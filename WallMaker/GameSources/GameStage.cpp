@@ -48,8 +48,8 @@ namespace basecross {
 
 	void GameStage::CreateStage()
 	{
-		// 仮ステージ
-		AddGameObject<FixedBox>(Vec3(50.0f, 1.0f, 50.0f), Vec3(0.0f), Vec3(0.0f, -0.5f, 0.0f));
+		// 床
+		AddGameObject<FixedBox>(Vec3(100.0f, 1.0f, 50.0f), Vec3(0.0f), Vec3(0.0f, -0.5f, 0.0f));
 	}
 
 }

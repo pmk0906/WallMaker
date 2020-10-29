@@ -50,6 +50,8 @@ namespace basecross {
 	{
 		// è∞
 		AddGameObject<FixedBox>(Vec3(100.0f, 1.0f, 50.0f), Vec3(0.0f), Vec3(0.0f, -0.5f, 0.0f));
+
+		AddGameObject<Player>(Vec3(2.0f), Vec3(0.0f), Vec3(0.0f, 2.0f, 0.0f));
 	}
 
 }

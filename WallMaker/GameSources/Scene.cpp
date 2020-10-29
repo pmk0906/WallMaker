@@ -12,8 +12,40 @@ namespace basecross{
 	//--------------------------------------------------------------------------------------
 	///	ゲームシーン
 	//--------------------------------------------------------------------------------------
+	
+	void Scene::CreateResources() {
+		// データディレクトリの取得
+		wstring dataDir;
+		App::GetApp()->GetDataDirectory(dataDir);
+		// テクスチャ
+		wstring texturesDir = dataDir + L"Textures\\";
+
+		struct Pairs
+		{
+			wstring Key;
+			wstring FileName;
+		};
+
+		// テクスチャ
+		Pairs txPairs[] =
+		{
+			{L"TRACE_TX", L"trace.png"},
+			{L"FLOOR_TX", L"Floor.png"}
+		};
+
+		// テクスチャ
+		for (auto pair : txPairs)
+		{
+			wstring strTexture = texturesDir + pair.FileName;
+			App::GetApp()->RegisterTexture(pair.Key, strTexture);
+		}
+	}
+
 	void Scene::OnCreate(){
 		try {
+			// リソースの作成
+			CreateResources();
+
 			//クリアする色を設定
 			Col4 Col;
 			Col.set(31.0f / 255.0f, 30.0f / 255.0f, 71.0f / 255.0f, 255.0f / 255.0f);

@@ -44,6 +44,9 @@ namespace basecross{
 		//ptrDraw->SetTextureResource(WstringKey::Tx_Floor);
 		ptrDraw->SetFogEnabled(true);
 		ptrDraw->SetOwnShadowActive(true);
+		//描画するテクスチャを設定
+		ptrDraw->SetTextureResource(L"FLOOR_TX");
+		SetAlphaActive(false);
 
 		SetDrawLayer(-2);
 	}

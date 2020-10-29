@@ -12,7 +12,7 @@ namespace basecross {
 	//	ゲームステージクラス実体
 	//--------------------------------------------------------------------------------------
 	void GameStage::CreateViewLight() {
-		const Vec3 eye(0.0f, 40.0f, -10.0f);
+		const Vec3 eye(0.0f, 20.0f, -10.0f);
 		const Vec3 at(0.0f);
 		auto PtrView = CreateView<SingleView>();
 		//ビューのカメラの設定
@@ -39,6 +39,8 @@ namespace basecross {
 		}
 
 		CreateStage();
+		CreateEnemy();
+		CreatePlayer();
 	}
 
 	void GameStage::OnUpdate() 
@@ -50,9 +52,17 @@ namespace basecross {
 	{
 		// 床
 		AddGameObject<FixedBox>(Vec3(100.0f, 1.0f, 50.0f), Vec3(0.0f), Vec3(0.0f, -0.5f, 0.0f));
-
-		AddGameObject<Player>(Vec3(2.0f), Vec3(0.0f), Vec3(0.0f, 2.0f, 0.0f));
 	}
 
+	void GameStage::CreateEnemy()
+	{
+		//敵①
+		AddGameObject<EnemyFirst>(Vec3(2.0f, 2.0f, 3.5f), Vec3(0.0f), Vec3(-5.0f, 0.0f, 0.0f));
+	}
+
+	void GameStage::CreatePlayer()
+	{
+		AddGameObject<Player>(Vec3(1.0f), Vec3(0.0f), Vec3(0.0f, 2.0f, 0.0f));
+	}
 }
 //end basecross

@@ -30,7 +30,8 @@ namespace basecross{
 		Pairs txPairs[] =
 		{
 			{L"TRACE_TX", L"trace.png"},
-			{L"FLOOR_TX", L"Floor.png"}
+			{L"FLOOR_TX", L"Floor.png"},
+			{L"MAGICWALL_TX", L"MagicWall.jpg"}
 		};
 
 		// テクスチャ

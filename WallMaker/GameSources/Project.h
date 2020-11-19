@@ -15,4 +15,7 @@
 #include "EnemyFirst.h"
 #include "EnemyBullet.h"
 
+#include "DebugBoard.h"
+#include "WstringKey.h"
+
 

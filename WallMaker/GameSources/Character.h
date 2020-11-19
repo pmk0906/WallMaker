@@ -28,5 +28,25 @@ namespace basecross{
 		virtual void OnCreate()override;
 	};
 
+	// ‰¼°
+	class Floor : public GameObject
+	{
+		// ‘å‚«‚³A‰ñ“]AˆÊ’u
+		Vec3 m_Scale;
+		Vec3 m_Rotation;
+		Vec3 m_Position;
+
+	public:
+		// \’z‚Æ”jŠü
+		Floor(
+			const shared_ptr<Stage>& StagePtr,
+			const Vec3& Scale,
+			const Vec3& Rotation,
+			const Vec3& Position);
+		virtual ~Floor();
+
+		// ‰Šú‰»
+		virtual void OnCreate()override;
+	};
 }
 //end basecross

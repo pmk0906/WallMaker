@@ -1,9 +1,9 @@
 #include "stdafx.h"
 #include "Project.h"
 
-////範囲内に入ったプレイヤーを狙い弾を撃つ敵
+////往復する敵（上下移動）
 namespace basecross {
-	EnemyFirst::EnemyFirst(
+	PatrolEnemyUPDown::PatrolEnemyUPDown(
 		const shared_ptr<Stage>& StagePtr,
 		const Vec3& Scale,
 		const Vec3& Rotation,
@@ -14,9 +14,9 @@ namespace basecross {
 		m_Rotation(Rotation),
 		m_Position(Position)
 	{}
-	EnemyFirst::~EnemyFirst() {}
+	PatrolEnemyUPDown::~PatrolEnemyUPDown() {}
 
-	void EnemyFirst::OnCreate()
+	void PatrolEnemyUPDown::OnCreate()
 	{
 		// 大きさ、回転、位置
 		auto ptrTrans = GetComponent<Transform>();
@@ -29,7 +29,7 @@ namespace basecross {
 		ptrColl->SetFixed(true);
 
 		//タグをつける
-		AddTag(L"EnemyFirst");
+		AddTag(L"PatrolEnemyUPDown");
 
 		//描画処理
 		auto ptrDraw = AddComponent<BcPNTStaticDraw>();
@@ -40,49 +40,27 @@ namespace basecross {
 		Initialize();
 	}
 
-	void EnemyFirst::OnUpdate()
+	void PatrolEnemyUPDown::OnUpdate()
 	{
-		auto transComp = GetComponent<Transform>();
-
-		auto enemyPos = transComp->GetPosition();
-
-		auto objs = GetStage()->GetGameObjectVec();
-
-		Vec3 playerPos(0.0f, 0.0f, 0.0f);
-
-		for (auto& obj : objs)
+		if (m_FireTime >= 3.0f)
 		{
-			auto player = dynamic_pointer_cast<Player>(obj);
-			auto gameStage = dynamic_pointer_cast<GameStage>(GetStage());
-
-			if (player) {
-				playerPos = player->GetPosition();
-			}
-		}
-
-		auto enemyToPlayer = playerPos - enemyPos;
-
-		if (enemyToPlayer.length() <= 20.0f)
-		{
-			LookPlayer();
-
-			if (m_FireTime >= 3.0f)
-			{
-				Fire();
-			}
+			Fire();
 		}
 
 		Reload();
+		Move();
 	}
 
-	void EnemyFirst::Initialize()
+	void PatrolEnemyUPDown::Initialize()
 	{
 		m_EnemyHP = 1.0f;
-		m_RotY = 0.0f;
 		m_FireTime = 3.0f;
+		m_MoveSpeed = 3.0f;
+		m_MoveDirect = 1.0f;
+		m_TimeOfChangeDirect = 0.0f;
 	}
 
-	void EnemyFirst::Fire()
+	void PatrolEnemyUPDown::Fire()
 	{
 		auto& app = App::GetApp();
 
@@ -93,7 +71,7 @@ namespace basecross {
 
 		Vec3 playerPos(0.0f, 0.0f, 0.0f);
 
-		for (auto& obj : objs) 
+		for (auto& obj : objs)
 		{
 			auto player = dynamic_pointer_cast<Player>(obj);
 			auto gameStage = dynamic_pointer_cast<GameStage>(GetStage());
@@ -117,11 +95,11 @@ namespace basecross {
 
 		bulletTrans->SetPosition(pos);
 		enemybullet->SetDir(forward_player);
-			
+		
 		m_FireTime = 0.0f;
 	}
 
-	void EnemyFirst::Reload()
+	void PatrolEnemyUPDown::Reload()
 	{
 		auto& app = App::GetApp();
 
@@ -130,48 +108,30 @@ namespace basecross {
 		m_FireTime += delta;
 	}
 
-	void EnemyFirst::LookPlayer()
+	void PatrolEnemyUPDown::Move()
 	{
 		auto& app = App::GetApp();
 
-		auto transComp = GetComponent<Transform>();
 		float delta = app->GetElapsedTime();
-		auto objs = GetStage()->GetGameObjectVec();
-		auto enemyPos = transComp->GetPosition();
 
-		Vec3 playerPos(0.0f, 0.0f, 0.0f);
+		auto transComp = GetComponent<Transform>();
+		auto pos = transComp->GetPosition();
 
-		for (auto& obj : objs)
+		pos.z += m_MoveSpeed * delta * m_MoveDirect;
+
+		m_TimeOfChangeDirect += delta;
+
+		if (m_TimeOfChangeDirect >= 2.0f)
 		{
-			auto player = dynamic_pointer_cast<Player>(obj);
-			auto gameStage = dynamic_pointer_cast<GameStage>(GetStage());
+			m_MoveDirect *= -1.0f;
 
-			if (player) {
-				playerPos = player->GetPosition();
-			}
+			m_TimeOfChangeDirect = 0.0f;
 		}
 
-		auto enemyToPlayer = playerPos - enemyPos;
-
-		auto forward = Vec3(cosf(m_RotY), 0.0f, sinf(m_RotY));
-
-		auto dir = enemyToPlayer.normalize();
-
-		float rot = XMConvertToRadians(45.0f) * delta; // １フレ―ム当たりの旋回角度
-
-		// 外積を用いてプレイヤ?がいる方向に旋回する
-		if (forward.cross(dir).y < 0.0f) {
-			m_RotY += rot;
-		}
-		else {
-			m_RotY -= rot;
-		}
-		
-		transComp->SetRotation(0.0f, -m_RotY, 0.0f);
-		
+		transComp->SetPosition(pos);
 	}
 
-	void EnemyFirst::Die()
+	void PatrolEnemyUPDown::Die()
 	{
 		if (m_EnemyHP <= 0.0f)
 		{

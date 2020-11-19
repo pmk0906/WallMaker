@@ -14,6 +14,9 @@
 #include "Player.h"
 #include "EnemyFirst.h"
 #include "EnemyBullet.h"
+#include "PatrolEnemy.h"
+#include "PatrolEnemyUPDown.h"
+#include "RapidFireEnemy.h"
 
 #include "DebugBoard.h"
 #include "WstringKey.h"

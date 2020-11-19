@@ -65,7 +65,19 @@ namespace basecross {
 	void GameStage::CreateEnemy()
 	{
 		//“G‡@
-		AddGameObject<EnemyFirst>(Vec3(2.0f, 2.0f, 3.5f), Vec3(0.0f), Vec3(-5.0f, 0.0f, 0.0f));
+		AddGameObject<EnemyFirst>(Vec3(3.5f, 1.0f, 2.0f), Vec3(0.0f), Vec3(-5.0f, 1.5f, 0.0f));
+
+		//‰•œ“Gi‰¡j
+		AddGameObject<PatrolEnemy>(Vec3(2.0f, 1.0f, 3.0f), Vec3(0.0f, XMConvertToRadians(90.0f), 0.0f), 
+			Vec3(-3.0f, 1.5f, 5.0f));
+
+		//‰•œ“Gicj
+		AddGameObject<PatrolEnemyUPDown>(Vec3(2.0f, 1.0f, 3.0f), Vec3(0.0f, XMConvertToRadians(180.0f), 0.0f),
+			Vec3(10.0f, 1.5f, -5.0f));
+
+		//˜AË‚·‚é“G
+		AddGameObject<RapidFireEnemy>(Vec3(3.5f, 1.0f, 2.0f), Vec3(0.0f), Vec3(0.0f, 1.5f, -5.0f));
+
 	}
 
 	void GameStage::CreatePlayer()

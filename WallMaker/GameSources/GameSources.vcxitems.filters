@@ -36,13 +36,22 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)EnemyFirst.h">
       <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\Dx11\EnemyBullet.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)DebugBoard.h">
       <Filter>DebugBoard</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\hdak3\Documents\DATEAPPS2020Eteam\WallMaker\WallMaker\GameSources\WstringKey.h">
+    <ClInclude Include="$(MSBuildThisFileDirectory)PatrolEnemy.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)PatrolEnemyUPDown.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)RapidFireEnemy.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)WstringKey.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)EnemyBullet.h">
       <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>
@@ -71,11 +80,20 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)EnemyFirst.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\Dx11\EnemyBullet.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)DebugBoard.cpp">
       <Filter>DebugBoard</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)PatrolEnemy.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)PatrolEnemyUPDown.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)RapidFireEnemy.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)EnemyBullet.cpp">
+      <Filter>Sources</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

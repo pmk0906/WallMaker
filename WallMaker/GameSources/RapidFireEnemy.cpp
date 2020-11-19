@@ -1,9 +1,9 @@
 #include "stdafx.h"
 #include "Project.h"
 
-////範囲内に入ったプレイヤーを狙い弾を撃つ敵
+////範囲内に入ったプレイヤーをロックオンして３連射する敵
 namespace basecross {
-	EnemyFirst::EnemyFirst(
+	RapidFireEnemy::RapidFireEnemy(
 		const shared_ptr<Stage>& StagePtr,
 		const Vec3& Scale,
 		const Vec3& Rotation,
@@ -14,9 +14,9 @@ namespace basecross {
 		m_Rotation(Rotation),
 		m_Position(Position)
 	{}
-	EnemyFirst::~EnemyFirst() {}
+	RapidFireEnemy::~RapidFireEnemy() {}
 
-	void EnemyFirst::OnCreate()
+	void RapidFireEnemy::OnCreate()
 	{
 		// 大きさ、回転、位置
 		auto ptrTrans = GetComponent<Transform>();
@@ -40,13 +40,16 @@ namespace basecross {
 		Initialize();
 	}
 
-	void EnemyFirst::OnUpdate()
+	void RapidFireEnemy::OnUpdate()
 	{
 		auto transComp = GetComponent<Transform>();
 
 		auto enemyPos = transComp->GetPosition();
 
 		auto objs = GetStage()->GetGameObjectVec();
+
+		auto& app = App::GetApp();
+		float delta = app->GetElapsedTime();
 
 		Vec3 playerPos(0.0f, 0.0f, 0.0f);
 
@@ -64,25 +67,39 @@ namespace basecross {
 
 		if (enemyToPlayer.length() <= 20.0f)
 		{
+			m_LockOnTime += delta;
+
 			LookPlayer();
 
-			if (m_FireTime >= 3.0f)
+			if (m_FireTime >= 1.0f && flg_LockOn)
 			{
 				Fire();
 			}
 		}
 
+		else
+		{
+			m_LockOnTime = 0.0f;
+		}
+
 		Reload();
+		LockOn();
+		Die();
 	}
 
-	void EnemyFirst::Initialize()
+	void RapidFireEnemy::Initialize()
 	{
 		m_EnemyHP = 1.0f;
 		m_RotY = 0.0f;
-		m_FireTime = 3.0f;
+		m_FireTime = 1.0f;
+		m_LockOnTime = 0.0f;
+
+		m_FireCount = 0;
+
+		flg_LockOn = false;
 	}
 
-	void EnemyFirst::Fire()
+	void RapidFireEnemy::Fire()
 	{
 		auto& app = App::GetApp();
 
@@ -93,7 +110,7 @@ namespace basecross {
 
 		Vec3 playerPos(0.0f, 0.0f, 0.0f);
 
-		for (auto& obj : objs) 
+		for (auto& obj : objs)
 		{
 			auto player = dynamic_pointer_cast<Player>(obj);
 			auto gameStage = dynamic_pointer_cast<GameStage>(GetStage());
@@ -117,20 +134,29 @@ namespace basecross {
 
 		bulletTrans->SetPosition(pos);
 		enemybullet->SetDir(forward_player);
-			
+
 		m_FireTime = 0.0f;
+
+		m_FireCount++;
 	}
 
-	void EnemyFirst::Reload()
+	void RapidFireEnemy::Reload()
 	{
 		auto& app = App::GetApp();
 
 		float delta = app->GetElapsedTime();
 
 		m_FireTime += delta;
+
+		if (m_FireCount >= 3)
+		{
+			m_FireCount = 0;
+			m_LockOnTime = 0.0f;
+			flg_LockOn = false;
+		}
 	}
 
-	void EnemyFirst::LookPlayer()
+	void RapidFireEnemy::LookPlayer()
 	{
 		auto& app = App::GetApp();
 
@@ -166,12 +192,20 @@ namespace basecross {
 		else {
 			m_RotY -= rot;
 		}
-		
+
 		transComp->SetRotation(0.0f, -m_RotY, 0.0f);
-		
+
 	}
 
-	void EnemyFirst::Die()
+	void RapidFireEnemy::LockOn()
+	{
+		if (m_LockOnTime >= 3.0f)
+		{
+			flg_LockOn = true;
+		}
+	}
+
+	void RapidFireEnemy::Die()
 	{
 		if (m_EnemyHP <= 0.0f)
 		{

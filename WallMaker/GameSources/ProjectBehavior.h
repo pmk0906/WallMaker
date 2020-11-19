@@ -21,11 +21,24 @@ namespace basecross {
 				return;
 			}
 			// コントローラの取得(優先)
-			auto cntlVec = App::GetApp()->GetInputDevice().GetControlerVec();
-			if (cntlVec[0].bConnected) {
+			auto cntlVec = App::GetApp()->GetInputDevice().GetControlerVec()[0];
+			if (cntlVec.bConnected) {
 				// Aボタン
-				if (cntlVec[0].wPressedButtons & XINPUT_GAMEPAD_A) {
+				if (cntlVec.wPressedButtons & XINPUT_GAMEPAD_A) {
 					Obj->OnPushA();
+				}
+				// Aボタン
+				if (cntlVec.wPressedButtons & XINPUT_GAMEPAD_B) {
+					Obj->OnPushB();
+				}
+				//RTrigger
+				if (cntlVec.bRightTrigger >= 10)
+				{
+					Obj->OnHoldRTrigger();
+				}
+				else
+				{
+					Obj->OnReleaseRTrigger();
 				}
 			}
 		}

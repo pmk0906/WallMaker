@@ -17,7 +17,7 @@
 #include "PatrolEnemy.h"
 #include "PatrolEnemyUPDown.h"
 #include "RapidFireEnemy.h"
-
+#include "PlayerLife.h"
 #include "DebugBoard.h"
 #include "WstringKey.h"
 

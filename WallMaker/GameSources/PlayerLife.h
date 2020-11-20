@@ -14,6 +14,11 @@ namespace basecross{
 		Vec2 m_StartScale;
 		Vec3 m_StartPos;
 
+		// 大きさ、回転、位置
+		Vec3 m_Scale;
+		Vec3 m_Rotation;
+		Vec3 m_Position;
+		
 	public:
 		// 構築と破棄
 		PlayerLife(

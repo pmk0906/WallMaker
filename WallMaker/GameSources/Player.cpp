@@ -219,9 +219,10 @@ namespace basecross{
 			auto ptrChild = dynamic_pointer_cast<MagicSkeltonWall>(m_MagicSkeltonWall);
 			if (ptrChild->GetCollisionFlg() == false)
 			{
+				auto rot = GetComponent<Transform>()->GetQuaternion();
 				GetStage()->AddGameObject<MagicWall>(
 					Vec3(ptrChild->GetScale()),
-					Vec3(GetComponent<Transform>()->GetRotation()),
+					Vec3(rot.toRotVec().y),
 					Vec3(ptrChild->GetPosition()));
 				m_WallStock++;
 			}
@@ -292,8 +293,9 @@ namespace basecross{
 		//•¶Žš—ñ•\Ž¦
 		
 		auto rot = GetComponent<Transform>()->GetQuaternion();
+		//rot.toRotVec().y
 		wstring playerRotation(L"PlayerRot.y: ");
-		playerRotation += Util::FloatToWStr(rot.y) + L"\n";
+		playerRotation += Util::FloatToWStr(XMConvertToDegrees(rot.toRotVec().y)) + L"\n";
 
 		auto angleR = GetInputStateR();
 		wstring playerRStick(L"fThumbRX: ");

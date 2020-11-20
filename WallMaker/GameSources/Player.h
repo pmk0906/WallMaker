@@ -14,6 +14,8 @@ namespace basecross{
 	{
 		//スピード
 		float m_Speed;
+		//HP
+		float m_PlayerHp = 3.0f;
 		// Rトリガーが押されているか
 		bool m_BeforePushRTFlg = false;
 		bool m_PushRTFlg = false;
@@ -74,6 +76,12 @@ namespace basecross{
 		//壁のストックを減らす
 		void WallStockDecrease();
 		void WallStockDecreaseFlg();
+
+		//Damage関数
+		void Damage(float damage);
+
+		//死ぬ
+		void Die();
 
 		// ボタン
 		void OnPushA();

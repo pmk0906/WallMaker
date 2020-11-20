@@ -41,6 +41,20 @@ namespace basecross{
 		m_wallDecreaseFlg = true;
 	}
 
+	void Player::Damage(float damage)
+	{
+		m_PlayerHp -= damage;
+	}
+
+	void Player::Die()
+	{
+		if (m_PlayerHp <= 0.0f)
+		{
+			SetDrawActive(false);
+			SetUpdateActive(false);
+		}
+	}
+
 	// RTriggerƒtƒ‰ƒOØ‚è‘Ö‚¦
 	void Player::RTriggerHandler()
 	{
@@ -258,6 +272,7 @@ namespace basecross{
 		m_InputHandler.PushHandle(GetThis<Player>());
 		MovePlayer();
 		WallStockDecrease();
+		Die();
 	}
 
 	void Player::OnUpdate2()

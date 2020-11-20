@@ -63,6 +63,8 @@ namespace basecross {
 		// “–‚½‚Á‚½‚Ì‚ªƒvƒŒƒCƒ„[‚È‚ç
 		if (auto player = dynamic_pointer_cast<Player>(other))
 		{
+			player->Damage(m_Attack);
+
 			SetDrawActive(false);
 			SetUpdateActive(false);
 		}

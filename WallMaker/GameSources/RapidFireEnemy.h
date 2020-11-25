@@ -36,6 +36,7 @@ namespace basecross {
 		void Reload();
 		void LookPlayer();
 		void LockOn();
+		void Damage(float damage);
 		void Die();
 
 		Vec3 GetPosition() const

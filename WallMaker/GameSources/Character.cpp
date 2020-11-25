@@ -89,7 +89,7 @@ namespace basecross{
 		auto ptrDraw = AddComponent<BcPNTStaticDraw>();
 		ptrDraw->SetMeshResource(L"DEFAULT_CUBE");
 		//ptrDraw->SetTextureResource(WstringKey::Tx_Floor);
-		ptrDraw->SetFogEnabled(true);
+		//ptrDraw->SetFogEnabled(true);
 		ptrDraw->SetOwnShadowActive(true);
 		//描画するテクスチャを設定
 		ptrDraw->SetTextureResource(L"FLOOR_TX");

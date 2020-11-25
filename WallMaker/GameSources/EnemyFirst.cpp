@@ -34,7 +34,7 @@ namespace basecross {
 		//•`‰æˆ—
 		auto ptrDraw = AddComponent<BcPNTStaticDraw>();
 		ptrDraw->SetMeshResource(L"DEFAULT_CUBE");
-		ptrDraw->SetFogEnabled(true);
+		//ptrDraw->SetFogEnabled(true);
 		ptrDraw->SetOwnShadowActive(true);
 
 		Initialize();
@@ -73,6 +73,7 @@ namespace basecross {
 		}
 
 		Reload();
+		Die();
 	}
 
 	void EnemyFirst::Initialize()
@@ -108,7 +109,7 @@ namespace basecross {
 		auto quaternion = transComp->GetQuaternion();
 		auto rot_bullet = quaternion.toRotVec();
 
-		auto forward_player = Vec3(cosf(rot_bullet.y), 0.0f, -sinf(rot_bullet.y));
+		auto forward_player = transComp->GetForword();
 
 		auto pos = transComp->GetPosition();
 
@@ -153,7 +154,7 @@ namespace basecross {
 
 		auto enemyToPlayer = playerPos - enemyPos;
 
-		auto forward = Vec3(cosf(m_RotY), 0.0f, sinf(m_RotY));
+		auto forward = transComp->GetForword();
 
 		auto dir = enemyToPlayer.normalize();
 
@@ -168,7 +169,11 @@ namespace basecross {
 		}
 		
 		transComp->SetRotation(0.0f, -m_RotY, 0.0f);
-		
+	}
+
+	void EnemyFirst::Damage(float damage)
+	{
+		m_EnemyHP -= damage;
 	}
 
 	void EnemyFirst::Die()

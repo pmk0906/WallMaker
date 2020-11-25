@@ -32,6 +32,7 @@ namespace basecross {
 		void Fire();
 		void Reload();
 		void Move();
+		void Damage(float damage);
 		void Die();
 
 		Vec3 GetPosition() const

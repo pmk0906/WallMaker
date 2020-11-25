@@ -7,9 +7,14 @@ namespace basecross {
 	{
 		Vec3 dir; // ’e‚ÌˆÚ“®•ûŒü
 
+		const float MAX_SPEED = 30.0f;
+		const float ATTACK = 1.0f;
+
 		float m_BulletSpeed; // ’e‚ÌˆÚ“®ƒXƒs\ƒh
 		float m_Attack; // ’e‚ÌˆĞ—Í
 		float m_DieTime; // ’e‚Ì¶‘¶ŠÔ
+
+		bool flg_reflect;
 
 	public:
 		EnemyBullet(const shared_ptr<Stage>& stage)
@@ -29,17 +34,14 @@ namespace basecross {
 		void Initialize();
 		void BulletMove();
 		void Die();
+		void SetDir(const Vec3& v);
+		void SetMaxSpeed();
 
 		// Õ“Ë”»’è
 		virtual void OnCollisionEnter(shared_ptr<GameObject>& other)override;
 
-		Vec3 GetPosition() const
-		{
-			return GetComponent<Transform>()->GetPosition();
-		}
+		Vec3 GetPosition() const;
 
-		void SetDir(const Vec3& v) {
-			dir = v;
-		}
+		Vec3 Reflect(Vec3 wall, Vec3 bullet);
 	};
 }

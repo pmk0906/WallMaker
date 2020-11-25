@@ -15,6 +15,7 @@ namespace basecross {
 		AddTag(L"EnemyBullet");
 
 		Initialize();
+		auto myTrans = GetComponent<Transform>();
 	}
 
 	void EnemyBullet::OnUpdate()
@@ -26,6 +27,7 @@ namespace basecross {
 
 		BulletMove();
 		Die();
+		SetMaxSpeed();
 	}
 
 	void EnemyBullet::Initialize()
@@ -33,6 +35,8 @@ namespace basecross {
 		m_BulletSpeed = 15.0f;
 		m_Attack = 1.0f;
 		m_DieTime = 0.0f;
+
+		flg_reflect = false;
 	}
 
 	void EnemyBullet::BulletMove()
@@ -42,7 +46,7 @@ namespace basecross {
 
 		auto transComp = GetComponent<Transform>();
 		auto pos = transComp->GetPosition();
-
+		
 		pos += m_BulletSpeed * dir * delta;
 
 		transComp->SetPosition(pos);
@@ -50,10 +54,50 @@ namespace basecross {
 
 	void EnemyBullet::Die()
 	{
-		if (m_DieTime >= 3.0f)
+		if (m_DieTime >= 5.0f)
 		{
 			SetDrawActive(false);
 			SetUpdateActive(false);
+		}
+	}
+
+	void EnemyBullet::SetDir(const Vec3& v)
+	{
+		dir = v;
+	}
+
+	Vec3 EnemyBullet::GetPosition() const
+	{
+		return GetComponent<Transform>()->GetPosition();
+	}
+
+	Vec3 EnemyBullet::Reflect(Vec3 wall, Vec3 bullet)
+	{
+		/*Vec3 temp = bullet;
+		temp.reflect(wall);
+		return temp;*/
+
+		Vec3 reverse_BulletVec, newDir, length, reflection;
+		float projection;
+
+		reverse_BulletVec = bullet * -1.0f; // ÉxÉNÉgÉãÇÃå¸Ç´ÇãtÇ…Ç∑ÇÈ
+
+		projection = dot(reverse_BulletVec, wall); // ì‡êœÇégÇ¡ÇƒéÀâeÇÃí∑Ç≥ÇãÅÇﬂÇÈ
+
+		length = projection * wall; // éÀâeÇÃí∑Ç≥
+
+		reflection = length * 2.0f; // éÀâeÇÃí∑Ç≥ÇÇQî{Ç∑ÇÈ
+
+		newDir = reflection + bullet; // Ç∑Ç◊ÇƒÇÃÉxÉNÉgÉãÇë´Ç∑
+
+		return newDir.normalize();
+	}
+
+	void EnemyBullet::SetMaxSpeed()
+	{
+		if (m_BulletSpeed >= MAX_SPEED)
+		{
+			m_BulletSpeed = MAX_SPEED;
 		}
 	}
 
@@ -63,10 +107,81 @@ namespace basecross {
 		// ìñÇΩÇ¡ÇΩÇÃÇ™ÉvÉåÉCÉÑÅ[Ç»ÇÁ
 		if (auto player = dynamic_pointer_cast<Player>(other))
 		{
-			player->Damage(m_Attack);
+			player->Damage(ATTACK);
 
 			SetDrawActive(false);
 			SetUpdateActive(false);
+		}
+
+		//Å@Ç†ÇΩÇ¡ÇΩÇÃÇ™ï«Ç»ÇÁ
+		if (auto magicWall = dynamic_pointer_cast<MagicWall>(other))
+		{
+			auto wallTrans = magicWall->GetComponent<Transform>();
+			auto myTrans = GetComponent<Transform>();
+
+			SetDir(Reflect(wallTrans->GetForword(), dir));
+
+			flg_reflect = true;
+
+			m_BulletSpeed += 5.0f;
+			m_Attack += 1.0f;
+		}
+
+		//ìñÇΩÇ¡ÇΩÇÃÇ™ìGÇ»ÇÁ
+		if (auto enemy = dynamic_pointer_cast<EnemyFirst>(other))
+		{
+			if (flg_reflect)
+			{
+				enemy->Damage(m_Attack);
+			}
+
+			if (m_DieTime >= 0.3f)
+			{
+				SetDrawActive(false);
+				SetUpdateActive(false);
+			}
+		}
+
+		if (auto patrolEnemy = dynamic_pointer_cast<PatrolEnemy>(other))
+		{
+			if (flg_reflect)
+			{
+				patrolEnemy->Damage(m_Attack);
+			}
+
+			if (m_DieTime >= 0.3f)
+			{
+				SetDrawActive(false);
+				SetUpdateActive(false);
+			}
+		}
+
+		if (auto upDownEnemy = dynamic_pointer_cast<PatrolEnemyUPDown>(other))
+		{
+			if (flg_reflect)
+			{
+				upDownEnemy->Damage(m_Attack);
+			}
+
+			if (m_DieTime >= 0.3f)
+			{
+				SetDrawActive(false);
+				SetUpdateActive(false);
+			}
+		}
+
+		if (auto raipidFireEnemy = dynamic_pointer_cast<RapidFireEnemy>(other))
+		{
+			if (flg_reflect)
+			{
+				raipidFireEnemy->Damage(m_Attack);
+			}
+
+			if (m_DieTime >= 0.3f)
+			{
+				SetDrawActive(false);
+				SetUpdateActive(false);
+			}
 		}
 	}
 }

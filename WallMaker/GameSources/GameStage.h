@@ -25,6 +25,9 @@ namespace basecross {
 		void CreateEnemy();
 		//プレイヤーの作成
 		void CreatePlayer();
+		//UIの作成
+		void CreateUI();
+
 	public:
 		//構築と破棄
 		GameStage() :Stage() {}

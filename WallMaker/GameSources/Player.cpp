@@ -252,7 +252,7 @@ namespace basecross{
 		auto ptrDraw = AddComponent<BcPNTStaticDraw>();
 		//描画するメッシュを設定
 		ptrDraw->SetMeshResource(L"DEFAULT_CUBE");
-		ptrDraw->SetFogEnabled(true);
+		//ptrDraw->SetFogEnabled(true);
 		//描画するテクスチャを設定
 		ptrDraw->SetTextureResource(L"TRACE_TX");
 		SetAlphaActive(true);
@@ -293,9 +293,9 @@ namespace basecross{
 		//文字列表示
 		
 		auto rot = GetComponent<Transform>()->GetQuaternion();
-		//rot.toRotVec().y
+		// QuartanionをRadianにする 「rot.toRotVec().y」
 		wstring playerRotation(L"PlayerRot.y: ");
-		playerRotation += Util::FloatToWStr(XMConvertToDegrees(rot.toRotVec().y)) + L"\n";
+		playerRotation += Util::FloatToWStr(rot.toRotVec().y) + L"\n";
 
 		auto angleR = GetInputStateR();
 		wstring playerRStick(L"fThumbRX: ");
@@ -322,6 +322,18 @@ namespace basecross{
 	Vec3 Player::GetPosition() const
 	{
 		return GetComponent<Transform>()->GetPosition();
+	}
+
+	//HPの取得
+	float Player::GetLife()
+	{
+		return m_PlayerHp;
+	}
+
+	//壁のストック取得
+	int Player::GetWallStock()
+	{
+		return m_WallStock;
 	}
 
 	// Aボタン
@@ -436,17 +448,24 @@ namespace basecross{
 	{}
 	MagicSkeltonWall::~MagicSkeltonWall() {}
 
-	void MagicSkeltonWall::SkeltonWalllSwitch()
+	void MagicSkeltonWall::SkeltonWallSwitch()
 	{
-		auto pushRTriggerFlg = m_Parent->GetComponent<Player>()->GetRTriggerPushFlg();
+		auto player_share = GetStage()->GetSharedGameObject<Player>(WstringKey::ShareObj_Player);
+
+		auto pushRTriggerFlg = player_share->GetRTriggerPushFlg();
 		if (pushRTriggerFlg == true)
 		{
 			// 色を半透明にする処理
-			
+			auto ptrDraw = GetComponent<BcPNTStaticDraw>();
+			ptrDraw->SetAlpha(0.2f);
+			SetDrawActive(true);
 		}
 		else
 		{
 			// 透明にする処理
+			auto ptrDraw = GetComponent<BcPNTStaticDraw>();
+			ptrDraw->SetAlpha(0.0f);
+			SetDrawActive(false);
 		}
 	}
 
@@ -468,16 +487,18 @@ namespace basecross{
 		ptrDraw->SetMeshResource(L"DEFAULT_CUBE");
 
 		//描画するテクスチャを設定
-		//ptrDraw->SetSpecularColor(Col4(1.0f, 1.0f, 1.0f, 0.5f));
 		SetAlphaActive(true);
-		ptrDraw->SetDiffuse(Col4(1.0f, 0.0f, 0.0f, 0.5f));
-		//ptrDraw->SetEmissive(Col4(1.0f, 1.0f, 1.0f, 0.5f));
 		ptrDraw->SetTextureResource(L"MAGICWALL_TX");
 
 		// DrawString用
 		auto strComp = AddComponent<StringSprite>();
 		strComp->SetBackColor(Col4(0, 0, 0, 0.5f));
 		strComp->SetTextRect(Rect2D<float>(10, 10, 270, 210));
+	}
+
+	void MagicSkeltonWall::OnUpdate()
+	{
+		SkeltonWallSwitch();
 	}
 
 	void MagicSkeltonWall::OnUpdate2()
@@ -489,18 +510,36 @@ namespace basecross{
 		if (dynamic_pointer_cast<MagicWall>(other))
 		{
 			m_CollisionFlg = true;
+			auto ptrDraw = GetComponent<BcPNTStaticDraw>();
+			auto col = ptrDraw->GetDiffuse();
+			col.x = 1.0f;
+			col.y = 0.2f;
+			col.z = 0.2f;
+			ptrDraw->SetDiffuse(col);
 		}
 	}
 	void MagicSkeltonWall::OnCollisionExcute(shared_ptr<GameObject>& other) {
 		if (dynamic_pointer_cast<MagicWall>(other))
 		{
 			m_CollisionFlg = true;
+			auto ptrDraw = GetComponent<BcPNTStaticDraw>();
+			auto col = ptrDraw->GetDiffuse();
+			col.x = 1.0f;
+			col.y = 0.2f;
+			col.z = 0.2f;
+			ptrDraw->SetDiffuse(col);
 		}
 	}
 	void MagicSkeltonWall::OnCollisionExit(shared_ptr<GameObject>& other) {
 		if (dynamic_pointer_cast<MagicWall>(other))
 		{
 			m_CollisionFlg = false;
+			auto ptrDraw = GetComponent<BcPNTStaticDraw>();
+			auto col = ptrDraw->GetDiffuse();
+			col.x = 1.0f;
+			col.y = 1.0f;
+			col.z = 1.0f;
+			ptrDraw->SetDiffuse(col);
 		}
 	}
 

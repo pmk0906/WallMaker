@@ -72,6 +72,10 @@ namespace basecross{
 
 		Vec3 GetRotation() const;
 		Vec3 GetPosition() const;
+		//HPの取得
+		float GetLife();
+		//壁のストックの取得
+		int GetWallStock();
 
 		//壁のストックを減らす
 		void WallStockDecrease();
@@ -129,7 +133,7 @@ namespace basecross{
 		//壁を生成するときに何かと重なっているかのフラグ
 		bool m_CollisionFlg = false;
 		// 透明な魔法壁の可視、不可視の切り替え
-		void SkeltonWalllSwitch();
+		void SkeltonWallSwitch();
 
 		// 親オブジェクト
 		const shared_ptr<GameObject>& m_Parent;
@@ -151,6 +155,7 @@ namespace basecross{
 		virtual ~MagicSkeltonWall();
 		// 初期化
 		virtual void OnCreate() override;
+		virtual void OnUpdate() override;
 		virtual void OnUpdate2() override;
 		virtual void OnCollisionEnter(shared_ptr<GameObject>& other)override;
 		virtual void OnCollisionExcute(shared_ptr<GameObject>& other)override;

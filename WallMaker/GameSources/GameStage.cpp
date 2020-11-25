@@ -41,6 +41,7 @@ namespace basecross {
 		CreateStage();
 		CreateEnemy();
 		CreatePlayer();
+		CreateUI();
 	}
 
 	void GameStage::OnUpdate() 
@@ -87,6 +88,18 @@ namespace basecross {
 
 		SetSharedGameObject(L"Player", player);
 
+	}
+
+	void GameStage::CreateUI()
+	{
+		//プレイヤーのライフ表示
+		AddGameObject<PlayerLife>(true, Vec2(100.0f), Vec3(-590.0f, 350.0f, 0.1f), 1.0f);
+		AddGameObject<PlayerLife>(true, Vec2(100.0f), Vec3(-490.0f, 350.0f, 0.1f), 2.0f);
+		AddGameObject<PlayerLife>(true, Vec2(100.0f), Vec3(-390.0f, 350.0f, 0.1f), 3.0f);
+		//壁のストック表示
+		AddGameObject<WallStock>(true, Vec2(100.0f), Vec3(-590.0f, 250.0f, 0.1f), 1.0f);
+		AddGameObject<WallStock>(true, Vec2(100.0f), Vec3(-490.0f, 250.0f, 0.1f), 2.0f);
+		AddGameObject<WallStock>(true, Vec2(100.0f), Vec3(-390.0f, 250.0f, 0.1f), 3.0f);
 	}
 }
 //end basecross

@@ -32,7 +32,8 @@ namespace basecross{
 			{L"TRACE_TX", L"trace.png"},
 			{L"FLOOR_TX", L"Floor.png"},
 			{L"MAGICWALL_TX", L"MagicWall.jpg"},
-			{L"HEART_TX", L"Heart.png"}
+			{L"HEART_TX", L"Heart.png"},
+			{L"WALLSTOCK_TX", L"WallUI.png"}
 		};
 
 		// テクスチャ

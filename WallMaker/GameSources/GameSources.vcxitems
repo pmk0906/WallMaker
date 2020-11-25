@@ -22,7 +22,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)PatrolEnemy.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)PatrolEnemyUPDown.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Player.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)PlayerLife.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)StageUI.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Project.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ProjectBehavior.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ProjectShader.h" />
@@ -39,7 +39,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)PatrolEnemy.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)PatrolEnemyUPDown.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Player.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)PlayerLife.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)StageUI.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ProjectBehavior.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ProjectShader.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)RapidFireEnemy.cpp" />

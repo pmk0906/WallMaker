@@ -78,7 +78,6 @@ namespace basecross {
 
 		//˜AŽË‚·‚é“G
 		AddGameObject<RapidFireEnemy>(Vec3(2.0f, 1.0f, 3.5f), Vec3(0.0f), Vec3(0.0f, 1.5f, -5.0f));
-
 	}
 
 	void GameStage::CreatePlayer()

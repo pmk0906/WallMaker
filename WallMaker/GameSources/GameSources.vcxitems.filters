@@ -55,6 +55,10 @@
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)StageUI.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)DangerBullet.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)DangerEnemy.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)Character.cpp">
@@ -97,5 +101,9 @@
       <Filter>Sources</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)StageUI.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)DangerBullet.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)DangerEnemy.cpp" />
   </ItemGroup>
 </Project>

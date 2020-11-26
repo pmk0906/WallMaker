@@ -10,6 +10,8 @@ namespace basecross {
 		const float MAX_SPEED = 30.0f;
 		const float ATTACK = 2.0f;
 
+		int m_ReflectCount;
+
 		float m_BulletSpeed; // 弾の移動スピ―ド
 		float m_Attack; // 弾の威力
 		float m_DieTime; // 弾の生存時間

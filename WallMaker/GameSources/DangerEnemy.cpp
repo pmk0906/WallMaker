@@ -113,7 +113,7 @@ namespace basecross {
 
 		auto pos = transComp->GetPosition();
 
-		auto enemybullet = GetStage()->AddGameObject<EnemyBullet>();
+		auto enemybullet = GetStage()->AddGameObject<DangerBullet>();
 		auto bulletTrans = enemybullet->GetComponent<Transform>();
 
 		bulletTrans->SetPosition(pos);

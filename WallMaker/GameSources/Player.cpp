@@ -422,11 +422,26 @@ namespace basecross{
 	void MagicWall::OnUpdate()
 	{
 		Delete();
+		Die();
 	}
 
 	void MagicWall::SetHp(float hp)
 	{
 		m_Hp = hp;
+	}
+
+	void MagicWall::Damage(float damage)
+	{
+		m_Hp -= damage;
+	}
+
+	void MagicWall::Die()
+	{
+		if (m_Hp <= 0.0f)
+		{
+			SetDrawActive(false);
+			SetUpdateActive(false);
+		}
 	}
 
 	//--------------------------------------------------

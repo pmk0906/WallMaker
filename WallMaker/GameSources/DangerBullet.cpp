@@ -7,6 +7,7 @@ namespace basecross {
 	{
 		auto drawComp = AddComponent<PNTStaticDraw>();
 		drawComp->SetMeshResource(L"DEFAULT_SPHERE");
+		drawComp->SetDiffuse(Col4(1.0f, 0.0f, 0.0f, 1.0f));
 
 		// è’ìÀîªíË
 		auto ptrColl = AddComponent<CollisionSphere>();
@@ -32,6 +33,8 @@ namespace basecross {
 
 	void DangerBullet::Initialize()
 	{
+		m_ReflectCount = 2;
+
 		m_BulletSpeed = 15.0f;
 		m_Attack = 2.0f;
 		m_DieTime = 0.0f;
@@ -119,12 +122,19 @@ namespace basecross {
 			auto wallTrans = magicWall->GetComponent<Transform>();
 			auto myTrans = GetComponent<Transform>();
 
-			SetDir(Reflect(wallTrans->GetForword(), dir));
-
 			flg_reflect = true;
 
-			m_BulletSpeed += 5.0f;
-			m_Attack += 1.0f;
+			m_ReflectCount -= 1;
+
+			if (m_ReflectCount <= 0)
+			{
+				SetDir(Reflect(wallTrans->GetForword(), dir));
+
+				m_BulletSpeed += 5.0f;
+				m_Attack += 1.0f;
+			}
+
+			magicWall->Damage(m_Attack);
 		}
 
 		//ìñÇΩÇ¡ÇΩÇÃÇ™ìGÇ»ÇÁ
@@ -175,6 +185,20 @@ namespace basecross {
 			if (flg_reflect)
 			{
 				raipidFireEnemy->Damage(m_Attack);
+			}
+
+			if (m_DieTime >= 0.3f)
+			{
+				SetDrawActive(false);
+				SetUpdateActive(false);
+			}
+		}
+
+		if (auto dangerEnemy = dynamic_pointer_cast<DangerEnemy>(other))
+		{
+			if (flg_reflect)
+			{
+				dangerEnemy->Damage(m_Attack);
 			}
 
 			if (m_DieTime >= 0.3f)

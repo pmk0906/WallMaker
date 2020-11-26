@@ -125,6 +125,8 @@ namespace basecross {
 
 			m_BulletSpeed += 5.0f;
 			m_Attack += 1.0f;
+
+			magicWall->Damage(m_Attack);
 		}
 
 		//“–‚½‚Á‚½‚Ì‚ª“G‚È‚ç
@@ -175,6 +177,20 @@ namespace basecross {
 			if (flg_reflect)
 			{
 				raipidFireEnemy->Damage(m_Attack);
+			}
+
+			if (m_DieTime >= 0.3f)
+			{
+				SetDrawActive(false);
+				SetUpdateActive(false);
+			}
+		}
+
+		if (auto dangerEnemy = dynamic_pointer_cast<DangerEnemy>(other))
+		{
+			if (flg_reflect)
+			{
+				dangerEnemy->Damage(m_Attack);
 			}
 
 			if (m_DieTime >= 0.3f)

@@ -123,6 +123,8 @@ namespace basecross{
 		virtual void OnUpdate() override;
 
 		void SetHp(float hp);
+		void Damage(float damage);
+		void Die();
 	};
 
 	//--------------------------------------------------

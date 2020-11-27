@@ -34,7 +34,6 @@ namespace basecross{
 			m_WallStock = m_WallStock - 1;
 			m_wallDecreaseFlg = false;
 		}
-
 	}
 	void Player::WallStockDecreaseFlg()
 	{
@@ -53,6 +52,25 @@ namespace basecross{
 			SetDrawActive(false);
 			SetUpdateActive(false);
 		}
+	}
+
+	void Player::SetCountWall()
+	{
+		m_ArrivedWall = 0;
+		auto stage = GetStage();
+		for (auto obj : stage->GetGameObjectVec())
+		{
+			// 壁が残ってるなら
+			if (obj->FindTag(WstringKey::Tag_MagicWall))
+			{
+				if (auto magicWall = dynamic_pointer_cast<MagicWall>(obj))
+				{
+					m_TestFlg = true;
+					m_ArrivedWall++;
+				}
+			}
+		}
+		m_WallStock = m_MaxWallStock - m_ArrivedWall;
 	}
 
 	// RTriggerフラグ切り替え
@@ -214,17 +232,17 @@ namespace basecross{
 
 	void Player::CreateMagicWall()
 	{
-		if (m_WallStock < 3)
+		if (m_WallStock > 0)
 		{
 			auto ptrChild = dynamic_pointer_cast<MagicSkeltonWall>(m_MagicSkeltonWall);
 			if (ptrChild->GetCollisionFlg() == false)
 			{
 				auto rot = GetComponent<Transform>()->GetQuaternion();
-				GetStage()->AddGameObject<MagicWall>(
+				auto magicWall = GetStage()->AddGameObject<MagicWall>(
 					Vec3(ptrChild->GetScale()),
 					Vec3(rot.toRotVec().y),
 					Vec3(ptrChild->GetPosition()));
-				m_WallStock++;
+				//m_WallStock--;
 			}
 		}
 	}
@@ -234,28 +252,45 @@ namespace basecross{
 		auto ptrTrans = AddComponent<Transform>();
 		ptrTrans->SetScale(Vec3(m_Scale.x, m_Scale.y, m_Scale.z));
 		ptrTrans->SetRotation(m_Rotation);
-		ptrTrans->SetPosition(Vec3(m_Position.x, m_Position.y, m_Position.z));
+		ptrTrans->SetPosition(Vec3(m_Position.x, m_Position.y + (m_Scale.y / 2), m_Position.z));
+
+		Mat4x4 spanMat; // モデルとトランスフォームの間の差分行列
+		spanMat.affineTransformation(
+			Vec3(1.0f, 1.0f, 1.0f),
+			Vec3(0.0f, 0.0f, 0.0f),
+			Vec3(0.0f, XMConvertToRadians(180.0f), 0.0f),
+			Vec3(0.0f, -1.0f, 0.0f)
+		);
 		
 		//CollisionSphere衝突判定を付ける
-		auto ptrColl = AddComponent<CollisionSphere>();
-		ptrColl->SetDrawActive(true);
+		auto ptrColl = AddComponent<CollisionCapsule>();
+		//ptrColl->SetDrawActive(true);
 
 		//重力を付ける
 		auto prtGra = AddComponent<Gravity>();
 
+		////影をつける（シャドウマップを描画する）
+		//auto shadowPtr = AddComponent<Shadowmap>();
+		////影の形（メッシュ）を設定
+		//shadowPtr->SetMeshResource(L"DEFAULT_CUBE");
+		
 		//影をつける（シャドウマップを描画する）
-		auto shadowPtr = AddComponent<Shadowmap>();
-		//影の形（メッシュ）を設定
-		shadowPtr->SetMeshResource(L"DEFAULT_CUBE");
+		auto ptrShadow = AddComponent<Shadowmap>();
+		//影の形(メッシュ)を指定
+		ptrShadow->SetMeshResource(WstringKey::Anim_Player);
+		ptrShadow->SetMeshToTransformMatrix(spanMat);
+		SetAlphaActive(true);
+
 
 		//描画コンポーネントの設定
-		auto ptrDraw = AddComponent<BcPNTStaticDraw>();
+		auto ptrDraw = AddComponent<PNTBoneModelDraw>();
 		//描画するメッシュを設定
-		ptrDraw->SetMeshResource(L"DEFAULT_CUBE");
-		//ptrDraw->SetFogEnabled(true);
-		//描画するテクスチャを設定
-		ptrDraw->SetTextureResource(L"TRACE_TX");
-		SetAlphaActive(true);
+		ptrDraw->SetMeshResource(WstringKey::Anim_Player);
+		ptrDraw->SetMeshToTransformMatrix(spanMat);
+		//アニメーションの追加
+		ptrDraw->AddAnimation(L"Stand", 0, 30, true, 10.0f);
+		ptrDraw->ChangeCurrentAnimation(L"Stand");
+
 		//タグ付け
 		AddTag(WstringKey::Tag_Player);
 
@@ -272,8 +307,13 @@ namespace basecross{
 		////コントローラチェックして入力があればコマンド呼び出し
 		m_InputHandler.PushHandle(GetThis<Player>());
 		MovePlayer();
-		WallStockDecrease();
+		//WallStockDecrease();
+		SetCountWall();
 		Die();
+
+		auto ptrDraw = GetComponent<PNTBoneModelDraw>();
+		float elapsedTime = App::GetApp()->GetElapsedTime();
+		ptrDraw->UpdateAnimation(elapsedTime);
 	}
 
 	void Player::OnUpdate2()
@@ -304,8 +344,21 @@ namespace basecross{
 
 		wstring wallStock(L"使える壁の枚数 : ");
 		wallStock += Util::UintToWStr(m_WallStock) + L"\n";
+		
+		wstring testFlg(L"テスト用フラグ : ");
+		if (m_TestFlg == true) 
+		{
+			testFlg += L"true\n";
+		}
+		else
+		{
+			testFlg += L"false\n";
+		}
 
-		wstring str = playerRotation + playerRStick + wallStock + L"\n";
+		wstring arrivingWall(L"ステージに存在する壁の枚数 : ");
+		arrivingWall += Util::UintToWStr(m_ArrivedWall) + L"\n";
+
+		wstring str = playerRotation + playerRStick + wallStock + testFlg + arrivingWall + L"\n";
 		auto ptrString = GetComponent<StringSprite>();
 		ptrString->SetText(str);
 	}
@@ -345,7 +398,18 @@ namespace basecross{
 	// Bボタン
 	void Player::OnPushB()
 	{
-
+		auto stage = GetStage();
+		for (auto obj : stage->GetGameObjectVec())
+		{
+			// 錆が残ってるなら
+			if (obj->FindTag(WstringKey::Tag_MagicWall))
+			{
+				if (auto magicWall = dynamic_pointer_cast<MagicWall>(obj))
+				{
+					magicWall->SetHp(0.0f);
+				}
+			}
+		}
 	}
 
 	// RTrigger長押し
@@ -393,8 +457,10 @@ namespace basecross{
 				player_share->WallStockDecreaseFlg();
 			}
 
-			SetDrawActive(false);
-			SetUpdateActive(false);
+			//SetDrawActive(false);
+			//SetUpdateActive(false);
+
+			GetStage()->RemoveGameObject<MagicWall>(GetThis<MagicWall>());
 		}
 	}
 
@@ -405,24 +471,46 @@ namespace basecross{
 		ptrMyTrans->SetRotation(Vec3(0.0f, m_Rotation.y, 0.0f));
 		ptrMyTrans->SetPosition(Vec3(m_Position.x, m_Position.y, m_Position.z));
 
-		auto ptrColl = AddComponent<CollisionObb>();
-		ptrColl->SetFixed(true);
-		ptrColl->SetAfterCollision(AfterCollision::Auto);
+		//auto ptrColl = AddComponent<CollisionObb>();
+		//ptrColl->SetFixed(true);
+		//ptrColl->SetAfterCollision(AfterCollision::Auto);
 
-		auto ptrDraw = AddComponent<BcPNTStaticDraw>();
-		ptrDraw->SetMeshResource(L"DEFAULT_CUBE");
+		//auto ptrDraw = AddComponent<BcPNTStaticDraw>();
+		//ptrDraw->SetMeshResource(L"DEFAULT_CUBE");
 
 		AddTag(L"TagMagicWall");
 
+		////描画するテクスチャを設定
+		//ptrDraw->SetTextureResource(L"MAGICWALL_TX");
+		//SetAlphaActive(true);
+
+		Mat4x4 spanMat; // モデルとトランスフォームの間の差分行列
+		spanMat.affineTransformation(
+			Vec3(0.55f, 0.5f, 5.0f),
+			Vec3(0.0f, 0.0f, 0.0f),
+			Vec3(0.0f, 0.0f, 0.0f),
+			Vec3(0.0f, -0.5f, 0.0f)
+		);
+
+		auto ptrColl = AddComponent<CollisionRect>();
+		ptrColl->SetAfterCollision(AfterCollision::None);
+		ptrColl->SetDrawActive(true);
+
+		//描画処理
+		auto ptrDraw = AddComponent<BcPNTnTStaticModelDraw>();
+		ptrDraw->SetMeshResource(L"MAGICWALL_MESH");
+		ptrDraw->SetMeshToTransformMatrix(spanMat);
+		ptrDraw->SetLightingEnabled(false);
+
+
 		//描画するテクスチャを設定
-		ptrDraw->SetTextureResource(L"MAGICWALL_TX");
 		SetAlphaActive(true);
+		ptrDraw->SetTextureResource(L"MAGICWALL_TX");
 	}
 
 	void MagicWall::OnUpdate()
 	{
 		Delete();
-		Die();
 	}
 
 	void MagicWall::SetHp(float hp)
@@ -433,15 +521,6 @@ namespace basecross{
 	void MagicWall::Damage(float damage)
 	{
 		m_Hp -= damage;
-	}
-
-	void MagicWall::Die()
-	{
-		if (m_Hp <= 0.0f)
-		{
-			SetDrawActive(false);
-			SetUpdateActive(false);
-		}
 	}
 
 	//--------------------------------------------------
@@ -471,16 +550,15 @@ namespace basecross{
 		if (pushRTriggerFlg == true)
 		{
 			// 色を半透明にする処理
-			auto ptrDraw = GetComponent<BcPNTStaticDraw>();
-			ptrDraw->SetAlpha(0.2f);
+			auto ptrDraw = GetComponent<BcPNTnTStaticModelDraw>();
 			SetDrawActive(true);
+			ptrDraw->SetAlpha(0.1f);
 		}
 		else
 		{
-			// 透明にする処理
-			auto ptrDraw = GetComponent<BcPNTStaticDraw>();
-			ptrDraw->SetAlpha(0.0f);
-			SetDrawActive(false);
+			//// 透明にする処理
+			//auto ptrDraw = GetComponent<BcPNTnTStaticModelDraw>();
+			//SetDrawActive(false);
 		}
 	}
 
@@ -491,15 +569,30 @@ namespace basecross{
 		ptrTrans->SetParent(m_Parent->GetThis<GameObject>());
 		
 		auto ptrMyTrans = AddComponent<Transform>();
-		ptrMyTrans->SetScale(Vec3(5.0f, 4.0f, 0.2f));
+		ptrMyTrans->SetScale(Vec3(5.0f, 5.0f, 1.0f));
 		ptrMyTrans->SetRotation(Vec3(0.0f));
-		ptrMyTrans->SetPosition(Vec3(0.0f, 2.0f, 3.0f));
+		ptrMyTrans->SetPosition(Vec3(0.0f, 1.25f, 3.0f));
 
-		auto ptrColl = AddComponent<CollisionObb>();
+		Mat4x4 spanMat; // モデルとトランスフォームの間の差分行列
+		spanMat.affineTransformation(
+			Vec3(0.55f, 0.5f, 5.0f),
+			Vec3(0.0f, 0.0f, 0.0f),
+			Vec3(0.0f, 0.0f, 0.0f),
+			Vec3(0.0f, -0.5f, 0.0f)
+		);
+
+		auto ptrColl = AddComponent<CollisionRect>();
 		ptrColl->SetAfterCollision(AfterCollision::None);
+		ptrColl->SetDrawActive(true);
 
-		auto ptrDraw = AddComponent<BcPNTStaticDraw>();
-		ptrDraw->SetMeshResource(L"DEFAULT_CUBE");
+		//描画処理
+		auto ptrDraw = AddComponent<BcPNTnTStaticModelDraw>();
+		ptrDraw->SetMeshResource(L"MAGICWALL_MESH");
+		ptrDraw->SetMeshToTransformMatrix(spanMat);
+		ptrDraw->SetLightingEnabled(false);
+		
+		//タグ付け
+		AddTag(WstringKey::Tag_MagicWall);
 
 		//描画するテクスチャを設定
 		SetAlphaActive(true);
@@ -525,11 +618,11 @@ namespace basecross{
 		if (dynamic_pointer_cast<MagicWall>(other))
 		{
 			m_CollisionFlg = true;
-			auto ptrDraw = GetComponent<BcPNTStaticDraw>();
+			auto ptrDraw = GetComponent<BcPNTnTStaticModelDraw>();
 			auto col = ptrDraw->GetDiffuse();
 			col.x = 1.0f;
-			col.y = 0.2f;
-			col.z = 0.2f;
+			col.y = 0.0f;
+			col.z = 0.0f;
 			ptrDraw->SetDiffuse(col);
 		}
 	}
@@ -537,11 +630,11 @@ namespace basecross{
 		if (dynamic_pointer_cast<MagicWall>(other))
 		{
 			m_CollisionFlg = true;
-			auto ptrDraw = GetComponent<BcPNTStaticDraw>();
+			auto ptrDraw = GetComponent<BcPNTnTStaticModelDraw>();
 			auto col = ptrDraw->GetDiffuse();
 			col.x = 1.0f;
-			col.y = 0.2f;
-			col.z = 0.2f;
+			col.y = 0.0f;
+			col.z = 0.0f;
 			ptrDraw->SetDiffuse(col);
 		}
 	}
@@ -549,7 +642,7 @@ namespace basecross{
 		if (dynamic_pointer_cast<MagicWall>(other))
 		{
 			m_CollisionFlg = false;
-			auto ptrDraw = GetComponent<BcPNTStaticDraw>();
+			auto ptrDraw = GetComponent<BcPNTnTStaticModelDraw>();
 			auto col = ptrDraw->GetDiffuse();
 			col.x = 1.0f;
 			col.y = 1.0f;

@@ -12,6 +12,9 @@ namespace basecross{
 	//--------------------------------------------------
 	class Player : public GameObject
 	{
+		bool m_TestFlg = false;
+		int m_ArrivedWall = 0;
+
 		//スピード
 		float m_Speed;
 		//HP
@@ -22,8 +25,11 @@ namespace basecross{
 
 		//壁のストック
 		const int m_MaxWallStock = 3;
-		int m_WallStock = 0;
+		int m_WallStock = 3;
 		bool m_wallDecreaseFlg = false;
+
+		//壁の数を数える
+		void SetCountWall();
 
 		//RTriggerについて
 		void RTriggerHandler();
@@ -124,7 +130,6 @@ namespace basecross{
 
 		void SetHp(float hp);
 		void Damage(float damage);
-		void Die();
 	};
 
 	//--------------------------------------------------

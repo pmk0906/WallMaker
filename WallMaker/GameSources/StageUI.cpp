@@ -122,7 +122,7 @@ namespace basecross{
 	{
 		auto player_share = GetStage()->GetSharedGameObject<Player>(WstringKey::ShareObj_Player);
 		float playerWallStock = player_share->GetWallStock();
-		if (playerWallStock < m_WallNum)
+		if (playerWallStock >= m_WallNum)
 		{
 			////F‚ğ–ß‚·
 			auto ptrDraw = GetComponent<PCTSpriteDraw>();

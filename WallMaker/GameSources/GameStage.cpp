@@ -58,7 +58,7 @@ namespace basecross {
 		Vec3 stagePos = Vec3(posX, 0, posZ);
 		for (int l = 0; l < STAGE_LENGTH; l++) {
 			for (int w = 0; w < STAGE_WIDTH; w++) {
-				AddGameObject<Floor>(Vec3(4.0f, 1.0f, 4.0f), Vec3(0.0f), Vec3(w * 4 - STAGE_LENGTH * 2 , 0, l * 4 - STAGE_WIDTH * 2));
+				AddGameObject<Floor>(Vec3(4.0f, 1.0f, 4.0f), Vec3(0.0f), Vec3(w * 4 - STAGE_LENGTH * 2 , -0.5f, l * 4 - STAGE_WIDTH * 2));
 			}
 		}
 	}
@@ -85,9 +85,8 @@ namespace basecross {
 
 	void GameStage::CreatePlayer()
 	{
-		auto player = AddGameObject<Player>(Vec3(1.0f), Vec3(0.0f), Vec3(0.0f, 2.0f, 0.0f));
+		auto player = AddGameObject<Player>(Vec3(1.5f), Vec3(0.0f), Vec3(0.0f, 2.0f, 0.0f));
 		SetSharedGameObject(WstringKey::ShareObj_Player, player);
-
 		SetSharedGameObject(L"Player", player);
 
 	}

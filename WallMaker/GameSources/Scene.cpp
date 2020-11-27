@@ -19,6 +19,8 @@ namespace basecross{
 		App::GetApp()->GetDataDirectory(dataDir);
 		// テクスチャ
 		wstring texturesDir = dataDir + L"Textures\\";
+		// アニメーション
+		wstring animDir = dataDir + L"Animations\\";
 
 		struct Pairs
 		{
@@ -36,11 +38,46 @@ namespace basecross{
 			{L"WALLSTOCK_TX", L"WallUI.png"}
 		};
 
+		// アニメーション
+		Pairs animPairs[] = 
+		{
+			{WstringKey::Anim_Player, L"PL_Stand.bmf"}
+		};
+		////スタティック
+		//Pairs staticPairs[] =
+		//{
+		//	{L"MAGICWALL_MESH", L"MagicWall.bmf"}
+		//};
+		//タンジェント有りスタティック
+		Pairs staticTangentPairs[] =
+		{
+			{L"MAGICWALL_MESH", L"MagicWall.bmf"}
+		};
+
 		// テクスチャ
 		for (auto pair : txPairs)
 		{
 			wstring strTexture = texturesDir + pair.FileName;
 			App::GetApp()->RegisterTexture(pair.Key, strTexture);
+		}
+
+		// アニメーション
+		for (auto pair : animPairs)
+		{
+			auto modelMesh = MeshResource::CreateBoneModelMesh(animDir, pair.FileName);
+			App::GetApp()->RegisterResource(pair.Key, modelMesh);
+		}
+		////スタティック
+		//for (auto pair : staticPairs)
+		//{
+		//	auto staticModelMesh = MeshResource::CreateStaticModelMesh(animDir, pair.FileName);
+		//	App::GetApp()->RegisterResource(pair.Key, staticModelMesh);
+		//}
+		//タンジェント有りスタティック
+		for (auto pair : staticTangentPairs)
+		{
+			auto staticModelMesh = MeshResource::CreateStaticModelMeshWithTangent(animDir, pair.FileName);
+			App::GetApp()->RegisterResource(pair.Key, staticModelMesh);
 		}
 	}
 

@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "Project.h"
 
-////ˆÐ—Í‚P‚Ìˆê”Ê’e
+////ˆÐ—Í‚Q‚Ì‹­—Í‚È’e
 namespace basecross {
 	void DangerBullet::OnCreate()
 	{
@@ -29,6 +29,7 @@ namespace basecross {
 		BulletMove();
 		Die();
 		SetMaxSpeed();
+		SetColor();
 	}
 
 	void DangerBullet::Initialize()
@@ -101,6 +102,16 @@ namespace basecross {
 		if (m_BulletSpeed >= MAX_SPEED)
 		{
 			m_BulletSpeed = MAX_SPEED;
+		}
+	}
+
+	void DangerBullet::SetColor()
+	{
+		if (m_ReflectCount <= 1)
+		{
+			auto drawComp = AddComponent<PNTStaticDraw>();
+
+			drawComp->SetDiffuse(Col4(1.0f, 1.0f, 1.0, 1.0f));
 		}
 	}
 

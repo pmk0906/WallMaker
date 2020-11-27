@@ -1,7 +1,7 @@
 #pragma once
 #include "stdafx.h"
 
-////”ÍˆÍ“à‚É“ü‚Á‚½ƒvƒŒƒCƒ„[‚ğ‘_‚¢’e‚ğŒ‚‚Â“G
+////”ÍˆÍ“à‚É“ü‚Á‚½ƒvƒŒƒCƒ„[‚ğ‘_‚¢‹­—Í‚È’e‚ğŒ‚‚Â“G
 namespace basecross {
 	class DangerEnemy : public GameObject
 	{
@@ -33,10 +33,7 @@ namespace basecross {
 		void Damage(float damage);
 		void Die();
 
-		Vec3 GetPosition() const
-		{
-			return GetComponent<Transform>()->GetPosition();
-		}
+		Vec3 GetPosition() const;
 	};
 }
 

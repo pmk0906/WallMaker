@@ -137,7 +137,7 @@ namespace basecross {
 				enemy->Damage(m_Attack);
 			}
 
-			if (m_DieTime >= 0.3f)
+			if (m_DieTime >= 0.1f)
 			{
 				SetDrawActive(false);
 				SetUpdateActive(false);
@@ -151,7 +151,7 @@ namespace basecross {
 				patrolEnemy->Damage(m_Attack);
 			}
 
-			if (m_DieTime >= 0.3f)
+			if (m_DieTime >= 0.1f)
 			{
 				SetDrawActive(false);
 				SetUpdateActive(false);
@@ -165,7 +165,7 @@ namespace basecross {
 				upDownEnemy->Damage(m_Attack);
 			}
 
-			if (m_DieTime >= 0.3f)
+			if (m_DieTime >= 0.1f)
 			{
 				SetDrawActive(false);
 				SetUpdateActive(false);
@@ -179,7 +179,7 @@ namespace basecross {
 				raipidFireEnemy->Damage(m_Attack);
 			}
 
-			if (m_DieTime >= 0.3f)
+			if (m_DieTime >= 0.1f)
 			{
 				SetDrawActive(false);
 				SetUpdateActive(false);
@@ -193,7 +193,7 @@ namespace basecross {
 				dangerEnemy->Damage(m_Attack);
 			}
 
-			if (m_DieTime >= 0.3f)
+			if (m_DieTime >= 0.1f)
 			{
 				SetDrawActive(false);
 				SetUpdateActive(false);

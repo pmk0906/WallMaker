@@ -52,6 +52,7 @@ namespace basecross {
 		Die();
 	}
 
+	//変数の初期化
 	void PatrolEnemy::Initialize()
 	{
 		m_EnemyHP = 1.0f;
@@ -61,6 +62,7 @@ namespace basecross {
 		m_TimeOfChangeDirect = 0.0f;
 	}
 
+	//発射
 	void PatrolEnemy::Fire()
 	{
 		auto& app = App::GetApp();
@@ -94,12 +96,15 @@ namespace basecross {
 		auto enemybullet = GetStage()->AddGameObject<EnemyBullet>();
 		auto bulletTrans = enemybullet->GetComponent<Transform>();
 
-		bulletTrans->SetPosition(pos);
+		auto scale_player = transComp->GetScale();
+
+		bulletTrans->SetPosition(pos + forward_player * scale_player.z);
 		enemybullet->SetDir(forward_player);
 			
 		m_FireTime = 0.0f;
 	}
 
+	//リロード
 	void PatrolEnemy::Reload()
 	{
 		auto& app = App::GetApp();
@@ -109,6 +114,7 @@ namespace basecross {
 		m_FireTime += delta;
 	}
 
+	//往復（左右）
 	void PatrolEnemy::Move()
 	{
 		auto& app = App::GetApp();
@@ -132,11 +138,14 @@ namespace basecross {
 		transComp->SetPosition(pos);
 	}
 
+	//ダメージを受ける
 	void PatrolEnemy::Damage(float damage)
 	{
 		m_EnemyHP -= damage;
 	}
 
+
+	//死ぬ
 	void PatrolEnemy::Die()
 	{
 		if (m_EnemyHP <= 0.0f)
@@ -144,5 +153,11 @@ namespace basecross {
 			SetDrawActive(false);
 			SetUpdateActive(false);
 		}
+	}
+
+	//ポジションの取得
+	Vec3 PatrolEnemy::GetPosition() const
+	{
+		return GetComponent<Transform>()->GetPosition();
 	}
 }

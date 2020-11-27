@@ -33,9 +33,6 @@ namespace basecross {
 		void Damage(float damage);
 		void Die();
 
-		Vec3 GetPosition() const
-		{
-			return GetComponent<Transform>()->GetPosition();
-		}
+		Vec3 GetPosition() const;
 	};
 }

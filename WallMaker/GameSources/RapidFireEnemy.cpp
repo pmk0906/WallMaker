@@ -132,7 +132,10 @@ namespace basecross {
 		auto enemybullet = GetStage()->AddGameObject<EnemyBullet>();
 		auto bulletTrans = enemybullet->GetComponent<Transform>();
 
-		bulletTrans->SetPosition(pos);
+
+		auto scale_player = transComp->GetScale();
+
+		bulletTrans->SetPosition(pos + forward_player * scale_player.x);
 		enemybullet->SetDir(forward_player);
 
 		m_FireTime = 0.0f;
@@ -185,7 +188,7 @@ namespace basecross {
 
 		float rot = XMConvertToRadians(45.0f) * delta; // １フレ―ム当たりの旋回角度
 
-		// 外積を用いてプレイヤ?がいる方向に旋回する
+		// 外積を用いてプレイヤーがいる方向に旋回する
 		if (forward.cross(dir).y < 0.0f) {
 			m_RotY += rot;
 		}
@@ -217,5 +220,10 @@ namespace basecross {
 			SetDrawActive(false);
 			SetUpdateActive(false);
 		}
+	}
+
+	Vec3 RapidFireEnemy::GetPosition() const
+	{
+		return GetComponent<Transform>()->GetPosition();
 	}
 }

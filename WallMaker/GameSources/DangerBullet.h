@@ -1,7 +1,7 @@
 #pragma once
 #include "stdafx.h"
 
-////ˆĞ—Í‚P‚Ìˆê”Ê’e
+////ˆĞ—Í‚Q‚Ì‹­—Í‚È’e
 namespace basecross {
 	class DangerBullet : public GameObject
 	{
@@ -38,6 +38,7 @@ namespace basecross {
 		void Die();
 		void SetDir(const Vec3& v);
 		void SetMaxSpeed();
+		void SetColor();
 
 		// Õ“Ë”»’è
 		virtual void OnCollisionEnter(shared_ptr<GameObject>& other)override;

@@ -94,7 +94,9 @@ namespace basecross {
 		auto enemybullet = GetStage()->AddGameObject<EnemyBullet>();
 		auto bulletTrans = enemybullet->GetComponent<Transform>();
 
-		bulletTrans->SetPosition(pos);
+		auto scale_player = transComp->GetScale();
+
+		bulletTrans->SetPosition(pos + forward_player * scale_player.z);
 		enemybullet->SetDir(forward_player);
 		
 		m_FireTime = 0.0f;
@@ -144,5 +146,10 @@ namespace basecross {
 			SetDrawActive(false);
 			SetUpdateActive(false);
 		}
+	}
+
+	Vec3 PatrolEnemyUPDown::GetPosition() const
+	{
+		return GetComponent<Transform>()->GetPosition();
 	}
 }

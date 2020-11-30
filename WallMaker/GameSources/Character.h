@@ -48,5 +48,47 @@ namespace basecross{
 		// ‰Šú‰»
 		virtual void OnCreate()override;
 	};
+
+	// ‰¼°
+	class StageWall : public GameObject
+	{
+		// ‘å‚«‚³A‰ñ“]AˆÊ’u
+		Vec3 m_Scale;
+		Vec3 m_Rotation;
+		Vec3 m_Position;
+
+	public:
+		// \’z‚Æ”jŠü
+		StageWall(
+			const shared_ptr<Stage>& StagePtr,
+			const Vec3& Scale,
+			const Vec3& Rotation,
+			const Vec3& Position);
+		virtual ~StageWall();
+
+		// ‰Šú‰»
+		virtual void OnCreate()override;
+	};
+
+	// ‰¼°
+	class StageRefrectWall : public GameObject
+	{
+		// ‘å‚«‚³A‰ñ“]AˆÊ’u
+		Vec3 m_Scale;
+		Vec3 m_Rotation;
+		Vec3 m_Position;
+
+	public:
+		// \’z‚Æ”jŠü
+		StageRefrectWall(
+			const shared_ptr<Stage>& StagePtr,
+			const Vec3& Scale,
+			const Vec3& Rotation,
+			const Vec3& Position);
+		virtual ~StageRefrectWall();
+
+		// ‰Šú‰»
+		virtual void OnCreate()override;
+	};
 }
 //end basecross

@@ -218,5 +218,16 @@ namespace basecross {
 				SetUpdateActive(false);
 			}
 		}
+
+		if (auto stageWall = dynamic_pointer_cast<StageWall>(other))
+		{
+			//auto wallTrans = stageWall->GetComponent<Transform>();
+
+			//SetDir(Reflect(wallTrans->GetForword(), dir));
+
+			SetDrawActive(false);
+			SetUpdateActive(false);
+		}
+
 	}
 }

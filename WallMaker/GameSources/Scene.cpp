@@ -21,6 +21,12 @@ namespace basecross{
 		wstring texturesDir = dataDir + L"Textures\\";
 		// アニメーション
 		wstring animDir = dataDir + L"Animations\\";
+		// オーディオ
+		wstring audioDir = dataDir + L"Audios\\";
+		// BGM
+		wstring bgmDir = audioDir + L"BGM\\";
+		// SE
+		wstring seDir = audioDir + L"SE\\";
 
 		struct Pairs
 		{
@@ -34,8 +40,9 @@ namespace basecross{
 			{L"TRACE_TX", L"trace.png"},
 			{L"FLOOR_TX", L"Floor.png"},
 			{L"MAGICWALL_TX", L"MagicWall.jpg"},
+			{L"WALL_TX", L"Wall.jpg"},
 			{L"HEART_TX", L"Heart.png"},
-			{L"WALLSTOCK_TX", L"WallUI.png"}
+			{L"WALLSTOCK_TX", L"UI_MagicWall.png"}
 		};
 
 		// アニメーション
@@ -52,6 +59,16 @@ namespace basecross{
 		Pairs staticTangentPairs[] =
 		{
 			{L"MAGICWALL_MESH", L"MagicWall.bmf"}
+		};
+
+		Pairs bgmPairs[] =
+		{
+			{L"SE_CraeteMagicWall", L"magicwall.wav"}
+		};
+
+		Pairs sePairs[] =
+		{
+			{L"SE_CraeteMagicWall", L"magicwall.wav"}
 		};
 
 		// テクスチャ
@@ -78,6 +95,20 @@ namespace basecross{
 		{
 			auto staticModelMesh = MeshResource::CreateStaticModelMeshWithTangent(animDir, pair.FileName);
 			App::GetApp()->RegisterResource(pair.Key, staticModelMesh);
+		}
+
+		//BGM
+		for (auto pair : sePairs)
+		{
+			wstring strBGM = bgmDir + pair.FileName;
+			App::GetApp()->RegisterWav(pair.Key, strBGM);
+		}
+
+		//SE
+		for (auto pair : sePairs)
+		{
+			wstring strSE = seDir + pair.FileName;
+			App::GetApp()->RegisterWav(pair.Key, strSE);
 		}
 	}
 

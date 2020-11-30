@@ -13,18 +13,19 @@ namespace basecross {
 	//--------------------------------------------------------------------------------------
 	class GameStage : public Stage {
 		//ステージの奥行
-		const int STAGE_LENGTH = 10;
+		const int STAGE_LENGTH = 16;
 		//ステージの横幅
-		const int STAGE_WIDTH = 10;
+		const int STAGE_WIDTH = 32;
 
 		//ビューの作成
 		void CreateViewLight();
 		// ステージの作成
 		void CreateStage();
+		void CreateWall();
 		//敵の作成
 		void CreateEnemy();
 		//プレイヤーの作成
-		void CreatePlayer();
+		void CreatePlayer(Vec3 pos);
 		//UIの作成
 		void CreateUI();
 

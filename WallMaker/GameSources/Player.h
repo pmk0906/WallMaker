@@ -30,6 +30,8 @@ namespace basecross{
 
 		//•Ç‚Ì”‚ğ”‚¦‚é
 		void SetCountWall();
+		//•Ç‚ğ‘S‚ÄÁ‚·
+		void WallAllDelete();
 
 		//RTrigger‚É‚Â‚¢‚Ä
 		void RTriggerHandler();

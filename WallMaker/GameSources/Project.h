@@ -22,5 +22,6 @@
 #include "StageUI.h"
 #include "DebugBoard.h"
 #include "WstringKey.h"
+#include "MyCamera.h"
 
 

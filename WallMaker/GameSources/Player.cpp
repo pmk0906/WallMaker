@@ -21,7 +21,7 @@ namespace basecross{
 		m_Scale(Scale),
 		m_Rotation(Rotation),
 		m_Position(Position),
-		m_Speed(6.0f)
+		m_Speed(4.0f)
 	{
 	}
 	Player::~Player() {}
@@ -65,12 +65,33 @@ namespace basecross{
 			{
 				if (auto magicWall = dynamic_pointer_cast<MagicWall>(obj))
 				{
-					m_TestFlg = true;
 					m_ArrivedWall++;
 				}
 			}
 		}
 		m_WallStock = m_MaxWallStock - m_ArrivedWall;
+		if (m_WallStock == m_MaxWallStock)
+		{
+			auto ptrChild = dynamic_pointer_cast<MagicSkeltonWall>(m_MagicSkeltonWall);
+			ptrChild->SetCollisionFlg(false);
+		}
+	}
+
+	void Player::WallAllDelete()
+	{
+		auto stage = GetStage();
+		for (auto obj : stage->GetGameObjectVec())
+		{
+			// 魔法壁が残ってるなら
+			if (obj->FindTag(WstringKey::Tag_MagicWall))
+			{
+				if (auto magicWall = dynamic_pointer_cast<MagicWall>(obj))
+				{
+					magicWall->SetHp(0.0f);
+					m_TestFlg = false;
+				}
+			}
+		}
 	}
 
 	// RTriggerフラグ切り替え
@@ -79,8 +100,8 @@ namespace basecross{
 		if (m_BeforePushRTFlg != m_PushRTFlg)
 		{
 			m_BeforePushRTFlg = m_PushRTFlg;
-
 		}
+
 	}
 
 	// プレイヤーが使用するコントローラの入力
@@ -234,6 +255,7 @@ namespace basecross{
 	{
 		if (m_WallStock > 0)
 		{
+				m_TestFlg = true;
 			auto ptrChild = dynamic_pointer_cast<MagicSkeltonWall>(m_MagicSkeltonWall);
 			if (ptrChild->GetCollisionFlg() == false)
 			{
@@ -243,6 +265,10 @@ namespace basecross{
 					Vec3(rot.toRotVec().y),
 					Vec3(ptrChild->GetPosition()));
 				//m_WallStock--;
+
+			// SE
+				auto ptrXA = App::GetApp()->GetXAudio2Manager();
+				ptrXA->Start(WstringKey::SE_CreateMagicWall, 0, 1.0f);
 			}
 		}
 	}
@@ -314,6 +340,7 @@ namespace basecross{
 		auto ptrDraw = GetComponent<PNTBoneModelDraw>();
 		float elapsedTime = App::GetApp()->GetElapsedTime();
 		ptrDraw->UpdateAnimation(elapsedTime);
+
 	}
 
 	void Player::OnUpdate2()
@@ -324,7 +351,7 @@ namespace basecross{
 	void Player::OnCollisionEnter(shared_ptr<GameObject>& other) {
 		if (auto magicWall = dynamic_pointer_cast<MagicWall>(other))
 		{
-			magicWall->SetHp(0.0f);
+			//magicWall->SetHp(0.0f);
 		}
 	}
 
@@ -398,18 +425,7 @@ namespace basecross{
 	// Bボタン
 	void Player::OnPushB()
 	{
-		auto stage = GetStage();
-		for (auto obj : stage->GetGameObjectVec())
-		{
-			// 錆が残ってるなら
-			if (obj->FindTag(WstringKey::Tag_MagicWall))
-			{
-				if (auto magicWall = dynamic_pointer_cast<MagicWall>(obj))
-				{
-					magicWall->SetHp(0.0f);
-				}
-			}
-		}
+		WallAllDelete();
 	}
 
 	// RTrigger長押し
@@ -443,19 +459,20 @@ namespace basecross{
 		m_Position(Position)
 	{
 	}
+
 	MagicWall::~MagicWall() {}
 
 	void MagicWall::Delete()
 	{
 		if (m_Hp <= 0)
 		{
-			auto objs = GetStage()->GetGameObjectVec();
-			for (auto& obj : objs)
-			{
-				auto player_share = GetStage()->GetSharedGameObject<Player>(WstringKey::ShareObj_Player);
-				
-				player_share->WallStockDecreaseFlg();
-			}
+			//auto objs = GetStage()->GetGameObjectVec();
+			//for (auto& obj : objs)
+			//{
+			//	auto player_share = GetStage()->GetSharedGameObject<Player>(WstringKey::ShareObj_Player);
+			//	
+			//	player_share->WallStockDecreaseFlg();
+			//}
 
 			//SetDrawActive(false);
 			//SetUpdateActive(false);
@@ -474,7 +491,6 @@ namespace basecross{
 		//auto ptrColl = AddComponent<CollisionObb>();
 		//ptrColl->SetFixed(true);
 		//ptrColl->SetAfterCollision(AfterCollision::Auto);
-
 		//auto ptrDraw = AddComponent<BcPNTStaticDraw>();
 		//ptrDraw->SetMeshResource(L"DEFAULT_CUBE");
 
@@ -492,16 +508,16 @@ namespace basecross{
 			Vec3(0.0f, -0.5f, 0.0f)
 		);
 
-		auto ptrColl = AddComponent<CollisionRect>();
+		auto ptrColl = AddComponent<CollisionObb>();
 		ptrColl->SetAfterCollision(AfterCollision::None);
 		ptrColl->SetDrawActive(true);
+		//ptrColl->SetFixed(true);
 
 		//描画処理
 		auto ptrDraw = AddComponent<BcPNTnTStaticModelDraw>();
 		ptrDraw->SetMeshResource(L"MAGICWALL_MESH");
 		ptrDraw->SetMeshToTransformMatrix(spanMat);
 		ptrDraw->SetLightingEnabled(false);
-
 
 		//描画するテクスチャを設定
 		SetAlphaActive(true);
@@ -556,9 +572,9 @@ namespace basecross{
 		}
 		else
 		{
-			//// 透明にする処理
+			// 透明にする処理
 			//auto ptrDraw = GetComponent<BcPNTnTStaticModelDraw>();
-			//SetDrawActive(false);
+			SetDrawActive(false);
 		}
 	}
 
@@ -569,7 +585,7 @@ namespace basecross{
 		ptrTrans->SetParent(m_Parent->GetThis<GameObject>());
 		
 		auto ptrMyTrans = AddComponent<Transform>();
-		ptrMyTrans->SetScale(Vec3(5.0f, 5.0f, 1.0f));
+		ptrMyTrans->SetScale(Vec3(5.0f, 5.0f, 0.3f));
 		ptrMyTrans->SetRotation(Vec3(0.0f));
 		ptrMyTrans->SetPosition(Vec3(0.0f, 1.25f, 3.0f));
 
@@ -581,7 +597,7 @@ namespace basecross{
 			Vec3(0.0f, -0.5f, 0.0f)
 		);
 
-		auto ptrColl = AddComponent<CollisionRect>();
+		auto ptrColl = AddComponent<CollisionObb>();
 		ptrColl->SetAfterCollision(AfterCollision::None);
 		ptrColl->SetDrawActive(true);
 
@@ -601,7 +617,7 @@ namespace basecross{
 		// DrawString用
 		auto strComp = AddComponent<StringSprite>();
 		strComp->SetBackColor(Col4(0, 0, 0, 0.5f));
-		strComp->SetTextRect(Rect2D<float>(10, 10, 270, 210));
+		strComp->SetTextRect(Rect2D<float>(10, 600, 270, 210));
 	}
 
 	void MagicSkeltonWall::OnUpdate()
@@ -636,6 +652,10 @@ namespace basecross{
 			col.y = 0.0f;
 			col.z = 0.0f;
 			ptrDraw->SetDiffuse(col);
+		}
+		else
+		{
+			m_CollisionFlg = false;
 		}
 	}
 	void MagicSkeltonWall::OnCollisionExit(shared_ptr<GameObject>& other) {

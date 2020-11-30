@@ -6,7 +6,7 @@ namespace basecross {
 	void EnemyBullet::OnCreate()
 	{
 		auto drawComp = AddComponent<PNTStaticDraw>();
-		drawComp->SetMeshResource(L"DEFAULT_SPHERE");
+		drawComp->SetMeshResource(L"DEFAULT_CUBE");
 
 		// è’ìÀîªíË
 		auto ptrColl = AddComponent<CollisionSphere>();
@@ -198,6 +198,26 @@ namespace basecross {
 				SetDrawActive(false);
 				SetUpdateActive(false);
 			}
+		}
+		
+		if (auto stageWall = dynamic_pointer_cast<StageRefrectWall>(other))
+		{
+			auto wallTrans = stageWall->GetComponent<Transform>();
+
+			if (flg_reflect)
+			{
+				
+			}
+SetDir(Reflect(wallTrans->GetForword(), dir));
+			//SetDrawActive(false);
+			//SetUpdateActive(false);
+
+		}
+		if (auto stageWall = dynamic_pointer_cast<StageWall>(other))
+		{
+			SetDrawActive(false);
+			SetUpdateActive(false);
+
 		}
 	}
 }

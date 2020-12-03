@@ -19,9 +19,13 @@
 #include "PatrolEnemyUPDown.h"
 #include "RapidFireEnemy.h"
 #include "DangerEnemy.h"
-#include "StageUI.h"
+#include "UISprite.h"
 #include "DebugBoard.h"
 #include "WstringKey.h"
 #include "MyCamera.h"
+#include "Treasure.h"
+#include "GameTitle.h"
+#include "GameStageSelect.h"
+#include "GameManager.h"
 
 

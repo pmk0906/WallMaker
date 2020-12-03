@@ -8,6 +8,17 @@
 #include "Project.h"
 
 namespace basecross{
+	//-----------------------------------------------------------------
+	//ゲームマネージャー
+	//選択されているステージを把握しておく
+	//-----------------------------------------------------------------
+	GameManager* GameManager::GM = nullptr;
+	GameManager* GameManager::GetInstance() {
+		if (GM == nullptr) {
+			GM = new GameManager();
+		}
+		return GM;
+	}
 
 	//--------------------------------------------------------------------------------------
 	///	ゲームシーン
@@ -42,23 +53,27 @@ namespace basecross{
 			{L"MAGICWALL_TX", L"MagicWall.jpg"},
 			{L"WALL_TX", L"Wall.jpg"},
 			{L"HEART_TX", L"Heart.png"},
-			{L"WALLSTOCK_TX", L"UI_MagicWall.png"}
+			{L"WALLSTOCK_TX", L"UI_MagicWall.png"},
+			{L"GAMETITLE_TX", L"Title.png"},
+			{L"WHITE_TX", L"White.png"}
 		};
 
 		// アニメーション
 		Pairs animPairs[] = 
 		{
-			{WstringKey::Anim_Player, L"PL_Stand.bmf"}
+			{WstringKey::Anim_Player, L"PL_Stand.bmf"},
+			{WstringKey::Anim_Player_Walk, L"PL_Walk.bmf"}
 		};
-		////スタティック
-		//Pairs staticPairs[] =
-		//{
-		//	{L"MAGICWALL_MESH", L"MagicWall.bmf"}
-		//};
+		//スタティック
+		Pairs staticPairs[] =
+		{
+			{L"TREASURE_MESH", L"Treasure.bmf"}
+		};
 		//タンジェント有りスタティック
 		Pairs staticTangentPairs[] =
 		{
-			{L"MAGICWALL_MESH", L"MagicWall.bmf"}
+			{L"MAGICWALL_MESH", L"MagicWall.bmf"},
+			{L"MAGICWALL_RED_MESH", L"MagicWall_R.bmf"}
 		};
 
 		Pairs bgmPairs[] =
@@ -84,12 +99,12 @@ namespace basecross{
 			auto modelMesh = MeshResource::CreateBoneModelMesh(animDir, pair.FileName);
 			App::GetApp()->RegisterResource(pair.Key, modelMesh);
 		}
-		////スタティック
-		//for (auto pair : staticPairs)
-		//{
-		//	auto staticModelMesh = MeshResource::CreateStaticModelMesh(animDir, pair.FileName);
-		//	App::GetApp()->RegisterResource(pair.Key, staticModelMesh);
-		//}
+		//スタティック
+		for (auto pair : staticPairs)
+		{
+			auto staticModelMesh = MeshResource::CreateStaticModelMesh(animDir, pair.FileName);
+			App::GetApp()->RegisterResource(pair.Key, staticModelMesh);
+		}
 		//タンジェント有りスタティック
 		for (auto pair : staticTangentPairs)
 		{
@@ -123,7 +138,7 @@ namespace basecross{
 			SetClearColor(Col);
 			//自分自身にイベントを送る
 			//これにより各ステージやオブジェクトがCreate時にシーンにアクセスできる
-			PostEvent(0.0f, GetThis<ObjectInterface>(), GetThis<Scene>(), L"ToGameStage");
+			PostEvent(0.0f, GetThis<ObjectInterface>(), GetThis<Scene>(), WstringKey::ToGameTitle);
 		}
 		catch (...) {
 			throw;
@@ -134,11 +149,17 @@ namespace basecross{
 	}
 
 	void Scene::OnEvent(const shared_ptr<Event>& event) {
-		if (event->m_MsgStr == L"ToGameStage") {
+		if (event->m_MsgStr == WstringKey::ToGameTitle) {
+			//最初のアクティブステージの設定
+			ResetActiveStage<GameTitle>();
+		}
+		else if (event->m_MsgStr == WstringKey::ToGameStageSelect) {
+			ResetActiveStage<GameStageSelect>();
+		}
+		else if (event->m_MsgStr == WstringKey::ToGameStage) {
 			//最初のアクティブステージの設定
 			ResetActiveStage<GameStage>();
 		}
 	}
-
 }
 //end basecross

@@ -52,6 +52,8 @@ namespace basecross {
 			//1,44, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,46, 1,44, 0, 2,46, 1,
 			//1,41,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,43, 1,41,42,42,43, 1,
 			//1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1
+
+
 			1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ,1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
 			1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
 			1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0 ,3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 1,
@@ -64,7 +66,7 @@ namespace basecross {
 			1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1,
 			1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1,
 			1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1,
-			1, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1,
+			1, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 6, 0, 0, 0, 1,
 			1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 2, 0, 1,
 			1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 1 ,0 ,0 ,0, 0, 1,
 			1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1
@@ -120,10 +122,19 @@ namespace basecross {
 					AddGameObject<StageRefrectWall>(Vec3(scale), Vec3(0.0f, XMConvertToRadians(90.0f), 0.0f), Vec3(pos.x + 1.3f, 1.5f, pos.z));
 					AddGameObject<StageRefrectWall>(Vec3(scale), Vec3(0.0f), Vec3(pos.x, 1.5f, pos.z + 1.3f));
 					break;
+				case 6:
+					AddGameObject<Treasure>(Vec3(1.0f), Vec3(0.0f), Vec3(pos.x, 1.5f, pos.z));
 
 				}
 			}
 		}
+	}
+
+	void GameStage::DrawStrings()
+	{
+		auto gm = GameManager::GetInstance();
+
+
 	}
 
 	void GameStage::OnCreate() 
@@ -139,17 +150,27 @@ namespace basecross {
 		CreateStage();
 		CreateEnemy();
 		CreateUI();
+		//CreatePlayer(Vec3(0.0f, 1.0f, 0.0f));
 	}
 
 	void GameStage::OnUpdate() 
 	{
+		auto gm = GameManager::GetInstance();
+
+		gm->ClearCheck(GetThis<Stage>());
+
+		if (gm->GetClearFlg() == true)
+		{
+			PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), WstringKey::ToGameStageSelect);
+			gm->SetClearFlg(false);
+		}
 
 	}
 
 	void GameStage::CreateStage()
 	{
 		// è∞
-		//AddGameObject<FixedBox>(Vec3(100.0f, 1.0f, 50.0f), Vec3(0.0f), Vec3(0.0f, -0.5f, 0.0f));
+		//AddGameObject<FixedBox>(Vec3(50.0f, 1.0f, 50.0f), Vec3(0.0f), Vec3(0.0f, -0.5f, 0.0f));
 		int posX = 0;
 		int posZ = 0;
 		Vec3 stagePos = Vec3(posX, 0, posZ);
@@ -161,7 +182,6 @@ namespace basecross {
 		AddGameObject<Floor>(Vec3(32.0f * 3.0f, 1.0f, 16.0f * 3.0f), Vec3(0.0f), Vec3(32.0f * 1.5f - 32.0f - 1.5f, 0.0f, -16.0f * 1.5f + 16.0f + 1.5f));
 
 		CreateWall();
-		//AddGameObject<StageWall>(Vec3(2.0f), Vec3(0.0f), Vec3(0.0f, 1.0f, 0.0f));
 
 	}
 

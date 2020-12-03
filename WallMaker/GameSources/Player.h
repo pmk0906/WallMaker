@@ -141,8 +141,10 @@ namespace basecross{
 	{
 		//壁を生成するときに何かと重なっているかのフラグ
 		bool m_CollisionFlg = false;
+		bool m_CollisionFlgChanged = false;
 		// 透明な魔法壁の可視、不可視の切り替え
 		void SkeltonWallSwitch();
+		void ChangeColor();
 
 		// 親オブジェクト
 		const shared_ptr<GameObject>& m_Parent;

@@ -33,6 +33,9 @@ namespace basecross {
 		//\’z‚Æ”jŠü
 		GameStage() :Stage() {}
 		virtual ~GameStage() {}
+
+		void DrawStrings();
+
 		//‰Šú‰»
 		virtual void OnCreate()override;
 		virtual void OnUpdate()override;

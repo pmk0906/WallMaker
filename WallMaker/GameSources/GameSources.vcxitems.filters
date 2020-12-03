@@ -54,12 +54,30 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)EnemyBullet.h">
       <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)StageUI.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)DangerBullet.h">
       <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)DangerEnemy.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)MyCamera.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)DangerEnemy.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)MyCamera.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Treasure.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)GameManager.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)GameStageSelect.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)GameTitle.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)UISprite.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)Character.cpp">
@@ -101,11 +119,26 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)EnemyBullet.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)StageUI.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)DangerBullet.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)DangerEnemy.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)MyCamera.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)DangerEnemy.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)MyCamera.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Treasure.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)GameStageSelect.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)GameTitle.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)UISprite.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

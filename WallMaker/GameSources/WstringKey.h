@@ -7,12 +7,14 @@ namespace WstringKey {
 	const wstring Tag_Player = L"TagPlayer";
 	//反射壁
 	const wstring Tag_MagicWall = L"TagMagicWall";
-	const wstring Tag_ReflectWall = L"TagMagicWall";
+	const wstring Tag_ReflectWall = L"TagReflectWall";
 	//ステージに配置するオブジェクト
 	const wstring Tag_Wall = L"TagWall";
 	const wstring Tag_CrackedWall = L"TagCracked";
 	//敵
 	const wstring Tag_Enemy = L"TagEnemy";
+	//宝
+	const wstring Tag_Treasure = L"TagTreasure";
 
 	//テクスチャキー
 	const wstring Tx_Player = L"TXPlayer";
@@ -20,6 +22,7 @@ namespace WstringKey {
 	// アニメーション用
 	// プレイヤー
 	const wstring Anim_Player = L"AnimPlayer";
+	const wstring Anim_Player_Walk = L"AnimPlayerWalk";
 
 	//音
 	//BGM
@@ -29,5 +32,11 @@ namespace WstringKey {
 	// シェアオブジェクト用
 	// プレイヤー
 	const wstring ShareObj_Player = L"ObjPlayer";
-	const wstring ShareObj_MagicWall = L"ObjMagicWall";
+	// フェード用スプライト
+	const wstring ShareObj_FadeSprite = L"ObjFadeSprite";
+
+	//シーン名
+	const wstring ToGameTitle = L"ToGameTitleScene";
+	const wstring ToGameStageSelect = L"ToGameStageScene";
+	const wstring ToGameStage = L"ToGameScene";
 }

@@ -8,7 +8,7 @@
 
 namespace basecross{
 	//--------------------------------------------------
-	// プレイヤーあ
+	// プレイヤー
 	//--------------------------------------------------
 	// 構築と破棄
 	Player::Player(
@@ -268,7 +268,7 @@ namespace basecross{
 
 			// SE
 				auto ptrXA = App::GetApp()->GetXAudio2Manager();
-				ptrXA->Start(WstringKey::SE_CreateMagicWall, 0, 1.0f);
+				ptrXA->Start(WstringKey::SE_CreateMagicWall, 0, 0.5f);
 			}
 		}
 	}
@@ -568,13 +568,30 @@ namespace basecross{
 			// 色を半透明にする処理
 			auto ptrDraw = GetComponent<BcPNTnTStaticModelDraw>();
 			SetDrawActive(true);
-			ptrDraw->SetAlpha(0.1f);
 		}
 		else
 		{
 			// 透明にする処理
 			//auto ptrDraw = GetComponent<BcPNTnTStaticModelDraw>();
 			SetDrawActive(false);
+		}
+	}
+
+	void MagicSkeltonWall::ChangeColor()
+	{
+		if (m_CollisionFlgChanged == true)
+		{
+			if (m_CollisionFlg == true)
+			{
+				auto ptrDraw = GetComponent<BcPNTnTStaticModelDraw>();
+				ptrDraw->SetMeshResource(L"MAGICWALL_RED_MESH");
+			}
+			else
+			{
+				auto ptrDraw = GetComponent<BcPNTnTStaticModelDraw>();
+				ptrDraw->SetMeshResource(L"MAGICWALL_MESH");
+			}
+			m_CollisionFlgChanged = false;
 		}
 	}
 
@@ -606,13 +623,15 @@ namespace basecross{
 		ptrDraw->SetMeshResource(L"MAGICWALL_MESH");
 		ptrDraw->SetMeshToTransformMatrix(spanMat);
 		ptrDraw->SetLightingEnabled(false);
+		ptrDraw->SetModelDiffusePriority(false);
+		ptrDraw->SetAlpha(0.4f);
 		
 		//タグ付け
 		AddTag(WstringKey::Tag_MagicWall);
 
 		//描画するテクスチャを設定
 		SetAlphaActive(true);
-		ptrDraw->SetTextureResource(L"MAGICWALL_TX");
+		//ptrDraw->SetTextureResource(L"MAGICWALL_TX");
 
 		// DrawString用
 		auto strComp = AddComponent<StringSprite>();
@@ -623,6 +642,7 @@ namespace basecross{
 	void MagicSkeltonWall::OnUpdate()
 	{
 		SkeltonWallSwitch();
+		ChangeColor();
 	}
 
 	void MagicSkeltonWall::OnUpdate2()
@@ -634,24 +654,15 @@ namespace basecross{
 		if (dynamic_pointer_cast<MagicWall>(other))
 		{
 			m_CollisionFlg = true;
-			auto ptrDraw = GetComponent<BcPNTnTStaticModelDraw>();
-			auto col = ptrDraw->GetDiffuse();
-			col.x = 1.0f;
-			col.y = 0.0f;
-			col.z = 0.0f;
-			ptrDraw->SetDiffuse(col);
+			m_CollisionFlgChanged = true;
+
 		}
 	}
 	void MagicSkeltonWall::OnCollisionExcute(shared_ptr<GameObject>& other) {
 		if (dynamic_pointer_cast<MagicWall>(other))
 		{
 			m_CollisionFlg = true;
-			auto ptrDraw = GetComponent<BcPNTnTStaticModelDraw>();
-			auto col = ptrDraw->GetDiffuse();
-			col.x = 1.0f;
-			col.y = 0.0f;
-			col.z = 0.0f;
-			ptrDraw->SetDiffuse(col);
+
 		}
 		else
 		{
@@ -662,12 +673,8 @@ namespace basecross{
 		if (dynamic_pointer_cast<MagicWall>(other))
 		{
 			m_CollisionFlg = false;
-			auto ptrDraw = GetComponent<BcPNTnTStaticModelDraw>();
-			auto col = ptrDraw->GetDiffuse();
-			col.x = 1.0f;
-			col.y = 1.0f;
-			col.z = 1.0f;
-			ptrDraw->SetDiffuse(col);
+			m_CollisionFlgChanged = true;
+
 		}
 	}
 

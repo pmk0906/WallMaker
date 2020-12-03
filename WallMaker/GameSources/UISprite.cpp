@@ -143,5 +143,159 @@ namespace basecross{
 			ptrDraw->SetDiffuse(col);
 		}
 	}
+
+	///-----------------------------------------------
+	/// 汎用スプライト
+	///-----------------------------------------------
+	Sprite::Sprite(
+		const shared_ptr<Stage>& StagePtr,
+		bool Trace,
+		const Vec2& StartScale,
+		const Vec2& StartPos,
+		const wstring TextureKey,
+		const int& Layer,
+		const Col4& Color
+	) :
+		GameObject(StagePtr),
+		m_Trace(Trace),
+		m_StartScale(StartScale),
+		m_StartPos(StartPos),
+		m_TextureKey(TextureKey),
+		m_Layer(Layer),
+		m_Color(Color)
+	{}
+	Sprite::~Sprite() {}
+
+	//	初期化
+	void Sprite::OnCreate()
+	{
+		float helfSize = 0.5f;
+		//頂点配列(縦横5個ずつ表示)
+		vector<VertexPositionColorTexture> vertices = {
+			{ VertexPositionColorTexture(Vec3(-helfSize, helfSize, 0),Col4(1.0f,1.0f,1.0f,1.0f), Vec2(0.0f, 0.0f)) },
+			{ VertexPositionColorTexture(Vec3(helfSize, helfSize, 0), Col4(1.0f, 1.0f, 1.0f, 1.0f), Vec2(1.0f, 0.0f)) },
+			{ VertexPositionColorTexture(Vec3(-helfSize, -helfSize, 0), Col4(1.0f, 1.0f, 1.0f, 1.0f), Vec2(0.0f, 1.0f)) },
+			{ VertexPositionColorTexture(Vec3(helfSize, -helfSize, 0), Col4(1.0f, 1.0f, 1.0, 1.0f), Vec2(1.0f, 1.0f)) },
+		};
+		//インデックス配列
+		vector<uint16_t> indices = { 0, 1, 2, 1, 3, 2 };
+		//大きさ、回転、位置
+		auto ptrTrans = GetComponent<Transform>();
+		ptrTrans->SetScale(m_StartScale.x, m_StartScale.y, 1.0f);
+		ptrTrans->SetRotation(0, 0, 0);
+		ptrTrans->SetPosition(Vec3(m_StartPos.x, m_StartPos.y, 0.0f));
+		//頂点とインデックスを指定してスプライト作成
+		auto ptrDraw = AddComponent<PCTSpriteDraw>(vertices, indices);
+		ptrDraw->SetTextureResource(m_TextureKey);
+		ptrDraw->SetDiffuse(m_Color);
+		//透明処理
+		SetAlphaActive(m_Trace);
+		// レイヤー
+		SetDrawLayer(m_Layer);
+	}
+
+	void Sprite::OnUpdate()
+	{
+
+	}
+
+	///-----------------------------------------------
+	/// スプライト(フェードイン/アウト用)
+	///-----------------------------------------------
+	FadeSprite::FadeSprite(
+		const shared_ptr<Stage>& StagePtr,
+		bool Trace,
+		const Vec2& StartScale,
+		const Vec3& StartPos,
+		bool FadeFlg,
+		const wstring TextureKey
+	) :
+		GameObject(StagePtr),
+		m_Trace(Trace),
+		m_StartScale(StartScale),
+		m_StartPos(StartPos),
+		m_FadeFlg(FadeFlg),
+		m_TextureKey(TextureKey)
+	{}
+	FadeSprite::~FadeSprite() {}
+
+	void FadeSprite::SwitchFadeFlg()
+	{
+		m_FadeFlg = !m_FadeFlg;
+		m_FadeFlgChanged = false;
+	}
+
+	//	初期化
+	void FadeSprite::OnCreate()
+	{
+		float helfSize = 0.5f;
+		//頂点配列(縦横5個ずつ表示)
+		vector<VertexPositionColorTexture> vertices = {
+			{ VertexPositionColorTexture(Vec3(-helfSize, helfSize, 0),Col4(1.0f,1.0f,1.0f,1.0f), Vec2(0.0f, 0.0f)) },
+			{ VertexPositionColorTexture(Vec3(helfSize, helfSize, 0), Col4(1.0f, 1.0f, 1.0f, 1.0f), Vec2(1.0f, 0.0f)) },
+			{ VertexPositionColorTexture(Vec3(-helfSize, -helfSize, 0), Col4(1.0f, 1.0f, 1.0f, 1.0f), Vec2(0.0f, 1.0f)) },
+			{ VertexPositionColorTexture(Vec3(helfSize, -helfSize, 0), Col4(1.0f, 1.0f, 1.0, 1.0f), Vec2(1.0f, 1.0f)) },
+		};
+		//インデックス配列
+		vector<uint16_t> indices = { 0, 1, 2, 1, 3, 2 };
+		SetAlphaActive(m_Trace);
+		auto ptrTrans = GetComponent<Transform>();
+		ptrTrans->SetScale(m_StartScale.x, m_StartScale.y, 1.0f);
+		ptrTrans->SetRotation(0, 0, 0);
+		ptrTrans->SetPosition(m_StartPos);
+		//頂点とインデックスを指定してスプライト作成
+		auto ptrDraw = AddComponent<PCTSpriteDraw>(vertices, indices);
+		ptrDraw->SetSamplerState(SamplerState::LinearWrap);
+		ptrDraw->SetTextureResource(L"WHITE_TX");
+		auto col = ptrDraw->GetDiffuse();
+		if (m_FadeFlg == true)
+		{
+			col.w = 0.0f;
+		}
+		else
+		{
+			col.w = 1.0f;
+		}
+		ptrDraw->SetDiffuse(col);
+	}
+
+	void FadeSprite::OnUpdate()
+	{
+		if (m_FadeFlgChanged == false)
+		{
+			if (m_FadeFlg == true)
+			{
+				if (m_AlphaValue < 1.0f)
+				{
+					auto drawComp = GetComponent<PCTSpriteDraw>();
+					auto col = drawComp->GetDiffuse();
+					auto delta = App::GetApp()->GetElapsedTime();
+					m_AlphaValue += delta;
+					col.w = m_AlphaValue;
+					drawComp->SetDiffuse(col);
+				}
+				else
+				{
+					m_FadeFlgChanged = true;
+				}
+			}
+			else
+			{
+				if (m_AlphaValue > 0.0f)
+				{
+					auto drawComp = GetComponent<PCTSpriteDraw>();
+					auto col = drawComp->GetDiffuse();
+					auto delta = App::GetApp()->GetElapsedTime();
+					m_AlphaValue -= delta;
+					col.w = m_AlphaValue;
+					drawComp->SetDiffuse(col);
+				}
+				else
+				{
+					m_FadeFlgChanged = true;
+				}
+			}
+		}
+	}
 }
 //end basecross

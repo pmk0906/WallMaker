@@ -38,11 +38,11 @@ namespace basecross{
 		//影をつける（シャドウマップを描画する）
 		auto shadowPtr = AddComponent<Shadowmap>();
 		//影の形（メッシュ）を設定
-		shadowPtr->SetMeshResource(L"DEFAULT_CUBE");
+		shadowPtr->SetMeshResource(L"DEFAULT_DODECAHEDRON");
 		auto ptrDraw = AddComponent<BcPNTStaticDraw>();
-		ptrDraw->SetMeshResource(L"DEFAULT_CUBE");
+		ptrDraw->SetMeshResource(L"DEFAULT_DODECAHEDRON");
 		//ptrDraw->SetTextureResource(WstringKey::Tx_Floor);
-		ptrDraw->SetFogEnabled(true);
+		//ptrDraw->SetFogEnabled(true);
 		ptrDraw->SetOwnShadowActive(true);
 		//描画するテクスチャを設定
 		ptrDraw->SetTextureResource(L"FLOOR_TX");

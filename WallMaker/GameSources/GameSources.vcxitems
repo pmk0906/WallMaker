@@ -20,17 +20,21 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)DebugBoard.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)EnemyBullet.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)EnemyFirst.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)GameManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)GameStage.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)GameStageSelect.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)GameTitle.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)MyCamera.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)PatrolEnemy.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)PatrolEnemyUPDown.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Player.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)StageUI.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)UISprite.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Project.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ProjectBehavior.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ProjectShader.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)RapidFireEnemy.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Scene.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Treasure.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)WstringKey.h" />
   </ItemGroup>
   <ItemGroup>
@@ -41,15 +45,18 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)EnemyBullet.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)EnemyFirst.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)GameStage.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)GameStageSelect.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)GameTitle.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)MyCamera.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)PatrolEnemy.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)PatrolEnemyUPDown.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Player.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)StageUI.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)UISprite.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ProjectBehavior.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ProjectShader.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)RapidFireEnemy.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Scene.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Treasure.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)WinMain.cpp" />
   </ItemGroup>
 </Project>

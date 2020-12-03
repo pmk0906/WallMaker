@@ -83,7 +83,13 @@ namespace basecross{
 
 		Pairs sePairs[] =
 		{
-			{L"SE_CraeteMagicWall", L"magicwall.wav"}
+			{L"SE_CraeteMagicWall", L"magicwall.wav"},
+			{L"SE_Bullet", L"Bullet.wav"},
+			{L"SE_Reflection", L"Reflection.wav"},
+			{L"SE_EnemyDamage", L"EnemyDamage.wav"},
+			{L"SE_BreakWall", L"BreakWall.wav"},
+			{L"SE_PlayerDamage", L"PlayerDamage.wav"},
+			{L"SE_MainBGM", L"MainBGM.wav"}
 		};
 
 		// テクスチャ

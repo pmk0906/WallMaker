@@ -10,7 +10,7 @@ namespace WstringKey {
 	const wstring Tag_ReflectWall = L"TagReflectWall";
 	//ステージに配置するオブジェクト
 	const wstring Tag_Wall = L"TagWall";
-	const wstring Tag_CrackedWall = L"TagCracked";
+	const wstring Tag_CrackedWall = L"TagCrackedWall";
 	//敵
 	const wstring Tag_Enemy = L"TagEnemy";
 	//宝
@@ -28,6 +28,12 @@ namespace WstringKey {
 	//BGM
 	//SE
 	const wstring SE_CreateMagicWall = L"SE_CraeteMagicWall";
+	const wstring SE_Bullet = L"SE_Bullet";
+	const wstring SE_Reflection = L"SE_Reflection";
+	const wstring SE_EnemyDamage = L"SE_EnemyDamage";
+	const wstring SE_BreakWall = L"SE_BreakWall";
+	const wstring SE_PlayerDamage = L"SE_PlayerDamage";
+	const wstring SE_MainBGM = L"SE_MainBGM";
 
 	// シェアオブジェクト用
 	// プレイヤー

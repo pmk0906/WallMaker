@@ -6,7 +6,7 @@ namespace basecross {
 	void DangerBullet::OnCreate()
 	{
 		auto drawComp = AddComponent<PNTStaticDraw>();
-		drawComp->SetMeshResource(L"DEFAULT_SPHERE");
+		drawComp->SetMeshResource(L"DEFAULT_DODECAHEDRON");
 		drawComp->SetDiffuse(Col4(1.0f, 0.0f, 0.0f, 1.0f));
 
 		// Õ“Ë”»’è
@@ -123,6 +123,9 @@ namespace basecross {
 		{
 			player->Damage(ATTACK);
 
+			auto ptrXA = App::GetApp()->GetXAudio2Manager();
+			ptrXA->Start(WstringKey::SE_PlayerDamage, 0, 1.0f);
+
 			SetDrawActive(false);
 			SetUpdateActive(false);
 		}
@@ -141,8 +144,17 @@ namespace basecross {
 			{
 				SetDir(Reflect(wallTrans->GetForword(), dir));
 
+				auto ptrXA = App::GetApp()->GetXAudio2Manager();
+				ptrXA->Start(WstringKey::SE_Reflection, 0, 1.0f);
+
 				m_BulletSpeed += 5.0f;
 				m_Attack += 1.0f;
+			}
+
+			else
+			{
+				auto ptrXA = App::GetApp()->GetXAudio2Manager();
+				ptrXA->Start(WstringKey::SE_BreakWall, 0, 1.0f);
 			}
 
 			magicWall->Damage(m_Attack);
@@ -154,6 +166,9 @@ namespace basecross {
 			if (flg_reflect)
 			{
 				enemy->Damage(m_Attack);
+
+				auto ptrXA = App::GetApp()->GetXAudio2Manager();
+				ptrXA->Start(WstringKey::SE_EnemyDamage, 0, 1.0f);
 			}
 
 			if (m_DieTime >= 0.3f)
@@ -168,6 +183,9 @@ namespace basecross {
 			if (flg_reflect)
 			{
 				patrolEnemy->Damage(m_Attack);
+
+				auto ptrXA = App::GetApp()->GetXAudio2Manager();
+				ptrXA->Start(WstringKey::SE_EnemyDamage, 0, 1.0f);
 			}
 
 			if (m_DieTime >= 0.3f)
@@ -182,6 +200,9 @@ namespace basecross {
 			if (flg_reflect)
 			{
 				upDownEnemy->Damage(m_Attack);
+
+				auto ptrXA = App::GetApp()->GetXAudio2Manager();
+				ptrXA->Start(WstringKey::SE_EnemyDamage, 0, 1.0f);
 			}
 
 			if (m_DieTime >= 0.3f)
@@ -196,6 +217,9 @@ namespace basecross {
 			if (flg_reflect)
 			{
 				raipidFireEnemy->Damage(m_Attack);
+
+				auto ptrXA = App::GetApp()->GetXAudio2Manager();
+				ptrXA->Start(WstringKey::SE_EnemyDamage, 0, 1.0f);
 			}
 
 			if (m_DieTime >= 0.3f)
@@ -210,6 +234,9 @@ namespace basecross {
 			if (flg_reflect)
 			{
 				dangerEnemy->Damage(m_Attack);
+
+				auto ptrXA = App::GetApp()->GetXAudio2Manager();
+				ptrXA->Start(WstringKey::SE_EnemyDamage, 0, 1.0f);
 			}
 
 			if (m_DieTime >= 0.3f)

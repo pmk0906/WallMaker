@@ -6,7 +6,7 @@ namespace basecross {
 	void EnemyBullet::OnCreate()
 	{
 		auto drawComp = AddComponent<PNTStaticDraw>();
-		drawComp->SetMeshResource(L"DEFAULT_CUBE");
+		drawComp->SetMeshResource(L"DEFAULT_DODECAHEDRON");
 
 		// è’ìÀîªíË
 		auto ptrColl = AddComponent<CollisionSphere>();
@@ -109,6 +109,9 @@ namespace basecross {
 		{
 			player->Damage(ATTACK);
 
+			auto ptrXA = App::GetApp()->GetXAudio2Manager();
+			ptrXA->Start(WstringKey::SE_PlayerDamage, 0, 1.0f);
+
 			SetDrawActive(false);
 			SetUpdateActive(false);
 		}
@@ -120,6 +123,9 @@ namespace basecross {
 			auto myTrans = GetComponent<Transform>();
 
 			SetDir(Reflect(wallTrans->GetForword(), dir));
+
+			auto ptrXA = App::GetApp()->GetXAudio2Manager();
+			ptrXA->Start(WstringKey::SE_Reflection, 0, 1.0f);
 
 			flg_reflect = true;
 
@@ -135,6 +141,9 @@ namespace basecross {
 			if (flg_reflect)
 			{
 				enemy->Damage(m_Attack);
+
+				auto ptrXA = App::GetApp()->GetXAudio2Manager();
+				ptrXA->Start(WstringKey::SE_EnemyDamage, 0, 1.0f);
 			}
 
 			if (m_DieTime >= 0.1f)
@@ -149,6 +158,9 @@ namespace basecross {
 			if (flg_reflect)
 			{
 				patrolEnemy->Damage(m_Attack);
+
+				auto ptrXA = App::GetApp()->GetXAudio2Manager();
+				ptrXA->Start(WstringKey::SE_EnemyDamage, 0, 1.0f);
 			}
 
 			if (m_DieTime >= 0.1f)
@@ -163,6 +175,9 @@ namespace basecross {
 			if (flg_reflect)
 			{
 				upDownEnemy->Damage(m_Attack);
+
+				auto ptrXA = App::GetApp()->GetXAudio2Manager();
+				ptrXA->Start(WstringKey::SE_EnemyDamage, 0, 1.0f);
 			}
 
 			if (m_DieTime >= 0.1f)
@@ -177,6 +192,9 @@ namespace basecross {
 			if (flg_reflect)
 			{
 				raipidFireEnemy->Damage(m_Attack);
+
+				auto ptrXA = App::GetApp()->GetXAudio2Manager();
+				ptrXA->Start(WstringKey::SE_EnemyDamage, 0, 1.0f);
 			}
 
 			if (m_DieTime >= 0.1f)
@@ -191,6 +209,9 @@ namespace basecross {
 			if (flg_reflect)
 			{
 				dangerEnemy->Damage(m_Attack);
+
+				auto ptrXA = App::GetApp()->GetXAudio2Manager();
+				ptrXA->Start(WstringKey::SE_EnemyDamage, 0, 1.0f);
 			}
 
 			if (m_DieTime >= 0.1f)
@@ -200,19 +221,19 @@ namespace basecross {
 			}
 		}
 		
-		if (auto stageWall = dynamic_pointer_cast<StageRefrectWall>(other))
-		{
-			auto wallTrans = stageWall->GetComponent<Transform>();
+		//if (auto stageWall = dynamic_pointer_cast<StageRefrectWall>(other))
+		//{
+		//	auto wallTrans = stageWall->GetComponent<Transform>();
 
-			if (flg_reflect)
-			{
-				
-			}
-SetDir(Reflect(wallTrans->GetForword(), dir));
-			//SetDrawActive(false);
-			//SetUpdateActive(false);
+		//	if (flg_reflect)
+		//	{
+		//		
+		//	}
+		//	SetDir(Reflect(wallTrans->GetForword(), dir));
+		//	//SetDrawActive(false);
+		//	//SetUpdateActive(false);
 
-		}
+		//}
 		if (auto stageWall = dynamic_pointer_cast<StageWall>(other))
 		{
 			SetDrawActive(false);

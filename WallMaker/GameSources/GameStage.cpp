@@ -151,6 +151,10 @@ namespace basecross {
 		CreateEnemy();
 		CreateUI();
 		//CreatePlayer(Vec3(0.0f, 1.0f, 0.0f));
+
+		//BGM
+		auto ptrXA = App::GetApp()->GetXAudio2Manager();
+		ptrXA->Start(WstringKey::SE_MainBGM, 0, 1.0f);
 	}
 
 	void GameStage::OnUpdate() 

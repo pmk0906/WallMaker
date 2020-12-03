@@ -122,6 +122,9 @@ namespace basecross {
 		enemybullet->SetDir(forward_player);
 			
 		m_FireTime = 0.0f;
+
+		auto ptrXA = App::GetApp()->GetXAudio2Manager();
+		ptrXA->Start(WstringKey::SE_Bullet, 0, 1.0f);
 	}
 
 	void EnemyFirst::Reload()

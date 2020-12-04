@@ -192,7 +192,7 @@ namespace basecross{
 	///--------------------------------------------------
 	/// GameManagerDebug
 	///--------------------------------------------------
-	GameManagerDebug::GameManagerDebug(
+	GameManagement::GameManagement(
 		const shared_ptr<Stage>& StagePtr,
 		const Vec3& Scale,
 		const Vec3& Rotation,
@@ -203,10 +203,10 @@ namespace basecross{
 		m_Rotation(Rotation),
 		m_Position(Position)
 	{}
-	GameManagerDebug::~GameManagerDebug() {}
+	GameManagement::~GameManagement() {}
 
 	//	初期化
-	void GameManagerDebug::OnCreate()
+	void GameManagement::OnCreate()
 	{
 		// 大きさ、回転、位置
 		auto ptrTrans = GetComponent<Transform>();
@@ -220,9 +220,9 @@ namespace basecross{
 		strComp->SetTextRect(Rect2D<float>(1000, 510, 1270, 710));
 	}
 
-	void GameManagerDebug::OnUpdate()
+	void GameManagement::OnUpdate()
 	{
-		m_InputHandler.PushHandle(GetThis<GameManagerDebug>());
+		m_InputHandler.PushHandle(GetThis<GameManagement>());
 		auto cntlVec = App::GetApp()->GetInputDevice().GetControlerVec();
 		WORD wButtons = 0;
 		if (cntlVec[0].bConnected) {
@@ -231,7 +231,7 @@ namespace basecross{
 		auto gm = GameManager::GetInstance();
 		//Dパッド上
 		if (wButtons & XINPUT_GAMEPAD_DPAD_UP) {
-			if (gm->GetSelectingButtonNumVertical() > 0)
+			if (gm->GetSelectingButtonNum() > 0)
 			{
 				gm->SetSelectingButtonMinus();
 				testFlg = true;
@@ -239,7 +239,23 @@ namespace basecross{
 		}
 		//Dパッド下
 		if (wButtons & XINPUT_GAMEPAD_DPAD_DOWN) {
-			if (gm->GetSelectingButtonNumVertical() < gm->GetMaxButtonNum())
+			if (gm->GetSelectingButtonNum() < gm->GetMaxButtonNum())
+			{
+				gm->SetSelectingButtonPlus();
+				testFlg = false;
+			}
+		}
+		//Dパッド左
+		if (wButtons & XINPUT_GAMEPAD_DPAD_LEFT) {
+			if (gm->GetSelectingButtonNum() > 0)
+			{
+				gm->SetSelectingButtonMinus();
+				testFlg = true;
+			}
+		}
+		//Dパッド右
+		if (wButtons & XINPUT_GAMEPAD_DPAD_RIGHT) {
+			if (gm->GetSelectingButtonNum() < gm->GetMaxButtonNum())
 			{
 				gm->SetSelectingButtonPlus();
 				testFlg = false;
@@ -248,18 +264,18 @@ namespace basecross{
 
 	}
 
-	void GameManagerDebug::OnUpdate2()
+	void GameManagement::OnUpdate2()
 	{
 
 		DrawStrings();
 	}
 
-	void GameManagerDebug::DrawStrings()
+	void GameManagement::DrawStrings()
 	{
 		auto gm = GameManager::GetInstance();
 
 		wstring selectingButton(L"選択しているボタンの番号 : ");
-		selectingButton += Util::UintToWStr(gm->GetSelectingButtonNumVertical()) + L"\n";
+		selectingButton += Util::UintToWStr(gm->GetSelectingButtonNum()) + L"\n";
 
 		wstring maxButtonNum(L"現在のボタンの最大番号 : ");
 		maxButtonNum += Util::UintToWStr(gm->GetMaxButtonNum()) + L"\n";
@@ -272,12 +288,12 @@ namespace basecross{
 		ptrString->SetText(str);
 	}
 
-	void GameManagerDebug::OnPushA()
+	void GameManagement::OnPushA()
 	{
 		auto gm = GameManager::GetInstance();
 		if (gm->GetClearFlgChanged())
 		{
-			switch (gm->GetSelectingButtonNumVertical())
+			switch (gm->GetSelectingButtonNum())
 			{
 			case 0:
 				break;
@@ -291,7 +307,7 @@ namespace basecross{
 		}
 		if (gm->GetDeathFlgChanged())
 		{
-			switch (gm->GetSelectingButtonNumVertical())
+			switch (gm->GetSelectingButtonNum())
 			{
 			case 0:
 				PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), WstringKey::ToGameStage);
@@ -307,7 +323,7 @@ namespace basecross{
 		}
 	}
 
-	void GameManagerDebug::StopBGM()
+	void GameManagement::StopBGM()
 	{
 		auto gameStage = dynamic_pointer_cast<GameStage>(GetStage());
 

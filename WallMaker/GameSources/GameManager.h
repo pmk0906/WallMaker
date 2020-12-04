@@ -26,7 +26,7 @@ namespace basecross {
 		bool m_DeathFlg = false;
 		bool m_DeathFlgChanged = false;
 
-		int m_SelectingButtonNumVertical = 0;
+		int m_SelectingButtonNum = 0;
 		int m_MaxButtonNum = 0;
 
 		//InputHandler<GameStage> m_InputHandler;
@@ -113,9 +113,9 @@ namespace basecross {
 		}
 
 		//縦のボタン番号の取得
-		int GetSelectingButtonNumVertical()
+		int GetSelectingButtonNum()
 		{
-			return m_SelectingButtonNumVertical;
+			return m_SelectingButtonNum;
 		}
 
 		void ChangeButton()
@@ -129,15 +129,15 @@ namespace basecross {
 		//}
 		void SetSelectingButton(int buttonNum)
 		{
-			m_SelectingButtonNumVertical = buttonNum;
+			m_SelectingButtonNum = buttonNum;
 		}
 		void SetSelectingButtonPlus()
 		{
-			m_SelectingButtonNumVertical++;
+			m_SelectingButtonNum++;
 		}
 		void SetSelectingButtonMinus()
 		{
-			m_SelectingButtonNumVertical--;
+			m_SelectingButtonNum--;
 		}
 		// 現在のボタンの番号の最大値
 		int GetMaxButtonNum()

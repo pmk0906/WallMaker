@@ -38,6 +38,8 @@ namespace basecross{
 		void OnHoldRTrigger() {}
 		void OnReleaseRTrigger() {}
 		void StopBGM();
+
+		wstring GetSceneName();
 	};
 }
 //end basecross

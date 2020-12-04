@@ -252,7 +252,7 @@ namespace basecross{
 		//頂点とインデックスを指定してスプライト作成
 		auto ptrDraw = AddComponent<PCTSpriteDraw>(vertices, indices);
 		ptrDraw->SetSamplerState(SamplerState::LinearWrap);
-		ptrDraw->SetTextureResource(L"WHITE_TX");
+		ptrDraw->SetTextureResource(m_TextureKey);
 		if (m_FadeFlg == true)
 		{
 			m_Color.w = 1.0f;
@@ -342,15 +342,15 @@ namespace basecross{
 	void ButtonSprite::SelectingThis()
 	{
 		auto gm = GameManager::GetInstance();
-		if (m_SelectButtonNum == gm->GetSelectingButtonNumVertical())
+		if (m_SelectButtonNum == gm->GetSelectingButtonNum())
 		{
 			auto delta = App::GetApp()->GetElapsedTime();
 			m_Timer += delta;
-			float sin = sinf(m_Timer) * 2;
+			float sin = sinf(m_Timer * 2);
 			auto transComp = GetComponent<Transform>();
 			transComp->SetScale(
-				m_FirstScale.x + sin * m_FirstScale.x / 20 + m_FirstScale.x / 30, 
-				m_FirstScale.y + sin * m_FirstScale.y / 20 + m_FirstScale.y / 30,
+				m_FirstScale.x + sin * m_FirstScale.x / 20 + m_FirstScale.x / 20, 
+				m_FirstScale.y + sin * m_FirstScale.y / 20 + m_FirstScale.y / 20,
 				1.0f
 			);
 			//transComp->SetScale(Vec3(m_FirstScale.x, m_FirstScale.y, 1.0f));

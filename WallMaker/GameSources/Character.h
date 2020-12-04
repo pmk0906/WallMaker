@@ -92,7 +92,7 @@ namespace basecross{
 	};
 
 	// ‰¼°
-	class GameManagerDebug : public GameObject
+	class GameManagement : public GameObject
 	{
 		// ‘å‚«‚³A‰ñ“]AˆÊ’u
 		Vec3 m_Scale;
@@ -101,16 +101,16 @@ namespace basecross{
 
 		bool testFlg = false;
 
-		InputHandler<GameManagerDebug> m_InputHandler;
+		InputHandler<GameManagement> m_InputHandler;
 
 	public:
 		// \’z‚Æ”jŠü
-		GameManagerDebug(
+		GameManagement(
 			const shared_ptr<Stage>& StagePtr,
 			const Vec3& Scale,
 			const Vec3& Rotation,
 			const Vec3& Position);
-		virtual ~GameManagerDebug();
+		virtual ~GameManagement();
 
 		// ‰Šú‰»
 		virtual void OnCreate()override;

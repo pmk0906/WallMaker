@@ -54,4 +54,5 @@ namespace WstringKey {
 	const wstring ToGameTitle = L"ToGameTitleScene";
 	const wstring ToGameStageSelect = L"ToGameStageScene";
 	const wstring ToGameStage = L"ToGameScene";
+	const wstring ToGameTestStage = L"ToGameTestStage";
 }

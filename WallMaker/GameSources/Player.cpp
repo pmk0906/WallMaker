@@ -594,6 +594,7 @@ namespace basecross{
 		ptrDraw->SetMeshResource(L"MAGICWALL_MESH");
 		ptrDraw->SetMeshToTransformMatrix(spanMat);
 		ptrDraw->SetLightingEnabled(false);
+		//ptrDraw->SetBlendState(BlendState::Additive);
 
 		//描画するテクスチャを設定
 		SetAlphaActive(true);

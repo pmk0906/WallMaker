@@ -152,7 +152,7 @@ namespace basecross {
 		CreateUI();
 		//CreatePlayer(Vec3(0.0f, 1.0f, 0.0f));
 
-		AddGameObject<GameManagerDebug>(Vec3(0.0f), Vec3(0.0f), Vec3(0.0f));
+		AddGameObject<GameManagement>(Vec3(0.0f), Vec3(0.0f), Vec3(0.0f));
 
 		auto gm = GameManager::GetInstance();
 		gm->InitGameManager();
@@ -176,8 +176,11 @@ namespace basecross {
 			gm->SetClearFlg(false);
 			gm->SetClearFlgChanged(true);
 
-			auto buttonSprite = AddGameObject<ButtonSprite>(true, Vec2(600, 100), Vec2(0, -100.0f), true, 1.0f, L"TO_NEXTSTAGE_TX", 0, 2, Col4(1, 1, 1, 0.5f));
-			auto buttonSprite2 = AddGameObject<ButtonSprite>(true, Vec2(600, 100), Vec2(0, -250.0f), true, 1.0f, L"TO_STAGESELECT_TX", 1, 2, Col4(1, 1, 1, 0.5f));
+			auto clearSprite = AddGameObject<FadeSprite>(true, Vec2(800, 300), Vec2(0, 150), true, 1.0f, L"GAMECLEAR_TX", 1, Col4(1, 1, 1, 0.1f));
+			clearSprite->SetFadeFlgChanged(false);
+
+			auto buttonSprite = AddGameObject<ButtonSprite>(true, Vec2(600, 100), Vec2(0, -70.0f), true, 1.0f, L"TO_NEXTSTAGE_TX", 0, 2, Col4(1, 1, 1, 0.5f));
+			auto buttonSprite2 = AddGameObject<ButtonSprite>(true, Vec2(600, 100), Vec2(0, -220.0f), true, 1.0f, L"TO_STAGESELECT_TX", 1, 2, Col4(1, 1, 1, 0.5f));
 			gm->SetMaxButtonNum(1);
 		}
 		if (gm->GetDeathFlg() == true && gm->GetDeathFlgChanged() == false)
@@ -187,8 +190,11 @@ namespace basecross {
 			gm->SetDeathFlg(false);
 			gm->SetDeathFlgChanged(true);
 
-			auto buttonSprite = AddGameObject<ButtonSprite>(false, Vec2(600, 100), Vec2(0, -100.0f), true, 1.0f, L"TO_RETRY_TX", 0, 2, Col4(1, 1, 1, 0.5f));
-			auto buttonSprite2 = AddGameObject<ButtonSprite>(true, Vec2(600, 100), Vec2(0, -250.0f), true, 1.0f, L"TO_STAGESELECT_TX", 1, 2, Col4(1, 1, 1, 0.5f));
+			auto clearSprite = AddGameObject<FadeSprite>(true, Vec2(800, 300), Vec2(0, 150), true, 1.0f, L"GAMEOVER_TX", 1, Col4(1, 1, 1, 0.1f));
+			clearSprite->SetFadeFlgChanged(false);
+
+			auto buttonSprite = AddGameObject<ButtonSprite>(false, Vec2(600, 100), Vec2(0, -70.0f), true, 1.0f, L"TO_RETRY_TX", 0, 2, Col4(1, 1, 1, 0.5f));
+			auto buttonSprite2 = AddGameObject<ButtonSprite>(true, Vec2(600, 100), Vec2(0, -220.0f), true, 1.0f, L"TO_STAGESELECT_TX", 1, 2, Col4(1, 1, 1, 0.5f));
 			gm->SetMaxButtonNum(1);
 		}
 

@@ -60,11 +60,17 @@ namespace basecross{
 			{L"TO_NEXTSTAGE_TX", L"ToNextStage.png"},
 			{L"TO_STAGESELECT_TX", L"ToStageSelect.png"},
 			{L"TO_RETRY_TX", L"ToRetry.png"},
-			{L"STAGE_1_TX", L"StageNum1.png"},
-			{L"STAGE_2_TX", L"StageNum2.png"},
-			{L"STAGE_3_TX", L"StageNum3.png"},
-			{L"STAGE_4_TX", L"StageNum4.png"},
-			{L"STAGE_5_TX", L"StageNum5.png"}
+			{L"STAGE_1_TX", L"Select_1.png"},
+			{L"STAGE_2_TX", L"Select_2.png"},
+			{L"STAGE_3_TX", L"Select_3.png"},
+			{L"STAGE_4_TX", L"Select_4.png"},
+			{L"STAGE_5_TX", L"Select_5.png"},
+			{L"GAMECLEAR_TX", L"Tx_GameClear.png"},
+			{L"GAMEEND_TX", L"Tx_GameEnd.png"},
+			{L"GAMEOVER_TX", L"Tx_GameOver.png"},
+			{L"NEXTSTAGE_TX", L"Tx_NextStage.png"},
+			{L"STAGESELECT_TX", L"Tx_StageSelect.png"},
+			{L"A_START_TX", L"Tx_Start.png"}
 		};
 		// アニメーション
 		Pairs animPairs[] = 
@@ -178,9 +184,12 @@ namespace basecross{
 			ResetActiveStage<GameStageSelect>();
 		}
 		else if (event->m_MsgStr == WstringKey::ToGameStage) {
-			//最初のアクティブステージの設定
 			ResetActiveStage<GameStage>();
 		}
+		//else if (event->m_MsgStr == WstringKey::ToGameTestStage) {
+		//	//最初のアクティブステージの設定
+		//	ResetActiveStage<GameStage>();
+		//}
 	}
 }
 //end basecross

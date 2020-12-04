@@ -66,6 +66,9 @@ namespace basecross{
 	{
 		AddGameObject<TitleSprite>(L"GAMETITLE_TX", false,
 			Vec2(1280.0f, 800.0f), Vec2(0.0f, 0.0f));
+
+		AddGameObject<Sprite>(true, Vec2(600, 150), Vec2(0, -200), L"A_START_TX", 1, Col4(1.0f, 1.0f, 1.0f, 1.0f));
+
 	}
 
 	//	èâä˙âª

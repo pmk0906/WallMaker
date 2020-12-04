@@ -85,7 +85,8 @@ namespace basecross{
 			{L"TREASURE_MESH", L"Treasure.bmf"},
 			{L"SHELD_MESH", L"Shield.bmf"},
 			{L"ENEMY_MESH", L"Enemy.bmf"},
-			{L"STOPENEMY_MESH", L"StopEnemy.bmf"}
+			{L"STOPENEMY_MESH", L"StopEnemy.bmf"},
+			{L"COLORENEMY_MESH", L"StopEnemy0002.bmf"}
 
 		};
 		//タンジェント有りスタティック

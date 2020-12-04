@@ -5,6 +5,8 @@
 namespace basecross {
 	class EnemyFirst : public GameObject 
 	{
+		shared_ptr<GameObject> m_Shield = nullptr;
+
 		// ëÂÇ´Ç≥ÅAâÒì]ÅAà íu
 		Vec3 m_Scale;
 		Vec3 m_Rotation;
@@ -32,7 +34,10 @@ namespace basecross {
 		void LookPlayer();
 		void Damage(float damage);
 		void Die();
+		void CreateShield();
 
 		Vec3 GetPosition() const;
+
+		float GetHp();
 	};
 }

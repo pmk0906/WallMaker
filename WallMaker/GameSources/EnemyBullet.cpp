@@ -136,12 +136,75 @@ namespace basecross {
 			auto ptrXA = App::GetApp()->GetXAudio2Manager();
 			ptrXA->Start(WstringKey::SE_Reflection, 0, 1.0f);
 
+			if (flg_reflect)
+			{
+				m_BulletSpeed += 5.0f;
+				m_Attack += 1.0f;
+			}
+
 			flg_reflect = true;
 
-			m_BulletSpeed += 5.0f;
-			m_Attack += 1.0f;
-
 			magicWall->Damage(m_Attack);
+		}
+
+		//　あたったのがシールドなら
+		if (auto shield = dynamic_pointer_cast<EnemyShield>(other))
+		{
+			if (flg_reflect)
+			{
+				shield->Damage(m_Attack);
+
+				SetDrawActive(false);
+				SetUpdateActive(false);
+			}
+		}
+
+		//　あたったのがシールドなら
+		if (auto shield = dynamic_pointer_cast<PatrolShield>(other))
+		{
+			if (flg_reflect)
+			{
+				shield->Damage(m_Attack);
+
+				SetDrawActive(false);
+				SetUpdateActive(false);
+			}
+		}
+
+		//　あたったのがシールドなら
+		if (auto shield = dynamic_pointer_cast<UPPatrolShield>(other))
+		{
+			if (flg_reflect)
+			{
+				shield->Damage(m_Attack);
+
+				SetDrawActive(false);
+				SetUpdateActive(false);
+			}
+		}
+
+		//　あたったのがシールドなら
+		if (auto shield = dynamic_pointer_cast<RapidShield>(other))
+		{
+			if (flg_reflect)
+			{
+				shield->Damage(m_Attack);
+
+				SetDrawActive(false);
+				SetUpdateActive(false);
+			}
+		}
+
+		//　あたったのがシールドなら
+		if (auto shield = dynamic_pointer_cast<DangerShield>(other))
+		{
+			if (flg_reflect)
+			{
+				shield->Damage(m_Attack);
+
+				SetDrawActive(false);
+				SetUpdateActive(false);
+			}
 		}
 
 		//当たったのが敵なら
@@ -237,17 +300,15 @@ namespace basecross {
 			if (flg_reflect)
 			{
 				SetDir(Reflect(wallTrans->GetForword(), dir));
-				
-			}
-			//SetDrawActive(false);
-			//SetUpdateActive(false);
 
+				m_BulletSpeed += 5.0f;
+				m_Attack += 1.0f;
+			}
 		}
 		if (auto stageWall = dynamic_pointer_cast<StageWall>(other))
 		{
 			SetDrawActive(false);
 			SetUpdateActive(false);
-
 		}
 	}
 }

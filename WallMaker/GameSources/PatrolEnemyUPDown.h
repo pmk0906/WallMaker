@@ -5,6 +5,8 @@
 namespace basecross {
 	class PatrolEnemyUPDown : public GameObject
 	{
+		shared_ptr<GameObject> m_Shield = nullptr;
+
 		// ëÂÇ´Ç≥ÅAâÒì]ÅAà íu
 		Vec3 m_Scale;
 		Vec3 m_Rotation;
@@ -34,6 +36,7 @@ namespace basecross {
 		void Move();
 		void Damage(float damage);
 		void Die();
+		void CreateShield();
 
 		Vec3 GetPosition() const;
 	};

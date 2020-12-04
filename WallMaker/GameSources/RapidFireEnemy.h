@@ -5,6 +5,8 @@
 namespace basecross {
 	class RapidFireEnemy : public GameObject
 	{
+		shared_ptr<GameObject> m_Shield = nullptr;
+
 		// ‘å‚«‚³A‰ñ“]AˆÊ’u
 		Vec3 m_Scale;
 		Vec3 m_Rotation;
@@ -38,6 +40,7 @@ namespace basecross {
 		void LockOn();
 		void Damage(float damage);
 		void Die();
+		void CreateShield();
 
 		Vec3 GetPosition() const;
 	};

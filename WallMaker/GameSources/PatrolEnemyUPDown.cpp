@@ -18,6 +18,14 @@ namespace basecross {
 
 	void PatrolEnemyUPDown::OnCreate()
 	{
+		Mat4x4 spanMat; // モデルとトランスフォームの間の差分行列
+		spanMat.affineTransformation(
+			Vec3(0.3f, 1.0f, 0.5f),
+			Vec3(0.0f, 0.0f, 0.0f),
+			Vec3(0.0f, XMConvertToRadians(270.0f), 0.0f),
+			Vec3(0.0f, 0.0f, 0.0f)
+		);
+
 		// 大きさ、回転、位置
 		auto ptrTrans = GetComponent<Transform>();
 		ptrTrans->SetScale(m_Scale);
@@ -32,12 +40,14 @@ namespace basecross {
 		AddTag(L"PatrolEnemyUPDown");
 
 		//描画処理
-		auto ptrDraw = AddComponent<BcPNTStaticDraw>();
-		ptrDraw->SetMeshResource(L"DEFAULT_CUBE");
+		auto ptrDraw = AddComponent<PNTStaticModelDraw>();
+		ptrDraw->SetMeshResource(L"ENEMY_MESH");
+		ptrDraw->SetMeshToTransformMatrix(spanMat);
 		//ptrDraw->SetFogEnabled(true);
 		ptrDraw->SetOwnShadowActive(true);
 
 		Initialize();
+		CreateShield();
 	}
 
 	void PatrolEnemyUPDown::OnUpdate()
@@ -144,11 +154,20 @@ namespace basecross {
 
 	void PatrolEnemyUPDown::Die()
 	{
+		auto ptrChild = dynamic_pointer_cast<UPPatrolShield>(m_Shield);
+
 		if (m_EnemyHP <= 0.0f)
 		{
 			SetDrawActive(false);
 			SetUpdateActive(false);
+
+			ptrChild->DirectDie();
 		}
+	}
+
+	void PatrolEnemyUPDown::CreateShield()
+	{
+		m_Shield = GetStage()->AddGameObject<UPPatrolShield>(GetThis<PatrolEnemyUPDown>());
 	}
 
 	Vec3 PatrolEnemyUPDown::GetPosition() const

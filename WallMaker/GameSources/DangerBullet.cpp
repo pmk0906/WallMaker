@@ -17,6 +17,10 @@ namespace basecross {
 
 		Initialize();
 		auto myTrans = GetComponent<Transform>();
+
+		auto my_Scale = myTrans->GetScale();
+
+		myTrans->SetScale(0.7f, 0.7f, 0.7f);
 	}
 
 	void DangerBullet::OnUpdate()
@@ -158,6 +162,66 @@ namespace basecross {
 			}
 
 			magicWall->Damage(m_Attack);
+		}
+
+		//　あたったのがシールドなら
+		if (auto shield = dynamic_pointer_cast<EnemyShield>(other))
+		{
+			if (flg_reflect)
+			{
+				shield->Damage(m_Attack);
+
+				SetDrawActive(false);
+				SetUpdateActive(false);
+			}
+		}
+
+		//　あたったのがシールドなら
+		if (auto shield = dynamic_pointer_cast<PatrolShield>(other))
+		{
+			if (flg_reflect)
+			{
+				shield->Damage(m_Attack);
+
+				SetDrawActive(false);
+				SetUpdateActive(false);
+			}
+		}
+
+		//　あたったのがシールドなら
+		if (auto shield = dynamic_pointer_cast<UPPatrolShield>(other))
+		{
+			if (flg_reflect)
+			{
+				shield->Damage(m_Attack);
+
+				SetDrawActive(false);
+				SetUpdateActive(false);
+			}
+		}
+
+		//　あたったのがシールドなら
+		if (auto shield = dynamic_pointer_cast<RapidShield>(other))
+		{
+			if (flg_reflect)
+			{
+				shield->Damage(m_Attack);
+
+				SetDrawActive(false);
+				SetUpdateActive(false);
+			}
+		}
+
+		//　あたったのがシールドなら
+		if (auto shield = dynamic_pointer_cast<DangerShield>(other))
+		{
+			if (flg_reflect)
+			{
+				shield->Damage(m_Attack);
+
+				SetDrawActive(false);
+				SetUpdateActive(false);
+			}
 		}
 
 		//当たったのが敵なら

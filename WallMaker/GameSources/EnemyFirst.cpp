@@ -47,6 +47,7 @@ namespace basecross {
 		ptrDraw->SetOwnShadowActive(true);
 
 		Initialize();
+		CreateShield();
 	}
 
 	void EnemyFirst::OnUpdate()
@@ -197,11 +198,25 @@ namespace basecross {
 
 	void EnemyFirst::Die()
 	{
+		auto ptrChild = dynamic_pointer_cast<EnemyShield>(m_Shield);
+
 		if (m_EnemyHP <= 0.0f)
 		{
 			SetDrawActive(false);
 			SetUpdateActive(false);
+
+			ptrChild->DirectDie();
 		}
+	}
+
+	void EnemyFirst::CreateShield()
+	{
+		m_Shield = GetStage()->AddGameObject<EnemyShield>(GetThis<EnemyFirst>());
+	}
+
+	float EnemyFirst::GetHp()
+	{
+		return m_EnemyHP;
 	}
 
 	Vec3 EnemyFirst::GetPosition() const

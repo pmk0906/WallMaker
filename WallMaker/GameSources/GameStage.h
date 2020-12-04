@@ -19,6 +19,8 @@ namespace basecross {
 
 		InputHandler<GameStage> m_InputHandler;
 
+		shared_ptr<SoundItem> m_BGM;
+
 		//ビューの作成
 		void CreateViewLight();
 		// ステージの作成
@@ -31,7 +33,6 @@ namespace basecross {
 		//UIの作成
 		void CreateUI();
 
-
 	public:
 		//構築と破棄
 		GameStage() :Stage() {}
@@ -42,6 +43,8 @@ namespace basecross {
 		//初期化
 		virtual void OnCreate()override;
 		virtual void OnUpdate()override;
+
+		void StopBGM();
 	};
 
 

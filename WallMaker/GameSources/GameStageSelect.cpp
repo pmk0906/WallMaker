@@ -45,6 +45,10 @@ namespace basecross{
 		CreateViewLight();
 		//スプライトの作成
 		CreateButtonSprite();
+
+		//BGM
+		auto ptrXA = App::GetApp()->GetXAudio2Manager();
+		m_BGM = ptrXA->Start(WstringKey::SE_GameSelect, 0, 1.0f);
 	}
 
 	void GameStageSelect::OnUpdate()
@@ -56,11 +60,21 @@ namespace basecross{
 	void GameStageSelect::OnPushA() 
 	{
 		PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), WstringKey::ToGameStage);
+
+		StopBGM();
 	}
 
 	void GameStageSelect::OnPushB()
 	{
 		PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), WstringKey::ToGameTitle);
+		StopBGM();
+	}
+
+	void GameStageSelect::StopBGM()
+	{
+		auto ptrXA = App::GetApp()->GetXAudio2Manager();
+
+		ptrXA->Stop(m_BGM);
 	}
 }
 //end basecross

@@ -75,6 +75,9 @@ namespace basecross{
 		//スプライトの作成
 		CreateTitleSprite();
 
+		//BGM
+		auto ptrXA = App::GetApp()->GetXAudio2Manager();
+		m_BGM = ptrXA->Start(WstringKey::SE_GameTitle, 0, 1.0f);
 	}
 
 	void GameTitle::OnUpdate()
@@ -87,6 +90,7 @@ namespace basecross{
 	void GameTitle::OnPushA() 
 	{
 		PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), WstringKey::ToGameStageSelect);
+		StopBGM();
 	}
 
 	void GameTitle::OnPushB()
@@ -94,5 +98,11 @@ namespace basecross{
 
 	}
 
+	void GameTitle::StopBGM()
+	{
+		auto ptrXA = App::GetApp()->GetXAudio2Manager();
+
+		ptrXA->Stop(m_BGM);
+	}
 }
 //end basecross

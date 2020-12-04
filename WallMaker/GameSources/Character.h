@@ -125,6 +125,8 @@ namespace basecross{
 
 		void DrawStrings();
 		//void OnPushDPad(int dPadNum);
+
+		void StopBGM();
 	};
 }
 //end basecross

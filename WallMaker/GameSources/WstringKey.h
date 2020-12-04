@@ -40,6 +40,9 @@ namespace WstringKey {
 	const wstring SE_BreakWall = L"SE_BreakWall";
 	const wstring SE_PlayerDamage = L"SE_PlayerDamage";
 	const wstring SE_MainBGM = L"SE_MainBGM";
+	const wstring SE_GameClear = L"SE_GameClear";
+	const wstring SE_GameTitle = L"SE_GameTitle";
+	const wstring SE_GameSelect = L"SE_GameSelect";
 
 	// シェアオブジェクト用
 	// プレイヤー

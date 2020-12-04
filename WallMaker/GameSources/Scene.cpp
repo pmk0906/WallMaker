@@ -101,7 +101,10 @@ namespace basecross{
 			{L"SE_EnemyDamage", L"EnemyDamage.wav"},
 			{L"SE_BreakWall", L"BreakWall.wav"},
 			{L"SE_PlayerDamage", L"PlayerDamage.wav"},
-			{L"SE_MainBGM", L"MainBGM.wav"}
+			{L"SE_MainBGM", L"MainBGM.wav"},
+			{L"SE_GameClear", L"GameClear.wav"},
+			{L"SE_GameTitle", L"GameTitle.wav"},
+			{L"SE_GameSelect", L"GameSelect.wav"}
 		};
 
 		// テクスチャ

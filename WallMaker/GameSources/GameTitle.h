@@ -36,6 +36,8 @@ namespace basecross{
 		// 入力ハンドラー
 		InputHandler<GameTitle> m_InputHandler;
 
+		shared_ptr<SoundItem> m_BGM;
+
 	public:
 		// 構築と破棄
 		GameTitle() :Stage() {}
@@ -50,6 +52,7 @@ namespace basecross{
 		void OnPushDPad(int dPadNum) {};
 		void OnHoldRTrigger() {}
 		void OnReleaseRTrigger() {}
+		void StopBGM();
 	};
 }
 //end basecross

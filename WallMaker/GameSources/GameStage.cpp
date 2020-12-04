@@ -159,7 +159,8 @@ namespace basecross {
 
 		//BGM
 		auto ptrXA = App::GetApp()->GetXAudio2Manager();
-		ptrXA->Start(WstringKey::SE_MainBGM, 0, 1.0f);
+		m_BGM = ptrXA->Start(WstringKey::SE_MainBGM, 0, 1.0f);
+
 	}
 
 	void GameStage::OnUpdate() 
@@ -249,6 +250,13 @@ namespace basecross {
 		AddGameObject<WallStock>(true, Vec2(100.0f), Vec3(+590.0f, 350.0f, 0.1f), 1.0f);
 		AddGameObject<WallStock>(true, Vec2(100.0f), Vec3(+490.0f, 350.0f, 0.1f), 2.0f);
 		AddGameObject<WallStock>(true, Vec2(100.0f), Vec3(+390.0f, 350.0f, 0.1f), 3.0f);
+	}
+
+	void GameStage::StopBGM()
+	{
+		auto ptrXA = App::GetApp()->GetXAudio2Manager();
+
+		ptrXA->Stop(m_BGM);
 	}
 }
 //end basecross

@@ -15,7 +15,12 @@ namespace basecross {
 		AddTag(L"EnemyBullet");
 
 		Initialize();
+
 		auto myTrans = GetComponent<Transform>();
+
+		auto my_Scale = myTrans->GetScale();
+
+		myTrans->SetScale(0.7f, 0.7f, 0.7f);
 	}
 
 	void EnemyBullet::OnUpdate()

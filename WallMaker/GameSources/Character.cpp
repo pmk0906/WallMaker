@@ -283,6 +283,7 @@ namespace basecross{
 				break;
 			case 1:
 				PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), WstringKey::ToGameStageSelect);
+				StopBGM();
 				break;
 			default:
 				break;
@@ -297,12 +298,20 @@ namespace basecross{
 				break;
 			case 1:
 				PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), WstringKey::ToGameStageSelect);
+				StopBGM();
 				break;
 			default:
 				break;
 			}
 
 		}
+	}
+
+	void GameManagerDebug::StopBGM()
+	{
+		auto gameStage = dynamic_pointer_cast<GameStage>(GetStage());
+
+		gameStage->StopBGM();
 	}
 
 	//void GameManagerDebug::OnPushDPad(int dPadNum) {

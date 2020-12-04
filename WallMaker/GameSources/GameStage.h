@@ -17,6 +17,8 @@ namespace basecross {
 		//ステージの横幅
 		const int STAGE_WIDTH = 32;
 
+		InputHandler<GameStage> m_InputHandler;
+
 		//ビューの作成
 		void CreateViewLight();
 		// ステージの作成
@@ -28,6 +30,7 @@ namespace basecross {
 		void CreatePlayer(Vec3 pos);
 		//UIの作成
 		void CreateUI();
+
 
 	public:
 		//構築と破棄

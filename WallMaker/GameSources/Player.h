@@ -19,9 +19,16 @@ namespace basecross{
 		float m_Speed;
 		//HP
 		float m_PlayerHp = 3.0f;
+
+		bool m_PlayerDied = false;
+
 		// Rトリガーが押されているか
 		bool m_BeforePushRTFlg = false;
 		bool m_PushRTFlg = false;
+
+		//自身が動いているか
+		bool m_MotionChanged = false;
+		wstring m_MotionName = L"";
 
 		//壁のストック
 		const int m_MaxWallStock = 3;
@@ -32,6 +39,9 @@ namespace basecross{
 		void SetCountWall();
 		//壁を全て消す
 		void WallAllDelete();
+
+		//描画切り替え
+		void DrawActiveSwitch();
 
 		//RTriggerについて
 		void RTriggerHandler();
@@ -82,12 +92,19 @@ namespace basecross{
 		Vec3 GetPosition() const;
 		//HPの取得
 		float GetLife();
+		float GetPlayerDiedFlg();
+		void SetPlayerDiedFlg(bool diedFlg);
+
 		//壁のストックの取得
 		int GetWallStock();
 
 		//壁のストックを減らす
 		void WallStockDecrease();
 		void WallStockDecreaseFlg();
+
+		//モーションの名前を登録
+		void SetMotionName(wstring motionName);
+		wstring GetMotionName();
 
 		//Damage関数
 		void Damage(float damage);
@@ -101,6 +118,7 @@ namespace basecross{
 		// RT長押し
 		void OnHoldRTrigger(); // 押している間
 		void OnReleaseRTrigger(); // 離している間
+		//void OnPushDPad(int dPadNum) {};
 	};
 
 	//--------------------------------------------------

@@ -47,6 +47,7 @@ namespace basecross{
 
 		void OnPushA();
 		void OnPushB();
+		void OnPushDPad(int dPadNum) {};
 		void OnHoldRTrigger() {}
 		void OnReleaseRTrigger() {}
 	};

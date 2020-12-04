@@ -20,14 +20,18 @@ namespace basecross {
 
 	void EnemyBullet::OnUpdate()
 	{
-		auto &app = App::GetApp();
-		auto delta = app->GetElapsedTime();
+		auto gm = GameManager::GetInstance();
+		if (gm->GetClearFlgChanged() == false)
+		{
+			auto &app = App::GetApp();
+			auto delta = app->GetElapsedTime();
 
-		m_DieTime += delta;
+			m_DieTime += delta;
 
-		BulletMove();
-		Die();
-		SetMaxSpeed();
+			BulletMove();
+			Die();
+			SetMaxSpeed();
+		}
 	}
 
 	void EnemyBullet::Initialize()
@@ -221,19 +225,19 @@ namespace basecross {
 			}
 		}
 		
-		//if (auto stageWall = dynamic_pointer_cast<StageRefrectWall>(other))
-		//{
-		//	auto wallTrans = stageWall->GetComponent<Transform>();
+		if (auto stageWall = dynamic_pointer_cast<StageRefrectWall>(other))
+		{
+			auto wallTrans = stageWall->GetComponent<Transform>();
 
-		//	if (flg_reflect)
-		//	{
-		//		
-		//	}
-		//	SetDir(Reflect(wallTrans->GetForword(), dir));
-		//	//SetDrawActive(false);
-		//	//SetUpdateActive(false);
+			if (flg_reflect)
+			{
+				SetDir(Reflect(wallTrans->GetForword(), dir));
+				
+			}
+			//SetDrawActive(false);
+			//SetUpdateActive(false);
 
-		//}
+		}
 		if (auto stageWall = dynamic_pointer_cast<StageWall>(other))
 		{
 			SetDrawActive(false);

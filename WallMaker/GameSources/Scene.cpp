@@ -51,23 +51,35 @@ namespace basecross{
 			{L"TRACE_TX", L"trace.png"},
 			{L"FLOOR_TX", L"Floor.png"},
 			{L"MAGICWALL_TX", L"MagicWall.jpg"},
-			{L"WALL_TX", L"Wall.jpg"},
+			{L"WALL_TX", L"BlockWall.tga"},
 			{L"HEART_TX", L"Heart.png"},
 			{L"WALLSTOCK_TX", L"UI_MagicWall.png"},
 			{L"GAMETITLE_TX", L"Title.png"},
-			{L"WHITE_TX", L"White.png"}
+			{L"GAMESELECT_BG_TX", L"Select_BackGround.png"},
+			{L"WHITE_TX", L"White.png"},
+			{L"TO_NEXTSTAGE_TX", L"ToNextStage.png"},
+			{L"TO_STAGESELECT_TX", L"ToStageSelect.png"},
+			{L"TO_RETRY_TX", L"ToRetry.png"},
+			{L"STAGE_1_TX", L"StageNum1.png"},
+			{L"STAGE_2_TX", L"StageNum2.png"},
+			{L"STAGE_3_TX", L"StageNum3.png"},
+			{L"STAGE_4_TX", L"StageNum4.png"},
+			{L"STAGE_5_TX", L"StageNum5.png"}
 		};
-
 		// アニメーション
 		Pairs animPairs[] = 
 		{
-			{WstringKey::Anim_Player, L"PL_Stand.bmf"},
-			{WstringKey::Anim_Player_Walk, L"PL_Walk.bmf"}
+			//{WstringKey::Anim_Player, L"PL_Stand.bmf"},
+			{WstringKey::Anim_Player, L"PL_Stand_Walk.bmf"}
 		};
 		//スタティック
 		Pairs staticPairs[] =
 		{
-			{L"TREASURE_MESH", L"Treasure.bmf"}
+			{L"TREASURE_MESH", L"Treasure.bmf"},
+			{L"SHELD_MESH", L"Shield.bmf"},
+			{L"ENEMY_MESH", L"Enemy.bmf"},
+			{L"STOPENEMY_MESH", L"StopEnemy.bmf"}
+
 		};
 		//タンジェント有りスタティック
 		Pairs staticTangentPairs[] =

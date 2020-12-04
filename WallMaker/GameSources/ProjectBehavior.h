@@ -7,6 +7,13 @@
 #include "stdafx.h"
 
 namespace basecross {
+	enum DPadNum
+	{
+		UP,
+		DOWN,
+		LEFT,
+		RIGHT
+	};
 
 	//--------------------------------------------------------------------------------------
 	///	コントローラのボタンのハンドラ
@@ -40,6 +47,23 @@ namespace basecross {
 				{
 					Obj->OnReleaseRTrigger();
 				}
+				//十字キー
+				//if (cntlVec.wPressedButtons & XINPUT_GAMEPAD_DPAD_UP)
+				//{
+				//	Obj->OnPushDPad(DPadNum::UP);
+				//}
+				//if (cntlVec.wPressedButtons & XINPUT_GAMEPAD_DPAD_DOWN)
+				//{
+				//	Obj->OnPushDPad(DPadNum::DOWN);
+				//}
+				//if (cntlVec.wPressedButtons & XINPUT_GAMEPAD_DPAD_LEFT)
+				//{
+				//	Obj->OnPushDPad(DPadNum::LEFT);
+				//}
+				//if (cntlVec.wPressedButtons & XINPUT_GAMEPAD_DPAD_RIGHT)
+				//{
+				//	Obj->OnPushDPad(DPadNum::RIGHT);
+				//}
 			}
 		}
 	};

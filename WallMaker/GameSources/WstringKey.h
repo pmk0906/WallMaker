@@ -11,6 +11,8 @@ namespace WstringKey {
 	//ステージに配置するオブジェクト
 	const wstring Tag_Wall = L"TagWall";
 	const wstring Tag_CrackedWall = L"TagCrackedWall";
+	const wstring Tag_Floor = L"TagFloor";
+	const wstring Tag_DrawActiveFalse = L"TagDrawActiveFalse";
 	//敵
 	const wstring Tag_Enemy = L"TagEnemy";
 	//宝
@@ -18,6 +20,10 @@ namespace WstringKey {
 
 	//テクスチャキー
 	const wstring Tx_Player = L"TXPlayer";
+
+	//モーションキー
+	const wstring AM_PlayerStand = L"PlayerStand";
+	const wstring AM_PlayerWalk = L"PlayerWalk";
 
 	// アニメーション用
 	// プレイヤー

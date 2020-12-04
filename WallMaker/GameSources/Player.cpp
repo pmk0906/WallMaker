@@ -26,33 +26,6 @@ namespace basecross{
 	}
 	Player::~Player() {}
 
-	//壁のストック減少
-	void Player::WallStockDecrease()
-	{
-		if (m_wallDecreaseFlg == true)
-		{
-			m_WallStock = m_WallStock - 1;
-			m_wallDecreaseFlg = false;
-		}
-	}
-	void Player::WallStockDecreaseFlg()
-	{
-		m_wallDecreaseFlg = true;
-	}
-
-	void Player::Damage(float damage)
-	{
-		m_PlayerHp -= damage;
-	}
-
-	void Player::Die()
-	{
-		if (m_PlayerHp <= 0.0f)
-		{
-			SetDrawActive(false);
-			SetUpdateActive(false);
-		}
-	}
 
 	void Player::SetCountWall()
 	{
@@ -89,6 +62,30 @@ namespace basecross{
 				{
 					magicWall->SetHp(0.0f);
 					m_TestFlg = false;
+				}
+			}
+		}
+	}
+
+	void Player::DrawActiveSwitch()
+	{
+		auto playerPos = GetComponent<Transform>()->GetPosition();
+
+		for (auto obj : GetStage()->GetGameObjectVec())
+		{
+			if (obj->FindTag(WstringKey::Tag_DrawActiveFalse))
+			{
+				auto otherPos = obj->GetComponent<Transform>()->GetPosition();
+				auto len = playerPos - otherPos;
+				if (len.length() >= 30.0f)
+				{
+					obj->SetDrawActive(false);
+					obj->SetUpdateActive(false);
+				}
+				else
+				{
+					obj->SetDrawActive(true);
+					obj->SetUpdateActive(true);
 				}
 			}
 		}
@@ -216,7 +213,23 @@ namespace basecross{
 
 			auto utiPtr = GetBehavior<UtilBehavior>();
 			utiPtr->RotToHead(angle, 1.0f);
-		
+
+			if (GetMotionName() != WstringKey::AM_PlayerWalk)
+			{
+				auto ptrDraw = GetComponent<PNTBoneModelDraw>();
+				ptrDraw->ChangeCurrentAnimation(WstringKey::AM_PlayerWalk);
+				SetMotionName(WstringKey::AM_PlayerWalk);
+			}
+		}
+		else
+		{
+			if (GetMotionName() != WstringKey::AM_PlayerStand)
+			{
+				auto ptrDraw = GetComponent<PNTBoneModelDraw>();
+				ptrDraw->ChangeCurrentAnimation(WstringKey::AM_PlayerStand);
+				SetMotionName(WstringKey::AM_PlayerStand);
+			}
+
 		}
 		auto angleR = GetMoveVectorR();
 		if (angleR.length() > 0.0f) {
@@ -314,8 +327,10 @@ namespace basecross{
 		ptrDraw->SetMeshResource(WstringKey::Anim_Player);
 		ptrDraw->SetMeshToTransformMatrix(spanMat);
 		//アニメーションの追加
-		ptrDraw->AddAnimation(L"Stand", 0, 30, true, 10.0f);
-		ptrDraw->ChangeCurrentAnimation(L"Stand");
+		ptrDraw->AddAnimation(WstringKey::AM_PlayerStand, 0, 30, true, 10.0f);
+		ptrDraw->AddAnimation(WstringKey::AM_PlayerWalk, 31, 60, true, 30.0f);
+		ptrDraw->ChangeCurrentAnimation(WstringKey::AM_PlayerStand);
+		SetMotionName(WstringKey::AM_PlayerStand);
 
 		//タグ付け
 		AddTag(WstringKey::Tag_Player);
@@ -325,21 +340,27 @@ namespace basecross{
 		// DrawString用
 		auto strComp = AddComponent<StringSprite>();
 		strComp->SetBackColor(Col4(0, 0, 0, 0.5f));
-		strComp->SetTextRect(Rect2D<float>(1000, 10, 1270, 210));
+		strComp->SetTextRect(Rect2D<float>(1000, 110, 1270, 310));
 	}
 
 	void Player::OnUpdate()
 	{
-		////コントローラチェックして入力があればコマンド呼び出し
-		m_InputHandler.PushHandle(GetThis<Player>());
-		MovePlayer();
-		//WallStockDecrease();
-		SetCountWall();
-		Die();
+		auto gm = GameManager::GetInstance();
+		if (gm->GetClearFlgChanged() == false)
+		{
+			////コントローラチェックして入力があればコマンド呼び出し
+			m_InputHandler.PushHandle(GetThis<Player>());
+			MovePlayer();
+			//WallStockDecrease();
+			SetCountWall();
+			Die();
 
-		auto ptrDraw = GetComponent<PNTBoneModelDraw>();
-		float elapsedTime = App::GetApp()->GetElapsedTime();
-		ptrDraw->UpdateAnimation(elapsedTime);
+			auto ptrDraw = GetComponent<PNTBoneModelDraw>();
+			float elapsedTime = App::GetApp()->GetElapsedTime();
+			ptrDraw->UpdateAnimation(elapsedTime);
+		}
+
+		DrawActiveSwitch();
 
 	}
 
@@ -358,6 +379,10 @@ namespace basecross{
 	void Player::DrawStrings()
 	{
 		//文字列表示
+		auto pos = GetComponent<Transform>()->GetPosition();
+		wstring playerPos(L"PlayerPos.x:");
+		playerPos += Util::FloatToWStr(pos.x) + L"\nPlayerPos.y:" + 
+			Util::FloatToWStr(pos.y), +L"\nPlayerPos.z:" + Util::FloatToWStr(pos.z) + L"\n";
 		
 		auto rot = GetComponent<Transform>()->GetQuaternion();
 		// QuartanionをRadianにする 「rot.toRotVec().y」
@@ -385,7 +410,7 @@ namespace basecross{
 		wstring arrivingWall(L"ステージに存在する壁の枚数 : ");
 		arrivingWall += Util::UintToWStr(m_ArrivedWall) + L"\n";
 
-		wstring str = playerRotation + playerRStick + wallStock + testFlg + arrivingWall + L"\n";
+		wstring str = playerPos + playerRotation + playerRStick + wallStock + testFlg + arrivingWall + L"\n";
 		auto ptrString = GetComponent<StringSprite>();
 		ptrString->SetText(str);
 	}
@@ -404,10 +429,61 @@ namespace basecross{
 		return GetComponent<Transform>()->GetPosition();
 	}
 
+	//壁のストック減少
+	void Player::WallStockDecrease()
+	{
+		if (m_wallDecreaseFlg == true)
+		{
+			m_WallStock = m_WallStock - 1;
+			m_wallDecreaseFlg = false;
+		}
+	}
+	void Player::WallStockDecreaseFlg()
+	{
+		m_wallDecreaseFlg = true;
+	}
+
+	void Player::SetMotionName(wstring motionName)
+	{
+		m_MotionChanged = true;
+		m_MotionName = motionName;
+	}
+
+	wstring Player::GetMotionName()
+	{
+		return m_MotionName;
+	}
+
+	void Player::Damage(float damage)
+	{
+		m_PlayerHp -= damage;
+	}
+
+	void Player::Die()
+	{
+		if (m_PlayerHp <= 0.0f)
+		{
+			SetPlayerDiedFlg(true);
+
+			SetDrawActive(false);
+			SetUpdateActive(false);
+		}
+	}
+
 	//HPの取得
 	float Player::GetLife()
 	{
 		return m_PlayerHp;
+	}
+
+	//プレイヤーが死んだかのフラグ
+	float Player::GetPlayerDiedFlg()
+	{
+		return m_PlayerDied;
+	}
+	void Player::SetPlayerDiedFlg(bool diedFlg)
+	{
+		m_PlayerDied = diedFlg;
 	}
 
 	//壁のストック取得

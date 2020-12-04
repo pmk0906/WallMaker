@@ -90,5 +90,41 @@ namespace basecross{
 		// ‰Šú‰»
 		virtual void OnCreate()override;
 	};
+
+	// ‰¼°
+	class GameManagerDebug : public GameObject
+	{
+		// ‘å‚«‚³A‰ñ“]AˆÊ’u
+		Vec3 m_Scale;
+		Vec3 m_Rotation;
+		Vec3 m_Position;
+
+		bool testFlg = false;
+
+		InputHandler<GameManagerDebug> m_InputHandler;
+
+	public:
+		// \’z‚Æ”jŠü
+		GameManagerDebug(
+			const shared_ptr<Stage>& StagePtr,
+			const Vec3& Scale,
+			const Vec3& Rotation,
+			const Vec3& Position);
+		virtual ~GameManagerDebug();
+
+		// ‰Šú‰»
+		virtual void OnCreate()override;
+		virtual void OnUpdate()override;
+		virtual void OnUpdate2() override;
+
+		void OnPushA();
+		void OnPushB() {}
+		// RT’·‰Ÿ‚µ
+		void OnHoldRTrigger() {} // ‰Ÿ‚µ‚Ä‚¢‚éŠÔ
+		void OnReleaseRTrigger() {} // —£‚µ‚Ä‚¢‚éŠÔ
+
+		void DrawStrings();
+		//void OnPushDPad(int dPadNum);
+	};
 }
 //end basecross

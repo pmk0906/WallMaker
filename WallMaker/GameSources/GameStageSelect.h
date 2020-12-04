@@ -16,7 +16,7 @@ namespace basecross{
 		//ビューの作成
 		void CreateViewLight();
 		//UIの作成
-		void CreateTitleSprite();
+		void CreateButtonSprite();
 
 		// 入力ハンドラー
 		InputHandler<GameStageSelect> m_InputHandler;
@@ -31,7 +31,8 @@ namespace basecross{
 		virtual void OnUpdate()override;
 
 		void OnPushA();
-		void OnPushB() {}
+		void OnPushB();
+		void OnPushDPad(int dPadNum) {};
 		void OnHoldRTrigger() {}
 		void OnReleaseRTrigger() {}
 	};

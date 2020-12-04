@@ -27,10 +27,16 @@ namespace basecross{
 		PtrMultiLight->SetDefaultLighting();
 	}
 
-	void GameStageSelect::CreateTitleSprite()
+	void GameStageSelect::CreateButtonSprite()
 	{
-		AddGameObject<TitleSprite>(L"MAGICWALL_TX", false,
-			Vec2(1280.0f, 800.0f), Vec2(0.0f, 0.0f));
+		AddGameObject<TitleSprite>(L"GAMESELECT_BG_TX", false, Vec2(1280.0f, 800.0f), Vec2(0.0f, 0.0f));
+
+		auto buttonSprite  = AddGameObject<ButtonSprite>(true, Vec2(100, 100), Vec2(-400, 50.0f), true, 1.0f, L"STAGE_1_TX", 0, 2, Col4(1, 1, 1, 0.5f));
+		auto buttonSprite2 = AddGameObject<ButtonSprite>(true, Vec2(100, 100), Vec2(-200, 50.0f), true, 1.0f, L"STAGE_2_TX", 1, 2, Col4(1, 1, 1, 0.5f));
+		auto buttonSprite3 = AddGameObject<ButtonSprite>(true, Vec2(100, 100), Vec2(0, 50.0f),    true, 1.0f, L"STAGE_3_TX", 2, 2, Col4(1, 1, 1, 0.5f));
+		auto buttonSprite4 = AddGameObject<ButtonSprite>(true, Vec2(100, 100), Vec2(200, 50.0f),  true, 1.0f, L"STAGE_4_TX", 3, 2, Col4(1, 1, 1, 0.5f));
+		auto buttonSprite5 = AddGameObject<ButtonSprite>(true, Vec2(100, 100), Vec2(400, 50.0f),  true, 1.0f, L"STAGE_5_TX", 4, 2, Col4(1, 1, 1, 0.5f));
+
 	}
 
 	//	初期化
@@ -38,28 +44,23 @@ namespace basecross{
 	{
 		CreateViewLight();
 		//スプライトの作成
-		CreateTitleSprite();
+		CreateButtonSprite();
 	}
 
 	void GameStageSelect::OnUpdate()
 	{
 		//コントローラチェックして入力があればコマンド呼び出し
 		m_InputHandler.PushHandle(GetThis<GameStageSelect>());
-
-		//コントローラの取得
-		auto CntlVec = App::GetApp()->GetInputDevice().GetControlerVec();
-		if (CntlVec[0].bConnected) {
-			//Bボタン
-			if (CntlVec[0].wPressedButtons & XINPUT_GAMEPAD_B) {
-				PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), WstringKey::ToGameStage);
-			}
-		}
-
 	}
 
 	void GameStageSelect::OnPushA() 
 	{
 		PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), WstringKey::ToGameStage);
+	}
+
+	void GameStageSelect::OnPushB()
+	{
+		PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), WstringKey::ToGameTitle);
 	}
 }
 //end basecross

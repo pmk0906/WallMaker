@@ -125,7 +125,7 @@ namespace basecross{
 
 		// 衝突判定
 		auto ptrColl = AddComponent<CollisionObb>();
-		ptrColl->SetFixed(true);
+		//ptrColl->SetFixed(true);
 
 		//タグをつける
 		AddTag(WstringKey::Tag_DrawActiveFalse);
@@ -174,7 +174,7 @@ namespace basecross{
 		// 衝突判定
 		auto ptrColl = AddComponent<CollisionObb>();
 		ptrColl->SetFixed(true);
-		ptrColl->SetDrawActive(true);
+		//ptrColl->SetDrawActive(true);
 
 		//タグをつける
 		AddTag(WstringKey::Tag_DrawActiveFalse);
@@ -215,9 +215,9 @@ namespace basecross{
 		ptrTrans->SetPosition(m_Position);
 
 		// DrawString用
-		auto strComp = AddComponent<StringSprite>();
-		strComp->SetBackColor(Col4(0, 0, 0, 0.5f));
-		strComp->SetTextRect(Rect2D<float>(1000, 510, 1270, 710));
+		//auto strComp = AddComponent<StringSprite>();
+		//strComp->SetBackColor(Col4(0, 0, 0, 0.5f));
+		//strComp->SetTextRect(Rect2D<float>(1000, 510, 1270, 710));
 	}
 
 	void GameManagement::OnUpdate()
@@ -267,7 +267,7 @@ namespace basecross{
 	void GameManagement::OnUpdate2()
 	{
 
-		DrawStrings();
+		// DrawStrings();
 	}
 
 	void GameManagement::DrawStrings()

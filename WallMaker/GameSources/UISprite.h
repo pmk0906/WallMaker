@@ -127,7 +127,7 @@ namespace basecross{
 		//フェードイン・アウト用
 		bool m_FadeFlg; // true:透明状態 false:可視状態
 		bool m_FadeFlgChanged = true;
-		float m_AlphaValue = 0;
+		float m_AlphaValue;
 
 		int m_Layer;
 		Col4 m_Color; // wは最後の透明度
@@ -145,6 +145,7 @@ namespace basecross{
 			const Vec2& StartPos,
 			bool FadeFlg,
 			float AlphaLimit,
+			float AlphaValue,
 			const wstring TextureKey,
 			const int& Layer = 0,
 			const Col4& Color = Col4(1.0f, 1.0f, 1.0f, 1.0f)

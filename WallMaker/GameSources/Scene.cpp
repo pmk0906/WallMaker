@@ -70,7 +70,8 @@ namespace basecross{
 			{L"GAMEOVER_TX", L"Tx_GameOver.png"},
 			{L"NEXTSTAGE_TX", L"Tx_NextStage.png"},
 			{L"STAGESELECT_TX", L"Tx_StageSelect.png"},
-			{L"A_START_TX", L"Tx_Start.png"}
+			{L"A_START_TX", L"Tx_Start.png"},
+			{L"START_TX", L"Start.png"}
 		};
 		// アニメーション
 		Pairs animPairs[] = 

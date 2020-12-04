@@ -209,6 +209,7 @@ namespace basecross{
 		const Vec2& StartPos,
 		bool FadeFlg,
 		const float AlphaLimit,
+		const float AlphaValue,
 		const wstring TextureKey,
 		const int& Layer,
 		const Col4& Color
@@ -219,6 +220,7 @@ namespace basecross{
 		m_StartPos(StartPos),
 		m_FadeFlg(FadeFlg),
 		m_AlphaLimit(AlphaLimit),
+		m_AlphaValue(AlphaValue),
 		m_TextureKey(TextureKey),
 		m_Layer(Layer),
 		m_Color(Color)
@@ -253,14 +255,6 @@ namespace basecross{
 		auto ptrDraw = AddComponent<PCTSpriteDraw>(vertices, indices);
 		ptrDraw->SetSamplerState(SamplerState::LinearWrap);
 		ptrDraw->SetTextureResource(m_TextureKey);
-		if (m_FadeFlg == true)
-		{
-			m_Color.w = 1.0f;
-		}
-		else
-		{
-			m_Color.w = 0.0f;
-		}
 		ptrDraw->SetDiffuse(m_Color);
 		// ÉåÉCÉÑÅ[
 		SetDrawLayer(m_Layer);

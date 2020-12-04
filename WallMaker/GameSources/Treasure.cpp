@@ -27,20 +27,20 @@ namespace basecross{
 	void Treasure::OnCreate()
 	{
 		auto ptrTrans = GetComponent<Transform>();
-		ptrTrans->SetScale(0.5f, 0.5f, 0.5f);
+		ptrTrans->SetScale(2.0f, 2.0f, 2.0f);
 		ptrTrans->SetRotation(0.0f, 0.0f, 0.0f);
 		ptrTrans->SetPosition(m_Position);
 
 		Mat4x4 spanMat; // モデルとトランスフォームの間の差分行列
 		spanMat.affineTransformation(
-			Vec3(1.0f, 1.0f, 1.0f),
+			Vec3(0.25f, 0.25f, 0.25f),
 			Vec3(0.0f, 0.0f, 0.0f),
 			Vec3(0.0f, 0.0f, 0.0f),
 			Vec3(0.0f, 0.0f, 0.0f)
 		);
 
 		auto ptrColl = AddComponent<CollisionCapsule>();
-		ptrColl->SetDrawActive(true);
+		//ptrColl->SetDrawActive(true);
 
 		//影をつける（シャドウマップを描画する）
 		auto ptrShadow = AddComponent<Shadowmap>();
@@ -55,14 +55,14 @@ namespace basecross{
 		AddTag(WstringKey::Tag_Treasure);
 
 		// DrawString用
-		auto strComp = AddComponent<StringSprite>();
-		strComp->SetBackColor(Col4(0, 0, 0, 0.5f));
-		strComp->SetTextRect(Rect2D<float>(10, 600, 270, 210));
+		//auto strComp = AddComponent<StringSprite>();
+		//strComp->SetBackColor(Col4(0, 0, 0, 0.5f));
+		//strComp->SetTextRect(Rect2D<float>(10, 600, 270, 210));
 	}
 
 	void Treasure::OnUpdate2()
 	{
-		DrawStrings();
+		//DrawStrings();
 	}
 
 	void Treasure::DrawStrings()

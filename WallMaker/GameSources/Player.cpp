@@ -338,9 +338,9 @@ namespace basecross{
 		m_MagicSkeltonWall = GetStage()->AddGameObject<MagicSkeltonWall>(m_Scale, m_Rotation, m_Position, GetThis<Player>());
 	
 		// DrawString—p
-		auto strComp = AddComponent<StringSprite>();
-		strComp->SetBackColor(Col4(0, 0, 0, 0.5f));
-		strComp->SetTextRect(Rect2D<float>(1000, 110, 1270, 310));
+		//auto strComp = AddComponent<StringSprite>();
+		//strComp->SetBackColor(Col4(0, 0, 0, 0.5f));
+		//strComp->SetTextRect(Rect2D<float>(1000, 110, 1270, 310));
 	}
 
 	void Player::OnUpdate()
@@ -366,7 +366,7 @@ namespace basecross{
 
 	void Player::OnUpdate2()
 	{
-		DrawStrings();
+		//DrawStrings();
 	}
 
 	void Player::OnCollisionEnter(shared_ptr<GameObject>& other) {

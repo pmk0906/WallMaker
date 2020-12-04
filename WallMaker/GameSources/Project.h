@@ -27,5 +27,6 @@
 #include "GameTitle.h"
 #include "GameStageSelect.h"
 #include "GameManager.h"
+#include "EnemyShield.h"
 
 

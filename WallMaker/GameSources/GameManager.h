@@ -2,17 +2,15 @@
 #include "stdafx.h"
 namespace basecross {
 
-	enum SelectingButton
+	enum SceneNum
 	{
-		ToNextStage,
-		ToStageSelect,
-		ToRetry,
-		ToShutdown,
-		ToGameStage1,
-		ToGameStage2,
-		ToGameStage3,
-		ToGameStage4,
-		ToGameStage5
+		Title,
+		StageSelect,
+		GameStage1,
+		GameStage2,
+		GameStage3,
+		GameStage4,
+		GameStage5
 	};
 
 	class GameManager {
@@ -25,9 +23,15 @@ namespace basecross {
 		// プレイヤーが死んだか
 		bool m_DeathFlg = false;
 		bool m_DeathFlgChanged = false;
-
+		//選択しているボタンの番号
 		int m_SelectingButtonNum = 0;
+		//ボタンの番号の最大値
 		int m_MaxButtonNum = 0;
+
+		//ステージの番号
+		int m_StageNumArray[9];
+		//現在のシーンの番号
+		int m_NowSceneNum = 0;
 
 		//InputHandler<GameStage> m_InputHandler;
 
@@ -45,11 +49,22 @@ namespace basecross {
 			SetSelectingButton(0);
 		}
 
+		//シーンの番号
+		void SetSceneNum(int sceneNum)
+		{
+			m_NowSceneNum = sceneNum;
+		}
+		int GetSceneNum()
+		{
+			return m_NowSceneNum;
+		}
 
+		//宝とプレイヤーのフラグを見てフラグを切り替え
 		void ClearCheck(shared_ptr<Stage>& stage)
 		{
 			for (auto obj : stage->GetGameObjectVec())
 			{
+				//宝
 				if (obj->FindTag(WstringKey::Tag_Treasure))
 				{
 					if (auto treasure = dynamic_pointer_cast<Treasure>(obj))
@@ -60,6 +75,7 @@ namespace basecross {
 						}
 					}
 				}
+				//プレイヤー
 				if (obj->FindTag(WstringKey::Tag_Player))
 				{
 					if (auto player = dynamic_pointer_cast<Player>(obj))
@@ -73,7 +89,8 @@ namespace basecross {
 			}
 		}
 
-		// クリアしたか
+
+		// クリアフラグ
 		bool GetClearFlg()
 		{
 			return m_ClearFlg;
@@ -91,9 +108,7 @@ namespace basecross {
 		{
 			m_ClearFlgChanged = flg;
 		}
-
-
-		// 倒されたか
+		// 死亡フラグ
 		bool GetDeathFlg()
 		{
 			return m_DeathFlg;
@@ -111,22 +126,11 @@ namespace basecross {
 		{
 			m_DeathFlgChanged = flg;
 		}
-
-		//縦のボタン番号の取得
+		// 選択しているボタンの番号
 		int GetSelectingButtonNum()
 		{
 			return m_SelectingButtonNum;
 		}
-
-		void ChangeButton()
-		{
-
-		}
-		//選択しているボタン
-		//int GetSelectingButton()
-		//{
-		//	return m_SelectingButton;
-		//}
 		void SetSelectingButton(int buttonNum)
 		{
 			m_SelectingButtonNum = buttonNum;
@@ -149,26 +153,5 @@ namespace basecross {
 			m_MaxButtonNum = maxButtonNum;
 		}
 
-		//void OnPushDpad(int dPadNum) {
-		//	switch (dPadNum)
-		//	{
-		//	case DPadNum::UP:
-		//		if (m_SelectingButtonNum < GetMaxButtonNum())
-		//		{
-		//			m_SelectingButtonNum++;
-		//		}
-		//		break;
-		//	case DPadNum::DOWN:
-		//		if (m_SelectingButtonNum > 0)
-		//		{
-		//			m_SelectingButtonNum--;
-		//		}
-		//		break;
-		//	case DPadNum::RIGHT:
-		//		break;
-		//	case DPadNum::LEFT:
-		//		break;
-		//	}
-		//};
 	};
 }

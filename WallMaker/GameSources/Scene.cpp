@@ -50,28 +50,28 @@ namespace basecross{
 		{
 			{L"TRACE_TX", L"trace.png"},
 			{L"FLOOR_TX", L"Floor.png"},
-			{L"MAGICWALL_TX", L"MagicWall.jpg"},
 			{L"WALL_TX", L"BlockWall.tga"},
-			{L"HEART_TX", L"Heart.png"},
-			{L"WALLSTOCK_TX", L"UI_MagicWall.png"},
-			{L"GAMETITLE_TX", L"Title.png"},
+			{L"HEART_UI_TX", L"Heart.png"},
+			{L"WALLSTOCK_UI_TX", L"UI_MagicWall.png"},
+			{L"TITLEL_LOGO_TX", L"Title.png"},
 			{L"GAMESELECT_BG_TX", L"Select_BackGround.png"},
 			{L"WHITE_TX", L"White.png"},
-			{L"TO_NEXTSTAGE_TX", L"ToNextStage.png"},
-			{L"TO_STAGESELECT_TX", L"ToStageSelect.png"},
-			{L"TO_RETRY_TX", L"ToRetry.png"},
+			//ボタン
+			{L"NEXTSTAGE_BUTTON_TX", L"Tx_NextStageButton.png"},
+			{L"STAGESELECT_BUTTON_TX", L"Tx_StageSelectButton.png"},
+			{L"RETRY_BUTTON_TX", L"Tx_Retry.png"},
+			//ステージ番号
 			{L"STAGE_1_TX", L"Select_1.png"},
 			{L"STAGE_2_TX", L"Select_2.png"},
 			{L"STAGE_3_TX", L"Select_3.png"},
 			{L"STAGE_4_TX", L"Select_4.png"},
 			{L"STAGE_5_TX", L"Select_5.png"},
+			//文字
 			{L"GAMECLEAR_TX", L"Tx_GameClear.png"},
-			{L"GAMEEND_TX", L"Tx_GameEnd.png"},
 			{L"GAMEOVER_TX", L"Tx_GameOver.png"},
-			{L"NEXTSTAGE_TX", L"Tx_NextStage.png"},
 			{L"STAGESELECT_TX", L"Tx_StageSelect.png"},
-			{L"A_START_TX", L"Tx_Start.png"},
-			{L"START_TX", L"Start.png"}
+			{L"A_START_TX", L"Tx_Start.png"}, // Aボタンでスタート
+			{L"START_TX", L"Start.png"} // ゲーム開始時
 		};
 		// アニメーション
 		Pairs animPairs[] = 
@@ -168,6 +168,7 @@ namespace basecross{
 			//自分自身にイベントを送る
 			//これにより各ステージやオブジェクトがCreate時にシーンにアクセスできる
 			PostEvent(0.0f, GetThis<ObjectInterface>(), GetThis<Scene>(), WstringKey::ToGameTitle);
+			//PostEvent(0.0f, GetThis<ObjectInterface>(), GetThis<Scene>(), WstringKey::ToGameTestStage);
 		}
 		catch (...) {
 			throw;
@@ -185,13 +186,12 @@ namespace basecross{
 		else if (event->m_MsgStr == WstringKey::ToGameStageSelect) {
 			ResetActiveStage<GameStageSelect>();
 		}
-		else if (event->m_MsgStr == WstringKey::ToGameStage) {
+		else if (event->m_MsgStr == WstringKey::ToGameStage1) {
 			ResetActiveStage<GameStage>();
 		}
-		//else if (event->m_MsgStr == WstringKey::ToGameTestStage) {
-		//	//最初のアクティブステージの設定
-		//	ResetActiveStage<GameStage>();
-		//}
+		else if (event->m_MsgStr == WstringKey::ToGameTestStage) {
+			ResetActiveStage<TestStage>();
+		}
 	}
 }
 //end basecross

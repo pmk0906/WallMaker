@@ -77,7 +77,7 @@ namespace basecross{
 			{
 				auto otherPos = obj->GetComponent<Transform>()->GetPosition();
 				auto len = playerPos - otherPos;
-				if (len.length() >= 30.0f)
+				if (len.length() >= 25.0f)
 				{
 					obj->SetDrawActive(false);
 					obj->SetUpdateActive(false);
@@ -469,6 +469,13 @@ namespace basecross{
 			SetUpdateActive(false);
 		}
 	}
+	//BGMを止める
+	void Player::StopBGM()
+	{
+		auto gameStage = dynamic_pointer_cast<GameStage>(GetStage());
+
+		gameStage->StopBGM();
+	}
 
 	//HPの取得
 	float Player::GetLife()
@@ -477,13 +484,13 @@ namespace basecross{
 	}
 
 	//プレイヤーが死んだかのフラグ
-	float Player::GetPlayerDiedFlg()
+	bool Player::GetPlayerDiedFlg()
 	{
-		return m_PlayerDied;
+		return m_PlayerDiedFlg;
 	}
 	void Player::SetPlayerDiedFlg(bool diedFlg)
 	{
-		m_PlayerDied = diedFlg;
+		m_PlayerDiedFlg = diedFlg;
 	}
 
 	//壁のストック取得
@@ -598,7 +605,7 @@ namespace basecross{
 
 		//描画するテクスチャを設定
 		SetAlphaActive(true);
-		ptrDraw->SetTextureResource(L"MAGICWALL_TX");
+		//ptrDraw->SetTextureResource(L"MAGICWALL_TX");
 	}
 
 	void MagicWall::OnUpdate()

@@ -11,7 +11,7 @@ namespace basecross {
 	//--------------------------------------------------------------------------------------
 	//	ゲームステージクラス実体
 	//--------------------------------------------------------------------------------------
-	void GameStage::CreateViewLight() 
+	void TestStage::CreateViewLight() 
 	{
 		const Vec3 eye(0.0f, 30.0f, -20.0f);
 		const Vec3 at(0.0f);
@@ -27,7 +27,7 @@ namespace basecross {
 		PtrMultiLight->SetDefaultLighting();
 	}
 
-	void GameStage::CreateWall()
+	void TestStage::CreateWall()
 	{
 		int mapRows = 16;
 		int mapCols = 32;
@@ -38,7 +38,7 @@ namespace basecross {
 		{
 			1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ,1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
 			1,47,48,48,48,48,48,48,48,48,48,48,48,48,49, 1, 1, 1,47,48,48,48,48,48,48,48,48,48,48,48,49, 1,
-			1,44, 0, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,49, 1,47 ,3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3,46, 1,
+			1,44, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,49, 1,47 ,3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3,46, 1,
 			1,44, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0,46, 1,44, 0, 0, 0,42,42,42,42, 0, 0, 0, 0, 0,46, 1,
 			1,41,42,42,42,42,42, 0, 0, 0, 0, 0, 0, 0, 0,46, 1,44, 0, 0,46, 1, 1, 1, 1,41, 0, 0, 0, 0,46, 1,
 			1, 1, 1, 1, 1, 1, 1,44, 0, 0, 0, 0, 0, 0, 0,46, 1,44, 0, 0, 0,48,48,48,49, 1,44, 0, 0, 0,46, 1,
@@ -48,7 +48,7 @@ namespace basecross {
 			1,44, 0, 0, 0, 0, 0, 0, 0,42,42,42,42,42,42,43, 1, 1,41,42,42,42, 0, 0, 0,46, 1,44, 0, 0,46, 1,
 			1,44, 0, 0, 0, 0, 0, 0,46, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,44, 0, 0,46, 1,44, 0, 0,46, 1,
 			1,44, 0, 0, 0, 0, 0, 0, 0,48,48,48,48,48,48,48,48,48,48,48,48,48, 0, 0, 0,46, 1,44, 0, 0,46, 1,
-			1,44, 0, 5, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0,46, 1,44, 0, 0,46, 1,
+			1,44, 0, 5, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0,46, 1,44, 6, 0,46, 1,
 			1,44, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,46, 1,44, 0, 2,46, 1,
 			1,41,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,43, 1,41,42,42,43, 1,
 			1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1
@@ -130,14 +130,14 @@ namespace basecross {
 		}
 	}
 
-	void GameStage::DrawStrings()
+	void TestStage::DrawStrings()
 	{
 		auto gm = GameManager::GetInstance();
 
 
 	}
 
-	void GameStage::OnCreate() 
+	void TestStage::OnCreate() 
 	{
 		try {
 			//ビューとライトの作成
@@ -148,9 +148,10 @@ namespace basecross {
 		}
 
 		CreateStage();
+		//CreateWall();
+		CreatePlayer(Vec3(0.0f, 1.0f, 0.0f));
 		CreateEnemy();
 		CreateUI();
-		//CreatePlayer(Vec3(0.0f, 1.0f, 0.0f));
 
 		AddGameObject<GameManagement>(Vec3(0.0f), Vec3(0.0f), Vec3(0.0f));
 
@@ -162,66 +163,30 @@ namespace basecross {
 		auto ptrXA = App::GetApp()->GetXAudio2Manager();
 		m_BGM = ptrXA->Start(WstringKey::SE_MainBGM, 0, 1.0f);
 
-		auto startSprite = AddGameObject<FadeSprite>(true, Vec2(800, 300), Vec2(0, 150), false, 0.0f, 3.0f, L"START_TX", 1, Col4(1, 1, 1, 1.0f));
+		//auto startSprite = AddGameObject<FadeSprite>(true, Vec2(800, 300), Vec2(0, 150), false, 0.0f, 3.0f, L"START_TX", 1, Col4(1, 1, 1, 1.0f));
 
 	}
 
-	void GameStage::OnUpdate() 
+	void TestStage::OnUpdate() 
 	{
-		auto gm = GameManager::GetInstance();
-
-		gm->ClearCheck(GetThis<Stage>());
-
-		if (gm->GetClearFlg() == true && gm->GetClearFlgChanged() == false)
-		{
-			auto whiteSprite = AddGameObject<FadeSprite>(true, Vec2(1120, 630), Vec2(0, 0), true, 0.5f, 0.0f, L"WHITE_TX", 1, Col4(1, 1, 1, 0.5f));
-			whiteSprite->SetFadeFlgChanged(false);
-			gm->SetClearFlg(false);
-			gm->SetClearFlgChanged(true);
-
-			auto clearSprite = AddGameObject<FadeSprite>(true, Vec2(800, 300), Vec2(0, 150), true, 1.0f, 0.0f, L"GAMECLEAR_TX", 1, Col4(1, 1, 1, 0.1f));
-			clearSprite->SetFadeFlgChanged(false);
-
-			auto buttonSprite = AddGameObject<ButtonSprite>(true, Vec2(600, 100), Vec2(0, -70.0f), true, 1.0f, L"NEXTSTAGE_BUTTON_TX", 0, 2, Col4(1, 1, 1, 0.5f));
-			auto buttonSprite2 = AddGameObject<ButtonSprite>(true, Vec2(600, 100), Vec2(0, -220.0f), true, 1.0f, L"STAGESELECT_BUTTON_TX", 1, 2, Col4(1, 1, 1, 0.5f));
-			gm->SetMaxButtonNum(1);
-		}
-		if (gm->GetDeathFlg() == true && gm->GetDeathFlgChanged() == false)
-		{
-			auto whiteSprite = AddGameObject<FadeSprite>(true, Vec2(1120, 630), Vec2(0, 0), true, 0.5f, 0.0f, L"WHITE_TX", 1, Col4(0, 0, 0, 0.5f));
-			whiteSprite->SetFadeFlgChanged(false);
-			gm->SetDeathFlg(false);
-			gm->SetDeathFlgChanged(true);
-
-			auto clearSprite = AddGameObject<FadeSprite>(true, Vec2(800, 300), Vec2(0, 150), true, 1.0f, 0.0f, L"GAMEOVER_TX", 1, Col4(1, 1, 1, 0.1f));
-			clearSprite->SetFadeFlgChanged(false);
-
-			auto buttonSprite = AddGameObject<ButtonSprite>(true, Vec2(600, 100), Vec2(0, -70.0f), true, 1.0f, L"RETRY_BUTTON_TX", 0, 2, Col4(1, 1, 1, 0.5f));
-			auto buttonSprite2 = AddGameObject<ButtonSprite>(true, Vec2(600, 100), Vec2(0, -220.0f), true, 1.0f, L"STAGESELECT_BUTTON_TX", 1, 2, Col4(1, 1, 1, 0.5f));
-			gm->SetMaxButtonNum(1);
-		}
-
 	}
 
-	void GameStage::CreateStage()
+	void TestStage::CreateStage()
 	{
-		// 床
-		//AddGameObject<FixedBox>(Vec3(50.0f, 1.0f, 50.0f), Vec3(0.0f), Vec3(0.0f, -0.5f, 0.0f));
-		int posX = 0;
-		int posZ = 0;
-		Vec3 stagePos = Vec3(posX, 0, posZ);
-		for (int l = 0; l < STAGE_LENGTH; l++) {
-			for (int w = 0; w < STAGE_WIDTH; w++) {
-				//AddGameObject<Floor>(Vec3(3.0f, 1.0f, 3.0f), Vec3(0.0f), Vec3(w * 3 - STAGE_LENGTH, -0.5f, l * 3 - STAGE_WIDTH));
-			}
-		}
+		//// 床
+		////AddGameObject<FixedBox>(Vec3(50.0f, 1.0f, 50.0f), Vec3(0.0f), Vec3(0.0f, -0.5f, 0.0f));
+		//int posX = 0;
+		//int posZ = 0;
+		//Vec3 stagePos = Vec3(posX, 0, posZ);
+		//for (int l = 0; l < STAGE_LENGTH; l++) {
+		//	for (int w = 0; w < STAGE_WIDTH; w++) {
+		//		//AddGameObject<Floor>(Vec3(3.0f, 1.0f, 3.0f), Vec3(0.0f), Vec3(w * 3 - STAGE_LENGTH, -0.5f, l * 3 - STAGE_WIDTH));
+		//	}
+		//}
 		AddGameObject<Floor>(Vec3(32.0f * 3.0f, 1.0f, 16.0f * 3.0f), Vec3(0.0f), Vec3(32.0f * 1.5f - 32.0f - 1.5f, 0.0f, -16.0f * 1.5f + 16.0f + 1.5f));
-
-		CreateWall();
-
 	}
 
-	void GameStage::CreateEnemy()
+	void TestStage::CreateEnemy()
 	{
 		////敵①
 		//AddGameObject<EnemyFirst>(Vec3(2.0f, 1.0f, 3.5f), Vec3(0.0f), Vec3(-5.0f, 1.5f, 0.0f));
@@ -241,7 +206,7 @@ namespace basecross {
 		AddGameObject<DangerEnemy>(Vec3(2.0f, 1.0f, 3.5f), Vec3(0.0f), Vec3(-5.0f, 1.5f, -3.0f));
 	}
 
-	void GameStage::CreatePlayer(Vec3 pos)
+	void TestStage::CreatePlayer(Vec3 pos)
 	{
 		auto player = AddGameObject<Player>(Vec3(1.5f), Vec3(0.0f), Vec3(pos.x, 2.0f, pos.z));
 		SetSharedGameObject(WstringKey::ShareObj_Player, player);
@@ -249,7 +214,7 @@ namespace basecross {
 
 	}
 
-	void GameStage::CreateUI()
+	void TestStage::CreateUI()
 	{
 		//プレイヤーのライフ表示
 		AddGameObject<PlayerLife>(true, Vec2(100.0f), Vec3(-590.0f, 350.0f, 0.1f), 1.0f);
@@ -261,7 +226,7 @@ namespace basecross {
 		AddGameObject<WallStock>(true, Vec2(100.0f), Vec3(+390.0f, 350.0f, 0.1f), 3.0f);
 	}
 
-	void GameStage::StopBGM()
+	void TestStage::StopBGM()
 	{
 		auto ptrXA = App::GetApp()->GetXAudio2Manager();
 

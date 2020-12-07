@@ -11,13 +11,11 @@ namespace basecross {
 	//--------------------------------------------------------------------------------------
 	//	ゲームステージクラス
 	//--------------------------------------------------------------------------------------
-	class GameStage : public Stage {
+	class TestStage : public Stage {
 		//ステージの奥行
 		const int STAGE_LENGTH = 16;
 		//ステージの横幅
 		const int STAGE_WIDTH = 32;
-
-		InputHandler<GameStage> m_InputHandler;
 
 		shared_ptr<SoundItem> m_BGM;
 
@@ -35,8 +33,8 @@ namespace basecross {
 
 	public:
 		//構築と破棄
-		GameStage() :Stage() {}
-		virtual ~GameStage() {
+		TestStage() :Stage() {}
+		virtual ~TestStage() {
 			StopBGM();
 		}
 

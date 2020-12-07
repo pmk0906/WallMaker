@@ -20,7 +20,7 @@ namespace basecross{
 		//HP
 		float m_PlayerHp = 3.0f;
 
-		bool m_PlayerDied = false;
+		bool m_PlayerDiedFlg = false;
 
 		// Rトリガーが押されているか
 		bool m_BeforePushRTFlg = false;
@@ -92,7 +92,7 @@ namespace basecross{
 		Vec3 GetPosition() const;
 		//HPの取得
 		float GetLife();
-		float GetPlayerDiedFlg();
+		bool GetPlayerDiedFlg();
 		void SetPlayerDiedFlg(bool diedFlg);
 
 		//壁のストックの取得
@@ -111,6 +111,8 @@ namespace basecross{
 
 		//死ぬ
 		void Die();
+		//BGMを止める
+		void StopBGM();
 
 		// ボタン
 		void OnPushA();

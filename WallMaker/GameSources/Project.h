@@ -28,5 +28,7 @@
 #include "GameStageSelect.h"
 #include "GameManager.h"
 #include "EnemyShield.h"
+#include "ManagerObject.h"
+#include "TestStage.h"
 
 

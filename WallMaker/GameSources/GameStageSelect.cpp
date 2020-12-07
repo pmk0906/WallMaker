@@ -61,21 +61,6 @@ namespace basecross{
 
 	void GameStageSelect::OnUpdate()
 	{
-		//コントローラチェックして入力があればコマンド呼び出し
-		m_InputHandler.PushHandle(GetThis<GameStageSelect>());
-	}
-
-	void GameStageSelect::OnPushA() 
-	{
-		PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), WstringKey::ToGameStage);
-
-		StopBGM();
-	}
-
-	void GameStageSelect::OnPushB()
-	{
-		PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), WstringKey::ToGameTitle);
-		StopBGM();
 	}
 
 	void GameStageSelect::StopBGM()

@@ -34,21 +34,23 @@ namespace basecross{
 		void CreateTitleSprite();
 
 		// 入力ハンドラー
-		InputHandler<GameTitle> m_InputHandler;
+		//InputHandler<GameTitle> m_InputHandler;
 
 		shared_ptr<SoundItem> m_BGM;
 
 	public:
 		// 構築と破棄
 		GameTitle() :Stage() {}
-		virtual ~GameTitle() {}
+		virtual ~GameTitle() {
+			StopBGM();
+		}
 
 		// 初期化
 		virtual void OnCreate()override;
 		virtual void OnUpdate()override;
 
-		void OnPushA();
-		void OnPushB();
+		void OnPushA() {};
+		void OnPushB(){};
 		void OnPushDPad(int dPadNum) {};
 		void OnHoldRTrigger() {}
 		void OnReleaseRTrigger() {}

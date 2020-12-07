@@ -101,7 +101,7 @@ namespace basecross{
 		//頂点とインデックスを指定してスプライト作成
 		auto ptrDraw = AddComponent<PCTSpriteDraw>(vertices, indices);
 		ptrDraw->SetSamplerState(SamplerState::LinearWrap);
-		ptrDraw->SetTextureResource(L"HEART_TX");
+		ptrDraw->SetTextureResource(L"HEART_UI_TX");
 	}
 
 	void PlayerLife::OnUpdate()
@@ -170,7 +170,7 @@ namespace basecross{
 		//頂点とインデックスを指定してスプライト作成
 		auto ptrDraw = AddComponent<PCTSpriteDraw>(vertices, indices);
 		ptrDraw->SetSamplerState(SamplerState::LinearWrap);
-		ptrDraw->SetTextureResource(L"WALLSTOCK_TX");
+		ptrDraw->SetTextureResource(L"WALLSTOCK_UI_TX");
 	}
 
 	void WallStock::OnUpdate()

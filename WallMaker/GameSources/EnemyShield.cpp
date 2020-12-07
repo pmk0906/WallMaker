@@ -341,7 +341,7 @@ namespace basecross {
 
 		ptrMyTrans->SetScale(Vec3(3.0f, 1.0f, 3.0f));
 		ptrMyTrans->SetRotation(Vec3(0.0f, XMConvertToRadians(180.0f), 0.0f));
-		ptrMyTrans->SetPosition(Vec3(0.0f, 0.5f, 3.0f));
+		ptrMyTrans->SetPosition(Vec3(0.0f, 0.0f, 3.0f));
 	}
 
 	void DangerShield::OnUpdate()

@@ -5,11 +5,21 @@
 namespace basecross {
 	void EnemyBullet::OnCreate()
 	{
-		auto drawComp = AddComponent<PNTStaticDraw>();
-		drawComp->SetMeshResource(L"DEFAULT_DODECAHEDRON");
+		Mat4x4 spanMat; // モデルとトランスフォームの間の差分行列
+		spanMat.affineTransformation(
+			Vec3(1.0f, 1.0f, 1.0f),
+			Vec3(0.0f, 0.0f, 0.0f),
+			Vec3(0.0f, 0.0f, 0.0f),
+			Vec3(0.0f, 0.0f, 0.0f)
+		);
+
+		//描画
+		auto ptrDraw = AddComponent<PNTStaticModelDraw>();
+		ptrDraw->SetMeshResource(L"BULLET_MESH");
+		ptrDraw->SetMeshToTransformMatrix(spanMat);
 
 		// 衝突判定
-		auto ptrColl = AddComponent<CollisionSphere>();
+		auto ptrColl = AddComponent<CollisionObb>();
 		ptrColl->SetAfterCollision(AfterCollision::None);
 
 		AddTag(L"EnemyBullet");
@@ -44,6 +54,7 @@ namespace basecross {
 		m_BulletSpeed = 15.0f;
 		m_Attack = 1.0f;
 		m_DieTime = 0.0f;
+		m_ReflectTime = 0.0f;
 
 		flg_reflect = false;
 	}
@@ -82,10 +93,6 @@ namespace basecross {
 
 	Vec3 EnemyBullet::Reflect(Vec3 wall, Vec3 bullet)
 	{
-		/*Vec3 temp = bullet;
-		temp.reflect(wall);
-		return temp;*/
-
 		Vec3 reverse_BulletVec, newDir, length, reflection;
 		float projection;
 
@@ -116,10 +123,13 @@ namespace basecross {
 		// 当たったのがプレイヤーなら
 		if (auto player = dynamic_pointer_cast<Player>(other))
 		{
-			player->Damage(ATTACK);
+			if (flg_reflect == false)
+			{
+				player->Damage(ATTACK);
 
-			auto ptrXA = App::GetApp()->GetXAudio2Manager();
-			ptrXA->Start(WstringKey::SE_PlayerDamage, 0, 1.0f);
+				auto ptrXA = App::GetApp()->GetXAudio2Manager();
+				ptrXA->Start(WstringKey::SE_PlayerDamage, 0, 1.0f);
+			}
 
 			SetDrawActive(false);
 			SetUpdateActive(false);
@@ -293,19 +303,33 @@ namespace basecross {
 			}
 		}
 		
-		if (auto stageWall = dynamic_pointer_cast<StageRefrectWall>(other))
+		if (auto reflectWall = dynamic_pointer_cast<StageRefrectWall>(other))
 		{
-			auto wallTrans = stageWall->GetComponent<Transform>();
+			auto wallTrans = reflectWall->GetComponent<Transform>();
+			auto myTrans = GetComponent<Transform>();
+
+			auto pos = myTrans->GetPosition();
 
 			if (flg_reflect)
 			{
+				pos -= 0.15f;
+
 				SetDir(Reflect(wallTrans->GetForword(), dir));
 
 				m_BulletSpeed += 5.0f;
 				m_Attack += 1.0f;
 			}
+
+			myTrans->SetPosition(pos);
 		}
+
 		if (auto stageWall = dynamic_pointer_cast<StageWall>(other))
+		{
+			SetDrawActive(false);
+			SetUpdateActive(false);
+		}
+
+		if (auto cannon = dynamic_pointer_cast<Cannon>(other))
 		{
 			SetDrawActive(false);
 			SetUpdateActive(false);

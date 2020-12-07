@@ -1,9 +1,9 @@
 #include "stdafx.h"
 #include "Project.h"
 
-////往復する敵（左右移動）
+////範囲内に入ったプレイヤーを狙い弾を撃つ敵
 namespace basecross {
-	PatrolEnemy::PatrolEnemy(
+	Cannon::Cannon(
 		const shared_ptr<Stage>& StagePtr,
 		const Vec3& Scale,
 		const Vec3& Rotation,
@@ -14,15 +14,15 @@ namespace basecross {
 		m_Rotation(Rotation),
 		m_Position(Position)
 	{}
-	PatrolEnemy::~PatrolEnemy() {}
+	Cannon::~Cannon() {}
 
-	void PatrolEnemy::OnCreate()
+	void Cannon::OnCreate()
 	{
 		Mat4x4 spanMat; // モデルとトランスフォームの間の差分行列
 		spanMat.affineTransformation(
-			Vec3(0.3f, 1.0f, 0.5f),
+			Vec3(0.8f, 1.0f, 0.8f),
 			Vec3(0.0f, 0.0f, 0.0f),
-			Vec3(0.0f, XMConvertToRadians(270.0f), 0.0f),
+			Vec3(0.0f, XMConvertToRadians(180.0f), 0.0f),
 			Vec3(0.0f, 0.0f, 0.0f)
 		);
 
@@ -37,43 +37,39 @@ namespace basecross {
 		ptrColl->SetFixed(true);
 
 		//タグをつける
-		AddTag(L"PatrolEnemy");
+		AddTag(L"Cannon");
 
 		//描画処理
 		auto ptrDraw = AddComponent<PNTStaticModelDraw>();
-		ptrDraw->SetMeshResource(L"ENEMY_MESH");
+		ptrDraw->SetMeshResource(L"STOPENEMY_MESH");
 		ptrDraw->SetMeshToTransformMatrix(spanMat);
 		//ptrDraw->SetFogEnabled(true);
 		ptrDraw->SetOwnShadowActive(true);
 
 		Initialize();
-		CreateShield();
 	}
 
-	void PatrolEnemy::OnUpdate()
+	void Cannon::OnUpdate()
 	{
-		if (m_FireTime >= 3.0f)
+
+		auto gm = GameManager::GetInstance();
+		if (gm->GetClearFlgChanged() == false)
 		{
-			Fire();
+			if (m_FireTime >= 3.0f)
+			{
+				Fire();
+			}
+
+			Reload();
 		}
-
-		Reload();
-		Move();
-		Die();
 	}
 
-	//変数の初期化
-	void PatrolEnemy::Initialize()
+	void Cannon::Initialize()
 	{
-		m_EnemyHP = 1.0f;
 		m_FireTime = 3.0f;
-		m_MoveSpeed = 3.0f;
-		m_MoveDirect = 1.0f;
-		m_TimeOfChangeDirect = 0.0f;
 	}
 
-	//発射
-	void PatrolEnemy::Fire()
+	void Cannon::Fire()
 	{
 		auto transComp = GetComponent<Transform>();
 
@@ -95,8 +91,7 @@ namespace basecross {
 		ptrXA->Start(WstringKey::SE_Bullet, 0, 1.0f);
 	}
 
-	//リロード
-	void PatrolEnemy::Reload()
+	void Cannon::Reload()
 	{
 		auto& app = App::GetApp();
 
@@ -105,58 +100,7 @@ namespace basecross {
 		m_FireTime += delta;
 	}
 
-	//往復（左右）
-	void PatrolEnemy::Move()
-	{
-		auto& app = App::GetApp();
-
-		float delta = app->GetElapsedTime();
-
-		auto transComp = GetComponent<Transform>();
-		auto pos = transComp->GetPosition();
-
-		pos.x += m_MoveSpeed * delta * m_MoveDirect;
-
-		m_TimeOfChangeDirect += delta;
-
-		if (m_TimeOfChangeDirect >= 2.0f)
-		{
-			m_MoveDirect *= -1.0f;
-
-			m_TimeOfChangeDirect = 0.0f;
-		}
-
-		transComp->SetPosition(pos);
-	}
-
-	//ダメージを受ける
-	void PatrolEnemy::Damage(float damage)
-	{
-		m_EnemyHP -= damage;
-	}
-
-
-	//死ぬ
-	void PatrolEnemy::Die()
-	{
-		auto ptrChild = dynamic_pointer_cast<PatrolShield>(m_Shield);
-
-		if (m_EnemyHP <= 0.0f)
-		{
-			SetDrawActive(false);
-			SetUpdateActive(false);
-
-			ptrChild->DirectDie();
-		}
-	}
-
-	void PatrolEnemy::CreateShield()
-	{
-		m_Shield = GetStage()->AddGameObject<PatrolShield>(GetThis<PatrolEnemy>());
-	}
-
-	//ポジションの取得
-	Vec3 PatrolEnemy::GetPosition() const
+	Vec3 Cannon::GetPosition() const
 	{
 		return GetComponent<Transform>()->GetPosition();
 	}

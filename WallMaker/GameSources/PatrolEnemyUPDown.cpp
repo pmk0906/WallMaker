@@ -73,7 +73,7 @@ namespace basecross {
 
 	void PatrolEnemyUPDown::Fire()
 	{
-		auto& app = App::GetApp();
+		/*auto& app = App::GetApp();
 
 		auto transComp = GetComponent<Transform>();
 		float delta = app->GetElapsedTime();
@@ -109,6 +109,25 @@ namespace basecross {
 		bulletTrans->SetPosition(pos + forward_player * scale_player.z);
 		enemybullet->SetDir(forward_player);
 		
+		m_FireTime = 0.0f;
+
+		auto ptrXA = App::GetApp()->GetXAudio2Manager();
+		ptrXA->Start(WstringKey::SE_Bullet, 0, 1.0f);*/
+
+		auto transComp = GetComponent<Transform>();
+
+		auto forward_player = transComp->GetForword();
+
+		auto pos = transComp->GetPosition();
+
+		auto enemybullet = GetStage()->AddGameObject<EnemyBullet>();
+		auto bulletTrans = enemybullet->GetComponent<Transform>();
+
+		auto scale_enemy = transComp->GetScale();
+
+		bulletTrans->SetPosition(pos + forward_player * scale_enemy.x);
+		enemybullet->SetDir(forward_player);
+
 		m_FireTime = 0.0f;
 
 		auto ptrXA = App::GetApp()->GetXAudio2Manager();

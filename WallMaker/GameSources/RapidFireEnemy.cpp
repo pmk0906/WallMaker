@@ -111,37 +111,14 @@ namespace basecross {
 
 	void RapidFireEnemy::Fire()
 	{
-		auto& app = App::GetApp();
-
 		auto transComp = GetComponent<Transform>();
-		float delta = app->GetElapsedTime();
-		auto objs = GetStage()->GetGameObjectVec();
-		auto enemyPos = transComp->GetPosition();
-
-		Vec3 playerPos(0.0f, 0.0f, 0.0f);
-
-		for (auto& obj : objs)
-		{
-			auto player = dynamic_pointer_cast<Player>(obj);
-			auto gameStage = dynamic_pointer_cast<GameStage>(GetStage());
-
-			if (player) {
-				playerPos = player->GetPosition();
-			}
-		}
-
-		auto enemyToPlayer = playerPos - enemyPos;
-
-		auto quaternion = transComp->GetQuaternion();
-		auto rot_bullet = quaternion.toRotVec();
-
+		
 		auto forward_player = transComp->GetForword();
 
 		auto pos = transComp->GetPosition();
 
 		auto enemybullet = GetStage()->AddGameObject<EnemyBullet>();
 		auto bulletTrans = enemybullet->GetComponent<Transform>();
-
 
 		auto scale_player = transComp->GetScale();
 

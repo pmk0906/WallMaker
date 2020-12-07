@@ -30,5 +30,6 @@
 #include "EnemyShield.h"
 #include "ManagerObject.h"
 #include "TestStage.h"
+#include "Cannon.h"
 
 

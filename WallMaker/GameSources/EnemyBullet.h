@@ -7,12 +7,13 @@ namespace basecross {
 	{
 		Vec3 dir; // ’e‚ÌˆÚ“®•ûŒü
 
-		const float MAX_SPEED = 30.0f;
+		const float MAX_SPEED = 25.0f;
 		const float ATTACK = 1.0f;
 
 		float m_BulletSpeed; // ’e‚ÌˆÚ“®ƒXƒs\ƒh
 		float m_Attack; // ’e‚ÌˆĞ—Í
 		float m_DieTime; // ’e‚Ì¶‘¶ŠÔ
+		float m_ReflectTime;
 
 		bool flg_reflect;
 

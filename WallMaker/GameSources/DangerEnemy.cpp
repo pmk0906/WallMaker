@@ -95,29 +95,7 @@ namespace basecross {
 
 	void DangerEnemy::Fire()
 	{
-		auto& app = App::GetApp();
-
 		auto transComp = GetComponent<Transform>();
-		float delta = app->GetElapsedTime();
-		auto objs = GetStage()->GetGameObjectVec();
-		auto enemyPos = transComp->GetPosition();
-
-		Vec3 playerPos(0.0f, 0.0f, 0.0f);
-
-		for (auto& obj : objs)
-		{
-			auto player = dynamic_pointer_cast<Player>(obj);
-			auto gameStage = dynamic_pointer_cast<GameStage>(GetStage());
-
-			if (player) {
-				playerPos = player->GetPosition();
-			}
-		}
-
-		auto enemyToPlayer = playerPos - enemyPos;
-
-		auto quaternion = transComp->GetQuaternion();
-		auto rot_bullet = quaternion.toRotVec();
 
 		auto forward_player = transComp->GetForword();
 
@@ -126,9 +104,9 @@ namespace basecross {
 		auto enemybullet = GetStage()->AddGameObject<DangerBullet>();
 		auto bulletTrans = enemybullet->GetComponent<Transform>();
 
-		auto scale_player = transComp->GetScale();
+		auto scale_enemy = transComp->GetScale();
 
-		bulletTrans->SetPosition(pos + forward_player * scale_player.x);
+		bulletTrans->SetPosition(pos + forward_player * scale_enemy.x);
 		enemybullet->SetDir(forward_player);
 
 		m_FireTime = 0.0f;

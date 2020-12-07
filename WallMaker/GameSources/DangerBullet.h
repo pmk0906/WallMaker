@@ -7,7 +7,7 @@ namespace basecross {
 	{
 		Vec3 dir; // ’e‚ÌˆÚ“®•ûŒü
 
-		const float MAX_SPEED = 30.0f;
+		const float MAX_SPEED = 25.0f;
 		const float ATTACK = 2.0f;
 
 		int m_ReflectCount;

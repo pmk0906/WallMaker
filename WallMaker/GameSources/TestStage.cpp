@@ -123,7 +123,7 @@ namespace basecross {
 					AddGameObject<StageRefrectWall>(Vec3(scale), Vec3(0.0f), Vec3(pos.x, 1.5f, pos.z + 1.3f));
 					break;
 				case 6:
-					AddGameObject<Treasure>(Vec3(1.0f), Vec3(0.0f), Vec3(pos.x, 1.5f, pos.z));
+					AddGameObject<TreasureBox>(Vec3(1.0f), Vec3(0.0f), Vec3(pos.x, 1.5f, pos.z));
 
 				}
 			}
@@ -192,12 +192,12 @@ namespace basecross {
 		//AddGameObject<EnemyFirst>(Vec3(2.0f, 1.0f, 3.5f), Vec3(0.0f), Vec3(-5.0f, 1.5f, 0.0f));
 
 		////âùïúìGÅiâ°Åj
-		//AddGameObject<PatrolEnemy>(Vec3(3.0f, 1.0f, 2.0f), Vec3(0.0f, XMConvertToRadians(180), 0.0f),
-		//	Vec3(-3.0f, 1.5f, 5.0f));
+		//AddGameObject<PatrolEnemy>(Vec3(2.0f, 1.0f, 3.5f), Vec3(0.0f, XMConvertToRadians(180), 0.0f),
+			//Vec3(-3.0f, 1.5f, 5.0f));
 
 		////âùïúìGÅiècÅj
-		//AddGameObject<PatrolEnemyUPDown>(Vec3(3.0f, 1.0f, 2.0f), Vec3(0.0f, XMConvertToRadians(270), 0.0f),
-		//	Vec3(10.0f, 1.5f, -5.0f));
+		//AddGameObject<PatrolEnemyUPDown>(Vec3(2.0f, 1.0f, 3.5f), Vec3(0.0f, XMConvertToRadians(270), 0.0f),
+			//Vec3(10.0f, 1.5f, -5.0f));
 
 		////òAéÀÇ∑ÇÈìG
 		//AddGameObject<RapidFireEnemy>(Vec3(2.0f, 1.0f, 3.5f), Vec3(0.0f), Vec3(0.0f, 1.5f, -5.0f));
@@ -206,7 +206,7 @@ namespace basecross {
 		//AddGameObject<DangerEnemy>(Vec3(2.0f, 1.0f, 3.5f), Vec3(0.0f), Vec3(-5.0f, 1.5f, -3.0f));
 
 		//ëÂñC
-		AddGameObject<Cannon>(Vec3(2.0f, 1.0f, 3.5f), Vec3(0.0f), Vec3(-5.0f, 1.5f, -3.0f));
+		//AddGameObject<Cannon>(Vec3(2.0f, 1.0f, 3.5f), Vec3(0.0f), Vec3(-5.0f, 1.5f, -3.0f));
 	}
 
 	void TestStage::CreatePlayer(Vec3 pos)

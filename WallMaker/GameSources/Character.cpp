@@ -175,6 +175,7 @@ namespace basecross{
 		auto ptrColl = AddComponent<CollisionObb>();
 		ptrColl->SetFixed(true);
 		//ptrColl->SetDrawActive(true);
+		ptrColl->SetAfterCollision(AfterCollision::None);
 
 		//ƒ^ƒO‚ð‚Â‚¯‚é
 		AddTag(WstringKey::Tag_DrawActiveFalse);

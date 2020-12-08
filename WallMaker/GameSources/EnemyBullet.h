@@ -37,6 +37,7 @@ namespace basecross {
 		void Die();
 		void SetDir(const Vec3& v);
 		void SetMaxSpeed();
+		void SetColor();
 
 		// Õ“Ë”»’è
 		virtual void OnCollisionEnter(shared_ptr<GameObject>& other)override;

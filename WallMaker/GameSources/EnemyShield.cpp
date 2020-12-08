@@ -17,7 +17,7 @@ namespace basecross {
 	{
 		Mat4x4 spanMat; // モデルとトランスフォームの間の差分行列
 		spanMat.affineTransformation(
-			Vec3(0.55f, 0.5f, 5.0f),
+			Vec3(1.0f, 1.0f, 1.0f),
 			Vec3(0.0f, 0.0f, 0.0f),
 			Vec3(0.0f, 0.0f, 0.0f),
 			Vec3(0.0f, -0.5f, 0.0f)
@@ -29,6 +29,7 @@ namespace basecross {
 		// 衝突判定
 		auto ptrColl = AddComponent<CollisionObb>();
 		ptrColl->SetAfterCollision(AfterCollision::None);
+		ptrColl->SetDrawActive(true);
 
 		AddTag(L"EnemyShield");
 
@@ -39,7 +40,7 @@ namespace basecross {
 
 		auto ptrMyTrans = AddComponent<Transform>();
 
-		ptrMyTrans->SetScale(Vec3(3.0f, 1.0f, 3.0f));
+		ptrMyTrans->SetScale(Vec3(3.0f, 1.0f, 2.0f));
 		ptrMyTrans->SetRotation(Vec3(0.0f,XMConvertToRadians(180.0f),0.0f));
 		ptrMyTrans->SetPosition(Vec3(0.0f, 0.5f, 2.5f));
 	}
@@ -92,7 +93,7 @@ namespace basecross {
 	{
 		Mat4x4 spanMat; // モデルとトランスフォームの間の差分行列
 		spanMat.affineTransformation(
-			Vec3(0.55f, 0.5f, 5.0f),
+			Vec3(1.0f, 1.0f, 1.0f),
 			Vec3(0.0f, 0.0f, 0.0f),
 			Vec3(0.0f, 0.0f, 0.0f),
 			Vec3(0.0f, -0.5f, 0.0f)
@@ -104,6 +105,7 @@ namespace basecross {
 		// 衝突判定
 		auto ptrColl = AddComponent<CollisionObb>();
 		ptrColl->SetAfterCollision(AfterCollision::None);
+		ptrColl->SetDrawActive(true);
 
 		AddTag(L"PatrolShield");
 
@@ -114,7 +116,7 @@ namespace basecross {
 
 		auto ptrMyTrans = AddComponent<Transform>();
 
-		ptrMyTrans->SetScale(Vec3(3.0f, 1.0f, 3.0f));
+		ptrMyTrans->SetScale(Vec3(3.0f, 1.0f, 2.0f));
 		ptrMyTrans->SetRotation(Vec3(0.0f, XMConvertToRadians(180.0f), 0.0f));
 		ptrMyTrans->SetPosition(Vec3(0.0f, 0.5f, 2.5f));
 	}
@@ -167,7 +169,7 @@ namespace basecross {
 	{
 		Mat4x4 spanMat; // モデルとトランスフォームの間の差分行列
 		spanMat.affineTransformation(
-			Vec3(0.55f, 0.5f, 5.0f),
+			Vec3(1.0f, 1.0f, 1.0f),
 			Vec3(0.0f, 0.0f, 0.0f),
 			Vec3(0.0f, 0.0f, 0.0f),
 			Vec3(0.0f, -0.5f, 0.0f)
@@ -179,6 +181,7 @@ namespace basecross {
 		// 衝突判定
 		auto ptrColl = AddComponent<CollisionObb>();
 		ptrColl->SetAfterCollision(AfterCollision::None);
+		ptrColl->SetDrawActive(true);
 
 		AddTag(L"UPPatrolShield");
 
@@ -189,7 +192,7 @@ namespace basecross {
 
 		auto ptrMyTrans = AddComponent<Transform>();
 
-		ptrMyTrans->SetScale(Vec3(3.0f, 1.0f, 3.0f));
+		ptrMyTrans->SetScale(Vec3(3.0f, 1.0f, 2.0f));
 		ptrMyTrans->SetRotation(Vec3(0.0f, XMConvertToRadians(180.0f), 0.0f));
 		ptrMyTrans->SetPosition(Vec3(0.0f, 0.5f, 2.5f));
 	}
@@ -242,7 +245,7 @@ namespace basecross {
 	{
 		Mat4x4 spanMat; // モデルとトランスフォームの間の差分行列
 		spanMat.affineTransformation(
-			Vec3(0.55f, 0.5f, 5.0f),
+			Vec3(1.0f, 1.0f, 1.0f),
 			Vec3(0.0f, 0.0f, 0.0f),
 			Vec3(0.0f, 0.0f, 0.0f),
 			Vec3(0.0f, -0.5f, 0.0f)
@@ -254,6 +257,7 @@ namespace basecross {
 		// 衝突判定
 		auto ptrColl = AddComponent<CollisionObb>();
 		ptrColl->SetAfterCollision(AfterCollision::None);
+		ptrColl->SetDrawActive(true);
 
 		AddTag(L"EnemyShield");
 
@@ -264,7 +268,7 @@ namespace basecross {
 
 		auto ptrMyTrans = AddComponent<Transform>();
 
-		ptrMyTrans->SetScale(Vec3(3.0f, 1.0f, 3.0f));
+		ptrMyTrans->SetScale(Vec3(3.0f, 1.0f, 2.0f));
 		ptrMyTrans->SetRotation(Vec3(0.0f, XMConvertToRadians(180.0f), 0.0f));
 		ptrMyTrans->SetPosition(Vec3(0.0f, 0.5f, 2.5f));
 	}
@@ -317,7 +321,7 @@ namespace basecross {
 	{
 		Mat4x4 spanMat; // モデルとトランスフォームの間の差分行列
 		spanMat.affineTransformation(
-			Vec3(0.55f, 0.5f, 5.0f),
+			Vec3(1.0f, 1.0f, 1.0f),
 			Vec3(0.0f, 0.0f, 0.0f),
 			Vec3(0.0f, 0.0f, 0.0f),
 			Vec3(0.0f, -0.5f, 0.0f)
@@ -329,6 +333,7 @@ namespace basecross {
 		// 衝突判定
 		auto ptrColl = AddComponent<CollisionObb>();
 		ptrColl->SetAfterCollision(AfterCollision::None);
+		ptrColl->SetDrawActive(true);
 
 		AddTag(L"EnemyShield");
 
@@ -339,7 +344,7 @@ namespace basecross {
 
 		auto ptrMyTrans = AddComponent<Transform>();
 
-		ptrMyTrans->SetScale(Vec3(3.0f, 1.0f, 3.0f));
+		ptrMyTrans->SetScale(Vec3(3.0f, 1.0f, 2.0f));
 		ptrMyTrans->SetRotation(Vec3(0.0f, XMConvertToRadians(180.0f), 0.0f));
 		ptrMyTrans->SetPosition(Vec3(0.0f, 0.0f, 3.0f));
 	}
@@ -351,7 +356,7 @@ namespace basecross {
 
 	void DangerShield::Initialize()
 	{
-		m_Hp = 9.0f;
+		m_Hp = 6.0f;
 	}
 
 	Vec3 DangerShield::GetPosition() const

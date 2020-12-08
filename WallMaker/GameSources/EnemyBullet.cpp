@@ -46,6 +46,7 @@ namespace basecross {
 			BulletMove();
 			Die();
 			SetMaxSpeed();
+			SetColor();
 		}
 	}
 
@@ -114,6 +115,25 @@ namespace basecross {
 		if (m_BulletSpeed >= MAX_SPEED)
 		{
 			m_BulletSpeed = MAX_SPEED;
+		}
+	}
+
+	void EnemyBullet::SetColor()
+	{
+		Mat4x4 spanMat; // モデルとトランスフォームの間の差分行列
+		spanMat.affineTransformation(
+			Vec3(1.0f, 1.0f, 1.0f),
+			Vec3(0.0f, 0.0f, 0.0f),
+			Vec3(0.0f, 0.0f, 0.0f),
+			Vec3(0.0f, 0.0f, 0.0f)
+		);
+
+		if (flg_reflect)
+		{
+			auto ptrDraw = AddComponent<PNTStaticModelDraw>();
+
+			ptrDraw->SetMeshResource(L"PURPLE_BULLET_MESH");
+			ptrDraw->SetMeshToTransformMatrix(spanMat);
 		}
 	}
 
@@ -312,7 +332,7 @@ namespace basecross {
 
 			if (flg_reflect)
 			{
-				pos -= 0.15f;
+				pos -= 0.1f;
 
 				SetDir(Reflect(wallTrans->GetForword(), dir));
 

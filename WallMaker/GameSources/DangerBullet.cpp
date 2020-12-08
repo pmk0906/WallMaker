@@ -124,12 +124,20 @@ namespace basecross {
 			Vec3(0.0f, 0.0f, 0.0f)
 		);
 
-		if (m_ReflectCount <= 1)
+		if (m_ReflectCount == 1)
 		{
 			//ï`âÊ
 			auto ptrDraw = AddComponent<PNTStaticModelDraw>();
 
 			ptrDraw->SetMeshResource(L"BULLET_MESH");
+			ptrDraw->SetMeshToTransformMatrix(spanMat);
+		}
+
+		if (flg_reflect && m_ReflectCount <= 0)
+		{
+			auto ptrDraw = AddComponent<PNTStaticModelDraw>();
+
+			ptrDraw->SetMeshResource(L"PURPLE_BULLET_MESH");
 			ptrDraw->SetMeshToTransformMatrix(spanMat);
 		}
 	}
@@ -140,10 +148,9 @@ namespace basecross {
 		// ìñÇΩÇ¡ÇΩÇÃÇ™ÉvÉåÉCÉÑÅ[Ç»ÇÁ
 		if (auto player = dynamic_pointer_cast<Player>(other))
 		{
-			if (flg_reflect)
+			if (flg_reflect == false)
 			{
 				player->Damage(ATTACK);
-
 				auto ptrXA = App::GetApp()->GetXAudio2Manager();
 				ptrXA->Start(WstringKey::SE_PlayerDamage, 0, 1.0f);
 			}
@@ -158,19 +165,22 @@ namespace basecross {
 			auto wallTrans = magicWall->GetComponent<Transform>();
 			auto myTrans = GetComponent<Transform>();
 
-			flg_reflect = true;
-
 			m_ReflectCount -= 1;
+
+			if (flg_reflect)
+			{
+				m_BulletSpeed += 5.0f;
+				m_Attack += 1.0f;
+			}
 
 			if (m_ReflectCount <= 0)
 			{
+				flg_reflect = true;
+
 				SetDir(Reflect(wallTrans->GetForword(), dir));
 
 				auto ptrXA = App::GetApp()->GetXAudio2Manager();
 				ptrXA->Start(WstringKey::SE_Reflection, 0, 1.0f);
-
-				m_BulletSpeed += 5.0f;
-				m_Attack += 1.0f;
 			}
 
 			else

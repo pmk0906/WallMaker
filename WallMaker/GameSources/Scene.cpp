@@ -90,7 +90,8 @@ namespace basecross{
 			{L"COLORENEMY_MESH", L"StopEnemy0002.bmf"},
 			{L"BULLET_MESH", L"Bullet_Green.bmf"},
 			{L"DANGER_BULLET_MESH", L"Bullet_Red.bmf"},
-			{L"THORN_BULLET_MESH", L"Bullet_Red_thorn.bmf"}
+			{L"THORN_BULLET_MESH", L"Bullet_Red_thorn.bmf"},
+			{L"PURPLE_BULLET_MESH", L"Bullet_Purple.bmf"}
 
 		};
 		//タンジェント有りスタティック

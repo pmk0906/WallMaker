@@ -120,7 +120,8 @@ namespace basecross{
 		// RT長押し
 		void OnHoldRTrigger(); // 押している間
 		void OnReleaseRTrigger(); // 離している間
-		//void OnPushDPad(int dPadNum) {};
+		bool GetRTriggerFlg();
+		void SetRTriggerFlg(bool triggerFlg);
 	};
 
 	//--------------------------------------------------
@@ -161,7 +162,6 @@ namespace basecross{
 	{
 		//壁を生成するときに何かと重なっているかのフラグ
 		bool m_CollisionFlg = false;
-		bool m_CollisionFlgChanged = false;
 		// 透明な魔法壁の可視、不可視の切り替え
 		void SkeltonWallSwitch();
 		void ChangeColor();

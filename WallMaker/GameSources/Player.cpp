@@ -77,7 +77,7 @@ namespace basecross{
 			{
 				auto otherPos = obj->GetComponent<Transform>()->GetPosition();
 				auto len = playerPos - otherPos;
-				if (len.length() >= 25.0f)
+				if (len.length() >= 30.0f)
 				{
 					obj->SetDrawActive(false);
 					obj->SetUpdateActive(false);
@@ -206,7 +206,8 @@ namespace basecross{
 	{
 		float elapsedTime = App::GetApp()->GetElapsedTime();
 		auto angle = GetMoveVector();
-		if (angle.length() > 0.0f){
+		if (angle.length() > 0.0f)
+		{
 			auto pos = GetComponent<Transform>()->GetPosition();
 			pos += angle * elapsedTime * m_Speed;
 			GetComponent<Transform>()->SetPosition(pos);
@@ -214,20 +215,44 @@ namespace basecross{
 			auto utiPtr = GetBehavior<UtilBehavior>();
 			utiPtr->RotToHead(angle, 1.0f);
 
-			if (GetMotionName() != WstringKey::AM_PlayerWalk)
+			if (GetRTriggerPushFlg() == true)
 			{
-				auto ptrDraw = GetComponent<PNTBoneModelDraw>();
-				ptrDraw->ChangeCurrentAnimation(WstringKey::AM_PlayerWalk);
-				SetMotionName(WstringKey::AM_PlayerWalk);
+				if (GetMotionName() != WstringKey::AM_PlayerWalkMagic)
+				{
+					auto ptrDraw = GetComponent<PNTBoneModelDraw>();
+					ptrDraw->ChangeCurrentAnimation(WstringKey::AM_PlayerWalkMagic);
+					SetMotionName(WstringKey::AM_PlayerWalkMagic);
+				}
+			}
+			else
+			{
+				if (GetMotionName() != WstringKey::AM_PlayerWalk) {
+					auto ptrDraw = GetComponent<PNTBoneModelDraw>();
+					ptrDraw->ChangeCurrentAnimation(WstringKey::AM_PlayerWalk);
+					SetMotionName(WstringKey::AM_PlayerWalk);
+				}
 			}
 		}
 		else
 		{
-			if (GetMotionName() != WstringKey::AM_PlayerStand)
+			if (GetRTriggerPushFlg() == true)
 			{
-				auto ptrDraw = GetComponent<PNTBoneModelDraw>();
-				ptrDraw->ChangeCurrentAnimation(WstringKey::AM_PlayerStand);
-				SetMotionName(WstringKey::AM_PlayerStand);
+				if (GetMotionName() != WstringKey::AM_PlayerStandMagic)
+				{
+					auto ptrDraw = GetComponent<PNTBoneModelDraw>();
+					ptrDraw->ChangeCurrentAnimation(WstringKey::AM_PlayerStandMagic);
+					SetMotionName(WstringKey::AM_PlayerStandMagic);
+				}
+
+			}
+			else 
+			{
+				if (GetMotionName() != WstringKey::AM_PlayerStand)
+				{
+					auto ptrDraw = GetComponent<PNTBoneModelDraw>();
+					ptrDraw->ChangeCurrentAnimation(WstringKey::AM_PlayerStand);
+					SetMotionName(WstringKey::AM_PlayerStand);
+				}
 			}
 
 		}
@@ -328,7 +353,9 @@ namespace basecross{
 		ptrDraw->SetMeshToTransformMatrix(spanMat);
 		//アニメーションの追加
 		ptrDraw->AddAnimation(WstringKey::AM_PlayerStand, 0, 30, true, 10.0f);
-		ptrDraw->AddAnimation(WstringKey::AM_PlayerWalk, 31, 60, true, 30.0f);
+		ptrDraw->AddAnimation(WstringKey::AM_PlayerWalk, 31, 29, true, 30.0f);
+		ptrDraw->AddAnimation(WstringKey::AM_PlayerStandMagic, 61, 29, true, 10.0f);
+		ptrDraw->AddAnimation(WstringKey::AM_PlayerWalkMagic, 91, 30, true, 30.0f);
 		ptrDraw->ChangeCurrentAnimation(WstringKey::AM_PlayerStand);
 		SetMotionName(WstringKey::AM_PlayerStand);
 
@@ -338,9 +365,9 @@ namespace basecross{
 		m_MagicSkeltonWall = GetStage()->AddGameObject<MagicSkeltonWall>(m_Scale, m_Rotation, m_Position, GetThis<Player>());
 	
 		// DrawString用
-		//auto strComp = AddComponent<StringSprite>();
-		//strComp->SetBackColor(Col4(0, 0, 0, 0.5f));
-		//strComp->SetTextRect(Rect2D<float>(1000, 110, 1270, 310));
+		auto strComp = AddComponent<StringSprite>();
+		strComp->SetBackColor(Col4(0, 0, 0, 0.5f));
+		strComp->SetTextRect(Rect2D<float>(1000, 110, 1270, 310));
 	}
 
 	void Player::OnUpdate()
@@ -366,7 +393,7 @@ namespace basecross{
 
 	void Player::OnUpdate2()
 	{
-		//DrawStrings();
+		DrawStrings();
 	}
 
 	void Player::OnCollisionEnter(shared_ptr<GameObject>& other) {
@@ -405,6 +432,15 @@ namespace basecross{
 		else
 		{
 			testFlg += L"false\n";
+		}
+		wstring RTriggerFlg(L"Rトリガーが押されているか : ");
+		if (GetRTriggerPushFlg() == true)
+		{
+			RTriggerFlg += L"true\n";
+		}
+		else
+		{
+			RTriggerFlg += L"false\n";
 		}
 
 		wstring arrivingWall(L"ステージに存在する壁の枚数 : ");
@@ -526,6 +562,14 @@ namespace basecross{
 		m_PushRTFlg = false;
 	}
 
+	bool Player::GetRTriggerFlg()
+	{
+		return m_PushRTFlg;
+	}
+	void Player::SetRTriggerFlg(bool triggerFlg)
+	{
+		m_PushRTFlg = triggerFlg;
+	}
 	//--------------------------------------------------
 	// 魔法壁
 	//--------------------------------------------------
@@ -549,14 +593,6 @@ namespace basecross{
 	{
 		if (m_Hp <= 0)
 		{
-			//auto objs = GetStage()->GetGameObjectVec();
-			//for (auto& obj : objs)
-			//{
-			//	auto player_share = GetStage()->GetSharedGameObject<Player>(WstringKey::ShareObj_Player);
-			//	
-			//	player_share->WallStockDecreaseFlg();
-			//}
-
 			//SetDrawActive(false);
 			//SetUpdateActive(false);
 
@@ -571,17 +607,7 @@ namespace basecross{
 		ptrMyTrans->SetRotation(Vec3(0.0f, m_Rotation.y, 0.0f));
 		ptrMyTrans->SetPosition(Vec3(m_Position.x, m_Position.y, m_Position.z));
 
-		//auto ptrColl = AddComponent<CollisionObb>();
-		//ptrColl->SetFixed(true);
-		//ptrColl->SetAfterCollision(AfterCollision::Auto);
-		//auto ptrDraw = AddComponent<BcPNTStaticDraw>();
-		//ptrDraw->SetMeshResource(L"DEFAULT_CUBE");
-
 		AddTag(L"TagMagicWall");
-
-		////描画するテクスチャを設定
-		//ptrDraw->SetTextureResource(L"MAGICWALL_TX");
-		//SetAlphaActive(true);
 
 		Mat4x4 spanMat; // モデルとトランスフォームの間の差分行列
 		spanMat.affineTransformation(
@@ -663,19 +689,15 @@ namespace basecross{
 
 	void MagicSkeltonWall::ChangeColor()
 	{
-		if (m_CollisionFlgChanged == true)
+		if (m_CollisionFlg == true)
 		{
-			if (m_CollisionFlg == true)
-			{
-				auto ptrDraw = GetComponent<BcPNTnTStaticModelDraw>();
-				ptrDraw->SetMeshResource(L"MAGICWALL_RED_MESH");
-			}
-			else
-			{
-				auto ptrDraw = GetComponent<BcPNTnTStaticModelDraw>();
-				ptrDraw->SetMeshResource(L"MAGICWALL_MESH");
-			}
-			m_CollisionFlgChanged = false;
+			auto ptrDraw = GetComponent<BcPNTnTStaticModelDraw>();
+			ptrDraw->SetMeshResource(L"MAGICWALL_RED_MESH");
+		}
+		else
+		{
+			auto ptrDraw = GetComponent<BcPNTnTStaticModelDraw>();
+			ptrDraw->SetMeshResource(L"MAGICWALL_MESH");
 		}
 	}
 
@@ -738,27 +760,16 @@ namespace basecross{
 		if (dynamic_pointer_cast<MagicWall>(other))
 		{
 			m_CollisionFlg = true;
-			m_CollisionFlgChanged = true;
 
 		}
 	}
 	void MagicSkeltonWall::OnCollisionExcute(shared_ptr<GameObject>& other) {
-		if (dynamic_pointer_cast<MagicWall>(other))
-		{
-			m_CollisionFlg = true;
 
-		}
-		else
-		{
-			m_CollisionFlg = false;
-		}
 	}
 	void MagicSkeltonWall::OnCollisionExit(shared_ptr<GameObject>& other) {
 		if (dynamic_pointer_cast<MagicWall>(other))
 		{
 			m_CollisionFlg = false;
-			m_CollisionFlgChanged = true;
-
 		}
 	}
 

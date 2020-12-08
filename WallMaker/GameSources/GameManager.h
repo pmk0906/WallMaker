@@ -67,7 +67,7 @@ namespace basecross {
 				//•ó
 				if (obj->FindTag(WstringKey::Tag_Treasure))
 				{
-					if (auto treasure = dynamic_pointer_cast<Treasure>(obj))
+					if (auto treasure = dynamic_pointer_cast<TreasureBox>(obj))
 					{
 						if (treasure->GetTreasureFlg() == true)
 						{

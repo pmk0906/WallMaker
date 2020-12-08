@@ -83,6 +83,7 @@ namespace basecross{
 		Pairs staticPairs[] =
 		{
 			{L"TREASURE_MESH", L"Treasure.bmf"},
+			{L"TREASUREBOX_MESH", L"TreasureBox.bmf"},
 			{L"SHELD_MESH", L"Shield.bmf"},
 			{L"ENEMY_MESH", L"Enemy.bmf"},
 			{L"STOPENEMY_MESH", L"StopEnemy.bmf"},

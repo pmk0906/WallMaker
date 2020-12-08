@@ -8,7 +8,7 @@
 
 namespace basecross{
 	// ‰¼°
-	class Treasure : public GameObject
+	class TreasureBox : public GameObject
 	{
 		// ‘å‚«‚³A‰ñ“]AˆÊ’u
 		Vec3 m_Scale;
@@ -19,12 +19,12 @@ namespace basecross{
 
 	public:
 		// \’z‚Æ”jŠü
-		Treasure(
+		TreasureBox(
 			const shared_ptr<Stage>& StagePtr,
 			const Vec3& Scale,
 			const Vec3& Rotation,
 			const Vec3& Position);
-		virtual ~Treasure();
+		virtual ~TreasureBox();
 
 		void DrawStrings();
 

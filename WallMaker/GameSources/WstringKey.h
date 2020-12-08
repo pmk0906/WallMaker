@@ -24,6 +24,8 @@ namespace WstringKey {
 	//モーションキー
 	const wstring AM_PlayerStand = L"PlayerStand";
 	const wstring AM_PlayerWalk = L"PlayerWalk";
+	const wstring AM_PlayerStandMagic = L"PlayerStandMagic";
+	const wstring AM_PlayerWalkMagic = L"PlayerWalkMagic";
 
 	// アニメーション用
 	// プレイヤー

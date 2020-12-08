@@ -10,7 +10,7 @@ namespace basecross{
 	///--------------------------------------------------
 	/// 宝
 	///--------------------------------------------------
-	Treasure::Treasure(
+	TreasureBox::TreasureBox(
 		const shared_ptr<Stage>& StagePtr,
 		const Vec3& Scale,
 		const Vec3& Rotation,
@@ -21,10 +21,10 @@ namespace basecross{
 		m_Rotation(Rotation),
 		m_Position(Position)
 	{}
-	Treasure::~Treasure() {}
+	TreasureBox::~TreasureBox() {}
 
 	//	初期化
-	void Treasure::OnCreate()
+	void TreasureBox::OnCreate()
 	{
 		auto ptrTrans = GetComponent<Transform>();
 		ptrTrans->SetScale(2.0f, 2.0f, 2.0f);
@@ -33,23 +33,23 @@ namespace basecross{
 
 		Mat4x4 spanMat; // モデルとトランスフォームの間の差分行列
 		spanMat.affineTransformation(
-			Vec3(0.25f, 0.25f, 0.25f),
+			Vec3(0.5f, 0.5f, 0.5f),
 			Vec3(0.0f, 0.0f, 0.0f),
-			Vec3(0.0f, 0.0f, 0.0f),
-			Vec3(0.0f, 0.0f, 0.0f)
+			Vec3(0.0f, XMConvertToRadians(180.0f), 0.0f),
+			Vec3(0.0f, -0.5f, -0.2f)
 		);
 
-		auto ptrColl = AddComponent<CollisionCapsule>();
-		//ptrColl->SetDrawActive(true);
+		auto ptrColl = AddComponent<CollisionObb>();
+		ptrColl->SetDrawActive(true);
 
 		//影をつける（シャドウマップを描画する）
 		auto ptrShadow = AddComponent<Shadowmap>();
 		//影の形（メッシュ）を設定
-		ptrShadow->SetMeshResource(L"TREASURE_MESH");
+		ptrShadow->SetMeshResource(L"TREASUREBOX_MESH");
 		ptrShadow->SetMeshToTransformMatrix(spanMat);
 
 		auto ptrDraw = AddComponent<PNTStaticModelDraw>();
-		ptrDraw->SetMeshResource(L"TREASURE_MESH");
+		ptrDraw->SetMeshResource(L"TREASUREBOX_MESH");
 		ptrDraw->SetMeshToTransformMatrix(spanMat);
 
 		AddTag(WstringKey::Tag_Treasure);
@@ -60,12 +60,12 @@ namespace basecross{
 		//strComp->SetTextRect(Rect2D<float>(10, 600, 270, 210));
 	}
 
-	void Treasure::OnUpdate2()
+	void TreasureBox::OnUpdate2()
 	{
 		//DrawStrings();
 	}
 
-	void Treasure::DrawStrings()
+	void TreasureBox::DrawStrings()
 	{
 		//文字列表示
 		wstring treasureFlg(L"TreasureFlg.y: ");
@@ -81,19 +81,19 @@ namespace basecross{
 		ptrString->SetText(str);
 	}
 
-	void Treasure::OnCollisionEnter(shared_ptr<GameObject>& other) {
+	void TreasureBox::OnCollisionEnter(shared_ptr<GameObject>& other) {
 		if (auto player = dynamic_pointer_cast<Player>(other))
 		{
 			SetTreasureFlg(true);
 		}
 	}
 	
-	void Treasure::SetTreasureFlg(bool flg)
+	void TreasureBox::SetTreasureFlg(bool flg)
 	{
 		m_TreasureFlg = flg;
 	}
 
-	bool Treasure::GetTreasureFlg()
+	bool TreasureBox::GetTreasureFlg()
 	{
 		return m_TreasureFlg;
 	}

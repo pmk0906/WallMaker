@@ -302,7 +302,6 @@ namespace basecross{
 					Vec3(ptrChild->GetScale()),
 					Vec3(rot.toRotVec().y),
 					Vec3(ptrChild->GetPosition()));
-				//m_WallStock--;
 
 			// SE
 				auto ptrXA = App::GetApp()->GetXAudio2Manager();
@@ -373,7 +372,7 @@ namespace basecross{
 	void Player::OnUpdate()
 	{
 		auto gm = GameManager::GetInstance();
-		if (gm->GetClearFlgChanged() == false)
+		if (gm->GetMoveEnabledFlg() == true)
 		{
 			////コントローラチェックして入力があればコマンド呼び出し
 			m_InputHandler.PushHandle(GetThis<Player>());

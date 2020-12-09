@@ -54,7 +54,7 @@ namespace basecross {
 	{
 
 		auto gm = GameManager::GetInstance();
-		if (gm->GetClearFlgChanged() == false)
+		if (gm->GetMoveEnabledFlg() == true)
 		{
 			auto transComp = GetComponent<Transform>();
 

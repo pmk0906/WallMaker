@@ -82,6 +82,8 @@ namespace basecross{
 
 		//タグをつける
 		AddTag(WstringKey::Tag_Floor);
+		AddTag(WstringKey::Tag_DrawActiveFalse);
+
 		//影をつける（シャドウマップを描画する）
 		auto shadowPtr = AddComponent<Shadowmap>();
 		//影の形（メッシュ）を設定
@@ -186,6 +188,7 @@ namespace basecross{
 		auto ptrDraw = AddComponent<BcPNTStaticDraw>();
 		ptrDraw->SetMeshResource(L"DEFAULT_CUBE");
 		ptrDraw->SetOwnShadowActive(true);
+		ptrDraw->SetTextureResource(L"REFLECTWALL_TX");
 
 		SetDrawLayer(-2);
 	}

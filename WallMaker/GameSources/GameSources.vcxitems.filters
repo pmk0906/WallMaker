@@ -90,6 +90,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Cannon.h">
       <Filter>Headers</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)DirectorObject.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)Character.cpp">
@@ -164,5 +165,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Cannon.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)DirectorObject.cpp" />
   </ItemGroup>
 </Project>

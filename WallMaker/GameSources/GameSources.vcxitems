@@ -19,6 +19,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)DangerBullet.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)DangerEnemy.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)DebugBoard.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)DirectorObject.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)TestStage.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)EnemyBullet.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)EnemyFirst.h" />
@@ -47,6 +48,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)DangerBullet.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)DangerEnemy.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)DebugBoard.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)DirectorObject.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)TestStage.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)EnemyBullet.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)EnemyFirst.cpp" />

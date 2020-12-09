@@ -52,50 +52,57 @@ namespace basecross {
 
 	void RapidFireEnemy::OnUpdate()
 	{
-		auto transComp = GetComponent<Transform>();
+		auto gm = GameManager::GetInstance();
 
-		auto enemyPos = transComp->GetPosition();
-
-		auto objs = GetStage()->GetGameObjectVec();
-
-		auto& app = App::GetApp();
-		float delta = app->GetElapsedTime();
-
-		Vec3 playerPos(0.0f, 0.0f, 0.0f);
-
-		for (auto& obj : objs)
+		if (gm->GetMoveEnabledFlg() == true)
 		{
-			auto player = dynamic_pointer_cast<Player>(obj);
-			auto gameStage = dynamic_pointer_cast<GameStage>(GetStage());
+			auto transComp = GetComponent<Transform>();
 
-			if (player) {
-				playerPos = player->GetPosition();
-			}
-		}
+			auto enemyPos = transComp->GetPosition();
 
-		auto enemyToPlayer = playerPos - enemyPos;
+			auto objs = GetStage()->GetGameObjectVec();
 
-		if (enemyToPlayer.length() <= 20.0f)
-		{
-			m_LockOnTime += delta;
+			auto& app = App::GetApp();
+			float delta = app->GetElapsedTime();
 
-			LookPlayer();
+			Vec3 playerPos(0.0f, 0.0f, 0.0f);
 
-			if (m_FireTime >= 1.0f && flg_LockOn)
+			for (auto& obj : objs)
 			{
-				Fire();
+				auto player = dynamic_pointer_cast<Player>(obj);
+				auto gameStage = dynamic_pointer_cast<GameStage>(GetStage());
+
+				if (player) 
+				{
+					playerPos = player->GetPosition();
+				}
 			}
-		}
 
-		else
-		{
-			m_LockOnTime = 0.0f;
-		}
+			auto enemyToPlayer = playerPos - enemyPos;
 
-		Reload();
-		LockOn();
-		Die();
+			if (enemyToPlayer.length() <= 20.0f)
+			{
+				m_LockOnTime += delta;
+
+				LookPlayer();
+
+				if (m_FireTime >= 1.0f && flg_LockOn)
+				{
+					Fire();
+				}
+			}
+
+			else
+			{
+				m_LockOnTime = 0.0f;
+			}
+
+			Reload();
+			LockOn();
+			Die();
+		}
 	}
+
 
 	void RapidFireEnemy::Initialize()
 	{

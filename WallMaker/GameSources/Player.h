@@ -58,6 +58,7 @@ namespace basecross{
 
 		// 魔法壁の生成
 		void CreateMagicWall();
+
 		//入力ハンドラー
 		InputHandler<Player> m_InputHandler;
 

@@ -55,6 +55,7 @@ namespace basecross{
 			{L"WALLSTOCK_UI_TX", L"UI_MagicWall.png"},
 			{L"TITLEL_LOGO_TX", L"Title.png"},
 			{L"GAMESELECT_BG_TX", L"Select_BackGround.png"},
+			{L"REFLECTWALL_TX", L"ReflectWall.tga"},
 			{L"WHITE_TX", L"White.png"},
 			//ボタン
 			{L"NEXTSTAGE_BUTTON_TX", L"Tx_NextStageButton.png"},
@@ -168,7 +169,7 @@ namespace basecross{
 
 			//クリアする色を設定
 			Col4 Col;
-			Col.set(31.0f / 255.0f, 30.0f / 255.0f, 71.0f / 255.0f, 255.0f / 255.0f);
+			Col.set(0.0f / 255.0f, 0.0f / 255.0f, 0.0f / 255.0f, 255.0f / 255.0f);
 			SetClearColor(Col);
 			//自分自身にイベントを送る
 			//これにより各ステージやオブジェクトがCreate時にシーンにアクセスできる

@@ -16,10 +16,15 @@ namespace basecross{
 		Vec3 m_Position;
 
 		bool testFlg = false;
+		float m_Timer = 0.0f;
+		bool m_PlayerMoveFlgChanged = false;
 
 		InputHandler<GameManagement> m_InputHandler;
 
 		void LoadScene(int stageNum);
+		void PlayerMoveEnabled();
+
+		void ButtonControl();
 
 		void TitleButton_A();
 		void TitleButton_B() {}
@@ -50,9 +55,6 @@ namespace basecross{
 		void OnReleaseRTrigger() {} // —£‚µ‚Ä‚¢‚éŠÔ
 
 		void DrawStrings();
-		//void OnPushDPad(int dPadNum);
-
-		//void StopBGM();
 	};
 }
 //end basecross

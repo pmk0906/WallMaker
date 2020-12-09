@@ -53,7 +53,6 @@ namespace basecross {
 			1,41,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,43, 1,41,42,42,43, 1,
 			1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1
 
-
 			//1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ,1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
 			//1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
 			//1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0 ,3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 1,
@@ -87,6 +86,7 @@ namespace basecross {
 					break;
 				case 2:
 					CreatePlayer(pos);
+					//AddGameObject<WarpMagicSircle>(Vec3(0.0f), Vec3(0.0f), Vec3(pos.x, 4.0f, pos.z));
 					break;
 				case 3:
 					AddGameObject<EnemyFirst>(Vec3(2.0f, 1.0f, 3.5f), Vec3(0.0f), Vec3(pos));
@@ -132,8 +132,6 @@ namespace basecross {
 
 	void GameStage::DrawStrings()
 	{
-		auto gm = GameManager::GetInstance();
-
 
 	}
 
@@ -207,16 +205,16 @@ namespace basecross {
 	void GameStage::CreateStage()
 	{
 		// è∞
-		//AddGameObject<FixedBox>(Vec3(50.0f, 1.0f, 50.0f), Vec3(0.0f), Vec3(0.0f, -0.5f, 0.0f));
 		int posX = 0;
 		int posZ = 0;
 		Vec3 stagePos = Vec3(posX, 0, posZ);
-		for (int l = 0; l < STAGE_LENGTH; l++) {
-			for (int w = 0; w < STAGE_WIDTH; w++) {
-				//AddGameObject<Floor>(Vec3(3.0f, 1.0f, 3.0f), Vec3(0.0f), Vec3(w * 3 - STAGE_LENGTH, -0.5f, l * 3 - STAGE_WIDTH));
+		for (int l = 0; l < STAGE_LENGTH / 4; l++) {
+			for (int w = 0; w < STAGE_WIDTH / 4; w++) {
+				AddGameObject<Floor>(Vec3(12.0f, 1.0f, 12.0f), Vec3(0.0f), Vec3(w * 12 - STAGE_LENGTH - 12.0f, -0.5f, l * 12 - STAGE_WIDTH + 9));
 			}
 		}
-		AddGameObject<Floor>(Vec3(32.0f * 3.0f, 1.0f, 16.0f * 3.0f), Vec3(0.0f), Vec3(32.0f * 1.5f - 32.0f - 1.5f, 0.0f, -16.0f * 1.5f + 16.0f + 1.5f));
+		//è∞àÍñáÇÃÇ›
+		//AddGameObject<Floor>(Vec3(32.0f * 3.0f, 1.0f, 16.0f * 3.0f), Vec3(0.0f), Vec3(32.0f * 1.5f - 32.0f - 1.5f, 0.0f, -16.0f * 1.5f + 16.0f + 1.5f));
 
 		CreateWall();
 

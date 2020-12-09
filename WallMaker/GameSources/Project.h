@@ -31,5 +31,6 @@
 #include "ManagerObject.h"
 #include "TestStage.h"
 #include "Cannon.h"
+#include "DirectorObject.h"
 
 

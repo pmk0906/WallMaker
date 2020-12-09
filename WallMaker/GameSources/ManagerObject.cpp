@@ -59,6 +59,75 @@ namespace basecross{
 		PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), sceneKey);
 	}
 
+	void GameManagement::PlayerMoveEnabled()
+	{
+		auto gm = GameManager::GetInstance();
+		if (gm->GetPlayerMoveTime() < m_Timer && m_PlayerMoveFlgChanged == false)
+		{
+			gm->SetMoveEnabledFlg(true);
+			m_PlayerMoveFlgChanged = true;
+		}
+		else
+		{
+			auto delta = App::GetApp()->GetElapsedTime();
+			m_Timer += delta;
+		}
+	}
+
+	void GameManagement::ButtonControl()
+	{
+		m_InputHandler.PushHandle(GetThis<GameManagement>());
+		auto cntlVec = App::GetApp()->GetInputDevice().GetControlerVec();
+		WORD wButtons = 0;
+		if (cntlVec[0].bConnected) {
+			wButtons = cntlVec[0].wPressedButtons;
+		}
+		auto gm = GameManager::GetInstance();
+		switch (gm->GetSceneNum())
+		{
+		case SceneNum::StageSelect:
+		//Dパッド左
+			if (wButtons & XINPUT_GAMEPAD_DPAD_LEFT) {
+				if (gm->GetSelectingButtonNum() > 0)
+				{
+					gm->SetSelectingButtonMinus();
+					testFlg = true;
+				}
+			}
+			//Dパッド右
+			if (wButtons & XINPUT_GAMEPAD_DPAD_RIGHT) {
+				if (gm->GetSelectingButtonNum() < gm->GetMaxButtonNum())
+				{
+					gm->SetSelectingButtonPlus();
+					testFlg = false;
+				}
+			}
+			break;
+		case SceneNum::GameStage1:
+		case SceneNum::GameStage2:
+		case SceneNum::GameStage3:
+		case SceneNum::GameStage4:
+		case SceneNum::GameStage5:
+			//Dパッド上
+			if (wButtons & XINPUT_GAMEPAD_DPAD_UP) {
+				if (gm->GetSelectingButtonNum() > 0)
+				{
+					gm->SetSelectingButtonMinus();
+					testFlg = true;
+				}
+			}
+			//Dパッド下
+			if (wButtons & XINPUT_GAMEPAD_DPAD_DOWN) {
+				if (gm->GetSelectingButtonNum() < gm->GetMaxButtonNum())
+				{
+					gm->SetSelectingButtonPlus();
+					testFlg = false;
+				}
+			}
+			break;
+		}
+	}
+
 	void GameManagement::TitleButton_A()
 	{
 		LoadScene(SceneNum::StageSelect);
@@ -136,46 +205,8 @@ namespace basecross{
 
 	void GameManagement::OnUpdate()
 	{
-		m_InputHandler.PushHandle(GetThis<GameManagement>());
-		auto cntlVec = App::GetApp()->GetInputDevice().GetControlerVec();
-		WORD wButtons = 0;
-		if (cntlVec[0].bConnected) {
-			wButtons = cntlVec[0].wPressedButtons;
-		}
-		auto gm = GameManager::GetInstance();
-		//Dパッド上
-		if (wButtons & XINPUT_GAMEPAD_DPAD_UP) {
-			if (gm->GetSelectingButtonNum() > 0)
-			{
-				gm->SetSelectingButtonMinus();
-				testFlg = true;
-			}
-		}
-		//Dパッド下
-		if (wButtons & XINPUT_GAMEPAD_DPAD_DOWN) {
-			if (gm->GetSelectingButtonNum() < gm->GetMaxButtonNum())
-			{
-				gm->SetSelectingButtonPlus();
-				testFlg = false;
-			}
-		}
-		//Dパッド左
-		if (wButtons & XINPUT_GAMEPAD_DPAD_LEFT) {
-			if (gm->GetSelectingButtonNum() > 0)
-			{
-				gm->SetSelectingButtonMinus();
-				testFlg = true;
-			}
-		}
-		//Dパッド右
-		if (wButtons & XINPUT_GAMEPAD_DPAD_RIGHT) {
-			if (gm->GetSelectingButtonNum() < gm->GetMaxButtonNum())
-			{
-				gm->SetSelectingButtonPlus();
-				testFlg = false;
-			}
-		}
-
+		ButtonControl();
+		PlayerMoveEnabled();
 	}
 
 	void GameManagement::OnUpdate2()
@@ -211,7 +242,11 @@ namespace basecross{
 		wstring testFLG(L"テストフラグ : ");
 		testFLG += Util::UintToWStr(testFlg) + L"\n";
 
-		wstring str = selectingButton + maxButtonNum + sceneNum + testFLG + L"\n";
+		wstring timer(L"m_Timer : ");
+		timer += Util::FloatToWStr(m_Timer) + L"\nGetPlayerMoveTime : " + Util::FloatToWStr(gm->GetPlayerMoveTime()) + L"\n";
+		
+
+		wstring str = selectingButton + maxButtonNum + sceneNum + testFLG + timer + L"\n";
 		auto ptrString = GetComponent<StringSprite>();
 		ptrString->SetText(str);
 	}

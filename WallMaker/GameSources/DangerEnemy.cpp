@@ -52,38 +52,43 @@ namespace basecross {
 
 	void DangerEnemy::OnUpdate()
 	{
-		auto transComp = GetComponent<Transform>();
+		auto gm = GameManager::GetInstance();
 
-		auto enemyPos = transComp->GetPosition();
-
-		auto objs = GetStage()->GetGameObjectVec();
-
-		Vec3 playerPos(0.0f, 0.0f, 0.0f);
-
-		for (auto& obj : objs)
+		if (gm->GetMoveEnabledFlg() == true)
 		{
-			auto player = dynamic_pointer_cast<Player>(obj);
-			auto gameStage = dynamic_pointer_cast<GameStage>(GetStage());
+			auto transComp = GetComponent<Transform>();
 
-			if (player) {
-				playerPos = player->GetPosition();
-			}
-		}
+			auto enemyPos = transComp->GetPosition();
 
-		auto enemyToPlayer = playerPos - enemyPos;
+			auto objs = GetStage()->GetGameObjectVec();
 
-		if (enemyToPlayer.length() <= 20.0f)
-		{
-			LookPlayer();
+			Vec3 playerPos(0.0f, 0.0f, 0.0f);
 
-			if (m_FireTime >= 5.0f)
+			for (auto& obj : objs)
 			{
-				Fire();
-			}
-		}
+				auto player = dynamic_pointer_cast<Player>(obj);
+				auto gameStage = dynamic_pointer_cast<GameStage>(GetStage());
 
-		Reload();
-		Die();
+				if (player) {
+					playerPos = player->GetPosition();
+				}
+			}
+
+			auto enemyToPlayer = playerPos - enemyPos;
+
+			if (enemyToPlayer.length() <= 20.0f)
+			{
+				LookPlayer();
+
+				if (m_FireTime >= 5.0f)
+				{
+					Fire();
+				}
+			}
+
+			Reload();
+			Die();
+		}
 	}
 
 	void DangerEnemy::Initialize()

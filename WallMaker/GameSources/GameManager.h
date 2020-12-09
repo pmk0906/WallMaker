@@ -16,7 +16,8 @@ namespace basecross {
 	class GameManager {
 	private:
 		// 動かせるか
-		bool m_MoveEnabled = true;
+		bool m_MoveEnabledFlg = false;
+		float m_PlayerMoveTime = 2.0f;
 		// クリアしたか
 		bool m_ClearFlg = false;
 		bool m_ClearFlgChanged = false;
@@ -47,6 +48,7 @@ namespace basecross {
 			SetDeathFlg(false);
 			SetDeathFlgChanged(false);
 			SetSelectingButton(0);
+			SetMoveEnabledFlg(false);
 		}
 
 		//シーンの番号
@@ -72,6 +74,7 @@ namespace basecross {
 						if (treasure->GetTreasureFlg() == true)
 						{
 							m_ClearFlg = true;
+							SetMoveEnabledFlg(false);
 						}
 					}
 				}
@@ -83,13 +86,30 @@ namespace basecross {
 						if (player->GetPlayerDiedFlg() == true)
 						{
 							m_DeathFlg = true;
+							SetMoveEnabledFlg(false);
 						}
 					}
 				}
 			}
 		}
-
-
+		//プレイヤーの行動許可
+		bool GetMoveEnabledFlg()
+		{
+			return m_MoveEnabledFlg;
+		}
+		void SetMoveEnabledFlg(bool moveEnabledFlg)
+		{
+			m_MoveEnabledFlg = moveEnabledFlg;
+		}
+		// プレイヤーの行動までの時間
+		float GetPlayerMoveTime()
+		{
+			return m_PlayerMoveTime;
+		}
+		void SetPlayerMoveTime(float moveTime)
+		{
+			m_PlayerMoveTime = moveTime;
+		}
 		// クリアフラグ
 		bool GetClearFlg()
 		{

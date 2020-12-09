@@ -90,5 +90,32 @@ namespace basecross{
 		// ‰Šú‰»
 		virtual void OnCreate()override;
 	};
+
+	// ‰ó‚ê‚é•Ç
+	class BreakWall : public GameObject
+	{
+		// ‘å‚«‚³A‰ñ“]AˆÊ’u
+		Vec3 m_Scale;
+		Vec3 m_Rotation;
+		Vec3 m_Position;
+
+		float m_Hp = 1.0f;
+
+	public:
+		// \’z‚Æ”jŠü
+		BreakWall(
+			const shared_ptr<Stage>& StagePtr,
+			const Vec3& Scale,
+			const Vec3& Rotation,
+			const Vec3& Position);
+		virtual ~BreakWall();
+
+		// ‰Šú‰»
+		virtual void OnCreate()override;
+		virtual void OnUpdate()override;
+
+		void Damage(float damage);
+		void Die();
+	};
 }
 //end basecross

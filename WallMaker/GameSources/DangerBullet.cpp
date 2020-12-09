@@ -369,5 +369,19 @@ namespace basecross {
 			SetDrawActive(false);
 			SetUpdateActive(false);
 		}
+
+		if (auto breakWall = dynamic_pointer_cast<BreakWall>(other))
+		{
+			if (flg_reflect)
+			{
+				breakWall->Damage(m_Attack);
+
+				auto ptrXA = App::GetApp()->GetXAudio2Manager();
+				ptrXA->Start(WstringKey::SE_BreakStageWall, 0, 1.0f);
+			}
+
+			SetDrawActive(false);
+			SetUpdateActive(false);
+		}
 	}
 }

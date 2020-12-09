@@ -206,7 +206,10 @@ namespace basecross {
 		//AddGameObject<DangerEnemy>(Vec3(2.0f, 1.0f, 3.5f), Vec3(0.0f), Vec3(-5.0f, 1.5f, -3.0f));
 
 		//‘å–C
-		//AddGameObject<Cannon>(Vec3(2.0f, 1.0f, 3.5f), Vec3(0.0f), Vec3(-5.0f, 1.5f, -3.0f));
+		AddGameObject<Cannon>(Vec3(2.0f, 1.0f, 3.5f), Vec3(0.0f), Vec3(-5.0f, 1.5f, -3.0f));
+
+		//‰ó‚ê‚é•Ç
+		AddGameObject<BreakWall>(Vec3(3.0f), Vec3(0.0f), Vec3(-15.0f, 1.5f, -3.0f));
 	}
 
 	void TestStage::CreatePlayer(Vec3 pos)

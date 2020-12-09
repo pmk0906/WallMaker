@@ -88,9 +88,7 @@
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)DirectorObject.h" />
-    <ClInclude Include="C:\Users\hdak3\Documents\DATEAPPS2020Eteam\WallMaker\WallMaker\GameSources\Camera.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Camera.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)Character.cpp">
@@ -163,8 +161,6 @@
       <Filter>Sources</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)DirectorObject.cpp" />
-    <ClCompile Include="C:\Users\hdak3\Documents\DATEAPPS2020Eteam\WallMaker\WallMaker\GameSources\Camera.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Camera.cpp" />
   </ItemGroup>
 </Project>

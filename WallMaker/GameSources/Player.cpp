@@ -77,15 +77,31 @@ namespace basecross{
 			{
 				auto otherPos = obj->GetComponent<Transform>()->GetPosition();
 				auto len = playerPos - otherPos;
-				if (len.length() >= 30.0f)
+				if (obj->FindTag(WstringKey::Tag_Floor))
 				{
-					obj->SetDrawActive(false);
-					obj->SetUpdateActive(false);
+					if (len.length() >= m_DrawActiveFloorLength)
+					{
+						obj->SetDrawActive(false);
+						obj->SetUpdateActive(false);
+					}
+					else
+					{
+						obj->SetDrawActive(true);
+						obj->SetUpdateActive(true);
+					}
 				}
 				else
 				{
-					obj->SetDrawActive(true);
-					obj->SetUpdateActive(true);
+					if (len.length() >= m_DrawActiveLength)
+					{
+						obj->SetDrawActive(false);
+						obj->SetUpdateActive(false);
+					}
+					else
+					{
+						obj->SetDrawActive(true);
+						obj->SetUpdateActive(true);
+					}
 				}
 			}
 		}
@@ -331,17 +347,12 @@ namespace basecross{
 
 		//重力を付ける
 		auto prtGra = AddComponent<Gravity>();
-
-		////影をつける（シャドウマップを描画する）
-		//auto shadowPtr = AddComponent<Shadowmap>();
-		////影の形（メッシュ）を設定
-		//shadowPtr->SetMeshResource(L"DEFAULT_CUBE");
 		
 		//影をつける（シャドウマップを描画する）
 		auto ptrShadow = AddComponent<Shadowmap>();
 		//影の形(メッシュ)を指定
-		ptrShadow->SetMeshResource(WstringKey::Anim_Player);
 		ptrShadow->SetMeshToTransformMatrix(spanMat);
+		ptrShadow->SetDrawActive(false);
 		SetAlphaActive(true);
 
 
@@ -357,6 +368,10 @@ namespace basecross{
 		ptrDraw->AddAnimation(WstringKey::AM_PlayerWalkMagic, 91, 30, true, 30.0f);
 		ptrDraw->ChangeCurrentAnimation(WstringKey::AM_PlayerStand);
 		SetMotionName(WstringKey::AM_PlayerStand);
+		//最初は透明にしておく
+		auto col = ptrDraw->GetDiffuse();
+		col.w = 0.0f;
+		ptrDraw->SetDiffuse(col);
 
 		//タグ付け
 		AddTag(WstringKey::Tag_Player);
@@ -380,13 +395,28 @@ namespace basecross{
 			//WallStockDecrease();
 			SetCountWall();
 			Die();
+			DrawActiveSwitch();
 
 			auto ptrDraw = GetComponent<PNTBoneModelDraw>();
 			float elapsedTime = App::GetApp()->GetElapsedTime();
 			ptrDraw->UpdateAnimation(elapsedTime);
 		}
+		else
+		{
+			if (gm->GetMagicSircleEnabledLook() == true)
+			{
+				auto ptrShadow = GetComponent<Shadowmap>();
+				ptrShadow->SetMeshResource(WstringKey::Anim_Player);
+				ptrShadow->SetDrawActive(true);
+				//見えるようにする
+				auto ptrDraw = GetComponent<PNTBoneModelDraw>();
+				auto delta = App::GetApp()->GetElapsedTime();
+				auto col = ptrDraw->GetDiffuse();
+				col.w = 1.0f;
+				ptrDraw->SetDiffuse(col);
+			}
+		}
 
-		DrawActiveSwitch();
 
 	}
 

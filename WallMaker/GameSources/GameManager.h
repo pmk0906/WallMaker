@@ -17,7 +17,13 @@ namespace basecross {
 	private:
 		// 動かせるか
 		bool m_MoveEnabledFlg = false;
-		float m_PlayerMoveTime = 2.0f;
+		float m_PlayerMoveTime = 5.0f;
+		//カメラの移動
+		bool m_OpeningCameraMoveEnd = false;
+		//魔法陣が見えるようになった
+		bool m_MagicSircleEnabledLook = false;
+		//魔法陣が降り切った
+		bool m_MagicSircleMoved = false;
 		// クリアしたか
 		bool m_ClearFlg = false;
 		bool m_ClearFlgChanged = false;
@@ -48,7 +54,9 @@ namespace basecross {
 			SetDeathFlg(false);
 			SetDeathFlgChanged(false);
 			SetSelectingButton(0);
-			SetMoveEnabledFlg(false);
+			SetMoveEnabledFlg(false); 
+			SetOpeningCameraMoveEnd(false);
+			SetMagicSircleMoved(false);
 		}
 
 		//シーンの番号
@@ -100,6 +108,33 @@ namespace basecross {
 		void SetMoveEnabledFlg(bool moveEnabledFlg)
 		{
 			m_MoveEnabledFlg = moveEnabledFlg;
+		}
+		//オープニングカメラの移動が終わったか
+		bool GetOpeningCameraMoveEnd()
+		{
+			return m_OpeningCameraMoveEnd;
+		}
+		void SetOpeningCameraMoveEnd(bool opCamMoveEnd)
+		{
+			m_OpeningCameraMoveEnd = opCamMoveEnd;
+		}
+		//魔法陣が見えるようになった
+		bool GetMagicSircleEnabledLook()
+		{
+			return m_MagicSircleEnabledLook;
+		}
+		void SetMagicSircleEnabledLook(bool magicSircleEnabledLook)
+		{
+			m_MagicSircleEnabledLook = magicSircleEnabledLook;
+		}
+		//魔法陣が降り切ったか
+		bool GetMagicSircleMoved()
+		{
+			return m_MagicSircleMoved;
+		}
+		void SetMagicSircleMoved(bool magicSircleMoved)
+		{
+			m_MagicSircleMoved = magicSircleMoved;
 		}
 		// プレイヤーの行動までの時間
 		float GetPlayerMoveTime()

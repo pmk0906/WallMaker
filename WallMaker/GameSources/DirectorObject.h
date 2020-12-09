@@ -19,6 +19,17 @@ namespace basecross{
 		unique_ptr< StateMachine<WarpMagicSircle> >  m_StateMachine;
 		Vec3 m_StartPos;
 		float m_StateChangeSize;
+
+		//完全に可視化するまでの時間
+		float m_ClearTimer = 0.0f;
+		float m_ForDownTime = 1.0f;
+		//完全に透明になるまでの時間
+		float m_ForClearTime = 1.0f;
+		//現在の透明度
+		float m_Alpha = 0.0f;
+
+		Vec3 m_FirstOffset = Vec3(0.0f, 2.0f, 0.0f);
+
 	public:
 		//構築と破棄
 		WarpMagicSircle(
@@ -40,6 +51,10 @@ namespace basecross{
 		// 初期化
 		virtual void OnCreate() override;
 		virtual void OnUpdate() override;
+
+		void UnClear();
+		void Falling();
+		void ClearAndDelete();
 	};
 
 	//--------------------------------------------------------------------------------------

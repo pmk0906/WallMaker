@@ -176,7 +176,7 @@ namespace basecross{
 	void WallStock::OnUpdate()
 	{
 		auto player_share = GetStage()->GetSharedGameObject<Player>(WstringKey::ShareObj_Player);
-		float playerWallStock = player_share->GetWallStock();
+		int playerWallStock = player_share->GetWallStock();
 		if (playerWallStock >= m_WallNum)
 		{
 			////F‚ğ–ß‚·

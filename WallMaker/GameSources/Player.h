@@ -22,6 +22,9 @@ namespace basecross{
 
 		bool m_PlayerDiedFlg = false;
 
+		//プレイヤーの透明度
+		float m_Alpha = 0.0f;
+
 		// Rトリガーが押されているか
 		bool m_BeforePushRTFlg = false;
 		bool m_PushRTFlg = false;
@@ -41,6 +44,8 @@ namespace basecross{
 		void WallAllDelete();
 
 		//描画切り替え
+		float m_DrawActiveLength = 30.0f;
+		float m_DrawActiveFloorLength = 40.0f;
 		void DrawActiveSwitch();
 
 		//RTriggerについて

@@ -22,7 +22,7 @@
 #include "UISprite.h"
 #include "DebugBoard.h"
 #include "WstringKey.h"
-#include "MyCamera.h"
+#include "Camera.h"
 #include "Treasure.h"
 #include "GameTitle.h"
 #include "GameStageSelect.h"

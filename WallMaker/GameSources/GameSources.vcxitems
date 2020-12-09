@@ -29,7 +29,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)GameStageSelect.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)GameTitle.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ManagerObject.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)MyCamera.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Camera.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)PatrolEnemy.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)PatrolEnemyUPDown.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Player.h" />
@@ -57,7 +57,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)GameStageSelect.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)GameTitle.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ManagerObject.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)MyCamera.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Camera.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)PatrolEnemy.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)PatrolEnemyUPDown.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Player.cpp" />

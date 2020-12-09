@@ -20,14 +20,65 @@ namespace basecross{
 	{}
 	WarpMagicSircle::~WarpMagicSircle() {}
 
+	void WarpMagicSircle::UnClear()
+	{
+		if (1.0f <= m_Alpha)
+		{
+			GetStateMachine()->ChangeState(DownState::Instance());
+		}
+		else
+		{
+			float delta = App::GetApp()->GetElapsedTime();
+			m_ClearTimer += delta;
+			auto ptrDraw = GetComponent<BcPNTnTStaticModelDraw>();
+			m_Alpha += 0.05;
+			ptrDraw->SetAlpha(m_Alpha);
+		}
+	}
+
+	void WarpMagicSircle::Falling()
+	{
+		auto player_share = GetStage()->GetSharedGameObject<Player>(WstringKey::ShareObj_Player);
+		auto playerPos = player_share->GetPosition();
+		auto ptrTrans = GetComponent<Transform>();
+		auto myPos = ptrTrans->GetPosition();
+		if (myPos.y <= playerPos.y - 0.75f)
+		{
+			GetStateMachine()->ChangeState(DeleteState::Instance());
+		}
+		else
+		{
+			ptrTrans->SetPosition(myPos.x, myPos.y - 0.1f, myPos.z);
+		}
+	}
+
+	void WarpMagicSircle::ClearAndDelete()
+	{
+		if (m_Alpha <= 0.0f)
+		{
+			auto gm = GameManager::GetInstance();
+			gm->SetMagicSircleMoved(true);
+			SetDrawActive(false);
+			SetUpdateActive(false);
+		}
+		else
+		{
+			float delta = App::GetApp()->GetElapsedTime();
+			m_ClearTimer -= delta;
+			auto ptrDraw = GetComponent<BcPNTnTStaticModelDraw>();
+			m_Alpha -= 0.05;
+			ptrDraw->SetAlpha(m_Alpha);
+		}
+	}
+
 	//	初期化
 	void WarpMagicSircle::OnCreate()
 	{
-		auto player_share = GetStage()->GetSharedGameObject<Player>(WstringKey::ShareObj_Player);
+		auto playerPos = GetStage()->GetSharedGameObject<Player>(WstringKey::ShareObj_Player)->GetPosition();
 		auto ptrMyTrans = AddComponent<Transform>();
-		ptrMyTrans->SetScale(Vec3(5.0f, 0.3f, 5.0f));
+		ptrMyTrans->SetScale(Vec3(7.0f, 0.3f, 7.0f));
 		ptrMyTrans->SetRotation(Vec3(0.0f, m_Rotation.y, 0.0f));
-		ptrMyTrans->SetPosition(Vec3(m_Position.x, m_Position.y, m_Position.z));
+		ptrMyTrans->SetPosition(playerPos + m_FirstOffset);
 
 		Mat4x4 spanMat; // モデルとトランスフォームの間の差分行列
 		spanMat.affineTransformation(
@@ -39,13 +90,15 @@ namespace basecross{
 
 		auto ptrColl = AddComponent<CollisionObb>();
 		ptrColl->SetAfterCollision(AfterCollision::None);
-		ptrColl->SetDrawActive(true);
+		//ptrColl->SetDrawActive(true);
 
 		//描画処理
 		auto ptrDraw = AddComponent<BcPNTnTStaticModelDraw>();
 		ptrDraw->SetMeshResource(L"MAGICWALL_MESH");
 		ptrDraw->SetMeshToTransformMatrix(spanMat);
 		ptrDraw->SetLightingEnabled(false);
+		ptrDraw->SetModelDiffusePriority(false);
+		ptrDraw->SetAlpha(m_Alpha);
 
 		//描画するテクスチャを設定
 		SetAlphaActive(true);
@@ -57,13 +110,14 @@ namespace basecross{
 	}
 
 	void WarpMagicSircle::OnUpdate()
-	{
-		auto player_share = GetStage()->GetSharedGameObject<Player>(WstringKey::ShareObj_Player);
-		auto playerPos = player_share->GetPosition();
-
-		//ステートマシンのUpdateを行う
-		//この中でステートの切り替えが行われる
-		m_StateMachine->Update();
+	{	
+		auto gm = GameManager::GetInstance();
+		if (gm->GetOpeningCameraMoveEnd() == true)
+		{
+			//ステートマシンのUpdateを行う
+			//この中でステートの切り替えが行われる
+			m_StateMachine->Update();
+		}
 	}
 
 	//--------------------------------------------------------------------------------------
@@ -76,8 +130,7 @@ namespace basecross{
 	void FirstState::Enter(const shared_ptr<WarpMagicSircle>& Obj) {
 	}
 	void FirstState::Execute(const shared_ptr<WarpMagicSircle>& Obj) {
-		auto ptrSeek = Obj->GetBehavior<SeekSteering>();
-		auto ptrSep = Obj->GetBehavior<SeparationSteering>();
+		Obj->UnClear();
 	}
 
 	void FirstState::Exit(const shared_ptr<WarpMagicSircle>& Obj) {
@@ -91,10 +144,11 @@ namespace basecross{
 		return instance;
 	}
 	void DownState::Enter(const shared_ptr<WarpMagicSircle>& Obj) {
+		auto gm = GameManager::GetInstance();
+		gm->SetMagicSircleEnabledLook(true);
 	}
 	void DownState::Execute(const shared_ptr<WarpMagicSircle>& Obj) {
-		auto ptrArrive = Obj->GetBehavior<ArriveSteering>();
-		auto ptrSep = Obj->GetBehavior<SeparationSteering>();
+		Obj->Falling();
 	}
 	void DownState::Exit(const shared_ptr<WarpMagicSircle>& Obj) {
 	}
@@ -109,8 +163,7 @@ namespace basecross{
 	void DeleteState::Enter(const shared_ptr<WarpMagicSircle>& Obj) {
 	}
 	void DeleteState::Execute(const shared_ptr<WarpMagicSircle>& Obj) {
-		auto ptrArrive = Obj->GetBehavior<ArriveSteering>();
-		auto ptrSep = Obj->GetBehavior<SeparationSteering>();
+		Obj->ClearAndDelete();
 	}
 	void DeleteState::Exit(const shared_ptr<WarpMagicSircle>& Obj) {
 	}

@@ -15,12 +15,19 @@ namespace basecross {
 	{
 		const Vec3 eye(0.0f, 30.0f, -20.0f);
 		const Vec3 at(0.0f);
-		auto PtrView = CreateView<SingleView>();
-		//ビューのカメラの設定
+		//OpeningCameraView用のビュー
+		m_OpeningCameraView = ObjectFactory::Create<SingleView>(GetThis<Stage>());
+		auto ptrOpeningCamera = ObjectFactory::Create<OpeningCamera>();
+		m_OpeningCameraView->SetCamera(ptrOpeningCamera);
+		//MyCamera用のビュー
+		m_MyCameraView = ObjectFactory::Create<SingleView>(GetThis<Stage>());
 		auto PtrCamera = ObjectFactory::Create<MyCamera>();
-		PtrView->SetCamera(PtrCamera);
 		PtrCamera->SetEye(eye);
 		PtrCamera->SetAt(at);
+		m_MyCameraView->SetCamera(PtrCamera);
+		//初期状態ではm_OpeningCameraViewを使う
+		SetView(m_OpeningCameraView);
+		m_CameraSelect = CameraSelect::openingCamera;
 		//マルチライトの作成
 		auto PtrMultiLight = CreateLight<MultiLight>();
 		//デフォルトのライティングを指定
@@ -38,7 +45,7 @@ namespace basecross {
 		{
 			1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ,1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
 			1,47,48,48,48,48,48,48,48,48,48,48,48,48,49, 1, 1, 1,47,48,48,48,48,48,48,48,48,48,48,48,49, 1,
-			1,44, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,49, 1,47 ,3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3,46, 1,
+			1,44, 0, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,49, 1,47 ,3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3,46, 1,
 			1,44, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0,46, 1,44, 0, 0, 0,42,42,42,42, 0, 0, 0, 0, 0,46, 1,
 			1,41,42,42,42,42,42, 0, 0, 0, 0, 0, 0, 0, 0,46, 1,44, 0, 0,46, 1, 1, 1, 1,41, 0, 0, 0, 0,46, 1,
 			1, 1, 1, 1, 1, 1, 1,44, 0, 0, 0, 0, 0, 0, 0,46, 1,44, 0, 0, 0,48,48,48,49, 1,44, 0, 0, 0,46, 1,
@@ -48,7 +55,7 @@ namespace basecross {
 			1,44, 0, 0, 0, 0, 0, 0, 0,42,42,42,42,42,42,43, 1, 1,41,42,42,42, 0, 0, 0,46, 1,44, 0, 0,46, 1,
 			1,44, 0, 0, 0, 0, 0, 0,46, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,44, 0, 0,46, 1,44, 0, 0,46, 1,
 			1,44, 0, 0, 0, 0, 0, 0, 0,48,48,48,48,48,48,48,48,48,48,48,48,48, 0, 0, 0,46, 1,44, 0, 0,46, 1,
-			1,44, 0, 5, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0,46, 1,44, 6, 0,46, 1,
+			1,44, 0, 5, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0,46, 1,44, 0, 0,46, 1,
 			1,44, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,46, 1,44, 0, 2,46, 1,
 			1,41,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,43, 1,41,42,42,43, 1,
 			1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1
@@ -86,7 +93,7 @@ namespace basecross {
 					break;
 				case 2:
 					CreatePlayer(pos);
-					//AddGameObject<WarpMagicSircle>(Vec3(0.0f), Vec3(0.0f), Vec3(pos.x, 4.0f, pos.z));
+					AddGameObject<WarpMagicSircle>(Vec3(0.0f), Vec3(0.0f), Vec3(pos.x, 4.0f, pos.z));
 					break;
 				case 3:
 					AddGameObject<EnemyFirst>(Vec3(2.0f, 1.0f, 3.5f), Vec3(0.0f), Vec3(pos));
@@ -123,7 +130,8 @@ namespace basecross {
 					AddGameObject<StageRefrectWall>(Vec3(scale), Vec3(0.0f), Vec3(pos.x, 1.5f, pos.z + 1.3f));
 					break;
 				case 6:
-					AddGameObject<TreasureBox>(Vec3(1.0f), Vec3(0.0f), Vec3(pos.x, 1.5f, pos.z));
+					auto treasureBox = AddGameObject<TreasureBox>(Vec3(1.0f), Vec3(0.0f), Vec3(pos.x, 1.5f, pos.z));
+					SetSharedGameObject(WstringKey::ShareObj_TreasureBox, treasureBox);
 
 				}
 			}
@@ -149,6 +157,7 @@ namespace basecross {
 		CreateEnemy();
 		CreateUI();
 		//CreatePlayer(Vec3(0.0f, 1.0f, 0.0f));
+		CreateCameraman();
 
 		AddGameObject<GameManagement>(Vec3(0.0f), Vec3(0.0f), Vec3(0.0f));
 
@@ -205,8 +214,8 @@ namespace basecross {
 	void GameStage::CreateStage()
 	{
 		// 床
-		int posX = 0;
-		int posZ = 0;
+		float posX = 0.0f;
+		float posZ = 0.0f;
 		Vec3 stagePos = Vec3(posX, 0, posZ);
 		for (int l = 0; l < STAGE_LENGTH / 4; l++) {
 			for (int w = 0; w < STAGE_WIDTH / 4; w++) {
@@ -247,7 +256,6 @@ namespace basecross {
 	{
 		auto player = AddGameObject<Player>(Vec3(1.5f), Vec3(0.0f), Vec3(pos.x, 2.0f, pos.z));
 		SetSharedGameObject(WstringKey::ShareObj_Player, player);
-		SetSharedGameObject(L"Player", player);
 
 	}
 
@@ -263,11 +271,38 @@ namespace basecross {
 		AddGameObject<WallStock>(true, Vec2(100.0f), Vec3(+390.0f, 350.0f, 0.1f), 3.0f);
 	}
 
+	//カメラマンの作成
+	void GameStage::CreateCameraman() {
+		auto ptrOpeningCameraman = AddGameObject<OpeningCameraman>();
+		//シェア配列にOpeningCameramanを追加
+		SetSharedGameObject(L"OpeningCameraman", ptrOpeningCameraman);
+
+		auto ptrOpeningCamera = dynamic_pointer_cast<OpeningCamera>(m_OpeningCameraView->GetCamera());
+		if (ptrOpeningCamera) {
+			ptrOpeningCamera->SetCameraObject(ptrOpeningCameraman);
+			SetView(m_OpeningCameraView);
+			m_CameraSelect = CameraSelect::openingCamera;
+		}
+
+	}
+
 	void GameStage::StopBGM()
 	{
 		auto ptrXA = App::GetApp()->GetXAudio2Manager();
 
 		ptrXA->Stop(m_BGM);
+	}
+
+	void GameStage::ToMyCamera() {
+		auto ptrPlayer = GetSharedGameObject<Player>(WstringKey::ShareObj_Player);
+		//MyCameraに変更
+		auto ptrMyCamera = dynamic_pointer_cast<MyCamera>(m_MyCameraView->GetCamera());
+		if (ptrMyCamera) {
+			ptrMyCamera->SetTargetObject(ptrPlayer);
+			//m_MyCameraViewを使う
+			SetView(m_MyCameraView);
+			m_CameraSelect = CameraSelect::myCamera;
+		}
 	}
 }
 //end basecross

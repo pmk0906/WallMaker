@@ -60,9 +60,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)DangerEnemy.h">
       <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)MyCamera.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Treasure.h">
       <Filter>Headers</Filter>
     </ClInclude>
@@ -91,6 +88,9 @@
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)DirectorObject.h" />
+    <ClInclude Include="C:\Users\hdak3\Documents\DATEAPPS2020Eteam\WallMaker\WallMaker\GameSources\Camera.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)Character.cpp">
@@ -138,9 +138,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)DangerEnemy.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)MyCamera.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Treasure.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
@@ -166,5 +163,8 @@
       <Filter>Sources</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)DirectorObject.cpp" />
+    <ClCompile Include="C:\Users\hdak3\Documents\DATEAPPS2020Eteam\WallMaker\WallMaker\GameSources\Camera.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

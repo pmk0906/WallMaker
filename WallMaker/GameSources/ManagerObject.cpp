@@ -62,10 +62,16 @@ namespace basecross{
 	void GameManagement::PlayerMoveEnabled()
 	{
 		auto gm = GameManager::GetInstance();
-		if (gm->GetPlayerMoveTime() < m_Timer && m_PlayerMoveFlgChanged == false)
+		if (gm->GetOpeningCameraMoveEnd())
 		{
-			gm->SetMoveEnabledFlg(true);
-			m_PlayerMoveFlgChanged = true;
+			if(gm->GetMagicSircleMoved() == true)
+			{
+				if (m_PlayerMoveFlgChanged == false)
+				{
+					gm->SetMoveEnabledFlg(true);
+					m_PlayerMoveFlgChanged = true;
+				}
+			}
 		}
 		else
 		{

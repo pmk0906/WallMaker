@@ -49,6 +49,8 @@ namespace WstringKey {
 	// シェアオブジェクト用
 	// プレイヤー
 	const wstring ShareObj_Player = L"ObjPlayer";
+	//宝箱
+	const wstring ShareObj_TreasureBox = L"ObjTreasureBox";
 	// フェード用スプライト
 	const wstring ShareObj_FadeSprite = L"ObjFadeSprite";
 

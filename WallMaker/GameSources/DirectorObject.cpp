@@ -132,7 +132,7 @@ namespace basecross{
 			auto gm = GameManager::GetInstance();
 			gm->SetMagicSircleMoved(true);
 
-			auto startSprite = GetStage()->AddGameObject<FadeSprite>(true, Vec2(800, 300), Vec2(0, 150), false, 0.0f, 3.0f, L"START_TX", 1, Col4(1, 1, 1, 1.0f));
+			auto startSprite = GetStage()->AddGameObject<FadeSprite>(true, Vec2(800, 200), Vec2(0, 150), false, 0.0f, 3.0f, L"START_TX", 1, Col4(1, 1, 1, 1.0f));
 			startSprite->SetFadeFlgChanged(false);
 
 			SetDrawActive(false);

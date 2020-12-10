@@ -172,7 +172,7 @@ namespace basecross {
 
 		//BGM
 		auto ptrXA = App::GetApp()->GetXAudio2Manager();
-		m_BGM = ptrXA->Start(WstringKey::SE_MainBGM, 0, 1.0f);
+		m_BGM = ptrXA->Start(WstringKey::SE_MainBGM, 0, 0.5f);
 
 
 	}

@@ -75,7 +75,7 @@ namespace basecross {
 		//Ÿ‚ÌƒV[ƒ“‚Ì”Ô†
 		int GetNextSceneNum()
 		{
-			return GetSceneNum() + 1;
+			return m_NowSceneNum + 1;
 		}
 		int GetStageNumMax()
 		{

@@ -76,7 +76,7 @@ namespace basecross{
 			{L"GAMEOVER_TX", L"Tx_GameOver.png"},
 			{L"STAGESELECT_TX", L"Tx_StageSelect.png"},
 			{L"A_START_TX", L"Tx_Start.png"}, // Aボタンでスタート
-			{L"START_TX", L"Start.png"} // ゲーム開始時
+			{L"START_TX", L"Tx_GameStart.png"} // ゲーム開始
 		};
 		// アニメーション
 		Pairs animPairs[] = 
@@ -96,7 +96,8 @@ namespace basecross{
 			{L"BULLET_MESH", L"Bullet_Green.bmf"},
 			{L"DANGER_BULLET_MESH", L"Bullet_Red.bmf"},
 			{L"THORN_BULLET_MESH", L"Bullet_Red_thorn.bmf"},
-			{L"PURPLE_BULLET_MESH", L"Bullet_Purple.bmf"}
+			{L"PURPLE_BULLET_MESH", L"Bullet_Purple.bmf"},
+			{L"BLUE_BULLET_MESH", L"Bullet_Blue.bmf"}
 
 		};
 		//タンジェント有りスタティック

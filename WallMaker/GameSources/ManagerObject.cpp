@@ -176,7 +176,7 @@ namespace basecross{
 				}
 				else
 				{
-					LoadScene(gm->GetNextSceneNum);
+					LoadScene(gm->GetNextSceneNum());
 				}
 				break;
 			case 1:

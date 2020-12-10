@@ -141,7 +141,7 @@ namespace basecross {
 		{
 			auto ptrDraw = AddComponent<PNTStaticModelDraw>();
 
-			ptrDraw->SetMeshResource(L"PURPLE_BULLET_MESH");
+			ptrDraw->SetMeshResource(L"BLUE_BULLET_MESH");
 			ptrDraw->SetMeshToTransformMatrix(spanMat);
 		}
 	}

@@ -43,6 +43,15 @@ namespace basecross {
 		Die();
 		SetMaxSpeed();
 		SetColor();
+
+		if (flg_reflect == false)
+		{
+			GenerateFire(2, Vec3(1.0f, 1.0f, 1.0f));
+		}
+		else
+		{
+			GenerateFireBlue(2, Vec3(1.0f, 1.0f, 1.0f));
+		}
 	}
 
 	void DangerBullet::Initialize()
@@ -142,12 +151,21 @@ namespace basecross {
 		}
 	}
 
-	void DangerBullet::GenerateFire()
+	void DangerBullet::GenerateFire(int GenerateNum, Vec3 MoveSpeed)
 	{
 		auto ptrTrans = GetComponent<Transform>();
 		auto PtrFire = GetStage()->GetSharedGameObject<MultiFire>(L"MultiFire", false);
 		if (PtrFire) {
-			PtrFire->InsertFire(GetComponent<Transform>()->GetPosition());
+			PtrFire->InsertFire(GetComponent<Transform>()->GetPosition(), GenerateNum, MoveSpeed);
+		}
+	}
+
+	void DangerBullet::GenerateFireBlue(int GenerateNum, Vec3 MoveSpeed)
+	{
+		auto ptrTrans = GetComponent<Transform>();
+		auto PtrFire = GetStage()->GetSharedGameObject<MultiFire>(L"MultiFire", false);
+		if (PtrFire) {
+			PtrFire->InsertFire(GetComponent<Transform>()->GetPosition(), GenerateNum, MoveSpeed);
 		}
 	}
 
@@ -392,6 +410,5 @@ namespace basecross {
 			SetDrawActive(false);
 			SetUpdateActive(false);
 		}
-		GenerateFire();
 	}
 }

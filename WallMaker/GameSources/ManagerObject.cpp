@@ -43,9 +43,9 @@ namespace basecross{
 			sceneKey = WstringKey::ToGameStage1;
 			gm->SetSceneNum(SceneNum::GameStage_1);
 			break;
-			case SceneNum::GameStage_2:
-				sceneKey = WstringKey::ToGameStage2;
-				break;
+		case SceneNum::GameStage_2:
+			sceneKey = WstringKey::ToGameStage2;
+			break;
 			/*case SceneNum::GameStage_3:
 				sceneKey = WstringKey::ToGameStage3;
 				break;
@@ -170,6 +170,14 @@ namespace basecross{
 			switch (gm->GetSelectingButtonNum())
 			{
 			case 0:
+				if (gm->GetNextSceneNum() == SceneNum::End)
+				{
+					LoadScene(SceneNum::StageSelect);
+				}
+				else
+				{
+					LoadScene(gm->GetNextSceneNum);
+				}
 				break;
 			case 1:
 				LoadScene((int)SceneNum::StageSelect);
@@ -273,8 +281,6 @@ namespace basecross{
 			StageSelectButton_A();
 			break;
 		case (int)SceneNum::GameStage_1:
-			GameStageButton_A();
-			break;
 		case(int)SceneNum::GameStage_2:
 			GameStageButton_A();
 			break;

@@ -10,7 +10,8 @@ namespace basecross {
 		GameStage_2,
 		GameStage_3,
 		GameStage_4,
-		GameStage_5
+		GameStage_5,
+		End
 	};
 
 	class GameManager {
@@ -35,8 +36,10 @@ namespace basecross {
 		//ボタンの番号の最大値
 		int m_MaxButtonNum = 0;
 
-		//ステージの番号
-		int m_StageNumArray[9];
+		//ステージの数
+		int m_StageNumMax = 5;
+		//開放されたステージ
+		bool m_StageNumArray[5] = {true, true, true, true, true};
 		//現在のシーンの番号
 		int m_NowSceneNum = 0;
 
@@ -68,6 +71,15 @@ namespace basecross {
 		int GetSceneNum()
 		{
 			return m_NowSceneNum;
+		}
+		//次のシーンの番号
+		int GetNextSceneNum()
+		{
+			return GetSceneNum() + 1;
+		}
+		int GetStageNumMax()
+		{
+			return m_StageNumMax;
 		}
 
 		//宝とプレイヤーのフラグを見てフラグを切り替え

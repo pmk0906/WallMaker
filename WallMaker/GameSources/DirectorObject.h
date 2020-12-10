@@ -17,7 +17,7 @@ namespace basecross{
 		virtual ~MultiFire();
 		//‰Šú‰»
 		virtual void OnCreate() override;
-		void InsertFire(const Vec3& Pos);
+		void InsertFire(const Vec3& Pos, int GenerateNum, Vec3 MoveSpeed);
 	};
 	//--------------------------------------------------------------------------------------
 	///	•¡”‚Ì”½ËŒã‚Ì‰ŠƒNƒ‰ƒX
@@ -29,7 +29,7 @@ namespace basecross{
 		virtual ~MultiFireBlue();
 		//‰Šú‰»
 		virtual void OnCreate() override;
-		void InsertFire(const Vec3& Pos);
+		void InsertFire(const Vec3& Pos, int GenerateNum, Vec3 MoveSpeed);
 	};
 
 	//--------------------------------------------------------------------------------------

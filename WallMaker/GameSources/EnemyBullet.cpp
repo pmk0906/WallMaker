@@ -50,11 +50,11 @@ namespace basecross {
 
 			if (flg_reflect == false)
 			{
-				GenerateFire();
+				GenerateFire(2, Vec3(1.0f, 1.0f, 1.0f));
 			}
 			else
 			{
-				GenerateFireBlue();
+				GenerateFireBlue(2, Vec3(1.0f, 1.0f, 1.0f));
 			}
 		}
 	}
@@ -146,21 +146,21 @@ namespace basecross {
 		}
 	}
 
-	void EnemyBullet::GenerateFire()
+	void EnemyBullet::GenerateFire(int GenerateNum, Vec3 MoveSpeed)
 	{
 		auto ptrTrans = GetComponent<Transform>();
 		auto PtrFire = GetStage()->GetSharedGameObject<MultiFire>(L"MultiFire", false);
 		if (PtrFire) {
-			PtrFire->InsertFire(GetComponent<Transform>()->GetPosition());
+			PtrFire->InsertFire(GetComponent<Transform>()->GetPosition(), GenerateNum, MoveSpeed);
 		}
 	}
 
-	void EnemyBullet::GenerateFireBlue()
+	void EnemyBullet::GenerateFireBlue(int GenerateNum, Vec3 MoveSpeed)
 	{
 		auto ptrTrans = GetComponent<Transform>();
 		auto PtrFire = GetStage()->GetSharedGameObject<MultiFireBlue>(L"MultiFireBlue", false);
 		if (PtrFire) {
-			PtrFire->InsertFire(GetComponent<Transform>()->GetPosition());
+			PtrFire->InsertFire(GetComponent<Transform>()->GetPosition(), GenerateNum, MoveSpeed);
 		}
 	}
 
@@ -202,12 +202,6 @@ namespace basecross {
 			flg_reflect = true;
 
 			magicWall->Damage(m_Attack);
-
-			auto ptrTrans = GetComponent<Transform>();
-			auto PtrFire = GetStage()->GetSharedGameObject<MultiFire>(L"MultiFire", false);
-			if (PtrFire) {
-				PtrFire->InsertFire(GetComponent<Transform>()->GetPosition());
-			}
 		}
 
 		//　あたったのがシールドなら

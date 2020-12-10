@@ -39,7 +39,8 @@ namespace basecross {
 		void SetDir(const Vec3& v);
 		void SetMaxSpeed();
 		void SetColor();
-		void GenerateFire();
+		void GenerateFire(int GenerateNum, Vec3 MoveSpeed);
+		void GenerateFireBlue(int GenerateNum, Vec3 MoveSpeed);
 
 		// Õ“Ë”»’è
 		virtual void OnCollisionEnter(shared_ptr<GameObject>& other)override;

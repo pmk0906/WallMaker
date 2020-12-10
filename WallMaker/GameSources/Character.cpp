@@ -232,7 +232,7 @@ namespace basecross{
 		ptrDraw->SetOwnShadowActive(true);
 		ptrDraw->SetLightingEnabled(false);
 		//描画するテクスチャを設定
-		ptrDraw->SetTextureResource(L"WALL_TX");
+		ptrDraw->SetTextureResource(L"BreakWall_TX");
 		SetAlphaActive(false);
 
 		SetDrawLayer(-2);

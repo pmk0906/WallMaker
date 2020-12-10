@@ -60,6 +60,7 @@ namespace basecross{
 			{L"WHITE_TX", L"White.png"},
 			{L"FIRE_TX", L"fire.png"},
 			{L"BLUEFIRE_TX", L"BlueFire.png"},
+			{L"BreakWall_TX", L"BreakWall.png"},
 			//ƒ{ƒ^ƒ“
 			{L"NEXTSTAGE_BUTTON_TX", L"Tx_NextStageButton.png"},
 			{L"STAGESELECT_BUTTON_TX", L"Tx_StageSelectButton.png"},
@@ -198,6 +199,9 @@ namespace basecross{
 		}
 		else if (event->m_MsgStr == WstringKey::ToGameStage1) {
 			ResetActiveStage<GameStage>();
+		}
+		else if (event->m_MsgStr == WstringKey::ToGameStage2) {
+			ResetActiveStage<GameStage2>();
 		}
 		else if (event->m_MsgStr == WstringKey::ToGameTestStage) {
 			ResetActiveStage<TestStage>();

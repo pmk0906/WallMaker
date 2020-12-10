@@ -6,11 +6,11 @@ namespace basecross {
 	{
 		Title,
 		StageSelect,
-		GameStage1,
-		GameStage2,
-		GameStage3,
-		GameStage4,
-		GameStage5
+		GameStage_1,
+		GameStage_2,
+		GameStage_3,
+		GameStage_4,
+		GameStage_5
 	};
 
 	class GameManager {

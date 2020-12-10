@@ -104,8 +104,20 @@ namespace basecross{
 	}
 
 	void OpeningCameraman::EndStateEnterBehavior() {
-		auto ptrGameGtage = GetTypeStage<GameStage>();
-		ptrGameGtage->ToMyCamera();
+		auto gm = GameManager::GetInstance();
+		int stageNum = gm->GetSceneNum();
+
+		if (stageNum == SceneNum::GameStage_1)
+		{
+			auto ptrGameGtage = GetTypeStage<GameStage>();
+			ptrGameGtage->ToMyCamera();
+		}
+		else if (stageNum == SceneNum::GameStage_2)
+		{
+			auto ptrGameGtage = GetTypeStage<GameStage2>();
+			ptrGameGtage->ToMyCamera();
+		}
+		
 	}
 
 	void OpeningCameraman::DrawActiveSwitch()

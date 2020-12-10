@@ -39,22 +39,22 @@ namespace basecross{
 			sceneKey = WstringKey::ToGameStageSelect;
 			gm->SetSceneNum(SceneNum::StageSelect);
 			break;
-		case (int)SceneNum::GameStage1:
+		case (int)SceneNum::GameStage_1:
 			sceneKey = WstringKey::ToGameStage1;
-			gm->SetSceneNum(SceneNum::GameStage1);
+			gm->SetSceneNum(SceneNum::GameStage_1);
 			break;
-			//case StageNum::GameStage2:
-			//	sceneKey = WstringKey::ToGameStage2;
-			//	break;
-			//case StageNum::GameStage3:
-			//	sceneKey = WstringKey::ToGameStage3;
-			//	break;
-			//case StageNum::GameStage4:
-			//	sceneKey = WstringKey::ToGameStage4;
-			//	break;
-			//case StageNum::GameStage5:
-			//	sceneKey = WstringKey::ToGameStage5;
-			//	break;
+			case SceneNum::GameStage_2:
+				sceneKey = WstringKey::ToGameStage2;
+				break;
+			/*case SceneNum::GameStage_3:
+				sceneKey = WstringKey::ToGameStage3;
+				break;
+			case SceneNum::GameStage_4:
+				sceneKey = WstringKey::ToGameStage4;
+				break;
+			case SceneNum::GameStage_5:
+				sceneKey = WstringKey::ToGameStage5;
+				break;*/
 		}
 		PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), sceneKey);
 	}
@@ -109,11 +109,11 @@ namespace basecross{
 				}
 			}
 			break;
-		case SceneNum::GameStage1:
-		case SceneNum::GameStage2:
-		case SceneNum::GameStage3:
-		case SceneNum::GameStage4:
-		case SceneNum::GameStage5:
+		case SceneNum::GameStage_1:
+		case SceneNum::GameStage_2:
+		case SceneNum::GameStage_3:
+		case SceneNum::GameStage_4:
+		case SceneNum::GameStage_5:
 			//Dパッド上
 			if (wButtons & XINPUT_GAMEPAD_DPAD_UP) {
 				if (gm->GetSelectingButtonNum() > 0)
@@ -147,9 +147,10 @@ namespace basecross{
 		switch (gm->GetSelectingButtonNum())
 		{
 		case 0:
-			LoadScene((int)SceneNum::GameStage1);
+			LoadScene((int)SceneNum::GameStage_1);
 			break;
 		case 1:
+			LoadScene((int)SceneNum::GameStage_2);
 			break;
 		default:
 			break;
@@ -240,8 +241,11 @@ namespace basecross{
 		case (int)SceneNum::StageSelect:
 			sceneNum += L"ステージセレクト\n";
 			break;
-		case (int)SceneNum::GameStage1:
+		case (int)SceneNum::GameStage_1:
 			sceneNum += L"ゲームステージ１\n";
+			break;
+		case (int)SceneNum::GameStage_2:
+			sceneNum += L"ゲームステージ２\n";
 			break;
 		}
 
@@ -268,7 +272,10 @@ namespace basecross{
 		case (int)SceneNum::StageSelect:
 			StageSelectButton_A();
 			break;
-		case (int)SceneNum::GameStage1:
+		case (int)SceneNum::GameStage_1:
+			GameStageButton_A();
+			break;
+		case(int)SceneNum::GameStage_2:
 			GameStageButton_A();
 			break;
 		}
@@ -285,7 +292,10 @@ namespace basecross{
 		case (int)SceneNum::StageSelect:
 			StageSelectButton_B();
 			break;
-		case (int)SceneNum::GameStage1:
+		case (int)SceneNum::GameStage_1:
+			GameStageButton_B();
+			break;
+		case (int)SceneNum::GameStage_2:
 			GameStageButton_B();
 			break;
 		}

@@ -27,7 +27,7 @@ namespace basecross {
 		m_MyCameraView->SetCamera(PtrCamera);
 		//初期状態ではm_OpeningCameraViewを使う
 		SetView(m_OpeningCameraView);
-		m_CameraSelect = CameraSelect::openingCamera;
+		m_CameraSelect = CameraSelect_Stage1::openingCamera;
 		//マルチライトの作成
 		auto PtrMultiLight = CreateLight<MultiLight>();
 		//デフォルトのライティングを指定
@@ -163,7 +163,7 @@ namespace basecross {
 
 		auto gm = GameManager::GetInstance();
 		gm->InitGameManager();
-		gm->SetSceneNum(SceneNum::GameStage1);
+		gm->SetSceneNum(SceneNum::GameStage_1);
 
 		auto multiFire = AddGameObject<MultiFire>();
 		SetSharedGameObject(L"MultiFire", multiFire);
@@ -284,7 +284,7 @@ namespace basecross {
 		if (ptrOpeningCamera) {
 			ptrOpeningCamera->SetCameraObject(ptrOpeningCameraman);
 			SetView(m_OpeningCameraView);
-			m_CameraSelect = CameraSelect::openingCamera;
+			m_CameraSelect = CameraSelect_Stage1::openingCamera;
 		}
 
 	}
@@ -304,7 +304,7 @@ namespace basecross {
 			ptrMyCamera->SetTargetObject(ptrPlayer);
 			//m_MyCameraViewを使う
 			SetView(m_MyCameraView);
-			m_CameraSelect = CameraSelect::myCamera;
+			m_CameraSelect = CameraSelect_Stage1::myCamera;
 		}
 	}
 }

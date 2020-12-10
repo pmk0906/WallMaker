@@ -185,12 +185,23 @@ namespace basecross {
 			SetUpdateActive(false);
 
 			ptrChild->DirectDie();
+
+			GenerataFire(30, Vec3(50.0f));
 		}
 	}
 
 	void PatrolEnemyUPDown::CreateShield()
 	{
 		m_Shield = GetStage()->AddGameObject<UPPatrolShield>(GetThis<PatrolEnemyUPDown>());
+	}
+
+	void PatrolEnemyUPDown::GenerataFire(int GenerateNum, Vec3 MoveSpeed)
+	{
+		auto ptrTrans = GetComponent<Transform>();
+		auto PtrFire = GetStage()->GetSharedGameObject<MultiFire>(L"MultiFire", false);
+		if (PtrFire) {
+			PtrFire->InsertFire(GetComponent<Transform>()->GetPosition(), GenerateNum, MoveSpeed);
+		}
 	}
 
 	Vec3 PatrolEnemyUPDown::GetPosition() const

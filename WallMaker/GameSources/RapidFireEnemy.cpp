@@ -220,12 +220,23 @@ namespace basecross {
 			SetUpdateActive(false);
 
 			ptrChild->DirectDie();
+
+			GenerataFire(30, Vec3(50.0f));
 		}
 	}
 
 	void RapidFireEnemy::CreateShield()
 	{
 		m_Shield = GetStage()->AddGameObject<RapidShield>(GetThis<RapidFireEnemy>());
+	}
+
+	void RapidFireEnemy::GenerataFire(int GenerateNum, Vec3 MoveSpeed)
+	{
+		auto ptrTrans = GetComponent<Transform>();
+		auto PtrFire = GetStage()->GetSharedGameObject<MultiFire>(L"MultiFire", false);
+		if (PtrFire) {
+			PtrFire->InsertFire(GetComponent<Transform>()->GetPosition(), GenerateNum, MoveSpeed);
+		}
 	}
 
 	Vec3 RapidFireEnemy::GetPosition() const

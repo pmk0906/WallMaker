@@ -379,9 +379,9 @@ namespace basecross{
 		m_MagicSkeltonWall = GetStage()->AddGameObject<MagicSkeltonWall>(m_Scale, m_Rotation, m_Position, GetThis<Player>());
 	
 		// DrawStringóp
-		auto strComp = AddComponent<StringSprite>();
+		/*auto strComp = AddComponent<StringSprite>();
 		strComp->SetBackColor(Col4(0, 0, 0, 0.5f));
-		strComp->SetTextRect(Rect2D<float>(1000, 110, 1270, 310));
+		strComp->SetTextRect(Rect2D<float>(1000, 110, 1270, 310));*/
 	}
 
 	void Player::OnUpdate()
@@ -422,7 +422,7 @@ namespace basecross{
 
 	void Player::OnUpdate2()
 	{
-		DrawStrings();
+		//DrawStrings();
 	}
 
 	void Player::OnCollisionEnter(shared_ptr<GameObject>& other) {
@@ -648,7 +648,7 @@ namespace basecross{
 
 		auto ptrColl = AddComponent<CollisionObb>();
 		ptrColl->SetAfterCollision(AfterCollision::None);
-		ptrColl->SetDrawActive(true);
+		//ptrColl->SetDrawActive(true);
 		//ptrColl->SetFixed(true);
 
 		//ï`âÊèàóù
@@ -751,7 +751,7 @@ namespace basecross{
 
 		auto ptrColl = AddComponent<CollisionObb>();
 		ptrColl->SetAfterCollision(AfterCollision::None);
-		ptrColl->SetDrawActive(true);
+		//ptrColl->SetDrawActive(true);
 
 		//ï`âÊèàóù
 		auto ptrDraw = AddComponent<BcPNTnTStaticModelDraw>();
@@ -769,9 +769,9 @@ namespace basecross{
 		//ptrDraw->SetTextureResource(L"MAGICWALL_TX");
 
 		// DrawStringóp
-		auto strComp = AddComponent<StringSprite>();
+		/*auto strComp = AddComponent<StringSprite>();
 		strComp->SetBackColor(Col4(0, 0, 0, 0.5f));
-		strComp->SetTextRect(Rect2D<float>(10, 600, 270, 210));
+		strComp->SetTextRect(Rect2D<float>(10, 600, 270, 210));*/
 	}
 
 	void MagicSkeltonWall::OnUpdate()
@@ -782,7 +782,7 @@ namespace basecross{
 
 	void MagicSkeltonWall::OnUpdate2()
 	{
-		DrawStrings();
+		//DrawStrings();
 	}
 
 	void MagicSkeltonWall::OnCollisionEnter(shared_ptr<GameObject>& other) {

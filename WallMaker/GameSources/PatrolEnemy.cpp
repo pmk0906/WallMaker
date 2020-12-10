@@ -52,14 +52,18 @@ namespace basecross {
 
 	void PatrolEnemy::OnUpdate()
 	{
-		if (m_FireTime >= 3.0f)
+		auto gm = GameManager::GetInstance();
+		if (gm->GetMoveEnabledFlg() == true)
 		{
-			Fire();
-		}
+			if (m_FireTime >= 3.0f)
+			{
+				Fire();
+			}
 
-		Reload();
-		Move();
-		Die();
+			Reload();
+			Move();
+			Die();
+		}
 	}
 
 	//•Ï”‚Ì‰Šú‰»

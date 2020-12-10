@@ -213,9 +213,9 @@ namespace basecross{
 		ptrTrans->SetPosition(m_Position);
 
 		// DrawString—p
-		auto strComp = AddComponent<StringSprite>();
+		/*auto strComp = AddComponent<StringSprite>();
 		strComp->SetBackColor(Col4(0, 0, 0, 0.5f));
-		strComp->SetTextRect(Rect2D<float>(1000, 510, 1270, 710));
+		strComp->SetTextRect(Rect2D<float>(1000, 510, 1270, 710));*/
 	}
 
 	void GameManagement::OnUpdate()
@@ -227,7 +227,7 @@ namespace basecross{
 	void GameManagement::OnUpdate2()
 	{
 
-		DrawStrings();
+		//DrawStrings();
 	}
 
 	void GameManagement::DrawStrings()

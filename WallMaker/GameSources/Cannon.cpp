@@ -51,16 +51,18 @@ namespace basecross {
 
 	void Cannon::OnUpdate()
 	{
-
 		auto gm = GameManager::GetInstance();
-		if (gm->GetClearFlgChanged() == false)
+		if (gm->GetMoveEnabledFlg() == true)
 		{
-			if (m_FireTime >= 3.0f)
+			if (gm->GetClearFlgChanged() == false)
 			{
-				Fire();
-			}
+				if (m_FireTime >= 3.0f)
+				{
+					Fire();
+				}
 
-			Reload();
+				Reload();
+			}
 		}
 	}
 

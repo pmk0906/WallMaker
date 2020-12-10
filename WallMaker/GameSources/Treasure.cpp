@@ -40,7 +40,7 @@ namespace basecross{
 		);
 
 		auto ptrColl = AddComponent<CollisionObb>();
-		ptrColl->SetDrawActive(true);
+		//ptrColl->SetDrawActive(true);
 		ptrColl->SetAfterCollision(AfterCollision::None);
 
 		//影をつける（シャドウマップを描画する）

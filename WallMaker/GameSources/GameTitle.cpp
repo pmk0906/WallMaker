@@ -69,7 +69,7 @@ namespace basecross{
 
 		AddGameObject<Sprite>(true, Vec2(1000, 500), Vec2(0, +100), L"TITLEL_LOGO_TX", 1, Col4(1.0f, 1.0f, 1.0f, 1.0f));
 
-		AddGameObject<Sprite>(true, Vec2(600, 150), Vec2(0, -200), L"A_START_TX", 1, Col4(1.0f, 1.0f, 1.0f, 1.0f));
+		AddGameObject<Sprite>(true, Vec2(400, 100), Vec2(0, -200), L"A_START_TX", 1, Col4(1.0f, 1.0f, 1.0f, 1.0f));
 
 	}
 

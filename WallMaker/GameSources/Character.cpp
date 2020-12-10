@@ -252,8 +252,7 @@ namespace basecross{
 	{
 		if (m_Hp <= 0.0f)
 		{
-			SetDrawActive(false);
-			SetUpdateActive(false);
+			GetStage()->RemoveGameObject<BreakWall>(GetThis<BreakWall>());
 		}
 	}
 }

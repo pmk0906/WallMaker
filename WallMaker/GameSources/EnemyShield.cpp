@@ -29,7 +29,7 @@ namespace basecross {
 		// Õ“Ë”»’è
 		auto ptrColl = AddComponent<CollisionObb>();
 		ptrColl->SetAfterCollision(AfterCollision::None);
-		ptrColl->SetDrawActive(true);
+		//ptrColl->SetDrawActive(true);
 
 		AddTag(L"EnemyShield");
 
@@ -105,7 +105,7 @@ namespace basecross {
 		// Õ“Ë”»’è
 		auto ptrColl = AddComponent<CollisionObb>();
 		ptrColl->SetAfterCollision(AfterCollision::None);
-		ptrColl->SetDrawActive(true);
+		//ptrColl->SetDrawActive(true);
 
 		AddTag(L"PatrolShield");
 
@@ -181,7 +181,7 @@ namespace basecross {
 		// Õ“Ë”»’è
 		auto ptrColl = AddComponent<CollisionObb>();
 		ptrColl->SetAfterCollision(AfterCollision::None);
-		ptrColl->SetDrawActive(true);
+		//ptrColl->SetDrawActive(true);
 
 		AddTag(L"UPPatrolShield");
 
@@ -257,7 +257,7 @@ namespace basecross {
 		// Õ“Ë”»’è
 		auto ptrColl = AddComponent<CollisionObb>();
 		ptrColl->SetAfterCollision(AfterCollision::None);
-		ptrColl->SetDrawActive(true);
+		//ptrColl->SetDrawActive(true);
 
 		AddTag(L"EnemyShield");
 
@@ -333,7 +333,7 @@ namespace basecross {
 		// Õ“Ë”»’è
 		auto ptrColl = AddComponent<CollisionObb>();
 		ptrColl->SetAfterCollision(AfterCollision::None);
-		ptrColl->SetDrawActive(true);
+		//ptrColl->SetDrawActive(true);
 
 		AddTag(L"EnemyShield");
 

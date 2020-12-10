@@ -124,7 +124,7 @@ namespace basecross{
 			ptrTrans->SetPosition(myPos.x, myPos.y - 0.1f, myPos.z);
 		}
 	}
-
+	//
 	void WarpMagicSircle::ClearAndDelete()
 	{
 		if (m_Alpha <= 0.0f)

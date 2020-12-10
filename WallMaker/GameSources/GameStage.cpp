@@ -165,12 +165,15 @@ namespace basecross {
 		gm->InitGameManager();
 		gm->SetSceneNum(SceneNum::GameStage1);
 
+		auto multiFire = AddGameObject<MultiFire>();
+		SetSharedGameObject(L"MultiFire", multiFire);
+		auto multiFireBlue = AddGameObject<MultiFireBlue>();
+		SetSharedGameObject(L"MultiFireBlue", multiFireBlue);
+
 		//BGM
 		auto ptrXA = App::GetApp()->GetXAudio2Manager();
 		m_BGM = ptrXA->Start(WstringKey::SE_MainBGM, 0, 1.0f);
 
-		auto startSprite = AddGameObject<FadeSprite>(true, Vec2(800, 300), Vec2(0, 150), false, 0.0f, 3.0f, L"START_TX", 1, Col4(1, 1, 1, 1.0f));
-		startSprite->SetFadeFlgChanged(false);
 
 	}
 

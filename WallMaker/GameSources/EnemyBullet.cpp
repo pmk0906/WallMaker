@@ -47,6 +47,15 @@ namespace basecross {
 			Die();
 			SetMaxSpeed();
 			SetColor();
+
+			if (flg_reflect == false)
+			{
+				GenerateFire();
+			}
+			else
+			{
+				GenerateFireBlue();
+			}
 		}
 	}
 
@@ -137,6 +146,24 @@ namespace basecross {
 		}
 	}
 
+	void EnemyBullet::GenerateFire()
+	{
+		auto ptrTrans = GetComponent<Transform>();
+		auto PtrFire = GetStage()->GetSharedGameObject<MultiFire>(L"MultiFire", false);
+		if (PtrFire) {
+			PtrFire->InsertFire(GetComponent<Transform>()->GetPosition());
+		}
+	}
+
+	void EnemyBullet::GenerateFireBlue()
+	{
+		auto ptrTrans = GetComponent<Transform>();
+		auto PtrFire = GetStage()->GetSharedGameObject<MultiFireBlue>(L"MultiFireBlue", false);
+		if (PtrFire) {
+			PtrFire->InsertFire(GetComponent<Transform>()->GetPosition());
+		}
+	}
+
 	//当たった瞬間
 	void EnemyBullet::OnCollisionEnter(shared_ptr<GameObject>& other)
 	{
@@ -175,6 +202,12 @@ namespace basecross {
 			flg_reflect = true;
 
 			magicWall->Damage(m_Attack);
+
+			auto ptrTrans = GetComponent<Transform>();
+			auto PtrFire = GetStage()->GetSharedGameObject<MultiFire>(L"MultiFire", false);
+			if (PtrFire) {
+				PtrFire->InsertFire(GetComponent<Transform>()->GetPosition());
+			}
 		}
 
 		//　あたったのがシールドなら

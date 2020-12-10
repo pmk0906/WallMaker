@@ -7,6 +7,34 @@
 #include "stdafx.h"
 
 namespace basecross{
+	//--------------------------------------------------------------------------------------
+	///	複数の炎クラス
+	//--------------------------------------------------------------------------------------
+	class MultiFire : public MultiParticle {
+	public:
+		//構築と破棄
+		MultiFire(shared_ptr<Stage>& StagePtr);
+		virtual ~MultiFire();
+		//初期化
+		virtual void OnCreate() override;
+		void InsertFire(const Vec3& Pos);
+	};
+	//--------------------------------------------------------------------------------------
+	///	複数の反射後の炎クラス
+	//--------------------------------------------------------------------------------------
+	class MultiFireBlue : public MultiParticle {
+	public:
+		//構築と破棄
+		MultiFireBlue(shared_ptr<Stage>& StagePtr);
+		virtual ~MultiFireBlue();
+		//初期化
+		virtual void OnCreate() override;
+		void InsertFire(const Vec3& Pos);
+	};
+
+	//--------------------------------------------------------------------------------------
+	///	ゲーム開始時にプレイヤーを出す演出
+	//--------------------------------------------------------------------------------------
 	// 仮床
 	class WarpMagicSircle : public GameObject
 	{

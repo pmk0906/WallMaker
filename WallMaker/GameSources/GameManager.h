@@ -57,6 +57,7 @@ namespace basecross {
 			SetMoveEnabledFlg(false); 
 			SetOpeningCameraMoveEnd(false);
 			SetMagicSircleMoved(false);
+			SetMagicSircleEnabledLook(false);
 		}
 
 		//ƒV[ƒ“‚Ì”Ô†

@@ -142,6 +142,15 @@ namespace basecross {
 		}
 	}
 
+	void DangerBullet::GenerateFire()
+	{
+		auto ptrTrans = GetComponent<Transform>();
+		auto PtrFire = GetStage()->GetSharedGameObject<MultiFire>(L"MultiFire", false);
+		if (PtrFire) {
+			PtrFire->InsertFire(GetComponent<Transform>()->GetPosition());
+		}
+	}
+
 	//ìñÇΩÇ¡ÇΩèuä‘
 	void DangerBullet::OnCollisionEnter(shared_ptr<GameObject>& other)
 	{
@@ -383,5 +392,6 @@ namespace basecross {
 			SetDrawActive(false);
 			SetUpdateActive(false);
 		}
+		GenerateFire();
 	}
 }

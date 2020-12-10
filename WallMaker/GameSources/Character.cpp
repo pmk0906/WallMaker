@@ -52,7 +52,7 @@ namespace basecross{
 	}
 
 	///--------------------------------------------------
-	/// Floor(‚Ð‚ÑŠ„‚ê‚½“y)
+	/// Floor
 	///--------------------------------------------------
 	Floor::Floor(
 		const shared_ptr<Stage>& StagePtr,
@@ -94,7 +94,7 @@ namespace basecross{
 		//ptrDraw->SetFogEnabled(true);
 		ptrDraw->SetOwnShadowActive(true);
 		//•`‰æ‚·‚éƒeƒNƒXƒ`ƒƒ‚ðÝ’è
-		ptrDraw->SetTextureResource(L"FLOOR_TX");
+		ptrDraw->SetTextureResource(L"FLOOR_4x4_TX");
 		SetAlphaActive(false);
 
 		SetDrawLayer(-2);

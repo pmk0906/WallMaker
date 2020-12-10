@@ -50,6 +50,7 @@ namespace basecross{
 		{
 			{L"TRACE_TX", L"trace.png"},
 			{L"FLOOR_TX", L"Floor.png"},
+			{L"FLOOR_4x4_TX", L"Floor_4x4.png"},
 			{L"WALL_TX", L"BlockWall.tga"},
 			{L"HEART_UI_TX", L"Heart.png"},
 			{L"WALLSTOCK_UI_TX", L"UI_MagicWall.png"},
@@ -57,6 +58,8 @@ namespace basecross{
 			{L"GAMESELECT_BG_TX", L"Select_BackGround.png"},
 			{L"REFLECTWALL_TX", L"ReflectWall.tga"},
 			{L"WHITE_TX", L"White.png"},
+			{L"FIRE_TX", L"fire.png"},
+			{L"BLUEFIRE_TX", L"BlueFire.png"},
 			//ƒ{ƒ^ƒ“
 			{L"NEXTSTAGE_BUTTON_TX", L"Tx_NextStageButton.png"},
 			{L"STAGESELECT_BUTTON_TX", L"Tx_StageSelectButton.png"},

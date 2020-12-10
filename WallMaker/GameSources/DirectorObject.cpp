@@ -7,6 +7,79 @@
 #include "Project.h"
 
 namespace basecross{
+	//--------------------------------------------------------------------------------------
+	///	複数の炎クラス
+	//--------------------------------------------------------------------------------------
+	//構築と破棄
+	MultiFire::MultiFire(shared_ptr<Stage>& StagePtr) :
+		MultiParticle(StagePtr)
+	{}
+	MultiFire::~MultiFire() {}
+
+	//初期化
+	void MultiFire::OnCreate() {
+		//加算描画処理をする
+		SetAddType(true);
+	}
+
+	void MultiFire::InsertFire(const Vec3& Pos) {
+		auto ptrParticle = InsertParticle(5);
+		ptrParticle->SetEmitterPos(Pos);
+		ptrParticle->SetTextureResource(L"FIRE_TX");
+		ptrParticle->SetMaxTime(1.0f);
+		for (auto& rParticleSprite : ptrParticle->GetParticleSpriteVec()) {
+			rParticleSprite.m_LocalPos.x = Util::RandZeroToOne() * 0.1f - 0.05f;
+			rParticleSprite.m_LocalPos.y = Util::RandZeroToOne() * 0.1f;
+			rParticleSprite.m_LocalPos.z = Util::RandZeroToOne() * 0.1f - 0.05f;
+			//各パーティクルの移動速度を指定
+			rParticleSprite.m_Velocity = Vec3(
+				rParticleSprite.m_LocalPos.x * 1.0f,
+				rParticleSprite.m_LocalPos.y * 1.0f,
+				rParticleSprite.m_LocalPos.z * 1.0f
+			);
+			//色の指定
+			rParticleSprite.m_Color = Col4(1.0f, 1.0f, 1.0f, 1.0f);
+		}
+	}
+
+	//--------------------------------------------------------------------------------------
+	///	複数の炎クラス
+	//--------------------------------------------------------------------------------------
+	//構築と破棄
+	MultiFireBlue::MultiFireBlue(shared_ptr<Stage>& StagePtr) :
+		MultiParticle(StagePtr)
+	{}
+	MultiFireBlue::~MultiFireBlue() {}
+
+	//初期化
+	void MultiFireBlue::OnCreate() {
+		//加算描画処理をする
+		SetAddType(true);
+	}
+
+	void MultiFireBlue::InsertFire(const Vec3& Pos) {
+		auto ptrParticle = InsertParticle(5);
+		ptrParticle->SetEmitterPos(Pos);
+		ptrParticle->SetTextureResource(L"BLUEFIRE_TX");
+		ptrParticle->SetMaxTime(1.0f);
+		for (auto& rParticleSprite : ptrParticle->GetParticleSpriteVec()) {
+			rParticleSprite.m_LocalPos.x = Util::RandZeroToOne() * 0.1f - 0.05f;
+			rParticleSprite.m_LocalPos.y = Util::RandZeroToOne() * 0.1f;
+			rParticleSprite.m_LocalPos.z = Util::RandZeroToOne() * 0.1f - 0.05f;
+			//各パーティクルの移動速度を指定
+			rParticleSprite.m_Velocity = Vec3(
+				rParticleSprite.m_LocalPos.x * 1.0f,
+				rParticleSprite.m_LocalPos.y * 1.0f,
+				rParticleSprite.m_LocalPos.z * 1.0f
+			);
+			//色の指定
+			rParticleSprite.m_Color = Col4(0.1f, 0.1f, 1.0f, 1.0f);
+		}
+	}
+
+	//--------------------------------------------------------------------------------------
+	///	ゲーム開始時にプレイヤーを出す演出
+	//--------------------------------------------------------------------------------------
 	WarpMagicSircle::WarpMagicSircle(
 		const shared_ptr<Stage>& StagePtr,
 		const Vec3& Scale,
@@ -58,6 +131,10 @@ namespace basecross{
 		{
 			auto gm = GameManager::GetInstance();
 			gm->SetMagicSircleMoved(true);
+
+			auto startSprite = GetStage()->AddGameObject<FadeSprite>(true, Vec2(800, 300), Vec2(0, 150), false, 0.0f, 3.0f, L"START_TX", 1, Col4(1, 1, 1, 1.0f));
+			startSprite->SetFadeFlgChanged(false);
+
 			SetDrawActive(false);
 			SetUpdateActive(false);
 		}

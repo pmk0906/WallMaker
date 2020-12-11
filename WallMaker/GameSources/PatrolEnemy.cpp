@@ -23,7 +23,7 @@ namespace basecross {
 			Vec3(0.3f, 1.0f, 0.5f),
 			Vec3(0.0f, 0.0f, 0.0f),
 			Vec3(0.0f, XMConvertToRadians(270.0f), 0.0f),
-			Vec3(0.0f, 0.0f, 0.0f)
+			Vec3(0.0f, -1.5f, 0.0f)
 		);
 
 		// ‘å‚«‚³A‰ñ“]AˆÊ’u
@@ -152,7 +152,7 @@ namespace basecross {
 
 			ptrChild->DirectDie();
 
-			GenerataFire(30, Vec3(50.0f));
+			GenerataFire(50, Vec3(50.0f));
 		}
 	}
 

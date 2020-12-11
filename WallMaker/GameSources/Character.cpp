@@ -36,9 +36,9 @@ namespace basecross{
 		//タグをつける
 		AddTag(L"FixedBox");
 		//影をつける（シャドウマップを描画する）
-		auto shadowPtr = AddComponent<Shadowmap>();
-		//影の形（メッシュ）を設定
-		shadowPtr->SetMeshResource(L"DEFAULT_DODECAHEDRON");
+		//auto shadowPtr = AddComponent<Shadowmap>();
+		////影の形（メッシュ）を設定
+		//shadowPtr->SetMeshResource(L"DEFAULT_DODECAHEDRON");
 		auto ptrDraw = AddComponent<BcPNTStaticDraw>();
 		ptrDraw->SetMeshResource(L"DEFAULT_DODECAHEDRON");
 		//ptrDraw->SetTextureResource(WstringKey::Tx_Floor);
@@ -85,9 +85,9 @@ namespace basecross{
 		AddTag(WstringKey::Tag_DrawActiveFalse);
 
 		//影をつける（シャドウマップを描画する）
-		auto shadowPtr = AddComponent<Shadowmap>();
-		//影の形（メッシュ）を設定
-		shadowPtr->SetMeshResource(L"DEFAULT_CUBE");
+		//auto shadowPtr = AddComponent<Shadowmap>();
+		////影の形（メッシュ）を設定
+		//shadowPtr->SetMeshResource(L"DEFAULT_CUBE");
 		auto ptrDraw = AddComponent<BcPNTStaticDraw>();
 		ptrDraw->SetMeshResource(L"DEFAULT_CUBE");
 		//ptrDraw->SetTextureResource(WstringKey::Tx_Floor);
@@ -132,9 +132,9 @@ namespace basecross{
 		//タグをつける
 		AddTag(WstringKey::Tag_DrawActiveFalse);
 		//影をつける（シャドウマップを描画する）
-		auto shadowPtr = AddComponent<Shadowmap>();
-		//影の形（メッシュ）を設定
-		shadowPtr->SetMeshResource(L"DEFAULT_CUBE");
+		//auto shadowPtr = AddComponent<Shadowmap>();
+		////影の形（メッシュ）を設定
+		//shadowPtr->SetMeshResource(L"DEFAULT_CUBE");
 		auto ptrDraw = AddComponent<BcPNTStaticDraw>();
 		ptrDraw->SetMeshResource(L"DEFAULT_CUBE");
 		//ptrDraw->SetTextureResource(WstringKey::Tx_Floor);
@@ -182,9 +182,9 @@ namespace basecross{
 		//タグをつける
 		AddTag(WstringKey::Tag_DrawActiveFalse);
 		//影をつける（シャドウマップを描画する）
-		auto shadowPtr = AddComponent<Shadowmap>();
-		//影の形（メッシュ）を設定
-		shadowPtr->SetMeshResource(L"DEFAULT_CUBE");
+		//auto shadowPtr = AddComponent<Shadowmap>();
+		////影の形（メッシュ）を設定
+		//shadowPtr->SetMeshResource(L"DEFAULT_CUBE");
 		auto ptrDraw = AddComponent<BcPNTStaticDraw>();
 		ptrDraw->SetMeshResource(L"DEFAULT_CUBE");
 		ptrDraw->SetOwnShadowActive(true);
@@ -217,14 +217,14 @@ namespace basecross{
 
 		// 衝突判定
 		auto ptrColl = AddComponent<CollisionObb>();
-		//ptrColl->SetFixed(true);
+		ptrColl->SetFixed(true);
 
 		//タグをつける
 		AddTag(WstringKey::Tag_DrawActiveFalse);
 		//影をつける（シャドウマップを描画する）
-		auto shadowPtr = AddComponent<Shadowmap>();
-		//影の形（メッシュ）を設定
-		shadowPtr->SetMeshResource(L"DEFAULT_CUBE");
+		//auto shadowPtr = AddComponent<Shadowmap>();
+		////影の形（メッシュ）を設定
+		//shadowPtr->SetMeshResource(L"DEFAULT_CUBE");
 		auto ptrDraw = AddComponent<BcPNTStaticDraw>();
 		ptrDraw->SetMeshResource(L"DEFAULT_CUBE");
 		//ptrDraw->SetTextureResource(WstringKey::Tx_Floor);

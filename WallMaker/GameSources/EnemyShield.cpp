@@ -20,7 +20,7 @@ namespace basecross {
 			Vec3(1.0f, 1.0f, 1.0f),
 			Vec3(0.0f, 0.0f, 0.0f),
 			Vec3(0.0f, 0.0f, 0.0f),
-			Vec3(0.0f, -0.5f, 0.0f)
+			Vec3(0.0f, 0.0f, 0.0f)
 		);
 
 		auto drawComp = AddComponent<BcPNTnTStaticModelDraw>();
@@ -42,7 +42,7 @@ namespace basecross {
 
 		ptrMyTrans->SetScale(Vec3(3.0f, 1.0f, 2.0f));
 		ptrMyTrans->SetRotation(Vec3(0.0f,XMConvertToRadians(180.0f),0.0f));
-		ptrMyTrans->SetPosition(Vec3(0.0f, 0.5f, 2.5f));
+		ptrMyTrans->SetPosition(Vec3(0.0f, 0.0f, 2.5f));
 	}
 
 	void EnemyShield::OnUpdate()
@@ -71,6 +71,8 @@ namespace basecross {
 		{
 			SetDrawActive(false);
 			SetUpdateActive(false);
+
+			GenerataFire(50, Vec3(50.0f));
 		}
 	}
 
@@ -78,6 +80,15 @@ namespace basecross {
 	{
 		SetDrawActive(false);
 		SetUpdateActive(false);
+	}
+
+	void EnemyShield::GenerataFire(int GenerateNum, Vec3 MoveSpeed)
+	{
+		auto ptrTrans = GetComponent<Transform>();
+		auto PtrFire = GetStage()->GetSharedGameObject<MultiFire>(L"MultiFire", false);
+		if (PtrFire) {
+			PtrFire->InsertFire(GetComponent<Transform>()->GetPosition(), GenerateNum, MoveSpeed);
+		}
 	}
 
 	PatrolShield::PatrolShield(
@@ -96,7 +107,7 @@ namespace basecross {
 			Vec3(1.0f, 1.0f, 1.0f),
 			Vec3(0.0f, 0.0f, 0.0f),
 			Vec3(0.0f, 0.0f, 0.0f),
-			Vec3(0.0f, -0.5f, 0.0f)
+			Vec3(0.0f, 0.0f, 0.0f)
 		);
 
 		auto drawComp = AddComponent<BcPNTnTStaticModelDraw>();
@@ -118,7 +129,7 @@ namespace basecross {
 
 		ptrMyTrans->SetScale(Vec3(3.0f, 1.0f, 2.0f));
 		ptrMyTrans->SetRotation(Vec3(0.0f, XMConvertToRadians(180.0f), 0.0f));
-		ptrMyTrans->SetPosition(Vec3(0.0f, 0.5f, 2.5f));
+		ptrMyTrans->SetPosition(Vec3(0.0f, 0.0f, 2.5f));
 	}
 
 	void PatrolShield::OnUpdate()
@@ -172,7 +183,7 @@ namespace basecross {
 			Vec3(1.0f, 1.0f, 1.0f),
 			Vec3(0.0f, 0.0f, 0.0f),
 			Vec3(0.0f, 0.0f, 0.0f),
-			Vec3(0.0f, -0.5f, 0.0f)
+			Vec3(0.0f, 0.0f, 0.0f)
 		);
 
 		auto drawComp = AddComponent<BcPNTnTStaticModelDraw>();
@@ -194,7 +205,7 @@ namespace basecross {
 
 		ptrMyTrans->SetScale(Vec3(3.0f, 1.0f, 2.0f));
 		ptrMyTrans->SetRotation(Vec3(0.0f, XMConvertToRadians(180.0f), 0.0f));
-		ptrMyTrans->SetPosition(Vec3(0.0f, 0.5f, 2.5f));
+		ptrMyTrans->SetPosition(Vec3(0.0f, 0.0f, 2.5f));
 	}
 
 	void UPPatrolShield::OnUpdate()
@@ -248,7 +259,7 @@ namespace basecross {
 			Vec3(1.0f, 1.0f, 1.0f),
 			Vec3(0.0f, 0.0f, 0.0f),
 			Vec3(0.0f, 0.0f, 0.0f),
-			Vec3(0.0f, -0.5f, 0.0f)
+			Vec3(0.0f, 0.0f, 0.0f)
 		);
 
 		auto drawComp = AddComponent<BcPNTnTStaticModelDraw>();
@@ -270,7 +281,7 @@ namespace basecross {
 
 		ptrMyTrans->SetScale(Vec3(3.0f, 1.0f, 2.0f));
 		ptrMyTrans->SetRotation(Vec3(0.0f, XMConvertToRadians(180.0f), 0.0f));
-		ptrMyTrans->SetPosition(Vec3(0.0f, 0.5f, 2.5f));
+		ptrMyTrans->SetPosition(Vec3(0.0f, 0.0f, 2.5f));
 	}
 
 	void RapidShield::OnUpdate()
@@ -324,7 +335,7 @@ namespace basecross {
 			Vec3(1.0f, 1.0f, 1.0f),
 			Vec3(0.0f, 0.0f, 0.0f),
 			Vec3(0.0f, 0.0f, 0.0f),
-			Vec3(0.0f, -0.5f, 0.0f)
+			Vec3(0.0f, 0.0f, 0.0f)
 		);
 
 		auto drawComp = AddComponent<BcPNTnTStaticModelDraw>();

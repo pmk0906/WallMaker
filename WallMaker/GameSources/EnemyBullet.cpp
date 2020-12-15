@@ -47,6 +47,7 @@ namespace basecross {
 			Die();
 			SetMaxSpeed();
 			SetColor();
+			SetReflectflg();
 
 			if (flg_reflect == false)
 			{
@@ -67,6 +68,7 @@ namespace basecross {
 		m_ReflectTime = 0.0f;
 
 		flg_reflect = false;
+		flg_reflectWall = false;
 	}
 
 	void EnemyBullet::BulletMove()
@@ -161,6 +163,16 @@ namespace basecross {
 		auto PtrFire = GetStage()->GetSharedGameObject<MultiFireBlue>(L"MultiFireBlue", false);
 		if (PtrFire) {
 			PtrFire->InsertFire(GetComponent<Transform>()->GetPosition(), GenerateNum, MoveSpeed);
+		}
+	}
+
+	void EnemyBullet::SetReflectflg()
+	{
+		if (m_ReflectTime >= 0.005f)
+		{
+			flg_reflectWall = false;
+
+			m_ReflectTime = 0.0f;
 		}
 	}
 
@@ -357,7 +369,10 @@ namespace basecross {
 
 			auto pos = myTrans->GetPosition();
 
-			if (flg_reflect)
+			auto &app = App::GetApp();
+			auto delta = app->GetElapsedTime();
+
+			if (flg_reflect && flg_reflectWall == false)
 			{
 				pos -= 0.1f;
 
@@ -365,6 +380,10 @@ namespace basecross {
 
 				m_BulletSpeed += 5.0f;
 				m_Attack += 1.0f;
+
+				flg_reflectWall = true;
+
+				m_ReflectTime += delta;
 			}
 
 			myTrans->SetPosition(pos);
@@ -373,7 +392,7 @@ namespace basecross {
 		if (auto stageWall = dynamic_pointer_cast<StageWall>(other))
 		{
 			SetDrawActive(false);
-			SetUpdateActive(false);
+			SetUpdateActive(false);	
 		}
 
 		if (auto cannon = dynamic_pointer_cast<Cannon>(other))

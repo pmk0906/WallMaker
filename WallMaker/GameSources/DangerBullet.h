@@ -15,7 +15,9 @@ namespace basecross {
 		float m_BulletSpeed; // ’e‚ÌˆÚ“®ƒXƒs\ƒh
 		float m_Attack; // ’e‚ÌˆĞ—Í
 		float m_DieTime; // ’e‚Ì¶‘¶ŠÔ
+		float m_ReflectTime;
 
+		bool flg_reflectWall;
 		bool flg_reflect;
 
 	public:
@@ -41,6 +43,7 @@ namespace basecross {
 		void SetColor();
 		void GenerateFire(int GenerateNum, Vec3 MoveSpeed);
 		void GenerateFireBlue(int GenerateNum, Vec3 MoveSpeed);
+		void SetReflectflg();
 
 		// Õ“Ë”»’è
 		virtual void OnCollisionEnter(shared_ptr<GameObject>& other)override;
@@ -50,4 +53,3 @@ namespace basecross {
 		Vec3 Reflect(Vec3 wall, Vec3 bullet);
 	};
 }
-

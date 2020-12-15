@@ -16,6 +16,7 @@ namespace basecross {
 		float m_ReflectTime;
 
 		bool flg_reflect;
+		bool flg_reflectWall;
 
 	public:
 		EnemyBullet(const shared_ptr<Stage>& stage)
@@ -40,6 +41,7 @@ namespace basecross {
 		void SetColor();
 		void GenerateFire(int GenerateNum, Vec3 MoveSpeed);
 		void GenerateFireBlue(int GenerateNum, Vec3 MoveSpeed);
+		void SetReflectflg();
 
 		// Õ“Ë”»’è
 		virtual void OnCollisionEnter(shared_ptr<GameObject>& other)override;

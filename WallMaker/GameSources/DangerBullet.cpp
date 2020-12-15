@@ -43,6 +43,7 @@ namespace basecross {
 		Die();
 		SetMaxSpeed();
 		SetColor();
+		SetReflectflg();
 
 		if (flg_reflect == false)
 		{
@@ -61,8 +62,10 @@ namespace basecross {
 		m_BulletSpeed = 15.0f;
 		m_Attack = 2.0f;
 		m_DieTime = 0.0f;
+		m_ReflectTime = 0.0f;
 
 		flg_reflect = false;
+		flg_reflectWall = false;
 	}
 
 	void DangerBullet::BulletMove()
@@ -166,6 +169,16 @@ namespace basecross {
 		auto PtrFire = GetStage()->GetSharedGameObject<MultiFireBlue>(L"MultiFireBlue", false);
 		if (PtrFire) {
 			PtrFire->InsertFire(GetComponent<Transform>()->GetPosition(), GenerateNum, MoveSpeed);
+		}
+	}
+
+	void DangerBullet::SetReflectflg()
+	{
+		if (m_ReflectTime >= 0.005f)
+		{
+			flg_reflectWall = false;
+
+			m_ReflectTime = 0.0f;
 		}
 	}
 
@@ -372,14 +385,21 @@ namespace basecross {
 
 			auto pos = myTrans->GetPosition();
 
-			if (flg_reflect)
+			auto &app = App::GetApp();
+			auto delta = app->GetElapsedTime();
+
+			if (flg_reflect && flg_reflectWall == false)
 			{
-				pos -= 0.15f;
+				pos -= 0.1f;
 
 				SetDir(Reflect(wallTrans->GetForword(), dir));
 
 				m_BulletSpeed += 5.0f;
 				m_Attack += 1.0f;
+
+				flg_reflectWall = true;
+
+				m_ReflectTime += delta;
 			}
 
 			myTrans->SetPosition(pos);

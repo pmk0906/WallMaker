@@ -21,7 +21,7 @@ namespace basecross{
 		m_Scale(Scale),
 		m_Rotation(Rotation),
 		m_Position(Position),
-		m_Speed(4.0f)
+		m_Speed(5.0f)
 	{
 	}
 	Player::~Player() {}
@@ -537,9 +537,9 @@ namespace basecross{
 	//BGM‚ðŽ~‚ß‚é
 	void Player::StopBGM()
 	{
-		auto gameStage = dynamic_pointer_cast<GameStage>(GetStage());
+		//auto gameStage = dynamic_pointer_cast<GameStage>(GetStage());
 
-		gameStage->StopBGM();
+		//gameStage->StopBGM();
 	}
 
 	//HP‚ÌŽæ“¾

@@ -186,15 +186,17 @@ namespace basecross {
 		SetSharedGameObject(L"MultiFire", multiFire);
 		auto multiFireBlue = AddGameObject<MultiFireBlue>();
 		SetSharedGameObject(L"MultiFireBlue", multiFireBlue);
+		auto breakWallEffect = AddGameObject<WallBreakEffect>();
+		SetSharedGameObject(WstringKey::ShareObj_BreakWallEffect, breakWallEffect);
 
 		//BGM
 		auto ptrXA = App::GetApp()->GetXAudio2Manager();
-		m_BGM = ptrXA->Start(WstringKey::SE_MainBGM, 0, 0.5f);
+		m_BGM = ptrXA->Start(WstringKey::SE_MainBGM, XAUDIO2_LOOP_INFINITE, 0.5f);
 
-
+		CreateSpriteAndButton();
 	}
 
-	void GameStage2::OnUpdate() 
+	void GameStage2::OnUpdate()
 	{
 		auto gm = GameManager::GetInstance();
 
@@ -202,31 +204,27 @@ namespace basecross {
 
 		if (gm->GetClearFlg() == true && gm->GetClearFlgChanged() == false)
 		{
-			auto whiteSprite = AddGameObject<FadeSprite>(true, Vec2(1120, 630), Vec2(0, 0), true, 0.5f, 0.0f, L"WHITE_TX", 1, Col4(1, 1, 1, 0.5f));
-			whiteSprite->SetFadeFlgChanged(false);
-			gm->SetClearFlg(false);
-			gm->SetClearFlgChanged(true);
-
-			auto clearSprite = AddGameObject<FadeSprite>(true, Vec2(800, 300), Vec2(0, 150), true, 1.0f, 0.0f, L"GAMECLEAR_TX", 1, Col4(1, 1, 1, 0.1f));
-			clearSprite->SetFadeFlgChanged(false);
-
-			auto buttonSprite = AddGameObject<ButtonSprite>(true, Vec2(600, 100), Vec2(0, -70.0f), true, 1.0f, L"NEXTSTAGE_BUTTON_TX", 0, 2, Col4(1, 1, 1, 0.5f));
-			auto buttonSprite2 = AddGameObject<ButtonSprite>(true, Vec2(600, 100), Vec2(0, -220.0f), true, 1.0f, L"STAGESELECT_BUTTON_TX", 1, 2, Col4(1, 1, 1, 0.5f));
-			gm->SetMaxButtonNum(1);
+			CreateClearButton();
 		}
-		if (gm->GetDeathFlg() == true && gm->GetDeathFlgChanged() == false)
+		else if (gm->GetDeathFlg() == true && gm->GetDeathFlgChanged() == false)
 		{
-			auto whiteSprite = AddGameObject<FadeSprite>(true, Vec2(1120, 630), Vec2(0, 0), true, 0.5f, 0.0f, L"WHITE_TX", 1, Col4(0, 0, 0, 0.5f));
-			whiteSprite->SetFadeFlgChanged(false);
-			gm->SetDeathFlg(false);
-			gm->SetDeathFlgChanged(true);
-
-			auto clearSprite = AddGameObject<FadeSprite>(true, Vec2(800, 300), Vec2(0, 150), true, 1.0f, 0.0f, L"GAMEOVER_TX", 1, Col4(1, 1, 1, 0.1f));
-			clearSprite->SetFadeFlgChanged(false);
-
-			auto buttonSprite = AddGameObject<ButtonSprite>(true, Vec2(600, 100), Vec2(0, -70.0f), true, 1.0f, L"RETRY_BUTTON_TX", 0, 2, Col4(1, 1, 1, 0.5f));
-			auto buttonSprite2 = AddGameObject<ButtonSprite>(true, Vec2(600, 100), Vec2(0, -220.0f), true, 1.0f, L"STAGESELECT_BUTTON_TX", 1, 2, Col4(1, 1, 1, 0.5f));
-			gm->SetMaxButtonNum(1);
+			CreateGameOverButton();
+		}
+		else if (gm->GetMagicSircleMoved() == true)
+		{
+			if (gm->GetPoseFlgChanged() == false)
+			{
+				if (gm->GetPoseFlg() == true)
+				{
+					SwitchPoseButton(true);
+					gm->SetPoseFlgChanged(true);
+				}
+				else
+				{
+					SwitchPoseButton(false);
+					gm->SetPoseFlgChanged(true);
+				}
+			}
 		}
 
 	}
@@ -304,6 +302,101 @@ namespace basecross {
 			m_CameraSelect = CameraSelect_Stage2::openingCamera;
 		}
 
+	}
+
+	void GameStage2::CreateClearButton()
+	{
+		auto gm = GameManager::GetInstance();
+
+		auto whiteSprite = dynamic_pointer_cast<FadeSprite>(WhiteSprite);
+		whiteSprite->SetColor(Col4(1.0f, 1.0f, 1.0f, 0.5f));
+		whiteSprite->SetFadeFlgChanged(false);
+		whiteSprite->SetDrawActive(true);
+
+		gm->SetClearFlgChanged(true);
+
+		auto clearSprite = AddGameObject<FadeSprite>(true, Vec2(800, 300), Vec2(0, 150), true, 1.0f, 0.0f, L"GAMECLEAR_TX", 1, Col4(1, 1, 1, 0.1f));
+		clearSprite->SetFadeFlgChanged(false);
+
+		auto buttonSprite = AddGameObject<ButtonSprite>(true, Vec2(600, 100), Vec2(0, -70.0f), true, 1.0f, L"NEXTSTAGE_BUTTON_TX", 0, 2, Col4(1, 1, 1, 0.5f));
+		auto buttonSprite2 = AddGameObject<ButtonSprite>(true, Vec2(600, 100), Vec2(0, -220.0f), true, 1.0f, L"STAGESELECT_BUTTON_TX", 1, 2, Col4(1, 1, 1, 0.5f));
+		gm->SetMaxButtonNum(1);
+		gm->SetSelectingButton(0);
+	}
+
+	void GameStage2::CreateGameOverButton()
+	{
+		auto gm = GameManager::GetInstance();
+
+		auto whiteSprite = dynamic_pointer_cast<FadeSprite>(WhiteSprite);
+		whiteSprite->SetColor(Col4(0.0f, 0.0f, 0.0f, 0.5f));
+		whiteSprite->SetFadeFlgChanged(false);
+		whiteSprite->SetDrawActive(true);
+
+		gm->SetDeathFlgChanged(true);
+
+		auto clearSprite = AddGameObject<FadeSprite>(true, Vec2(800, 300), Vec2(0, 150), true, 1.0f, 0.0f, L"GAMEOVER_TX", 1, Col4(1, 1, 1, 0.1f));
+		clearSprite->SetFadeFlgChanged(false);
+
+		auto buttonSprite = AddGameObject<ButtonSprite>(true, Vec2(600, 100), Vec2(0, -70.0f), true, 1.0f, L"RETRY_BUTTON_TX", 0, 2, Col4(1, 1, 1, 0.5f));
+		auto buttonSprite2 = AddGameObject<ButtonSprite>(true, Vec2(600, 100), Vec2(0, -220.0f), true, 1.0f, L"STAGESELECT_BUTTON_TX", 1, 2, Col4(1, 1, 1, 0.5f));
+		gm->SetMaxButtonNum(1);
+		gm->SetSelectingButton(0);
+	}
+
+	void GameStage2::CreateSpriteAndButton()
+	{
+		WhiteSprite = AddGameObject<FadeSprite>(true, Vec2(1120, 630), Vec2(0, 0), true, 0.5f, 0.0f, L"WHITE_TX", 1, Col4(1, 1, 1, 0.5f));
+		WhiteSprite->SetDrawActive(false);
+
+		ResultSprite = AddGameObject<Sprite>(true, Vec2(800, 200), Vec2(0, 150), L"POSE_TX", 1, Col4(1, 1, 1, 1.0f));
+		ResultSprite->SetDrawActive(false);
+
+		m_Button1 = AddGameObject<ButtonSprite>(true, Vec2(600, 100), Vec2(0, -60.0f), true, 1.0f, L"RETRY_BUTTON_TX", 0, 2, Col4(1, 1, 1, 0.5f));
+		m_Button1->SetDrawActive(false);
+		m_Button1->SetUpdateActive(false);
+		m_Button2 = AddGameObject<ButtonSprite>(true, Vec2(600, 100), Vec2(0, -150.0f), true, 1.0f, L"STAGESELECT_BUTTON_TX", 1, 2, Col4(1, 1, 1, 0.5f));
+		m_Button2->SetDrawActive(false);
+		m_Button2->SetUpdateActive(false);
+		m_Button3 = AddGameObject<ButtonSprite>(true, Vec2(600, 100), Vec2(0, -240.0f), true, 1.0f, L"GAMEBACK_BUTTON_TX", 2, 2, Col4(1, 1, 1, 0.5f));
+		m_Button3->SetDrawActive(false);
+		m_Button3->SetUpdateActive(false);
+	}
+
+	void GameStage2::SwitchPoseButton(bool poseFlg)
+	{
+		auto gm = GameManager::GetInstance();
+
+		auto whiteSprite = dynamic_pointer_cast<FadeSprite>(WhiteSprite);
+		whiteSprite->SetDrawActive(poseFlg);
+		whiteSprite->SetUpdateActive(poseFlg);
+
+		auto resultSprite = dynamic_pointer_cast<Sprite>(ResultSprite);
+		resultSprite->SetDrawActive(poseFlg);
+		resultSprite->SetUpdateActive(poseFlg);
+
+		m_Button1->SetDrawActive(poseFlg);
+		m_Button1->SetUpdateActive(poseFlg);
+		m_Button2->SetDrawActive(poseFlg);
+		m_Button2->SetUpdateActive(poseFlg);
+		m_Button3->SetDrawActive(poseFlg);
+		m_Button3->SetUpdateActive(poseFlg);
+
+		gm->SetPoseFlg(poseFlg);
+		gm->SetPoseFlgChanged(true);
+
+		if (poseFlg == true)
+		{
+			gm->SetSelectingButton(2);
+			gm->SetMoveEnabledFlg(false);
+		}
+		else
+		{
+			gm->SetSelectingButton(0);
+			gm->SetMoveEnabledFlg(true);
+		}
+
+		gm->SetMaxButtonNum(2);
 	}
 
 	void GameStage2::StopBGM()

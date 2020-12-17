@@ -33,6 +33,12 @@ namespace basecross {
 
 		shared_ptr<SoundItem> m_BGM;
 
+		shared_ptr<GameObject> WhiteSprite = nullptr;
+		shared_ptr<GameObject> ResultSprite = nullptr;
+		shared_ptr<GameObject> m_Button1 = nullptr;
+		shared_ptr<GameObject> m_Button2 = nullptr;
+		shared_ptr<GameObject> m_Button3 = nullptr;
+
 		//ビューの作成
 		void CreateViewLight();
 		// ステージの作成
@@ -46,6 +52,12 @@ namespace basecross {
 		void CreateUI();
 		//カメラマンの作成
 		void CreateCameraman();
+
+		//ボタンの作成・削除
+		void CreateClearButton();
+		void CreateGameOverButton();
+		void CreateSpriteAndButton();
+		void SwitchPoseButton(bool poseFlg);
 
 	public:
 		//構築と破棄

@@ -48,23 +48,28 @@ namespace basecross{
 		// テクスチャ
 		Pairs txPairs[] =
 		{
+			//タイトル
+			{L"TITLEL_LOGO_TX", L"Title.png"},
+			// ステージのテクスチャ
 			{L"TRACE_TX", L"trace.png"},
 			{L"FLOOR_TX", L"Floor.png"},
 			{L"FLOOR_4x4_TX", L"Floor_4x4.png"},
 			{L"WALL_TX", L"BlockWall.tga"},
+			{L"REFLECTWALL_TX", L"ReflectWall.tga"},
+			// ステージのUI
 			{L"HEART_UI_TX", L"Heart.png"},
 			{L"WALLSTOCK_UI_TX", L"UI_MagicWall.png"},
-			{L"TITLEL_LOGO_TX", L"Title.png"},
 			{L"GAMESELECT_BG_TX", L"Select_BackGround.png"},
-			{L"REFLECTWALL_TX", L"ReflectWall.tga"},
 			{L"WHITE_TX", L"White.png"},
+			//エフェクト
 			{L"FIRE_TX", L"fire.png"},
 			{L"BLUEFIRE_TX", L"BlueFire.png"},
-			{L"BreakWall_TX", L"BreakWall.png"},
+			{L"BREAKWALL_TX", L"BreakWall.png"},
 			//ボタン
 			{L"NEXTSTAGE_BUTTON_TX", L"Tx_NextStageButton.png"},
 			{L"STAGESELECT_BUTTON_TX", L"Tx_StageSelectButton.png"},
 			{L"RETRY_BUTTON_TX", L"Tx_Retry.png"},
+			{L"GAMEBACK_BUTTON_TX", L"Tx_GameBack.png"},
 			//ステージ番号
 			{L"STAGE_1_TX", L"Select_1.png"},
 			{L"STAGE_2_TX", L"Select_2.png"},
@@ -74,6 +79,7 @@ namespace basecross{
 			//文字
 			{L"GAMECLEAR_TX", L"Tx_GameClear.png"},
 			{L"GAMEOVER_TX", L"Tx_GameOver.png"},
+			{L"POSE_TX", L"Tx_Paused.png"},
 			{L"STAGESELECT_TX", L"Tx_StageSelect.png"},
 			{L"A_START_TX", L"Tx_Start.png"}, // Aボタンでスタート
 			{L"START_TX", L"Tx_GameStart.png"} // ゲーム開始
@@ -203,6 +209,15 @@ namespace basecross{
 		}
 		else if (event->m_MsgStr == WstringKey::ToGameStage2) {
 			ResetActiveStage<GameStage2>();
+		}
+		else if (event->m_MsgStr == WstringKey::ToGameStage3) {
+			ResetActiveStage<GameStage3>();
+		}
+		else if (event->m_MsgStr == WstringKey::ToGameStage4) {
+			ResetActiveStage<GameStage4>();
+		}
+		else if (event->m_MsgStr == WstringKey::ToGameStage5) {
+			ResetActiveStage<GameStage5>();
 		}
 		else if (event->m_MsgStr == WstringKey::ToGameTestStage) {
 			ResetActiveStage<TestStage>();

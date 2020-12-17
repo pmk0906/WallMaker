@@ -123,6 +123,7 @@ namespace basecross{
 		// ƒ{ƒ^ƒ“
 		void OnPushA();
 		void OnPushB();
+		void OnPushStart() {}
 		// RT’·‰Ÿ‚µ
 		void OnHoldRTrigger(); // ‰Ÿ‚µ‚Ä‚¢‚éŠÔ
 		void OnReleaseRTrigger(); // —£‚µ‚Ä‚¢‚éŠÔ

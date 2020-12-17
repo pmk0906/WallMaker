@@ -33,6 +33,19 @@ namespace basecross{
 	};
 
 	//--------------------------------------------------------------------------------------
+	///	複数の反射後の炎クラス
+	//--------------------------------------------------------------------------------------
+	class WallBreakEffect : public MultiParticle {
+	public:
+		//構築と破棄
+		WallBreakEffect(shared_ptr<Stage>& StagePtr);
+		virtual ~WallBreakEffect();
+		//初期化
+		virtual void OnCreate() override;
+		void InsertEffect(const Vec3& Pos, int GenerateNum, Vec3 MoveSpeed);
+	};
+
+	//--------------------------------------------------------------------------------------
 	///	ゲーム開始時にプレイヤーを出す演出
 	//--------------------------------------------------------------------------------------
 	// 仮床

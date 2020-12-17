@@ -25,6 +25,8 @@ namespace basecross{
 		void PlayerMoveEnabled();
 
 		void ButtonControl();
+		// ƒJƒƒ‰‚Ì•ÏX
+		void ChangeCamera();
 
 		void TitleButton_A();
 		void TitleButton_B() {}
@@ -32,6 +34,7 @@ namespace basecross{
 		void StageSelectButton_B();
 		void GameStageButton_A();
 		void GameStageButton_B() {}
+		void GameStageButton_Start();
 
 
 	public:
@@ -50,6 +53,7 @@ namespace basecross{
 
 		void OnPushA();
 		void OnPushB();
+		void OnPushStart();
 		// RT’·‰Ÿ‚µ
 		void OnHoldRTrigger() {} // ‰Ÿ‚µ‚Ä‚¢‚éŠÔ
 		void OnReleaseRTrigger() {} // —£‚µ‚Ä‚¢‚éŠÔ

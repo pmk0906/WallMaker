@@ -47,23 +47,10 @@ namespace basecross {
 				{
 					Obj->OnReleaseRTrigger();
 				}
-				//\ŽšƒL[
-				//if (cntlVec.wPressedButtons & XINPUT_GAMEPAD_DPAD_UP)
-				//{
-				//	Obj->OnPushDPad(DPadNum::UP);
-				//}
-				//if (cntlVec.wPressedButtons & XINPUT_GAMEPAD_DPAD_DOWN)
-				//{
-				//	Obj->OnPushDPad(DPadNum::DOWN);
-				//}
-				//if (cntlVec.wPressedButtons & XINPUT_GAMEPAD_DPAD_LEFT)
-				//{
-				//	Obj->OnPushDPad(DPadNum::LEFT);
-				//}
-				//if (cntlVec.wPressedButtons & XINPUT_GAMEPAD_DPAD_RIGHT)
-				//{
-				//	Obj->OnPushDPad(DPadNum::RIGHT);
-				//}
+				if (cntlVec.wPressedButtons & XINPUT_GAMEPAD_START)
+				{
+					Obj->OnPushStart();
+				}
 			}
 		}
 	};

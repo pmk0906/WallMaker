@@ -116,6 +116,57 @@ namespace basecross{
 
 		void Damage(float damage);
 		void Die();
+		void GenerateEffect(int GenerateNum, Vec3 MoveSpeed);
+	};
+
+	// 動かせる反射ブロック
+	class MoveEnableReflectBlock : public GameObject
+	{
+		// 大きさ、回転、位置
+		Vec3 m_Scale;
+		Vec3 m_Rotation;
+		Vec3 m_Position;
+
+		shared_ptr<GameObject> m_Child1 = nullptr;
+		shared_ptr<GameObject> m_Child2 = nullptr;
+		shared_ptr<GameObject> m_Child3 = nullptr;
+		shared_ptr<GameObject> m_Child4 = nullptr;
+
+	public:
+		// 構築と破棄
+		MoveEnableReflectBlock(
+			const shared_ptr<Stage>& StagePtr,
+			const Vec3& Scale,
+			const Vec3& Rotation,
+			const Vec3& Position);
+		virtual ~MoveEnableReflectBlock();
+
+		// 初期化
+		virtual void OnCreate()override;
+	};
+
+	// 動かせる反射ブロックの壁
+	class MoveEnableReflectWall : public GameObject
+	{
+		// 大きさ、回転、位置
+		Vec3 m_Scale;
+		Vec3 m_Rotation;
+		Vec3 m_Position;
+
+		const shared_ptr<GameObject>& m_Parent;
+
+	public:
+		// 構築と破棄
+		MoveEnableReflectWall(
+			const shared_ptr<Stage>& StagePtr,
+			const Vec3& Scale,
+			const Vec3& Rotation,
+			const Vec3& Position,
+			const shared_ptr<GameObject>& Parent);
+		virtual ~MoveEnableReflectWall();
+
+		// 初期化
+		virtual void OnCreate()override;
 	};
 }
 //end basecross

@@ -233,6 +233,12 @@ namespace basecross{
 		m_FadeFlgChanged = false;
 	}
 
+	void FadeSprite::SetColor(Col4 col)
+	{
+		auto ptrDraw = GetComponent<PCTSpriteDraw>();
+		ptrDraw->SetDiffuse(col);
+	}
+
 	//	‰Šú‰»
 	void FadeSprite::OnCreate()
 	{

@@ -156,6 +156,9 @@ namespace basecross{
 		void SwitchFadeFlg();
 		void SetFadeFlgChanged(bool flg);
 
+		//F‚Ìİ’è
+		void SetColor(Col4 col);
+
 		// ‰Šú‰»
 		virtual void OnCreate()override;
 		virtual void OnUpdate()override;

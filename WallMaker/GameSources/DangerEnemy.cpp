@@ -67,7 +67,7 @@ namespace basecross {
 			for (auto& obj : objs)
 			{
 				auto player = dynamic_pointer_cast<Player>(obj);
-				auto gameStage = dynamic_pointer_cast<GameStage>(GetStage());
+				//auto gameStage = dynamic_pointer_cast<GameStage>(GetStage());
 
 				if (player) {
 					playerPos = player->GetPosition();
@@ -143,7 +143,7 @@ namespace basecross {
 		for (auto& obj : objs)
 		{
 			auto player = dynamic_pointer_cast<Player>(obj);
-			auto gameStage = dynamic_pointer_cast<GameStage>(GetStage());
+			//auto gameStage = dynamic_pointer_cast<GameStage>(GetStage());
 
 			if (player) {
 				playerPos = player->GetPosition();

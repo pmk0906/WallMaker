@@ -46,15 +46,15 @@ namespace basecross{
 		case SceneNum::GameStage_2:
 			sceneKey = WstringKey::ToGameStage2;
 			break;
-			/*case SceneNum::GameStage_3:
-				sceneKey = WstringKey::ToGameStage3;
-				break;
-			case SceneNum::GameStage_4:
-				sceneKey = WstringKey::ToGameStage4;
-				break;
-			case SceneNum::GameStage_5:
-				sceneKey = WstringKey::ToGameStage5;
-				break;*/
+		case SceneNum::GameStage_3:
+			sceneKey = WstringKey::ToGameStage3;
+			break;
+		case SceneNum::GameStage_4:
+			sceneKey = WstringKey::ToGameStage4;
+			break;
+		case SceneNum::GameStage_5:
+			sceneKey = WstringKey::ToGameStage5;
+			break;
 		}
 		PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), sceneKey);
 	}
@@ -131,6 +131,39 @@ namespace basecross{
 				}
 			}
 			break;
+		default:
+			break;
+		}
+	}
+	void GameManagement::ChangeCamera()
+	{
+		auto gm = GameManager::GetInstance();
+		int stageNum = gm->GetSceneNum();
+
+		if (stageNum == SceneNum::GameStage_1)
+		{
+			auto ptrGameGtage = GetTypeStage<GameStage>();
+			ptrGameGtage->ToMyCamera();
+		}
+		else if (stageNum == SceneNum::GameStage_2)
+		{
+			auto ptrGameGtage = GetTypeStage<GameStage2>();
+			ptrGameGtage->ToMyCamera();
+		}
+		else if (stageNum == SceneNum::GameStage_3)
+		{
+			auto ptrGameGtage = GetTypeStage<GameStage3>();
+			ptrGameGtage->ToMyCamera();
+		}
+		else if (stageNum == SceneNum::GameStage_4)
+		{
+			auto ptrGameGtage = GetTypeStage<GameStage4>();
+			ptrGameGtage->ToMyCamera();
+		}
+		else if (stageNum == SceneNum::GameStage_5)
+		{
+			auto ptrGameGtage = GetTypeStage<GameStage5>();
+			ptrGameGtage->ToMyCamera();
 		}
 	}
 
@@ -152,6 +185,15 @@ namespace basecross{
 		case 1:
 			LoadScene((int)SceneNum::GameStage_2);
 			break;
+		case 2:
+			LoadScene((int)SceneNum::GameStage_3);
+			break;
+		case 3:
+			LoadScene((int)SceneNum::GameStage_4);
+			break;
+		case 4:
+			LoadScene((int)SceneNum::GameStage_5);
+			break;
 		default:
 			break;
 		}
@@ -165,6 +207,24 @@ namespace basecross{
 	void GameManagement::GameStageButton_A()
 	{
 		auto gm = GameManager::GetInstance();
+		if (gm->GetPoseFlg() == true)
+		{
+			switch (gm->GetSelectingButtonNum())
+			{
+			case 0: // リトライ
+				LoadScene(gm->GetSceneNum());
+				break;
+			case 1:	// ステージセレクト
+				LoadScene((int)SceneNum::StageSelect);
+				break;
+			case 2: // ゲームに戻る
+				gm->SetPoseFlg(false);
+				gm->SetPoseFlgChanged(false);
+				break;
+			default:
+				break;
+			}
+		}
 		if (gm->GetClearFlgChanged() == true)
 		{
 			switch (gm->GetSelectingButtonNum())
@@ -199,7 +259,31 @@ namespace basecross{
 			default:
 				break;
 			}
+		}
+		if (gm->GetOpeningCameraMoveEnd() == false)
+		{
+			auto gm = GameManager::GetInstance();
+			gm->SetOpeningCameraMoveEnd(true);
 
+			ChangeCamera();
+		}
+	}
+
+	void GameManagement::GameStageButton_Start()
+	{
+		auto gm = GameManager::GetInstance();
+		if (gm->GetPoseFlgChanged() == true)
+		{
+			if (gm->GetPoseFlg() == true)
+			{
+				gm->SetPoseFlg(false);
+				gm->SetPoseFlgChanged(false);
+			}
+			else
+			{
+				gm->SetPoseFlg(true);
+				gm->SetPoseFlgChanged(false);
+			}
 		}
 	}
 
@@ -213,9 +297,9 @@ namespace basecross{
 		ptrTrans->SetPosition(m_Position);
 
 		// DrawString用
-		/*auto strComp = AddComponent<StringSprite>();
-		strComp->SetBackColor(Col4(0, 0, 0, 0.5f));
-		strComp->SetTextRect(Rect2D<float>(1000, 510, 1270, 710));*/
+		//auto strComp = AddComponent<StringSprite>();
+		//strComp->SetBackColor(Col4(0, 0, 0, 0.5f));
+		//strComp->SetTextRect(Rect2D<float>(1000, 510, 1270, 710));
 	}
 
 	void GameManagement::OnUpdate()
@@ -255,6 +339,17 @@ namespace basecross{
 		case (int)SceneNum::GameStage_2:
 			sceneNum += L"ゲームステージ２\n";
 			break;
+		case (int)SceneNum::GameStage_3:
+			sceneNum += L"ゲームステージ３\n";
+			break;
+		case (int)SceneNum::GameStage_4:
+			sceneNum += L"ゲームステージ４\n";
+			break;
+		case (int)SceneNum::GameStage_5:
+			sceneNum += L"ゲームステージ５\n";
+			break;
+		default:
+			break;
 		}
 
 		wstring testFLG(L"テストフラグ : ");
@@ -262,9 +357,18 @@ namespace basecross{
 
 		wstring timer(L"m_Timer : ");
 		timer += Util::FloatToWStr(m_Timer) + L"\nGetPlayerMoveTime : " + Util::FloatToWStr(gm->GetPlayerMoveTime()) + L"\n";
-		
 
-		wstring str = selectingButton + maxButtonNum + sceneNum + testFLG + timer + L"\n";
+		wstring pose(L"ポーズフラグ : ");
+		if (gm->GetPoseFlg() == true)
+		{
+			pose += L"true\n";
+		}
+		else
+		{
+			pose += L"false\n";
+		}
+
+		wstring str = selectingButton + maxButtonNum + sceneNum + testFLG + timer + pose + L"\n";
 		auto ptrString = GetComponent<StringSprite>();
 		ptrString->SetText(str);
 	}
@@ -281,8 +385,13 @@ namespace basecross{
 			StageSelectButton_A();
 			break;
 		case (int)SceneNum::GameStage_1:
-		case(int)SceneNum::GameStage_2:
+		case (int)SceneNum::GameStage_2:
+		case (int)SceneNum::GameStage_3:
+		case (int)SceneNum::GameStage_4:
+		case (int)SceneNum::GameStage_5:
 			GameStageButton_A();
+			break;
+		default:
 			break;
 		}
 	}
@@ -299,10 +408,30 @@ namespace basecross{
 			StageSelectButton_B();
 			break;
 		case (int)SceneNum::GameStage_1:
+		case (int)SceneNum::GameStage_2:
+		case (int)SceneNum::GameStage_3:
+		case (int)SceneNum::GameStage_4:
+		case (int)SceneNum::GameStage_5:
 			GameStageButton_B();
 			break;
+		default:
+			break;
+		}
+	}
+
+	void GameManagement::OnPushStart()
+	{
+		auto gm = GameManager::GetInstance();
+		switch (gm->GetSceneNum())
+		{
+		case (int)SceneNum::GameStage_1:
 		case (int)SceneNum::GameStage_2:
-			GameStageButton_B();
+		case (int)SceneNum::GameStage_3:
+		case (int)SceneNum::GameStage_4:
+		case (int)SceneNum::GameStage_5:
+			GameStageButton_Start();
+			break;
+		default:
 			break;
 		}
 	}

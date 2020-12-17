@@ -54,6 +54,8 @@ namespace WstringKey {
 	const wstring ShareObj_TreasureBox = L"ObjTreasureBox";
 	// フェード用スプライト
 	const wstring ShareObj_FadeSprite = L"ObjFadeSprite";
+	//パーティクル
+	const wstring ShareObj_BreakWallEffect = L"ObjBreakWallEffect";
 
 	//シーン名
 	const wstring ToGameTitle = L"ToGameTitleScene";

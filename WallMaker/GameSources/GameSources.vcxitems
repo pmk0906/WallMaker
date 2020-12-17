@@ -21,6 +21,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)DebugBoard.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)DirectorObject.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)GameStage2.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)GameStage3.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)GameStage4.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)GameStage5.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)TestStage.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)EnemyBullet.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)EnemyFirst.h" />
@@ -51,6 +54,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)DebugBoard.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)DirectorObject.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)GameStage2.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)GameStage3.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)GameStage4.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)GameStage5.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)TestStage.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)EnemyBullet.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)EnemyFirst.cpp" />

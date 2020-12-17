@@ -96,6 +96,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)DirectorObject.h">
       <Filter>Headers</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)GameStage3.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)GameStage4.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)GameStage5.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)Character.cpp">
@@ -176,5 +179,8 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)GameStage2.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)GameStage3.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)GameStage4.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)GameStage5.cpp" />
   </ItemGroup>
 </Project>

@@ -36,26 +36,29 @@ namespace basecross {
 	void EnemyBullet::OnUpdate()
 	{
 		auto gm = GameManager::GetInstance();
-		if (gm->GetClearFlgChanged() == false)
+		if (gm->GetMoveEnabledFlg() == true)
 		{
-			auto &app = App::GetApp();
-			auto delta = app->GetElapsedTime();
-
-			m_DieTime += delta;
-
-			BulletMove();
-			Die();
-			SetMaxSpeed();
-			SetColor();
-			SetReflectflg();
-
-			if (flg_reflect == false)
+			if (gm->GetClearFlgChanged() == false)
 			{
-				GenerateFire(2, Vec3(1.0f, 1.0f, 1.0f));
-			}
-			else
-			{
-				GenerateFireBlue(2, Vec3(1.0f, 1.0f, 1.0f));
+				auto &app = App::GetApp();
+				auto delta = app->GetElapsedTime();
+
+				m_DieTime += delta;
+
+				BulletMove();
+				Die();
+				SetMaxSpeed();
+				SetColor();
+				SetReflectflg();
+
+				if (flg_reflect == false)
+				{
+					GenerateFire(2, Vec3(1.0f, 1.0f, 1.0f));
+				}
+				else
+				{
+					GenerateFireBlue(2, Vec3(1.0f, 1.0f, 1.0f));
+				}
 			}
 		}
 	}

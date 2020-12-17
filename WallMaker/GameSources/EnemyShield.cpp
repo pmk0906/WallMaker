@@ -17,7 +17,7 @@ namespace basecross {
 	{
 		Mat4x4 spanMat; // モデルとトランスフォームの間の差分行列
 		spanMat.affineTransformation(
-			Vec3(1.0f, 1.0f, 1.0f),
+			Vec3(1.0f, 1.0f, 2.0f),
 			Vec3(0.0f, 0.0f, 0.0f),
 			Vec3(0.0f, 0.0f, 0.0f),
 			Vec3(0.0f, 0.0f, 0.0f)
@@ -40,7 +40,7 @@ namespace basecross {
 
 		auto ptrMyTrans = AddComponent<Transform>();
 
-		ptrMyTrans->SetScale(Vec3(3.0f, 1.0f, 2.0f));
+		ptrMyTrans->SetScale(Vec3(3.0f, 1.0f, 1.0f));
 		ptrMyTrans->SetRotation(Vec3(0.0f,XMConvertToRadians(180.0f),0.0f));
 		ptrMyTrans->SetPosition(Vec3(0.0f, 0.0f, 2.5f));
 	}
@@ -72,7 +72,7 @@ namespace basecross {
 			SetDrawActive(false);
 			SetUpdateActive(false);
 
-			GenerataFire(50, Vec3(50.0f));
+			GenerataFire(50, Vec3(30.0f));
 		}
 	}
 
@@ -84,10 +84,10 @@ namespace basecross {
 
 	void EnemyShield::GenerataFire(int GenerateNum, Vec3 MoveSpeed)
 	{
-		auto ptrTrans = GetComponent<Transform>();
+		auto myPos = GetComponent<Transform>()->GetWorldPosition();
 		auto PtrFire = GetStage()->GetSharedGameObject<MultiFire>(L"MultiFire", false);
 		if (PtrFire) {
-			PtrFire->InsertFire(GetComponent<Transform>()->GetPosition(), GenerateNum, MoveSpeed);
+			PtrFire->InsertFire(myPos , GenerateNum, MoveSpeed);
 		}
 	}
 
@@ -158,6 +158,9 @@ namespace basecross {
 		{
 			SetDrawActive(false);
 			SetUpdateActive(false);
+
+			GenerataFire(50, Vec3(30.0f));
+
 		}
 	}
 
@@ -165,6 +168,15 @@ namespace basecross {
 	{
 		SetDrawActive(false);
 		SetUpdateActive(false);
+	}
+
+	void PatrolShield::GenerataFire(int GenerateNum, Vec3 MoveSpeed)
+	{
+		auto ptrTrans = GetComponent<Transform>();
+		auto PtrFire = GetStage()->GetSharedGameObject<MultiFire>(L"MultiFire", false);
+		if (PtrFire) {
+			PtrFire->InsertFire(GetComponent<Transform>()->GetPosition(), GenerateNum, MoveSpeed);
+		}
 	}
 
 	UPPatrolShield::UPPatrolShield(
@@ -234,6 +246,9 @@ namespace basecross {
 		{
 			SetDrawActive(false);
 			SetUpdateActive(false);
+
+			GenerataFire(50, Vec3(30.0f));
+
 		}
 	}
 
@@ -241,6 +256,15 @@ namespace basecross {
 	{
 		SetDrawActive(false);
 		SetUpdateActive(false);
+	}
+
+	void UPPatrolShield::GenerataFire(int GenerateNum, Vec3 MoveSpeed)
+	{
+		auto myPos = GetComponent<Transform>()->GetWorldPosition();
+		auto PtrFire = GetStage()->GetSharedGameObject<MultiFire>(L"MultiFire", false);
+		if (PtrFire) {
+			PtrFire->InsertFire(myPos, GenerateNum, MoveSpeed);
+		}
 	}
 
 	RapidShield::RapidShield(
@@ -310,6 +334,8 @@ namespace basecross {
 		{
 			SetDrawActive(false);
 			SetUpdateActive(false);
+
+			GenerataFire(50, Vec3(30.0f));
 		}
 	}
 
@@ -317,6 +343,15 @@ namespace basecross {
 	{
 		SetDrawActive(false);
 		SetUpdateActive(false);
+	}
+
+	void RapidShield::GenerataFire(int GenerateNum, Vec3 MoveSpeed)
+	{
+		auto myPos = GetComponent<Transform>()->GetWorldPosition();
+		auto PtrFire = GetStage()->GetSharedGameObject<MultiFire>(L"MultiFire", false);
+		if (PtrFire) {
+			PtrFire->InsertFire(myPos, GenerateNum, MoveSpeed);
+		}
 	}
 
 	DangerShield::DangerShield(

@@ -1,5 +1,5 @@
 /*!
-@file GameStage.h
+@file GameStage4.h
 @brief ゲームステージ
 */
 
@@ -7,7 +7,7 @@
 #include "stdafx.h"
 
 namespace basecross {
-	enum class CameraSelect_Stage2 {
+	enum class CameraSelect_Stage4 {
 		openingCamera,
 		myCamera,
 		objCamera,
@@ -16,20 +16,20 @@ namespace basecross {
 	//--------------------------------------------------------------------------------------
 	//	ゲームステージクラス
 	//--------------------------------------------------------------------------------------
-	class GameStage2 : public Stage {
+	class GameStage4 : public Stage {
 
 		//OpeningCamera用のビュー
 		shared_ptr<SingleView> m_OpeningCameraView;
 		//MyCamera用のビュー
 		shared_ptr<SingleView> m_MyCameraView;
-		CameraSelect_Stage2 m_CameraSelect;
+		CameraSelect_Stage4 m_CameraSelect;
 
 		//ステージの奥行
 		const int STAGE_LENGTH = 16;
 		//ステージの横幅
 		const int STAGE_WIDTH = 32;
 
-		InputHandler<GameStage2> m_InputHandler;
+		InputHandler<GameStage4> m_InputHandler;
 
 		shared_ptr<SoundItem> m_BGM;
 
@@ -61,8 +61,8 @@ namespace basecross {
 
 	public:
 		//構築と破棄
-		GameStage2() :Stage() {}
-		virtual ~GameStage2() {
+		GameStage4() :Stage() {}
+		virtual ~GameStage4() {
 			StopBGM();
 		}
 

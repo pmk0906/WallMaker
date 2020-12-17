@@ -22,7 +22,8 @@ namespace basecross{
 		SetAddType(true);
 	}
 
-	void MultiFire::InsertFire(const Vec3& Pos, int GenerateNum, Vec3 MoveSpeed) {
+	void MultiFire::InsertFire(const Vec3& Pos, int GenerateNum, Vec3 MoveSpeed) 
+	{
 		auto ptrParticle = InsertParticle(GenerateNum);
 		ptrParticle->SetEmitterPos(Pos);
 		ptrParticle->SetTextureResource(L"FIRE_TX");
@@ -74,6 +75,39 @@ namespace basecross{
 			);
 			//色の指定
 			rParticleSprite.m_Color = Col4(0.1f, 0.1f, 1.0f, 1.0f);
+		}
+	}
+
+	//--------------------------------------------------------------------------------------
+	///	壁を壊した時のエフェクト
+	//--------------------------------------------------------------------------------------
+	//構築と破棄
+	WallBreakEffect::WallBreakEffect(shared_ptr<Stage>& StagePtr) :
+		MultiParticle(StagePtr)
+	{}
+	WallBreakEffect::~WallBreakEffect() {}
+
+	//初期化
+	void WallBreakEffect::OnCreate() {
+		//加算描画処理をする
+		SetAddType(true);
+	}
+
+	void WallBreakEffect::InsertEffect(const Vec3& Pos, int GenerateNum, Vec3 MoveSpeed) {
+		auto ptrParticle = InsertParticle(GenerateNum);
+		ptrParticle->SetEmitterPos(Pos);
+		ptrParticle->SetTextureResource(L"BREAKWALL_TX");
+		ptrParticle->SetMaxTime(1.0f);
+		for (auto& rParticleSprite : ptrParticle->GetParticleSpriteVec()) {
+			rParticleSprite.m_LocalPos.x = Util::RandZeroToOne() * 0.1f - 0.05f;
+			rParticleSprite.m_LocalPos.y = Util::RandZeroToOne() * 0.1f;
+			rParticleSprite.m_LocalPos.z = Util::RandZeroToOne() * 0.1f - 0.05f;
+			//各パーティクルの移動速度を指定
+			rParticleSprite.m_Velocity = Vec3(
+				rParticleSprite.m_LocalPos.x * MoveSpeed.x,
+				rParticleSprite.m_LocalPos.y * MoveSpeed.y,
+				rParticleSprite.m_LocalPos.z * MoveSpeed.z
+			);
 		}
 	}
 

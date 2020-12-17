@@ -7,7 +7,7 @@
 #include "stdafx.h"
 
 namespace basecross {
-	enum class CameraSelect_Stage2 {
+	enum class CameraSelect_Stage3 {
 		openingCamera,
 		myCamera,
 		objCamera,
@@ -16,20 +16,18 @@ namespace basecross {
 	//--------------------------------------------------------------------------------------
 	//	ゲームステージクラス
 	//--------------------------------------------------------------------------------------
-	class GameStage2 : public Stage {
+	class GameStage3 : public Stage {
 
 		//OpeningCamera用のビュー
 		shared_ptr<SingleView> m_OpeningCameraView;
 		//MyCamera用のビュー
 		shared_ptr<SingleView> m_MyCameraView;
-		CameraSelect_Stage2 m_CameraSelect;
+		CameraSelect_Stage3 m_CameraSelect;
 
 		//ステージの奥行
 		const int STAGE_LENGTH = 16;
 		//ステージの横幅
 		const int STAGE_WIDTH = 32;
-
-		InputHandler<GameStage2> m_InputHandler;
 
 		shared_ptr<SoundItem> m_BGM;
 
@@ -61,8 +59,8 @@ namespace basecross {
 
 	public:
 		//構築と破棄
-		GameStage2() :Stage() {}
-		virtual ~GameStage2() {
+		GameStage3() :Stage() {}
+		virtual ~GameStage3() {
 			StopBGM();
 		}
 

@@ -1,5 +1,5 @@
 /*!
-@file GameStage.cpp
+@file GameStage4.cpp
 @brief ゲームステージ実体
 */
 
@@ -11,7 +11,7 @@ namespace basecross {
 	//--------------------------------------------------------------------------------------
 	//	ゲームステージクラス実体
 	//--------------------------------------------------------------------------------------
-	void GameStage::CreateViewLight() 
+	void GameStage4::CreateViewLight() 
 	{
 		const Vec3 eye(0.0f, 30.0f, -20.0f);
 		const Vec3 at(0.0f);
@@ -27,14 +27,14 @@ namespace basecross {
 		m_MyCameraView->SetCamera(PtrCamera);
 		//初期状態ではm_OpeningCameraViewを使う
 		SetView(m_OpeningCameraView);
-		m_CameraSelect = CameraSelect_Stage1::openingCamera;
+		m_CameraSelect = CameraSelect_Stage4::openingCamera;
 		//マルチライトの作成
 		auto PtrMultiLight = CreateLight<MultiLight>();
 		//デフォルトのライティングを指定
 		PtrMultiLight->SetDefaultLighting();
 	}
 
-	void GameStage::CreateWall()
+	void GameStage4::CreateWall()
 	{
 		int mapRows = 16;
 		int mapCols = 32;
@@ -62,7 +62,7 @@ namespace basecross {
 
 			1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ,1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
 			1,47,48,48,48,49, 1,47,48,48,48,48,48,48,48,48, 1,47,48,48,48,48,48,48,48,49, 1,47,48,48,49, 1,
-			1,44, 0, 3, 0,46, 1,44, 0, 0, 0, 0, 0, 0,74,46, 1,44 ,0, 0, 0, 0, 0, 0, 0,46, 1,44, 0,72,46, 1,
+			1,44, 0, 3, 0,46, 1,44, 0, 0, 0, 0, 0, 0,74,46, 1,44 ,0, 0, 0, 0, 0, 0, 0,46, 1,44,72, 0,46, 1,
 			1,44, 0, 0, 0,46, 1,44, 0, 0, 0, 0, 0, 0, 0,46, 1,44, 0, 0, 0, 0,42, 0, 0,46, 1,44, 0, 0,46, 1,
 			1,44, 0, 0, 0, 0,48, 0, 0, 0, 0, 0, 0, 0, 0,46, 1,44, 0, 0, 0,46, 1, 8, 8, 8, 1,44, 0, 0,46, 1,
 			1,44, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3,46, 1,44, 0, 6, 0,46, 1,44, 0, 0,48, 0, 0, 0,46, 1,
@@ -160,9 +160,6 @@ namespace basecross {
 					AddGameObject<PatrolEnemyUPDown>(Vec3(2.0f, 1.0f, 3.5f), Vec3(0.0f, XMConvertToRadians(270), 0.0f),
 						Vec3(pos.x, 1.5f, pos.z));
 					break;
-				case 13:
-					AddGameObject<MoveEnableReflectBlock>(Vec3(2.0f, 3.0f, 2.0f), Vec3(0.0f), Vec3(pos.x, 1.5f, pos.z));
-					break;
 				default:
 					break;
 				}
@@ -175,12 +172,12 @@ namespace basecross {
 		}
 	}
 
-	void GameStage::DrawStrings()
+	void GameStage4::DrawStrings()
 	{
 
 	}
 
-	void GameStage::OnCreate() 
+	void GameStage4::OnCreate() 
 	{
 		try {
 			//ビューとライトの作成
@@ -200,7 +197,7 @@ namespace basecross {
 
 		auto gm = GameManager::GetInstance();
 		gm->InitGameManager();
-		gm->SetSceneNum(SceneNum::GameStage_1);
+		gm->SetSceneNum(SceneNum::GameStage_4);
 
 		auto multiFire = AddGameObject<MultiFire>();
 		SetSharedGameObject(L"MultiFire", multiFire);
@@ -216,7 +213,7 @@ namespace basecross {
 		CreateSpriteAndButton();
 	}
 
-	void GameStage::OnUpdate() 
+	void GameStage4::OnUpdate() 
 	{
 		auto gm = GameManager::GetInstance();
 
@@ -249,7 +246,7 @@ namespace basecross {
 
 	}
 
-	void GameStage::CreateStage()
+	void GameStage4::CreateStage()
 	{
 		// 床
 		float posX = 0.0f;
@@ -267,7 +264,7 @@ namespace basecross {
 
 	}
 
-	void GameStage::CreateEnemy()
+	void GameStage4::CreateEnemy()
 	{
 		////敵①
 		//AddGameObject<EnemyFirst>(Vec3(2.0f, 1.0f, 3.5f), Vec3(0.0f), Vec3(-5.0f, 1.5f, 0.0f));
@@ -290,14 +287,14 @@ namespace basecross {
 		//AddGameObject<Cannon>(Vec3(2.0f, 1.0f, 3.5f), Vec3(0.0f), Vec3(-5.0f, 1.5f, -3.0f));
 	}
 
-	void GameStage::CreatePlayer(Vec3 pos)
+	void GameStage4::CreatePlayer(Vec3 pos)
 	{
 		auto player = AddGameObject<Player>(Vec3(1.5f), Vec3(0.0f), Vec3(pos.x, 2.0f, pos.z));
 		SetSharedGameObject(WstringKey::ShareObj_Player, player);
 
 	}
 
-	void GameStage::CreateUI()
+	void GameStage4::CreateUI()
 	{
 		//プレイヤーのライフ表示
 		AddGameObject<PlayerLife>(true, Vec2(100.0f), Vec3(-590.0f, 350.0f, 0.1f), 1.0f);
@@ -310,7 +307,7 @@ namespace basecross {
 	}
 
 	//カメラマンの作成
-	void GameStage::CreateCameraman() 
+	void GameStage4::CreateCameraman() 
 	{
 		auto ptrOpeningCameraman = AddGameObject<OpeningCameraman>();
 		//シェア配列にOpeningCameramanを追加
@@ -320,12 +317,12 @@ namespace basecross {
 		if (ptrOpeningCamera) {
 			ptrOpeningCamera->SetCameraObject(ptrOpeningCameraman);
 			SetView(m_OpeningCameraView);
-			m_CameraSelect = CameraSelect_Stage1::openingCamera;
+			m_CameraSelect = CameraSelect_Stage4::openingCamera;
 		}
 
 	}
 
-	void GameStage::CreateClearButton()
+	void GameStage4::CreateClearButton()
 	{
 		auto gm = GameManager::GetInstance();
 
@@ -342,10 +339,9 @@ namespace basecross {
 		auto buttonSprite = AddGameObject<ButtonSprite>(true, Vec2(600, 100), Vec2(0, -70.0f), true, 1.0f, L"NEXTSTAGE_BUTTON_TX", 0, 2, Col4(1, 1, 1, 0.5f));
 		auto buttonSprite2 = AddGameObject<ButtonSprite>(true, Vec2(600, 100), Vec2(0, -220.0f), true, 1.0f, L"STAGESELECT_BUTTON_TX", 1, 2, Col4(1, 1, 1, 0.5f));
 		gm->SetMaxButtonNum(1);
-		gm->SetSelectingButton(0);
 	}
 
-	void GameStage::CreateGameOverButton()
+	void GameStage4::CreateGameOverButton()
 	{
 		auto gm = GameManager::GetInstance();
 
@@ -362,16 +358,12 @@ namespace basecross {
 		auto buttonSprite = AddGameObject<ButtonSprite>(true, Vec2(600, 100), Vec2(0, -70.0f), true, 1.0f, L"RETRY_BUTTON_TX", 0, 2, Col4(1, 1, 1, 0.5f));
 		auto buttonSprite2 = AddGameObject<ButtonSprite>(true, Vec2(600, 100), Vec2(0, -220.0f), true, 1.0f, L"STAGESELECT_BUTTON_TX", 1, 2, Col4(1, 1, 1, 0.5f));
 		gm->SetMaxButtonNum(1);
-		gm->SetSelectingButton(0);
 	}
 
-	void GameStage::CreateSpriteAndButton()
+	void GameStage4::CreateSpriteAndButton()
 	{
 		WhiteSprite = AddGameObject<FadeSprite>(true, Vec2(1120, 630), Vec2(0, 0), true, 0.5f, 0.0f, L"WHITE_TX", 1, Col4(1, 1, 1, 0.5f));
 		WhiteSprite->SetDrawActive(false);
-
-		ResultSprite = AddGameObject<Sprite>(true, Vec2(800, 200), Vec2(0, 150), L"POSE_TX", 1, Col4(1, 1, 1, 1.0f));
-		ResultSprite->SetDrawActive(false);
 
 		m_Button1 = AddGameObject<ButtonSprite>(true, Vec2(600, 100), Vec2(0, -60.0f), true, 1.0f, L"RETRY_BUTTON_TX", 0, 2, Col4(1, 1, 1, 0.5f));
 		m_Button1->SetDrawActive(false);
@@ -384,17 +376,13 @@ namespace basecross {
 		m_Button3->SetUpdateActive(false);
 	}
 
-	void GameStage::SwitchPoseButton(bool poseFlg)
+	void GameStage4::SwitchPoseButton(bool poseFlg)
 	{
 		auto gm = GameManager::GetInstance();
 
 		auto whiteSprite = dynamic_pointer_cast<FadeSprite>(WhiteSprite);
 		whiteSprite->SetDrawActive(poseFlg);
 		whiteSprite->SetUpdateActive(poseFlg);
-
-		auto resultSprite = dynamic_pointer_cast<Sprite>(ResultSprite);
-		resultSprite->SetDrawActive(poseFlg);
-		resultSprite->SetUpdateActive(poseFlg);
 
 		m_Button1->SetDrawActive(poseFlg);
 		m_Button1->SetUpdateActive(poseFlg);
@@ -408,26 +396,24 @@ namespace basecross {
 
 		if (poseFlg == true)
 		{
-			gm->SetSelectingButton(2);
 			gm->SetMoveEnabledFlg(false);
 		}
 		else
 		{
-			gm->SetSelectingButton(0);
 			gm->SetMoveEnabledFlg(true);
 		}
 
 		gm->SetMaxButtonNum(2);
 	}
 
-	void GameStage::StopBGM()
+	void GameStage4::StopBGM()
 	{
 		auto ptrXA = App::GetApp()->GetXAudio2Manager();
 
 		ptrXA->Stop(m_BGM);
 	}
 
-	void GameStage::ToMyCamera() {
+	void GameStage4::ToMyCamera() {
 		auto ptrPlayer = GetSharedGameObject<Player>(WstringKey::ShareObj_Player);
 		//MyCameraに変更
 		auto ptrMyCamera = dynamic_pointer_cast<MyCamera>(m_MyCameraView->GetCamera());
@@ -435,7 +421,7 @@ namespace basecross {
 			ptrMyCamera->SetTargetObject(ptrPlayer);
 			//m_MyCameraViewを使う
 			SetView(m_MyCameraView);
-			m_CameraSelect = CameraSelect_Stage1::myCamera;
+			m_CameraSelect = CameraSelect_Stage4::myCamera;
 		}
 	}
 }

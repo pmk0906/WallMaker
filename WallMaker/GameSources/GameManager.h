@@ -31,6 +31,9 @@ namespace basecross {
 		// プレイヤーが死んだか
 		bool m_DeathFlg = false;
 		bool m_DeathFlgChanged = false;
+		//ポーズ状態になっているか
+		bool m_PoseFlg = false;
+		bool m_PoseFlgChanged = false;
 		//選択しているボタンの番号
 		int m_SelectingButtonNum = 0;
 		//ボタンの番号の最大値
@@ -56,6 +59,8 @@ namespace basecross {
 			SetClearFlgChanged(false); 
 			SetDeathFlg(false);
 			SetDeathFlgChanged(false);
+			SetPoseFlg(false);
+			SetPoseFlgChanged(false);
 			SetSelectingButton(0);
 			SetMoveEnabledFlg(false); 
 			SetOpeningCameraMoveEnd(false);
@@ -113,6 +118,7 @@ namespace basecross {
 				}
 			}
 		}
+
 		//プレイヤーの行動許可
 		bool GetMoveEnabledFlg()
 		{
@@ -193,6 +199,23 @@ namespace basecross {
 		void SetDeathFlgChanged(bool flg)
 		{
 			m_DeathFlgChanged = flg;
+		}
+		//ポーズ状態
+		bool GetPoseFlg()
+		{
+			return m_PoseFlg;
+		}
+		void SetPoseFlg(bool poseFlg)
+		{
+			m_PoseFlg = poseFlg;
+		}
+		bool GetPoseFlgChanged()
+		{
+			return m_PoseFlgChanged;
+		}
+		void SetPoseFlgChanged(bool poseFlgChanged)
+		{
+			m_PoseFlgChanged = poseFlgChanged;
 		}
 		// 選択しているボタンの番号
 		int GetSelectingButtonNum()

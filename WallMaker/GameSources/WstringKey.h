@@ -22,15 +22,20 @@ namespace WstringKey {
 	const wstring Tx_Player = L"TXPlayer";
 
 	//モーションキー
+	//プレイヤー
 	const wstring AM_PlayerStand = L"PlayerStand";
 	const wstring AM_PlayerWalk = L"PlayerWalk";
 	const wstring AM_PlayerStandMagic = L"PlayerStandMagic";
 	const wstring AM_PlayerWalkMagic = L"PlayerWalkMagic";
+	//敵
+	const wstring AM_EnemyGearSpin = L"EnemyGearSpin";
 
 	// アニメーション用
 	// プレイヤー
 	const wstring Anim_Player = L"AnimPlayer";
 	const wstring Anim_Player_Walk = L"AnimPlayerWalk";
+	const wstring Anim_Enemy = L"AnimEnemy";
+	const wstring Anim_EnemyBlue = L"AnimEnemyBlue";
 
 	//音
 	//BGM

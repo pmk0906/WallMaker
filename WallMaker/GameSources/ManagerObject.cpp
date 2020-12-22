@@ -55,6 +55,9 @@ namespace basecross{
 		case SceneNum::GameStage_5:
 			sceneKey = WstringKey::ToGameStage5;
 			break;
+		case SceneNum::GameStage_Test:
+			sceneKey = WstringKey::ToGameTestStage;
+			break;
 		}
 		PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), sceneKey);
 	}
@@ -114,6 +117,7 @@ namespace basecross{
 		case SceneNum::GameStage_3:
 		case SceneNum::GameStage_4:
 		case SceneNum::GameStage_5:
+		case SceneNum::GameStage_Test:
 			//Dパッド上
 			if (wButtons & XINPUT_GAMEPAD_DPAD_UP) {
 				if (gm->GetSelectingButtonNum() > 0)
@@ -165,6 +169,11 @@ namespace basecross{
 			auto ptrGameGtage = GetTypeStage<GameStage5>();
 			ptrGameGtage->ToMyCamera();
 		}
+		else if (stageNum == SceneNum::GameStage_Test)
+		{
+			auto ptrGameGtage = GetTypeStage<TestStage>();
+			ptrGameGtage->ToMyCamera();
+		}
 	}
 
 	void GameManagement::TitleButton_A()
@@ -176,8 +185,8 @@ namespace basecross{
 	void GameManagement::StageSelectButton_A()
 	{
 		auto gm = GameManager::GetInstance();
-
-		switch (gm->GetSelectingButtonNum())
+		auto selectingButtonNum = gm->GetSelectingButtonNum();
+		switch (selectingButtonNum)
 		{
 		case 0:
 			LoadScene((int)SceneNum::GameStage_1);
@@ -348,6 +357,9 @@ namespace basecross{
 		case (int)SceneNum::GameStage_5:
 			sceneNum += L"ゲームステージ５\n";
 			break;
+		case (int)SceneNum::GameStage_Test:
+			sceneNum += L"テストステージ\n";
+			break;
 		default:
 			break;
 		}
@@ -389,6 +401,7 @@ namespace basecross{
 		case (int)SceneNum::GameStage_3:
 		case (int)SceneNum::GameStage_4:
 		case (int)SceneNum::GameStage_5:
+		case(int)SceneNum::GameStage_Test:
 			GameStageButton_A();
 			break;
 		default:
@@ -424,6 +437,9 @@ namespace basecross{
 		auto gm = GameManager::GetInstance();
 		switch (gm->GetSceneNum())
 		{
+		case (int)SceneNum::Title:
+			LoadScene((int)SceneNum::GameStage_Test);
+			break;
 		case (int)SceneNum::GameStage_1:
 		case (int)SceneNum::GameStage_2:
 		case (int)SceneNum::GameStage_3:

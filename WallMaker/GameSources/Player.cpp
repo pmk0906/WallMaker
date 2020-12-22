@@ -239,6 +239,8 @@ namespace basecross{
 					ptrDraw->ChangeCurrentAnimation(WstringKey::AM_PlayerWalkMagic);
 					SetMotionName(WstringKey::AM_PlayerWalkMagic);
 				}
+
+				m_Speed = m_HoldSpeed;
 			}
 			else
 			{
@@ -247,6 +249,8 @@ namespace basecross{
 					ptrDraw->ChangeCurrentAnimation(WstringKey::AM_PlayerWalk);
 					SetMotionName(WstringKey::AM_PlayerWalk);
 				}
+
+				m_Speed = m_DefaultSpeed;
 			}
 		}
 		else

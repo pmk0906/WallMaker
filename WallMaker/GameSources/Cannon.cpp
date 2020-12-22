@@ -20,10 +20,10 @@ namespace basecross {
 	{
 		Mat4x4 spanMat; // モデルとトランスフォームの間の差分行列
 		spanMat.affineTransformation(
-			Vec3(0.8f, 1.0f, 0.8f),
+			Vec3(0.8f, 0.5f, 0.8f),
 			Vec3(0.0f, 0.0f, 0.0f),
 			Vec3(0.0f, XMConvertToRadians(180.0f), 0.0f),
-			Vec3(0.0f, 0.0f, 0.0f)
+			Vec3(0.0f, -0.5f, 0.0f)
 		);
 
 		// 大きさ、回転、位置
@@ -35,6 +35,7 @@ namespace basecross {
 		// 衝突判定
 		auto ptrColl = AddComponent<CollisionObb>();
 		ptrColl->SetFixed(true);
+		//ptrColl->SetDrawActive(true);
 
 		//タグをつける
 		AddTag(L"Cannon");

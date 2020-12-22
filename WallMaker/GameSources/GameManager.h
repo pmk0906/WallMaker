@@ -11,7 +11,8 @@ namespace basecross {
 		GameStage_3,
 		GameStage_4,
 		GameStage_5,
-		End
+		End,
+		GameStage_Test
 	};
 
 	class GameManager {

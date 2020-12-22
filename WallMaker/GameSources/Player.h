@@ -17,6 +17,8 @@ namespace basecross{
 
 		//スピード
 		float m_Speed;
+		float m_DefaultSpeed = 5.0f;
+		float m_HoldSpeed = 3.0f;
 		//HP
 		float m_PlayerHp = 3.0f;
 

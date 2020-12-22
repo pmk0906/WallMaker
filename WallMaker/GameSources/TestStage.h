@@ -7,11 +7,22 @@
 #include "stdafx.h"
 
 namespace basecross {
-
+	enum class CameraSelect_TestStage {
+		openingCamera,
+		myCamera,
+		objCamera,
+	};
 	//--------------------------------------------------------------------------------------
 	//	ゲームステージクラス
 	//--------------------------------------------------------------------------------------
 	class TestStage : public Stage {
+
+		//OpeningCamera用のビュー
+		shared_ptr<SingleView> m_OpeningCameraView;
+		//MyCamera用のビュー
+		shared_ptr<SingleView> m_MyCameraView;
+		CameraSelect_TestStage m_CameraSelect;
+
 		//ステージの奥行
 		const int STAGE_LENGTH = 16;
 		//ステージの横幅
@@ -30,6 +41,8 @@ namespace basecross {
 		void CreatePlayer(Vec3 pos);
 		//UIの作成
 		void CreateUI();
+		//カメラマンの作成
+		void CreateCameraman();
 
 	public:
 		//構築と破棄
@@ -45,6 +58,8 @@ namespace basecross {
 		virtual void OnUpdate()override;
 
 		void StopBGM();
+
+		void ToMyCamera();
 	};
 
 

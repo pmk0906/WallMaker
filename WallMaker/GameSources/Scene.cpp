@@ -73,9 +73,13 @@ namespace basecross{
 			//ステージ番号
 			{L"STAGE_1_TX", L"Select_1.png"},
 			{L"STAGE_2_TX", L"Select_2.png"},
+			{L"STAGE_2_LOCK_TX", L"LockSelect_2.png"},
 			{L"STAGE_3_TX", L"Select_3.png"},
+			{L"STAGE_3_LOCK_TX", L"LockSelect_3.png"},
 			{L"STAGE_4_TX", L"Select_4.png"},
+			{L"STAGE_4_LOCK_TX", L"LockSelect_4.png"},
 			{L"STAGE_5_TX", L"Select_5.png"},
+			{L"STAGE_5_LOCK_TX", L"LockSelect_5.png"},
 			//文字
 			{L"GAMECLEAR_TX", L"Tx_GameClear.png"},
 			{L"GAMEOVER_TX", L"Tx_GameOver.png"},
@@ -88,7 +92,9 @@ namespace basecross{
 		Pairs animPairs[] = 
 		{
 			//{WstringKey::Anim_Player, L"PL_Stand.bmf"},
-			{WstringKey::Anim_Player, L"PL_Stand_Walk.bmf"}
+			{WstringKey::Anim_Player, L"PL_Stand_Walk.bmf"},
+			{WstringKey::Anim_Enemy, L"Enemy_ver2.bmf"},
+			{WstringKey::Anim_EnemyBlue, L"Enemy_Blue_ver2.bmf"}
 		};
 		//スタティック
 		Pairs staticPairs[] =
@@ -182,6 +188,7 @@ namespace basecross{
 			//クリアする色を設定
 			Col4 Col;
 			Col.set(0.0f / 255.0f, 0.0f / 255.0f, 0.0f / 255.0f, 255.0f / 255.0f);
+			//Col.set(31.0f / 255.0f, 30.0f / 255.0f, 71.0f / 255.0f, 255.0f / 255.0f);
 			SetClearColor(Col);
 			//自分自身にイベントを送る
 			//これにより各ステージやオブジェクトがCreate時にシーンにアクセスできる

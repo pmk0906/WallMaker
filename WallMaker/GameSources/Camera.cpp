@@ -132,6 +132,11 @@ namespace basecross{
 			auto ptrGameGtage = GetTypeStage<GameStage5>();
 			ptrGameGtage->ToMyCamera();
 		}
+		else if (stageNum == SceneNum::GameStage_Test)
+		{
+			auto ptrGameGtage = GetTypeStage<TestStage>();
+			ptrGameGtage->ToMyCamera();
+		}
 		
 	}
 

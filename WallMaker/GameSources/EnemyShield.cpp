@@ -48,6 +48,7 @@ namespace basecross {
 	void EnemyShield::OnUpdate()
 	{
 		Die();
+		//FireEffect();
 	}
 
 	void EnemyShield::Initialize()

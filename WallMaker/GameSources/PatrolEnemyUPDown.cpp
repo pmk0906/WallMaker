@@ -63,6 +63,7 @@ namespace basecross {
 			Reload();
 			Move();
 			Die();
+			FireEffect();
 		}
 	}
 
@@ -195,12 +196,23 @@ namespace basecross {
 		m_Shield = GetStage()->AddGameObject<UPPatrolShield>(GetThis<PatrolEnemyUPDown>());
 	}
 
+	void PatrolEnemyUPDown::FireEffect()
+	{
+		if (m_FireTime >= 2.0f)
+		{
+			GenerataFire(2, Vec3(10.0f));
+		}
+	}
+
 	void PatrolEnemyUPDown::GenerataFire(int GenerateNum, Vec3 MoveSpeed)
 	{
 		auto ptrTrans = GetComponent<Transform>();
+		auto forward_player = ptrTrans->GetForword();
+		auto scale_enemy = ptrTrans->GetScale();
 		auto PtrFire = GetStage()->GetSharedGameObject<MultiFire>(L"MultiFire", false);
 		if (PtrFire) {
-			PtrFire->InsertFire(GetComponent<Transform>()->GetPosition(), GenerateNum, MoveSpeed);
+			PtrFire->InsertFire(ptrTrans->GetPosition() + forward_player * scale_enemy.x,
+				GenerateNum, MoveSpeed);
 		}
 	}
 

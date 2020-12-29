@@ -51,6 +51,7 @@ namespace basecross {
 
 		Initialize();
 		CreateShield();
+		CreateRay();
 	}
 
 	void EnemyFirst::OnUpdate()
@@ -70,16 +71,21 @@ namespace basecross {
 			for (auto& obj : objs)
 			{
 				auto player = dynamic_pointer_cast<Player>(obj);
-				//auto gameStage = dynamic_pointer_cast<GameStage>(GetStage());
+				//auto gameStage = dynamic_pointer_cast<GameStage>(obj);
 
-				if (player) {
+				if (player) 
+				{
 					playerPos = player->GetPosition();
 				}
 			}
 
+			//auto ray_share = GetStage()->GetSharedGameObject<RayBullet>(WstringKey::ShareObj_Ray);
+
+			//flg_Ray = ray_share->GetRayFlg();
+
 			auto enemyToPlayer = playerPos - enemyPos;
 
-			if (enemyToPlayer.length() <= 20.0f)
+			if (enemyToPlayer.length() <= 20.0f /*&& ray_share->GetRayFlg() == true*/)
 			{
 				LookPlayer();
 
@@ -91,7 +97,7 @@ namespace basecross {
 
 			Reload();
 			Die();
-
+			FireEffect();
 		}
 		if (gm->GetPoseFlg() == false)
 		{
@@ -105,7 +111,9 @@ namespace basecross {
 	{
 		m_EnemyHP = 1.0f;
 		m_RotY = 0.0f;
-		m_FireTime = 3.0f;
+		m_FireTime = 0.0f;
+
+		flg_Ray = true;
 	}
 
 	void EnemyFirst::Fire()
@@ -208,18 +216,52 @@ namespace basecross {
 		m_Shield = GetStage()->AddGameObject<EnemyShield>(GetThis<EnemyFirst>());
 	}
 
+	void EnemyFirst::CreateRay()
+	{
+		auto transComp = GetComponent<Transform>();
+		auto pos = transComp->GetPosition();
+		auto scale_enemy = transComp->GetScale();
+		auto forward_player = transComp->GetForword();
+
+		auto ray = GetStage()->AddGameObject<RayObject>();
+
+		auto rayTrans = ray->GetComponent<Transform>();
+
+		auto rayPos = rayTrans->GetPosition();
+
+		rayPos = pos;
+
+		rayTrans->SetPosition(rayPos);
+	}
+
+	void EnemyFirst::FireEffect()
+	{
+		if (m_FireTime >= 2.0f)
+		{
+			GenerataFire(2, Vec3(10.0f));
+		}
+	}
+
 	void EnemyFirst::GenerataFire(int GenerateNum, Vec3 MoveSpeed)
 	{
 		auto ptrTrans = GetComponent<Transform>();
+		auto forward_player = ptrTrans->GetForword();
+		auto scale_enemy = ptrTrans->GetScale();
 		auto PtrFire = GetStage()->GetSharedGameObject<MultiFire>(L"MultiFire", false);
 		if (PtrFire) {
-			PtrFire->InsertFire(GetComponent<Transform>()->GetPosition(), GenerateNum, MoveSpeed);
+			PtrFire->InsertFire(ptrTrans->GetPosition() + forward_player * scale_enemy.x,
+				GenerateNum, MoveSpeed);
 		}
 	}
 
 	float EnemyFirst::GetHp()
 	{
 		return m_EnemyHP;
+	}
+
+	float EnemyFirst::GetFireTime()
+	{
+		return m_FireTime;
 	}
 
 	Vec3 EnemyFirst::GetPosition() const

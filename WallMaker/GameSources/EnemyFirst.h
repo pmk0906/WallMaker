@@ -18,6 +18,8 @@ namespace basecross {
 		float m_RotY;
 		float m_FireTime;
 
+		bool flg_Ray;
+
 	public:
 		EnemyFirst(const shared_ptr<Stage>& StagePtr,
 			const Vec3& Scale,
@@ -35,10 +37,13 @@ namespace basecross {
 		void Damage(float damage);
 		void Die();
 		void CreateShield();
+		void CreateRay();
+		void FireEffect();
 		void GenerataFire(int GenerateNum, Vec3 MoveSpeed);
 
 		Vec3 GetPosition() const;
 
 		float GetHp();
+		float GetFireTime();
 	};
 }

@@ -36,5 +36,7 @@
 #include "TestStage.h"
 #include "Cannon.h"
 #include "DirectorObject.h"
+#include "RayObject.h"
+#include "RayBullet.h"
 
 

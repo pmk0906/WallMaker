@@ -99,6 +99,8 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)GameStage3.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)GameStage4.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)GameStage5.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)RayBullet.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)RayObject.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)Character.cpp">
@@ -182,5 +184,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)GameStage3.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)GameStage4.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)GameStage5.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)RayBullet.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)RayObject.cpp" />
   </ItemGroup>
 </Project>

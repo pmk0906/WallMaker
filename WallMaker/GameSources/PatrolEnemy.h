@@ -37,6 +37,7 @@ namespace basecross {
 		void Damage(float damage);
 		void Die();
 		void CreateShield();
+		void FireEffect();
 		void GenerataFire(int GenerateNum, Vec3 MoveSpeed);
 
 		Vec3 GetPosition() const;

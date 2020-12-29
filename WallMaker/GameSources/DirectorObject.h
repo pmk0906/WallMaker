@@ -33,13 +33,26 @@ namespace basecross{
 	};
 
 	//--------------------------------------------------------------------------------------
-	///	複数の反射後の炎クラス
+	///	壁を壊したときの煙
 	//--------------------------------------------------------------------------------------
 	class WallBreakEffect : public MultiParticle {
 	public:
 		//構築と破棄
 		WallBreakEffect(shared_ptr<Stage>& StagePtr);
 		virtual ~WallBreakEffect();
+		//初期化
+		virtual void OnCreate() override;
+		void InsertEffect(const Vec3& Pos, int GenerateNum, Vec3 MoveSpeed);
+	};
+
+	//--------------------------------------------------------------------------------------
+	///	弾が反射したときのエフェクト
+	//--------------------------------------------------------------------------------------
+	class ReflectBulletEffect : public MultiParticle {
+	public:
+		//構築と破棄
+		ReflectBulletEffect(shared_ptr<Stage>& StagePtr);
+		virtual ~ReflectBulletEffect();
 		//初期化
 		virtual void OnCreate() override;
 		void InsertEffect(const Vec3& Pos, int GenerateNum, Vec3 MoveSpeed);

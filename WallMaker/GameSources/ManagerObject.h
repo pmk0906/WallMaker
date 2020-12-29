@@ -24,10 +24,15 @@ namespace basecross{
 		void LoadScene(int stageNum);
 		void PlayerMoveEnabled();
 
+		//十字キー用
 		void ButtonControl();
 		// カメラの変更
 		void ChangeCamera();
 
+		//エフェクトをステージに登録する
+		void StageEffect();
+
+		//シーン毎のボタンの処理
 		void TitleButton_A();
 		void TitleButton_B() {}
 		void StageSelectButton_A();

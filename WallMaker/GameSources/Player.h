@@ -144,8 +144,12 @@ namespace basecross{
 		Vec3 m_Scale;
 		Vec3 m_Rotation;
 		Vec3 m_Position;
+		
+		bool m_CollisionFlg = false;
 
 		void Delete();
+
+		void MagicWallCollisionRef();
 
 	public:
 		//ç\ízÇ∆îjä¸
@@ -159,6 +163,9 @@ namespace basecross{
 		// èâä˙âª
 		virtual void OnCreate() override;
 		virtual void OnUpdate() override;
+		virtual void OnCollisionEnter(shared_ptr<GameObject>& other)override;
+		virtual void OnCollisionExcute(shared_ptr<GameObject>& other)override;
+		virtual void OnCollisionExit(shared_ptr<GameObject>& other)override;
 
 		void SetHp(float hp);
 		void Damage(float damage);

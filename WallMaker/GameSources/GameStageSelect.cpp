@@ -36,7 +36,7 @@ namespace basecross{
 		auto buttonSprite  = AddGameObject<ButtonSprite>(true, Vec2(150, 150), Vec2(-400, 50.0f), true, 1.0f, L"STAGE_1_TX", 0, 2, Col4(1, 1, 1, 0.5f));
 		auto buttonSprite2 = AddGameObject<ButtonSprite>(true, Vec2(150, 150), Vec2(-200, 50.0f), true, 1.0f, L"STAGE_2_TX", 1, 2, Col4(1, 1, 1, 0.5f));
 		auto buttonSprite3 = AddGameObject<ButtonSprite>(true, Vec2(150, 150), Vec2(0, 50.0f),    true, 1.0f, L"STAGE_3_TX", 2, 2, Col4(1, 1, 1, 0.5f));
-		auto buttonSprite4 = AddGameObject<ButtonSprite>(true, Vec2(150, 150), Vec2(200, 50.0f),  true, 1.0f, L"STAGE_4_LOCK_TX", 3, 2, Col4(1, 1, 1, 0.5f));
+		auto buttonSprite4 = AddGameObject<ButtonSprite>(true, Vec2(150, 150), Vec2(200, 50.0f),  true, 1.0f, L"STAGE_4_TX", 3, 2, Col4(1, 1, 1, 0.5f));
 		auto buttonSprite5 = AddGameObject<ButtonSprite>(true, Vec2(150, 150), Vec2(400, 50.0f),  true, 1.0f, L"STAGE_5_LOCK_TX", 4, 2, Col4(1, 1, 1, 0.5f));
 
 	}

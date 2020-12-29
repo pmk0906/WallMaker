@@ -56,6 +56,7 @@ namespace basecross{
 			{L"FLOOR_4x4_TX", L"Floor_4x4.png"},
 			{L"WALL_TX", L"BlockWall.tga"},
 			{L"REFLECTWALL_TX", L"ReflectWall.tga"},
+			{L"BREAKWALL_TX", L"BreakWall.png"},
 			// ステージのUI
 			{L"HEART_UI_TX", L"Heart.png"},
 			{L"WALLSTOCK_UI_TX", L"UI_MagicWall.png"},
@@ -64,7 +65,8 @@ namespace basecross{
 			//エフェクト
 			{L"FIRE_TX", L"fire.png"},
 			{L"BLUEFIRE_TX", L"BlueFire.png"},
-			{L"BREAKWALL_TX", L"BreakWall.png"},
+			{L"BREAK_TX", L"Break.png"},
+			{L"REFLECT_TX", L"Reflect0005.png"},
 			//ボタン
 			{L"NEXTSTAGE_BUTTON_TX", L"Tx_NextStageButton.png"},
 			{L"STAGESELECT_BUTTON_TX", L"Tx_StageSelectButton.png"},

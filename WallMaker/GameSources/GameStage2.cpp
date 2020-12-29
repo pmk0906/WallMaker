@@ -182,12 +182,12 @@ namespace basecross {
 		gm->InitGameManager();
 		gm->SetSceneNum(SceneNum::GameStage_2);
 
-		auto multiFire = AddGameObject<MultiFire>();
-		SetSharedGameObject(L"MultiFire", multiFire);
-		auto multiFireBlue = AddGameObject<MultiFireBlue>();
-		SetSharedGameObject(L"MultiFireBlue", multiFireBlue);
-		auto breakWallEffect = AddGameObject<WallBreakEffect>();
-		SetSharedGameObject(WstringKey::ShareObj_BreakWallEffect, breakWallEffect);
+		//auto multiFire = AddGameObject<MultiFire>();
+		//SetSharedGameObject(L"MultiFire", multiFire);
+		//auto multiFireBlue = AddGameObject<MultiFireBlue>();
+		//SetSharedGameObject(L"MultiFireBlue", multiFireBlue);
+		//auto breakWallEffect = AddGameObject<WallBreakEffect>();
+		//SetSharedGameObject(WstringKey::ShareObj_BreakWallEffect, breakWallEffect);
 
 		//BGM
 		auto ptrXA = App::GetApp()->GetXAudio2Manager();

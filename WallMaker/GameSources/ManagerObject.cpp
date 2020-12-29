@@ -176,6 +176,18 @@ namespace basecross{
 		}
 	}
 
+	void GameManagement::StageEffect()
+	{
+		auto multiFire = GetStage()->AddGameObject<MultiFire>();
+		GetStage()->SetSharedGameObject(L"MultiFire", multiFire);
+		auto multiFireBlue = GetStage()->AddGameObject<MultiFireBlue>();
+		GetStage()->SetSharedGameObject(L"MultiFireBlue", multiFireBlue);
+		auto breakWallEffect = GetStage()->AddGameObject<WallBreakEffect>();
+		GetStage()->SetSharedGameObject(WstringKey::ShareObj_BreakWallEffect, breakWallEffect);
+		auto reflectEffect = GetStage()->AddGameObject<ReflectBulletEffect>();
+		GetStage()->SetSharedGameObject(WstringKey::ShareObj_ReflectBulletEffect, reflectEffect);
+	}
+
 	void GameManagement::TitleButton_A()
 	{
 		LoadScene(SceneNum::StageSelect);
@@ -304,6 +316,8 @@ namespace basecross{
 		ptrTrans->SetScale(m_Scale);
 		ptrTrans->SetRotation(m_Rotation);
 		ptrTrans->SetPosition(m_Position);
+
+		StageEffect();
 
 		// DrawString—p
 		//auto strComp = AddComponent<StringSprite>();

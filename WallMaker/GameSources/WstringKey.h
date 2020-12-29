@@ -55,12 +55,14 @@ namespace WstringKey {
 	// シェアオブジェクト用
 	// プレイヤー
 	const wstring ShareObj_Player = L"ObjPlayer";
+	const wstring ShareObj_MagicSkeltonWall = L"ObjMagicSkeltonWall";
 	//宝箱
 	const wstring ShareObj_TreasureBox = L"ObjTreasureBox";
 	// フェード用スプライト
 	const wstring ShareObj_FadeSprite = L"ObjFadeSprite";
 	//パーティクル
 	const wstring ShareObj_BreakWallEffect = L"ObjBreakWallEffect";
+	const wstring ShareObj_ReflectBulletEffect = L"ObjReflectBulletEffect";
 
 	//シーン名
 	const wstring ToGameTitle = L"ToGameTitleScene";

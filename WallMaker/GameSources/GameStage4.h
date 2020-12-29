@@ -25,7 +25,7 @@ namespace basecross {
 		CameraSelect_Stage4 m_CameraSelect;
 
 		//ステージの奥行
-		const int STAGE_LENGTH = 16;
+		const int STAGE_LENGTH = 20;
 		//ステージの横幅
 		const int STAGE_WIDTH = 32;
 

@@ -41,6 +41,7 @@ namespace basecross {
 		void SetColor();
 		void GenerateFire(int GenerateNum, Vec3 MoveSpeed);
 		void GenerateFireBlue(int GenerateNum, Vec3 MoveSpeed);
+		void GenerateReflectEffect(int GenerateNum, Vec3 MoveSpeed);
 		void SetReflectflg();
 
 		// Õ“Ë”»’è

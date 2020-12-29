@@ -381,7 +381,8 @@ namespace basecross{
 		AddTag(WstringKey::Tag_Player);
 
 		m_MagicSkeltonWall = GetStage()->AddGameObject<MagicSkeltonWall>(m_Scale, m_Rotation, m_Position, GetThis<Player>());
-	
+		GetStage()->SetSharedGameObject(WstringKey::ShareObj_MagicSkeltonWall, m_MagicSkeltonWall);
+
 		// DrawString—p
 		/*auto strComp = AddComponent<StringSprite>();
 		strComp->SetBackColor(Col4(0, 0, 0, 0.5f));
@@ -620,7 +621,17 @@ namespace basecross{
 	{
 	}
 
-	MagicWall::~MagicWall() {}
+	MagicWall::~MagicWall() 
+	{
+		auto magicSkeltonWall = GetStage()->GetSharedGameObject<MagicSkeltonWall>(WstringKey::ShareObj_MagicSkeltonWall);
+		if (magicSkeltonWall)
+		{
+			if (m_CollisionFlg == true)
+			{
+				magicSkeltonWall->SetCollisionFlg(false);
+			}
+		}
+	}
 
 	void MagicWall::Delete()
 	{
@@ -628,6 +639,7 @@ namespace basecross{
 		{
 			//SetDrawActive(false);
 			//SetUpdateActive(false);
+
 
 			GetStage()->RemoveGameObject<MagicWall>(GetThis<MagicWall>());
 		}
@@ -670,6 +682,25 @@ namespace basecross{
 	void MagicWall::OnUpdate()
 	{
 		Delete();
+	}
+
+	void MagicWall::OnCollisionEnter(shared_ptr<GameObject>& other) {
+		if (dynamic_pointer_cast<MagicSkeltonWall>(other))
+		{
+			m_CollisionFlg = true;
+		}
+	}
+	void MagicWall::OnCollisionExcute(shared_ptr<GameObject>& other) {
+		//if (dynamic_pointer_cast<MagicWall>(other))
+		//{
+		//}
+		//m_CollisionFlg = true;
+	}
+	void MagicWall::OnCollisionExit(shared_ptr<GameObject>& other) {
+		if (dynamic_pointer_cast<MagicSkeltonWall>(other))
+		{
+			m_CollisionFlg = false;
+		}
 	}
 
 	void MagicWall::SetHp(float hp)
@@ -773,9 +804,9 @@ namespace basecross{
 		//ptrDraw->SetTextureResource(L"MAGICWALL_TX");
 
 		// DrawString—p
-		/*auto strComp = AddComponent<StringSprite>();
+		auto strComp = AddComponent<StringSprite>();
 		strComp->SetBackColor(Col4(0, 0, 0, 0.5f));
-		strComp->SetTextRect(Rect2D<float>(10, 600, 270, 210));*/
+		strComp->SetTextRect(Rect2D<float>(10, 600, 270, 210));
 	}
 
 	void MagicSkeltonWall::OnUpdate()
@@ -786,24 +817,26 @@ namespace basecross{
 
 	void MagicSkeltonWall::OnUpdate2()
 	{
-		//DrawStrings();
+		DrawStrings();
 	}
 
 	void MagicSkeltonWall::OnCollisionEnter(shared_ptr<GameObject>& other) {
 		if (dynamic_pointer_cast<MagicWall>(other))
 		{
-			m_CollisionFlg = true;
-
 		}
+			m_CollisionFlg = true;
 	}
 	void MagicSkeltonWall::OnCollisionExcute(shared_ptr<GameObject>& other) {
-
+		//if (dynamic_pointer_cast<MagicWall>(other))
+		//{
+		//}
+			m_CollisionFlg = true;
 	}
 	void MagicSkeltonWall::OnCollisionExit(shared_ptr<GameObject>& other) {
 		if (dynamic_pointer_cast<MagicWall>(other))
 		{
-			m_CollisionFlg = false;
 		}
+			m_CollisionFlg = false;
 	}
 
 	void MagicSkeltonWall::DrawStrings()

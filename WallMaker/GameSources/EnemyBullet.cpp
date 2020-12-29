@@ -169,6 +169,15 @@ namespace basecross {
 		}
 	}
 
+	void EnemyBullet::GenerateReflectEffect(int GenerateNum, Vec3 MoveSpeed)
+	{
+		auto ptrTrans = GetComponent<Transform>();
+		auto PtrFire = GetStage()->GetSharedGameObject<ReflectBulletEffect>(WstringKey::ShareObj_ReflectBulletEffect, false);
+		if (PtrFire) {
+			PtrFire->InsertEffect(GetComponent<Transform>()->GetPosition(), GenerateNum, MoveSpeed);
+		}
+	}
+
 	void EnemyBullet::SetReflectflg()
 	{
 		if (m_ReflectTime >= 0.005f)
@@ -197,7 +206,7 @@ namespace basecross {
 			SetUpdateActive(false);
 		}
 
-		//@‚ ‚½‚Á‚½‚Ì‚ª•Ç‚È‚ç
+		//@‚ ‚½‚Á‚½‚Ì‚ª–‚–@•Ç‚È‚ç
 		if (auto magicWall = dynamic_pointer_cast<MagicWall>(other))
 		{
 			auto wallTrans = magicWall->GetComponent<Transform>();
@@ -215,6 +224,8 @@ namespace basecross {
 			}
 
 			flg_reflect = true;
+
+			GenerateReflectEffect(30, Vec3(30.0f));
 
 			magicWall->Damage(m_Attack);
 		}
@@ -365,6 +376,7 @@ namespace basecross {
 			}
 		}
 		
+		// “–‚½‚Á‚½‚Ì‚ª”½Ë•Ç‚È‚ç
 		if (auto reflectWall = dynamic_pointer_cast<StageRefrectWall>(other))
 		{
 			auto wallTrans = reflectWall->GetComponent<Transform>();
@@ -387,6 +399,8 @@ namespace basecross {
 				flg_reflectWall = true;
 
 				m_ReflectTime += delta;
+
+				GenerateReflectEffect(30, Vec3(30.0f));
 			}
 
 			myTrans->SetPosition(pos);

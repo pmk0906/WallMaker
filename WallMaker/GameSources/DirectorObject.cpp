@@ -58,6 +58,19 @@ namespace basecross{
 		SetAddType(true);
 	}
 
+	void MultiFireBlue::OnUpdate()
+	{
+		//auto gm = GameManager::GetInstance();
+		//if (gm->GetMoveEnabledFlg() == false)
+		//{
+		//	SetUpdateActive(false);
+		//}
+		//else
+		//{
+		//	SetUpdateActive(true);
+		//}
+	}
+
 	void MultiFireBlue::InsertFire(const Vec3& Pos, int GenerateNum, Vec3 MoveSpeed) {
 		auto ptrParticle = InsertParticle(GenerateNum);
 		ptrParticle->SetEmitterPos(Pos);

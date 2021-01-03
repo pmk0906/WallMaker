@@ -19,6 +19,7 @@ namespace basecross{
 		Vec2 m_StartPos;
 		int m_Layer;
 		Col4 m_Color;
+		wstring m_TextureKey;
 
 		//バックアップ頂点データ
 		vector<VertexPositionColorTexture> m_BackupVertices;
@@ -26,7 +27,6 @@ namespace basecross{
 		//フェードイン・アウト用
 		float m_AlphaValue = 0;
 
-		wstring m_TextureKey;
 
 	public:
 		// 構築と破棄

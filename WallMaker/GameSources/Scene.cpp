@@ -58,8 +58,11 @@ namespace basecross{
 			{L"REFLECTWALL_TX", L"ReflectWall.tga"},
 			{L"BREAKWALL_TX", L"BreakWall.png"},
 			// ステージのUI
-			{L"HEART_UI_TX", L"Heart.png"},
+			{L"HEART_UI_TX", L"HP_Life.png"},
+			{L"HP_FRONT_UI_TX", L"HP_UI_Front.png"},
+			{L"HP_BACK_UI_TX", L"HP_UI_Back.png"},
 			{L"WALLSTOCK_UI_TX", L"UI_MagicWall.png"},
+			{L"WALLSTICK_UI_TX", L"MagicStick_UI.png"},
 			{L"GAMESELECT_BG_TX", L"Select_BackGround.png"},
 			{L"WHITE_TX", L"White.png"},
 			//エフェクト

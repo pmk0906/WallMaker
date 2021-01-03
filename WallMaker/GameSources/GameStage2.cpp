@@ -280,13 +280,19 @@ namespace basecross {
 	void GameStage2::CreateUI()
 	{
 		//プレイヤーのライフ表示
-		AddGameObject<PlayerLife>(true, Vec2(100.0f), Vec3(-590.0f, 350.0f, 0.1f), 1.0f);
-		AddGameObject<PlayerLife>(true, Vec2(100.0f), Vec3(-490.0f, 350.0f, 0.1f), 2.0f);
-		AddGameObject<PlayerLife>(true, Vec2(100.0f), Vec3(-390.0f, 350.0f, 0.1f), 3.0f);
+		AddGameObject<PlayerLife>(true, Vec2(70.0f), Vec3(-469.0f, 311.0f, 0.1f), 1.0f);
+		AddGameObject<PlayerLife>(true, Vec2(70.0f), Vec3(-385.0f, 311.0f, 0.1f), 2.0f);
+		AddGameObject<PlayerLife>(true, Vec2(70.0f), Vec3(-299.0f, 311.0f, 0.1f), 3.0f);
+
+		AddGameObject<Sprite>(true, Vec2(400.0f, 200.0f), Vec2(-440.0f, 320.0f), L"HP_FRONT_UI_TX", 1.0f, Col4(1.0f));
+		AddGameObject<Sprite>(true, Vec2(300.0f, 150.0f), Vec2(-390.0f, 315.0f), L"HP_BACK_UI_TX", -1.0f, Col4(1.0f));
+
 		//壁のストック表示
-		AddGameObject<WallStock>(true, Vec2(100.0f), Vec3(+590.0f, 350.0f, 0.1f), 1.0f);
-		AddGameObject<WallStock>(true, Vec2(100.0f), Vec3(+490.0f, 350.0f, 0.1f), 2.0f);
-		AddGameObject<WallStock>(true, Vec2(100.0f), Vec3(+390.0f, 350.0f, 0.1f), 3.0f);
+		AddGameObject<WallStock>(true, Vec2(90.0f), Vec3(+500.0f, 313.0f, 0.1f), 1.0f);
+		AddGameObject<WallStock>(true, Vec2(90.0f), Vec3(+410.0f, 313.0f, 0.1f), 2.0f);
+		AddGameObject<WallStock>(true, Vec2(90.0f), Vec3(+320.0f, 313.0f, 0.1f), 3.0f);
+
+		AddGameObject<Sprite>(true, Vec2(400.0f, 200.0f), Vec2(450.0f, 265.0f), L"WALLSTICK_UI_TX", 1.0f, Col4(1.0f));
 	}
 
 	//カメラマンの作成

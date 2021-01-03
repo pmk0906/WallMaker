@@ -102,6 +102,8 @@ namespace basecross{
 		auto ptrDraw = AddComponent<PCTSpriteDraw>(vertices, indices);
 		ptrDraw->SetSamplerState(SamplerState::LinearWrap);
 		ptrDraw->SetTextureResource(L"HEART_UI_TX");
+
+		SetDrawLayer(0);
 	}
 
 	void PlayerLife::OnUpdate()

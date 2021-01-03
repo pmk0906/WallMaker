@@ -88,9 +88,9 @@ namespace basecross {
 				{
 					Fire();
 				}
+				Reload();
 			}
 
-			Reload();
 			Die();
 			FireEffect();
 
@@ -107,7 +107,7 @@ namespace basecross {
 	{
 		m_EnemyHP = 2.0f;
 		m_RotY = 0.0f;
-		m_FireTime = 5.0f;
+		m_FireTime = 0.0f;
 	}
 
 	void DangerEnemy::Fire()

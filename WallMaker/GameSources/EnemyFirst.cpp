@@ -93,9 +93,10 @@ namespace basecross {
 				{
 					Fire();
 				}
+
+				Reload();
 			}
 
-			Reload();
 			Die();
 			FireEffect();
 

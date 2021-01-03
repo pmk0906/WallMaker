@@ -80,7 +80,7 @@ namespace basecross {
 	void PatrolEnemyUPDown::Initialize()
 	{
 		m_EnemyHP = 1.0f;
-		m_FireTime = 3.0f;
+		m_FireTime = 0.0f;
 		m_MoveSpeed = 3.0f;
 		m_MoveDirect = 1.0f;
 		m_TimeOfChangeDirect = 0.0f;

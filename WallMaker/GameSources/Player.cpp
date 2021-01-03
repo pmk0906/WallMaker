@@ -363,7 +363,7 @@ namespace basecross{
 		//描画コンポーネントの設定
 		auto ptrDraw = AddComponent<PNTBoneModelDraw>();
 		//描画するメッシュを設定
-		ptrDraw->SetMeshResource(WstringKey::Anim_Player);
+		ptrDraw->SetMeshResource(WstringKey::Anim_Player_Ver2);
 		ptrDraw->SetMeshToTransformMatrix(spanMat);
 		//アニメーションの追加
 		ptrDraw->AddAnimation(WstringKey::AM_PlayerStand, 0, 30, true, 10.0f);

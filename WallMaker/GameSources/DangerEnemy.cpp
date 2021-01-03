@@ -41,11 +41,14 @@ namespace basecross {
 		AddTag(WstringKey::Tag_DrawActiveFalse);
 
 		//•`‰æˆ—
-		auto ptrDraw = AddComponent<PNTStaticModelDraw>();
-		ptrDraw->SetMeshResource(L"COLORENEMY_MESH");
+		auto ptrDraw = AddComponent<PNTBoneModelDraw>();
+		ptrDraw->SetMeshResource(WstringKey::Anim_EnemyBlue);
 		ptrDraw->SetMeshToTransformMatrix(spanMat);
 		//ptrDraw->SetFogEnabled(true);
 		ptrDraw->SetOwnShadowActive(true);
+
+		ptrDraw->AddAnimation(WstringKey::AM_EnemyGearSpin, 0, 31, true, 30.0f);
+		ptrDraw->ChangeCurrentAnimation(WstringKey::AM_EnemyGearSpin);
 
 		Initialize();
 		CreateShield();
@@ -94,7 +97,7 @@ namespace basecross {
 		}
 		if (gm->GetPoseFlg() == false)
 		{
-			auto ptrDraw = GetComponent<PNTStaticModelDraw>();
+			auto ptrDraw = GetComponent<PNTBoneModelDraw>();
 			float elapsedTime = App::GetApp()->GetElapsedTime();
 			ptrDraw->UpdateAnimation(elapsedTime);
 		}

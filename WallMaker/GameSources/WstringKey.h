@@ -34,6 +34,7 @@ namespace WstringKey {
 	// ÉvÉåÉCÉÑÅ[
 	const wstring Anim_Player = L"AnimPlayer";
 	const wstring Anim_Player_Walk = L"AnimPlayerWalk";
+	const wstring Anim_Player_Ver2 = L"AnimPlayerAnimation";
 	const wstring Anim_Enemy = L"AnimEnemy";
 	const wstring Anim_EnemyBlue = L"AnimEnemyBlue";
 

@@ -95,6 +95,7 @@ namespace basecross{
 		{
 			//{WstringKey::Anim_Player, L"PL_Stand.bmf"},
 			{WstringKey::Anim_Player, L"PL_Stand_Walk.bmf"},
+			{WstringKey::Anim_Player_Ver2, L"PL_Animation_ver2.bmf"},
 			{WstringKey::Anim_Enemy, L"Enemy_ver2.bmf"},
 			{WstringKey::Anim_EnemyBlue, L"Enemy_Blue_ver2.bmf"}
 		};

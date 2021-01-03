@@ -41,11 +41,14 @@ namespace basecross {
 		AddTag(WstringKey::Tag_DrawActiveFalse);
 
 		//ï`âÊèàóù
-		auto ptrDraw = AddComponent<PNTStaticModelDraw>();
-		ptrDraw->SetMeshResource(L"ENEMY_MESH");
+		auto ptrDraw = AddComponent<PNTBoneModelDraw>();
+		ptrDraw->SetMeshResource(WstringKey::Anim_Enemy);
 		ptrDraw->SetMeshToTransformMatrix(spanMat);
 		//ptrDraw->SetFogEnabled(true);
 		ptrDraw->SetOwnShadowActive(true);
+
+		ptrDraw->AddAnimation(WstringKey::AM_EnemyGearSpin, 0, 31, true, 30.0f);
+		ptrDraw->ChangeCurrentAnimation(WstringKey::AM_EnemyGearSpin);
 
 		Initialize();
 		CreateShield();
@@ -102,6 +105,12 @@ namespace basecross {
 			LockOn();
 			Die();
 			FireEffect();
+		}
+		if (gm->GetPoseFlg() == false)
+		{
+			auto ptrDraw = GetComponent<PNTBoneModelDraw>();
+			float elapsedTime = App::GetApp()->GetElapsedTime();
+			ptrDraw->UpdateAnimation(elapsedTime);
 		}
 	}
 
@@ -218,8 +227,9 @@ namespace basecross {
 
 		if (m_EnemyHP <= 0.0f)
 		{
-			SetDrawActive(false);
-			SetUpdateActive(false);
+			//SetDrawActive(false);
+			//SetUpdateActive(false);
+			GetStage()->RemoveGameObject<RapidFireEnemy>(GetThis<RapidFireEnemy>());
 
 			ptrChild->DirectDie();
 

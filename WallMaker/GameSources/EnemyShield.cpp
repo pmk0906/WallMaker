@@ -32,6 +32,8 @@ namespace basecross {
 		//ptrColl->SetDrawActive(true);
 
 		AddTag(L"EnemyShield");
+		//タグをつける
+		//AddTag(WstringKey::Tag_DrawActiveFalse);
 
 		Initialize();
 
@@ -70,17 +72,20 @@ namespace basecross {
 	{
 		if (m_Hp <= 0.0f)
 		{
-			SetDrawActive(false);
-			SetUpdateActive(false);
+			//SetDrawActive(false);
+			//SetUpdateActive(false);
+			GetStage()->RemoveGameObject<EnemyShield>(GetThis<EnemyShield>());
 
-			GenerataFire(50, Vec3(30.0f));
+			GenerataFire(30, Vec3(30.0f));
 		}
 	}
 
 	void EnemyShield::DirectDie()
 	{
-		SetDrawActive(false);
-		SetUpdateActive(false);
+		//SetDrawActive(false);
+		//SetUpdateActive(false);
+		GetStage()->RemoveGameObject<EnemyShield>(GetThis<EnemyShield>());
+
 	}
 
 	void EnemyShield::GenerataFire(int GenerateNum, Vec3 MoveSpeed)
@@ -120,6 +125,8 @@ namespace basecross {
 		//ptrColl->SetDrawActive(true);
 
 		AddTag(L"PatrolShield");
+		//タグをつける
+		//AddTag(WstringKey::Tag_DrawActiveFalse);
 
 		Initialize();
 
@@ -157,8 +164,9 @@ namespace basecross {
 	{
 		if (m_Hp <= 0.0f)
 		{
-			SetDrawActive(false);
-			SetUpdateActive(false);
+			//SetDrawActive(false);
+			//SetUpdateActive(false);
+			GetStage()->RemoveGameObject<PatrolShield>(GetThis<PatrolShield>());
 
 			GenerataFire(50, Vec3(30.0f));
 
@@ -167,8 +175,9 @@ namespace basecross {
 
 	void PatrolShield::DirectDie()
 	{
-		SetDrawActive(false);
-		SetUpdateActive(false);
+		//SetDrawActive(false);
+		//SetUpdateActive(false);
+		GetStage()->RemoveGameObject<PatrolShield>(GetThis<PatrolShield>());
 	}
 
 	void PatrolShield::GenerataFire(int GenerateNum, Vec3 MoveSpeed)
@@ -208,6 +217,8 @@ namespace basecross {
 		//ptrColl->SetDrawActive(true);
 
 		AddTag(L"UPPatrolShield");
+		//タグをつける
+		//AddTag(WstringKey::Tag_DrawActiveFalse);
 
 		Initialize();
 
@@ -245,8 +256,9 @@ namespace basecross {
 	{
 		if (m_Hp <= 0.0f)
 		{
-			SetDrawActive(false);
-			SetUpdateActive(false);
+			//SetDrawActive(false);
+			//SetUpdateActive(false);
+			GetStage()->RemoveGameObject<UPPatrolShield>(GetThis<UPPatrolShield>());
 
 			GenerataFire(50, Vec3(30.0f));
 
@@ -255,8 +267,9 @@ namespace basecross {
 
 	void UPPatrolShield::DirectDie()
 	{
-		SetDrawActive(false);
-		SetUpdateActive(false);
+		//SetDrawActive(false);
+		//SetUpdateActive(false);
+		GetStage()->RemoveGameObject<UPPatrolShield>(GetThis<UPPatrolShield>());
 	}
 
 	void UPPatrolShield::GenerataFire(int GenerateNum, Vec3 MoveSpeed)
@@ -296,6 +309,8 @@ namespace basecross {
 		//ptrColl->SetDrawActive(true);
 
 		AddTag(L"EnemyShield");
+		//タグをつける
+		//AddTag(WstringKey::Tag_DrawActiveFalse);
 
 		Initialize();
 
@@ -333,8 +348,9 @@ namespace basecross {
 	{
 		if (m_Hp <= 0.0f)
 		{
-			SetDrawActive(false);
-			SetUpdateActive(false);
+			//SetDrawActive(false);
+			//SetUpdateActive(false);
+			GetStage()->RemoveGameObject<RapidShield>(GetThis<RapidShield>());
 
 			GenerataFire(50, Vec3(30.0f));
 		}
@@ -342,8 +358,9 @@ namespace basecross {
 
 	void RapidShield::DirectDie()
 	{
-		SetDrawActive(false);
-		SetUpdateActive(false);
+		//SetDrawActive(false);
+		//SetUpdateActive(false);
+		GetStage()->RemoveGameObject<RapidShield>(GetThis<RapidShield>());
 	}
 
 	void RapidShield::GenerataFire(int GenerateNum, Vec3 MoveSpeed)
@@ -420,14 +437,16 @@ namespace basecross {
 	{
 		if (m_Hp <= 0.0f)
 		{
-			SetDrawActive(false);
-			SetUpdateActive(false);
+			//SetDrawActive(false);
+			//SetUpdateActive(false);
+			GetStage()->RemoveGameObject<DangerShield>(GetThis<DangerShield>());
 		}
 	}
 
 	void DangerShield::DirectDie()
 	{
-		SetDrawActive(false);
-		SetUpdateActive(false);
+		//SetDrawActive(false);
+		//SetUpdateActive(false);
+		GetStage()->RemoveGameObject<DangerShield>(GetThis<DangerShield>());
 	}
 }

@@ -3,35 +3,24 @@
 
 ////範囲内に入ったプレイヤーを狙い弾を撃つ敵
 namespace basecross {
+
+	RayObject::RayObject(
+		const shared_ptr<Stage>& StagePtr,
+		const shared_ptr<GameObject>& Parent)
+		:
+		GameObject(StagePtr),
+		m_Parent(Parent)
+	{}
+	RayObject::~RayObject() {}
+
 	void RayObject::OnCreate()
 	{
-		//Mat4x4 spanMat; // モデルとトランスフォームの間の差分行列
-		//spanMat.affineTransformation(
-		//	Vec3(0.3f, 1.0f, 0.5f),
-		//	Vec3(0.0f, 0.0f, 0.0f),
-		//	Vec3(0.0f, XMConvertToRadians(270.0f), 0.0f),
-		//	Vec3(0.0f, -1.5f, 0.0f)
-		//);
-
-		// 大きさ、回転、位置
-		
-
 		// 衝突判定
 		auto ptrColl = AddComponent<CollisionObb>();
 		ptrColl->SetFixed(true);
 
 		//タグをつける
 		AddTag(L"EnemyFirst");
-
-		//描画処理
-		//auto ptrDraw = AddComponent<PNTBoneModelDraw>();
-		//ptrDraw->SetMeshResource(WstringKey::Anim_Enemy);
-		//ptrDraw->SetMeshToTransformMatrix(spanMat);
-		////ptrDraw->SetFogEnabled(true);
-		//ptrDraw->SetOwnShadowActive(true);
-
-		/*ptrDraw->AddAnimation(WstringKey::AM_EnemyGearSpin, 0, 31, true, 30.0f);
-		ptrDraw->ChangeCurrentAnimation(WstringKey::AM_EnemyGearSpin);*/
 
 		Initialize();
 	}
@@ -66,11 +55,22 @@ namespace basecross {
 
 			if (enemyToPlayer.length() <= 20.0f)
 			{
-				
-				
-				//Fire();
-				
+				Fire();	
 			}
+
+			//if (GetRayFlg() == true)
+			//{
+			//	auto parentObject = dynamic_pointer_cast<EnemyFirst>(m_Parent);
+			//	parentObject->SetFlgRay(GetRayFlg());
+			//}
+			//else
+			//{
+			//	auto parentObject = dynamic_pointer_cast<EnemyFirst>(m_Parent);
+			//	parentObject->SetFlgRay(GetRayFlg());
+			//}
+			//auto parentObject = dynamic_pointer_cast<EnemyFirst>(m_Parent);
+			//parentObject->SetFlgRay(GetRayFlg());
+			
 			
 		}
 		if (gm->GetPoseFlg() == false)
@@ -104,7 +104,7 @@ namespace basecross {
 
 		auto pos = transComp->GetPosition();
 
-		auto raybullet = GetStage()->AddGameObject<RayBullet>();
+		auto raybullet = GetStage()->AddGameObject<RayBullet>(GetThis<RayObject>());
 
 		flg_Ray = raybullet->GetRayFlg();
 
@@ -119,8 +119,8 @@ namespace basecross {
 		bulletTrans->SetPosition(bulletPos);
 		raybullet->SetDir(forward_player);
 
-		auto ptrXA = App::GetApp()->GetXAudio2Manager();
-		ptrXA->Start(WstringKey::SE_Bullet, 0, 1.0f);
+		//auto ptrXA = App::GetApp()->GetXAudio2Manager();
+		//ptrXA->Start(WstringKey::SE_Bullet, 0, 1.0f);
 
 		m_FireTime = 0.0f;
 	}
@@ -173,5 +173,15 @@ namespace basecross {
 	bool RayObject::GetRayFlg()
 	{
 		return flg_Ray;
+	}
+	void RayObject::SetRayFlg(bool rayFlg)
+	{
+		flg_Ray = rayFlg;
+	}
+
+	void RayObject::SetParentRayFlg(bool rayFlg)
+	{
+		//auto parentObject = dynamic_pointer_cast<EnemyFirst>(m_Parent);
+		//parentObject->SetFlgRay(rayFlg);
 	}
 }

@@ -53,11 +53,11 @@ namespace basecross {
 
 				if (flg_reflect == false)
 				{
-					GenerateFire(2, Vec3(1.0f, 1.0f, 1.0f));
+					GenerateFire(1, Vec3(0.0f, 0.0f, 0.0f));
 				}
 				else
 				{
-					GenerateFireBlue(2, Vec3(1.0f, 1.0f, 1.0f));
+					GenerateFireBlue(3, Vec3(0.0f, 0.0f, 0.0f));
 				}
 			}
 		}

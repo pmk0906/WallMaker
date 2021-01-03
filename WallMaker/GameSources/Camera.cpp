@@ -15,7 +15,7 @@ namespace basecross{
 		//ƒvƒŒƒCƒ„[‚ÌŽæ“¾
 		auto share_player = stage->GetSharedGameObject<Player>(WstringKey::ShareObj_Player);
 		auto playerPos = share_player->GetPosition();
-		Vec3 offset = Vec3(0.0f, 30.0f, -10.0f);
+		Vec3 offset = Vec3(0.0f, 40.0f, -7.0f);
 		Vec3 myPos = playerPos + offset;
 		SetEye(myPos);
 		auto at = GetAt();

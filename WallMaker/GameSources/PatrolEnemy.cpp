@@ -38,6 +38,7 @@ namespace basecross {
 
 		//ƒ^ƒO‚ğ‚Â‚¯‚é
 		AddTag(L"PatrolEnemy");
+		AddTag(WstringKey::Tag_DrawActiveFalse);
 
 		//•`‰æˆ—
 		auto ptrDraw = AddComponent<PNTStaticModelDraw>();

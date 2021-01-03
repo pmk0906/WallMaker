@@ -6,6 +6,7 @@ namespace basecross {
 	class EnemyFirst : public GameObject 
 	{
 		shared_ptr<GameObject> m_Shield = nullptr;
+		shared_ptr<GameObject> m_RayObject = nullptr;
 
 		// ‘å‚«‚³A‰ñ“]AˆÊ’u
 		Vec3 m_Scale;
@@ -45,5 +46,8 @@ namespace basecross {
 
 		float GetHp();
 		float GetFireTime();
+
+		bool GetFlgRay();
+		void SetFlgRay(bool rayFlg);
 	};
 }

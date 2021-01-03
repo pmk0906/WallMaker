@@ -3,6 +3,16 @@
 
 ////威力１の一般弾
 namespace basecross {
+
+	RayBullet::RayBullet(
+		const shared_ptr<Stage>& StagePtr,
+		const shared_ptr<GameObject>& Parent)
+		:
+		GameObject(StagePtr),
+		m_Parent(Parent)
+	{}
+	RayBullet::~RayBullet() {}
+
 	void RayBullet::OnCreate()
 	{
 		Mat4x4 spanMat; // モデルとトランスフォームの間の差分行列
@@ -101,7 +111,8 @@ namespace basecross {
 	{
 		if (auto player = dynamic_pointer_cast<Player>(other))
 		{
-			flg_Ray = true;
+			//auto rayObject = dynamic_pointer_cast<RayObject>(m_Parent);
+			//rayObject->SetRayFlg(true);
 
 			SetDrawActive(false);
 			SetUpdateActive(false);
@@ -109,21 +120,26 @@ namespace basecross {
 		
 		else if (auto reflectWall = dynamic_pointer_cast<StageRefrectWall>(other))
 		{
-			flg_Ray = false;
+			//auto rayObject = dynamic_pointer_cast<RayObject>(m_Parent);
+			//rayObject->SetRayFlg(false);
 
 			SetDrawActive(false);
 			SetUpdateActive(false);
 		}
 		else if (auto stageWall = dynamic_pointer_cast<StageWall>(other))
 		{
-			flg_Ray = false;
+			//auto rayObject = dynamic_pointer_cast<RayObject>(m_Parent);
+			//rayObject->SetRayFlg(false);
 
 			SetDrawActive(false);
 			SetUpdateActive(false);
 		}
 		else if (auto breakWall = dynamic_pointer_cast<BreakWall>(other))
 		{
-			flg_Ray = false;
+			//auto rayObject = dynamic_pointer_cast<RayObject>(m_Parent);
+			//rayObject->SetRayFlg(false);
+			//auto rayObject = static_pointer_cast<RayObject>(m_Parent);
+			//rayObject->SetRayFlg(false);
 
 			SetDrawActive(false);
 			SetUpdateActive(false);

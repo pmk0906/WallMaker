@@ -45,18 +45,23 @@ namespace basecross{
 			break;
 		case SceneNum::GameStage_2:
 			sceneKey = WstringKey::ToGameStage2;
+			gm->SetSceneNum(SceneNum::GameStage_2);
 			break;
 		case SceneNum::GameStage_3:
 			sceneKey = WstringKey::ToGameStage3;
+			gm->SetSceneNum(SceneNum::GameStage_3);
 			break;
 		case SceneNum::GameStage_4:
 			sceneKey = WstringKey::ToGameStage4;
+			gm->SetSceneNum(SceneNum::GameStage_4);
 			break;
 		case SceneNum::GameStage_5:
 			sceneKey = WstringKey::ToGameStage5;
+			gm->SetSceneNum(SceneNum::GameStage_4);
 			break;
 		case SceneNum::GameStage_Test:
 			sceneKey = WstringKey::ToGameTestStage;
+			gm->SetSceneNum(SceneNum::GameStage_Test);
 			break;
 		}
 		PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), sceneKey);
@@ -250,7 +255,7 @@ namespace basecross{
 		{
 			switch (gm->GetSelectingButtonNum())
 			{
-			case 0:
+			case 0: // 次のステージへ
 				if (gm->GetNextSceneNum() == SceneNum::End)
 				{
 					LoadScene(SceneNum::StageSelect);
@@ -260,7 +265,7 @@ namespace basecross{
 					LoadScene(gm->GetNextSceneNum());
 				}
 				break;
-			case 1:
+			case 1: // ステージセレクトへ
 				LoadScene((int)SceneNum::StageSelect);
 				break;
 			default:
@@ -271,10 +276,10 @@ namespace basecross{
 		{
 			switch (gm->GetSelectingButtonNum())
 			{
-			case 0:
+			case 0: // リトライ
 				LoadScene(gm->GetSceneNum());
 				break;
-			case 1:
+			case 1: // ステージセレクトへ
 				LoadScene((int)SceneNum::StageSelect);
 				break;
 			default:

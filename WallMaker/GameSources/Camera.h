@@ -31,7 +31,7 @@ namespace basecross{
 		Vec3 m_AtPos;
 		float m_TotalTime;
 
-		Vec3 offset = Vec3(0.0f, 30.0f, -10.0f);
+		Vec3 offset = Vec3(0.0f, 40.0f, -7.0f);
 
 		//ステートマシーン
 		unique_ptr< StateMachine<OpeningCameraman> >  m_StateMachine;
@@ -57,7 +57,7 @@ namespace basecross{
 		void EndStateEnterBehavior();
 
 		//描画切り替え
-		float m_DrawActiveLength = 30.0f;
+		float m_DrawActiveLength = 35.0f;
 		float m_DrawActiveFloorLength = 40.0f;
 		void DrawActiveSwitch();
 	};

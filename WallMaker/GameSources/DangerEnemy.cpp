@@ -38,6 +38,7 @@ namespace basecross {
 
 		//ƒ^ƒO‚ğ‚Â‚¯‚é
 		AddTag(L"EnemyFirst");
+		AddTag(WstringKey::Tag_DrawActiveFalse);
 
 		//•`‰æˆ—
 		auto ptrDraw = AddComponent<PNTStaticModelDraw>();
@@ -89,6 +90,13 @@ namespace basecross {
 			Reload();
 			Die();
 			FireEffect();
+
+		}
+		if (gm->GetPoseFlg() == false)
+		{
+			auto ptrDraw = GetComponent<PNTStaticModelDraw>();
+			float elapsedTime = App::GetApp()->GetElapsedTime();
+			ptrDraw->UpdateAnimation(elapsedTime);
 		}
 	}
 
@@ -181,12 +189,13 @@ namespace basecross {
 
 		if (m_EnemyHP <= 0.0f)
 		{
-			SetDrawActive(false);
-			SetUpdateActive(false);
+			//SetDrawActive(false);
+			//SetUpdateActive(false);
+			GetStage()->RemoveGameObject<DangerEnemy>(GetThis<DangerEnemy>());
 
 			ptrChild->DirectDie();
 
-			GenerataFire(50, Vec3(50.0f));
+			GenerataFire(30, Vec3(50.0f));
 		}
 	}
 

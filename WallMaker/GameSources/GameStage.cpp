@@ -89,7 +89,7 @@ namespace basecross {
 				case 0:
 					break;
 				case 1: // 普通の壁
-					AddGameObject<StageWall>(Vec3(3.0f), Vec3(0.0f), Vec3(pos));
+					AddGameObject<StageWall>(Vec3(3.0f, 6.0f, 3.0f), Vec3(0.0f), Vec3(pos.x, 3.0f, pos.z)); // 二段
 					break;
 				case 2: // プレイヤー生成
 					CreatePlayer(pos);

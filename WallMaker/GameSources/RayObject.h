@@ -8,18 +8,16 @@ namespace basecross {
 		float m_RotY;
 		float m_FireTime;
 
-		bool flg_Ray;
+		bool flg_Ray = false;
+
+		// 親オブジェクト
+		const shared_ptr<GameObject>& m_Parent;
 	public:
-		RayObject(const shared_ptr<Stage>& stage)
-			: GameObject(stage)
-		{
-
-		}
-
-		~RayObject()
-		{
-
-		}
+		RayObject(
+			const shared_ptr<Stage>& StagePtr,
+			const shared_ptr<GameObject>& Parent
+		);
+		virtual ~RayObject();
 
 		void OnCreate() override;
 		void OnUpdate() override;
@@ -31,6 +29,9 @@ namespace basecross {
 
 		Vec3 GetPosition() const;
 		bool GetRayFlg();
+		void SetRayFlg(bool rayFlg);
+
+		void SetParentRayFlg(bool rayFlg);
 	};
 }
 

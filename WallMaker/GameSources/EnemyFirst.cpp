@@ -38,6 +38,8 @@ namespace basecross {
 
 		//タグをつける
 		AddTag(L"EnemyFirst");
+		//タグをつける
+		AddTag(WstringKey::Tag_DrawActiveFalse);
 
 		//描画処理
 		auto ptrDraw = AddComponent<PNTBoneModelDraw>();
@@ -51,7 +53,7 @@ namespace basecross {
 
 		Initialize();
 		CreateShield();
-		CreateRay();
+		//CreateRay();
 	}
 
 	void EnemyFirst::OnUpdate()
@@ -79,13 +81,11 @@ namespace basecross {
 				}
 			}
 
-			//auto ray_share = GetStage()->GetSharedGameObject<RayBullet>(WstringKey::ShareObj_Ray);
-
-			//flg_Ray = ray_share->GetRayFlg();
+			//auto rayObject = dynamic_pointer_cast<RayObject>(m_RayObject);
 
 			auto enemyToPlayer = playerPos - enemyPos;
 
-			if (enemyToPlayer.length() <= 20.0f /*&& ray_share->GetRayFlg() == true*/)
+			if (enemyToPlayer.length() <= 20.0f /*&& rayObject->GetRayFlg() == true*/)
 			{
 				LookPlayer();
 
@@ -98,6 +98,7 @@ namespace basecross {
 			Reload();
 			Die();
 			FireEffect();
+
 		}
 		if (gm->GetPoseFlg() == false)
 		{
@@ -202,12 +203,13 @@ namespace basecross {
 
 		if (m_EnemyHP <= 0.0f)
 		{
-			SetDrawActive(false);
-			SetUpdateActive(false);
+			//SetDrawActive(false);
+			//SetUpdateActive(false);
+			GetStage()->RemoveGameObject<EnemyFirst>(GetThis<EnemyFirst>());
 
 			ptrChild->DirectDie();
 
-			GenerataFire(50, Vec3(50.0f));
+			GenerataFire(30, Vec3(50.0f));
 		}
 	}
 
@@ -220,12 +222,10 @@ namespace basecross {
 	{
 		auto transComp = GetComponent<Transform>();
 		auto pos = transComp->GetPosition();
-		auto scale_enemy = transComp->GetScale();
-		auto forward_player = transComp->GetForword();
 
-		auto ray = GetStage()->AddGameObject<RayObject>();
+		m_RayObject = GetStage()->AddGameObject<RayObject>(GetThis<EnemyFirst>());
 
-		auto rayTrans = ray->GetComponent<Transform>();
+		auto rayTrans = m_RayObject->GetComponent<Transform>();
 
 		auto rayPos = rayTrans->GetPosition();
 
@@ -262,6 +262,16 @@ namespace basecross {
 	float EnemyFirst::GetFireTime()
 	{
 		return m_FireTime;
+	}
+
+	bool EnemyFirst::GetFlgRay()
+	{
+		return flg_Ray;
+	}
+
+	void EnemyFirst::SetFlgRay(bool rayFlg)
+	{
+		flg_Ray = rayFlg;
 	}
 
 	Vec3 EnemyFirst::GetPosition() const

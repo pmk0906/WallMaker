@@ -12,17 +12,16 @@ namespace basecross {
 
 		bool flg_Ray;
 
+		// 親オブジェクト
+		const shared_ptr<GameObject>& m_Parent;
+
 	public:
-		RayBullet(const shared_ptr<Stage>& stage)
-			: GameObject(stage)
-		{
+		RayBullet(
+			const shared_ptr<Stage>& StagePtr,
+			const shared_ptr<GameObject>& Parent
+			);
 
-		}
-
-		~RayBullet()
-		{
-
-		}
+		virtual ~RayBullet();
 
 		void OnCreate() override;
 		void OnUpdate() override;

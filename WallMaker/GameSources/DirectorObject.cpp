@@ -59,7 +59,7 @@ namespace basecross{
 	}
 
 	void MultiFireBlue::InsertFire(const Vec3& Pos, int GenerateNum, Vec3 MoveSpeed) {
-		auto ptrParticle = InsertParticle(5);
+		auto ptrParticle = InsertParticle(GenerateNum);
 		ptrParticle->SetEmitterPos(Pos);
 		ptrParticle->SetTextureResource(L"BLUEFIRE_TX");
 		ptrParticle->SetMaxTime(1.0f);
@@ -69,12 +69,12 @@ namespace basecross{
 			rParticleSprite.m_LocalPos.z = Util::RandZeroToOne() * 0.1f - 0.05f;
 			//各パーティクルの移動速度を指定
 			rParticleSprite.m_Velocity = Vec3(
-				rParticleSprite.m_LocalPos.x * 1.0f,
-				rParticleSprite.m_LocalPos.y * 1.0f,
-				rParticleSprite.m_LocalPos.z * 1.0f
+				rParticleSprite.m_LocalPos.x * MoveSpeed.x,
+				rParticleSprite.m_LocalPos.y * MoveSpeed.y,
+				rParticleSprite.m_LocalPos.z * MoveSpeed.z
 			);
 			//色の指定
-			rParticleSprite.m_Color = Col4(0.1f, 0.1f, 1.0f, 1.0f);
+			rParticleSprite.m_Color = Col4(1.0f, 1.0f, 1.0f, 1.0f);
 		}
 	}
 

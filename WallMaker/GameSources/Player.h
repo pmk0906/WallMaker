@@ -46,7 +46,7 @@ namespace basecross{
 		void WallAllDelete();
 
 		//•`‰æØ‚è‘Ö‚¦
-		float m_DrawActiveLength = 30.0f;
+		float m_DrawActiveLength = 35.0f;
 		float m_DrawActiveFloorLength = 40.0f;
 		void DrawActiveSwitch();
 

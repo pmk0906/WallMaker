@@ -88,6 +88,16 @@ namespace basecross{
 		}
 	}
 
+	void GameManagement::ClearCheck()
+	{
+		//auto gm = GameManager::GetInstance();
+		//if (gm->GetClearFlg() == true && gm->GetClearFlgChanged() == false)
+		//{
+		//	ChangeCamera();
+		//	gm->SetClearFlgChanged(true);
+		//}
+	}
+
 	void GameManagement::ButtonControl()
 	{
 		m_InputHandler.PushHandle(GetThis<GameManagement>());
@@ -144,6 +154,7 @@ namespace basecross{
 			break;
 		}
 	}
+
 	void GameManagement::ChangeCamera()
 	{
 		auto gm = GameManager::GetInstance();
@@ -151,34 +162,48 @@ namespace basecross{
 
 		if (stageNum == SceneNum::GameStage_1)
 		{
+			//if (gm->GetClearFlg() == true && gm->GetClearFlgChanged() == false)
+			//{
+			//	auto ptrGameGtage = GetTypeStage<GameStage>();
+			//	ptrGameGtage->ToGoalCamera();
+			//	//ptrGameGtage->SetView(ptrGameGtage->GetGoalCamera());
+			//}
+			//else
+			//{
+			//	auto ptrGameGtage = GetTypeStage<GameStage>();
+			//	ptrGameGtage->ToMyCamera();
+			//}
 			auto ptrGameGtage = GetTypeStage<GameStage>();
-			ptrGameGtage->ToMyCamera();
+			ptrGameGtage->ToPlayerCamera();
 		}
 		else if (stageNum == SceneNum::GameStage_2)
 		{
 			auto ptrGameGtage = GetTypeStage<GameStage2>();
-			ptrGameGtage->ToMyCamera();
+			ptrGameGtage->ToPlayerCamera();
 		}
 		else if (stageNum == SceneNum::GameStage_3)
 		{
 			auto ptrGameGtage = GetTypeStage<GameStage3>();
-			ptrGameGtage->ToMyCamera();
+			ptrGameGtage->ToPlayerCamera();
 		}
 		else if (stageNum == SceneNum::GameStage_4)
 		{
 			auto ptrGameGtage = GetTypeStage<GameStage4>();
-			ptrGameGtage->ToMyCamera();
+			ptrGameGtage->ToPlayerCamera();
 		}
 		else if (stageNum == SceneNum::GameStage_5)
 		{
 			auto ptrGameGtage = GetTypeStage<GameStage5>();
-			ptrGameGtage->ToMyCamera();
+			ptrGameGtage->ToPlayerCamera();
 		}
 		else if (stageNum == SceneNum::GameStage_Test)
 		{
 			auto ptrGameGtage = GetTypeStage<TestStage>();
-			ptrGameGtage->ToMyCamera();
+			ptrGameGtage->ToPlayerCamera();
 		}
+
+		//auto testObj = GetStage()->GetSharedGameObject<TestObject>(WstringKey::ShareObj_TestObject);
+		//testObj->SetTestFlg(!testObj->GetTestFlg());
 	}
 
 	void GameManagement::StageEffect()
@@ -251,6 +276,7 @@ namespace basecross{
 				break;
 			}
 		}
+		//クリアした場合
 		if (gm->GetClearFlgChanged() == true)
 		{
 			switch (gm->GetSelectingButtonNum())
@@ -272,6 +298,7 @@ namespace basecross{
 				break;
 			}
 		}
+		//ゲームオーバーになった場合
 		if (gm->GetDeathFlgChanged() == true)
 		{
 			switch (gm->GetSelectingButtonNum())
@@ -286,12 +313,12 @@ namespace basecross{
 				break;
 			}
 		}
+		//カメラの移動が終わってない場合
 		if (gm->GetOpeningCameraMoveEnd() == false)
 		{
 			auto gm = GameManager::GetInstance();
-			gm->SetOpeningCameraMoveEnd(true);
-
 			ChangeCamera();
+			gm->SetOpeningCameraMoveEnd(true);
 		}
 	}
 
@@ -325,9 +352,9 @@ namespace basecross{
 		StageEffect();
 
 		// DrawString用
-		//auto strComp = AddComponent<StringSprite>();
-		//strComp->SetBackColor(Col4(0, 0, 0, 0.5f));
-		//strComp->SetTextRect(Rect2D<float>(1000, 510, 1270, 710));
+		auto strComp = AddComponent<StringSprite>();
+		strComp->SetBackColor(Col4(0, 0, 0, 0.5f));
+		strComp->SetTextRect(Rect2D<float>(50, 150, 400, 600));
 	}
 
 	void GameManagement::OnUpdate()
@@ -338,8 +365,7 @@ namespace basecross{
 
 	void GameManagement::OnUpdate2()
 	{
-
-		//DrawStrings();
+		DrawStrings();
 	}
 
 	void GameManagement::DrawStrings()
@@ -383,9 +409,6 @@ namespace basecross{
 			break;
 		}
 
-		wstring testFLG(L"テストフラグ : ");
-		testFLG += Util::UintToWStr(testFlg) + L"\n";
-
 		wstring timer(L"m_Timer : ");
 		timer += Util::FloatToWStr(m_Timer) + L"\nGetPlayerMoveTime : " + Util::FloatToWStr(gm->GetPlayerMoveTime()) + L"\n";
 
@@ -399,7 +422,51 @@ namespace basecross{
 			pose += L"false\n";
 		}
 
-		wstring str = selectingButton + maxButtonNum + sceneNum + testFLG + timer + pose + L"\n";
+		wstring camName = L"現在のカメラの名前：";
+		switch (gm->GetSceneNum())
+		{
+		case (int)SceneNum::GameStage_1:
+			camName += gm->GetCameraName();
+		case (int)SceneNum::GameStage_2:
+		case (int)SceneNum::GameStage_3:
+		case (int)SceneNum::GameStage_4:
+		case (int)SceneNum::GameStage_5:
+			break;
+		default:
+			camName += L"なし\n";
+			break;
+		}
+
+		wstring playerCamState = L"PlayerCamera_State：";
+		switch (gm->GetSceneNum())
+		{
+		case (int)SceneNum::GameStage_1:
+			playerCamState += gm->GetPlayerCameraStateName();
+		case (int)SceneNum::GameStage_2:
+		case (int)SceneNum::GameStage_3:
+		case (int)SceneNum::GameStage_4:
+		case (int)SceneNum::GameStage_5:
+			break;
+		default:
+			playerCamState += L"なし\n";
+			break;
+		}
+
+		wstring testFLG(L"テストフラグ : ");
+		if (gm->GetTestFlg() == true)
+		{
+			testFLG += L"true\n";
+		}
+		else
+		{
+			testFLG += L"false\n";
+		}
+
+		wstring testText(L"テストテキスト\n");
+		testText += gm->GetTestText();
+
+
+		wstring str = selectingButton + maxButtonNum + sceneNum + timer + pose + camName + playerCamState + L"\n" + testFLG + testText+ L"\n";
 		auto ptrString = GetComponent<StringSprite>();
 		ptrString->SetText(str);
 	}

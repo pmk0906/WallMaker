@@ -29,6 +29,33 @@ namespace basecross{
 	};
 
 	// ‰¼°
+	class TestObject : public GameObject
+	{
+		wstring camName;
+
+		bool m_TestFlg;
+		bool m_TestFlg2;
+
+	public:
+		// \’z‚Æ”jŠü
+		TestObject(
+			const shared_ptr<Stage>& StagePtr);
+		virtual ~TestObject();
+
+		// ‰Šú‰»
+		virtual void OnCreate()override;
+		virtual void OnUpdate2() override;
+
+		void DrawStrings();
+		void SetCamName(wstring name);
+		wstring GetCamName();
+		void SetTestFlg(bool testFlg);
+		bool GetTestFlg();
+		void SetTestFlg2(bool testFlg2);
+		bool GetTestFlg2();
+	};
+
+	// ‰¼°
 	class Floor : public GameObject
 	{
 		// ‘å‚«‚³A‰ñ“]AˆÊ’u

@@ -8,9 +8,10 @@
 
 namespace basecross {
 	enum class CameraSelect_Stage5 {
+		playerCamera,
 		openingCamera,
 		myCamera,
-		objCamera,
+		goalCamera,
 	};
 
 	//--------------------------------------------------------------------------------------
@@ -18,10 +19,14 @@ namespace basecross {
 	//--------------------------------------------------------------------------------------
 	class GameStage5 : public Stage {
 
+		//PlayerCamera用のビュー
+		shared_ptr<SingleView> m_PlayerCameraView;
 		//OpeningCamera用のビュー
 		shared_ptr<SingleView> m_OpeningCameraView;
 		//MyCamera用のビュー
 		shared_ptr<SingleView> m_MyCameraView;
+		//GoalCamera用のビュー
+		shared_ptr<SingleView> m_GoalCameraView;
 		CameraSelect_Stage5 m_CameraSelect;
 
 		//ステージの奥行
@@ -66,15 +71,21 @@ namespace basecross {
 			StopBGM();
 		}
 
-		void DrawStrings();
-
 		//初期化
 		virtual void OnCreate()override;
 		virtual void OnUpdate()override;
 
+		virtual void OnUpdate2() override;
+		void DrawStrings();
+
 		void StopBGM();
 
 		void ToMyCamera();
+		void ToPlayerCamera();
+		void ToGoalCamera();
+
+		wstring GetCameraSelectName();
+
 	};
 
 

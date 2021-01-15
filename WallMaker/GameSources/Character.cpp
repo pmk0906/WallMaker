@@ -52,6 +52,89 @@ namespace basecross{
 	}
 
 	///--------------------------------------------------
+	/// TestObject
+	///--------------------------------------------------
+	TestObject::TestObject(
+		const shared_ptr<Stage>& StagePtr
+	) :
+		GameObject(StagePtr)
+	{}
+	TestObject::~TestObject() {}
+
+	//	初期化
+	void TestObject::OnCreate()
+	{
+		//// DrawString用
+		//auto strComp = AddComponent<StringSprite>();
+		//strComp->SetBackColor(Col4(0, 0, 0, 0.5f));
+		//strComp->SetTextRect(Rect2D<float>(1000, 510, 1270, 710));
+	}
+
+	void TestObject::OnUpdate2()
+	{
+		//DrawStrings();
+	}
+
+	void TestObject::DrawStrings()
+	{
+		wstring cameraName = GetCamName();
+
+		wstring testFlg = L"テストフラグ：";
+		if (m_TestFlg == true)
+		{
+			testFlg += L"true\n";
+		}
+		else
+		{
+			testFlg += L"false\n";
+		}
+		wstring testFlg2 = L"テストフラグ２：";
+		if (m_TestFlg2 == true)
+		{
+			testFlg2 += L"true\n";
+		}
+		else
+		{
+			testFlg2 += L"false\n";
+		}
+
+		wstring str = cameraName + testFlg + testFlg2 + L"\n";
+		auto ptrString = GetComponent<StringSprite>();
+		ptrString->SetText(str);
+	}
+
+	void TestObject::SetCamName(wstring name)
+	{
+		camName = name;
+	}
+
+	wstring TestObject::GetCamName()
+	{
+		return camName;
+	}
+
+	//auto testObj = GetStage()->GetSharedGameObject<TestObject>(WstringKey::ShareObj_TestObject);
+	//testObj->SetTestFlg(!testObj->GetTestFlg());
+	void TestObject::SetTestFlg(bool testFlg)
+	{
+		m_TestFlg = testFlg;
+	}
+	bool TestObject::GetTestFlg()
+	{
+		return m_TestFlg;
+	}
+	//auto testObj2 = GetSharedGameObject<TestObject>(WstringKey::ShareObj_TestObject);
+	//testObj2->SetTestFlg2(!testObj2->GetTestFlg2());
+	void TestObject::SetTestFlg2(bool testFlg2)
+	{
+		m_TestFlg2 = testFlg2;
+	}
+	bool TestObject::GetTestFlg2()
+	{
+		return m_TestFlg2;
+	}
+
+	///--------------------------------------------------
 	/// Floor
 	///--------------------------------------------------
 	Floor::Floor(
@@ -131,15 +214,9 @@ namespace basecross{
 
 		//タグをつける
 		AddTag(WstringKey::Tag_DrawActiveFalse);
-		//影をつける（シャドウマップを描画する）
-		//auto shadowPtr = AddComponent<Shadowmap>();
-		////影の形（メッシュ）を設定
-		//shadowPtr->SetMeshResource(L"DEFAULT_CUBE");
 		auto ptrDraw = AddComponent<BcPNTStaticDraw>();
 		ptrDraw->SetMeshResource(L"DEFAULT_CUBE");
-		//ptrDraw->SetTextureResource(WstringKey::Tx_Floor);
-		//ptrDraw->SetFogEnabled(true);
-		ptrDraw->SetOwnShadowActive(true);
+		ptrDraw->SetOwnShadowActive(false);
 		ptrDraw->SetLightingEnabled(false);
 		//描画するテクスチャを設定
 		ptrDraw->SetTextureResource(L"WALL_TX");
@@ -188,7 +265,7 @@ namespace basecross{
 		auto ptrDraw = AddComponent<BcPNTStaticDraw>();
 		ptrDraw->SetMeshResource(L"DEFAULT_CUBE");
 		ptrDraw->SetOwnShadowActive(true);
-		ptrDraw->SetTextureResource(L"REFLECTWALL_TX");
+		ptrDraw->SetTextureResource(L"REFLECTWALL_BLUE_TX");
 
 		SetDrawLayer(-2);
 	}

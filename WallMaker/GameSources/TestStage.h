@@ -8,19 +8,24 @@
 
 namespace basecross {
 	enum class CameraSelect_TestStage {
+		playerCamera,
 		openingCamera,
 		myCamera,
-		objCamera,
+		goalCamera,
 	};
 	//--------------------------------------------------------------------------------------
 	//	ゲームステージクラス
 	//--------------------------------------------------------------------------------------
 	class TestStage : public Stage {
 
+		//PlayerCamera用のビュー
+		shared_ptr<SingleView> m_PlayerCameraView;
 		//OpeningCamera用のビュー
 		shared_ptr<SingleView> m_OpeningCameraView;
 		//MyCamera用のビュー
 		shared_ptr<SingleView> m_MyCameraView;
+		//GoalCamera用のビュー
+		shared_ptr<SingleView> m_GoalCameraView;
 		CameraSelect_TestStage m_CameraSelect;
 
 		//ステージの奥行
@@ -29,6 +34,12 @@ namespace basecross {
 		const int STAGE_WIDTH = 32;
 
 		shared_ptr<SoundItem> m_BGM;
+
+		shared_ptr<GameObject> WhiteSprite = nullptr;
+		shared_ptr<GameObject> ResultSprite = nullptr;
+		shared_ptr<GameObject> m_Button1 = nullptr;
+		shared_ptr<GameObject> m_Button2 = nullptr;
+		shared_ptr<GameObject> m_Button3 = nullptr;
 
 		//ビューの作成
 		void CreateViewLight();
@@ -44,6 +55,12 @@ namespace basecross {
 		//カメラマンの作成
 		void CreateCameraman();
 
+		//ボタンの作成・削除
+		void CreateClearButton();
+		void CreateGameOverButton();
+		void CreateSpriteAndButton();
+		void SwitchPoseButton(bool poseFlg);
+
 	public:
 		//構築と破棄
 		TestStage() :Stage() {}
@@ -51,15 +68,21 @@ namespace basecross {
 			StopBGM();
 		}
 
-		void DrawStrings();
-
 		//初期化
 		virtual void OnCreate()override;
 		virtual void OnUpdate()override;
 
+		virtual void OnUpdate2() override;
+		void DrawStrings();
+
 		void StopBGM();
 
 		void ToMyCamera();
+		void ToPlayerCamera();
+		void ToGoalCamera();
+
+		wstring GetCameraSelectName();
+
 	};
 
 

@@ -64,11 +64,12 @@ namespace basecross{
 
 	void GameTitle::CreateTitleSprite()
 	{
-		AddGameObject<TitleSprite>(L"GAMESELECT_BG_TX", false, Vec2(1280.0f, 800.0f), Vec2(0.0f, 0.0f));
+		AddGameObject<TitleSprite>(L"TITLE_BACK", false, Vec2(1280.0f, 800.0f), Vec2(0.0f, 0.0f));
 
-		AddGameObject<Sprite>(true, Vec2(1000, 500), Vec2(0, +100), L"TITLEL_LOGO_TX", 1, Col4(1.0f, 1.0f, 1.0f, 1.0f));
+		AddGameObject<Sprite>(true, Vec2(1000, 500), Vec2(0, +150), L"TITLEL_LOGO_TX", 1, Col4(1.0f, 1.0f, 1.0f, 1.0f));
 
-		AddGameObject<Sprite>(true, Vec2(600, 150), Vec2(0, -200), L"A_START_TX", 1, Col4(1.0f, 1.0f, 1.0f, 1.0f));
+		auto buttonSprite = AddGameObject<ButtonSprite>(true, Vec2(600, 150), Vec2(-25, -200), true, 1.0f, L"A_START_TX", 0, 2, Col4(1.0f, 1.0f, 1.0f, 1.0f));
+
 
 	}
 
@@ -84,6 +85,7 @@ namespace basecross{
 		auto gm = GameManager::GetInstance();
 		gm->InitGameManager();
 		gm->SetSceneNum(SceneNum::Title);
+		gm->SetMaxButtonNum(0);
 
 		//BGM
 		auto ptrXA = App::GetApp()->GetXAudio2Manager();

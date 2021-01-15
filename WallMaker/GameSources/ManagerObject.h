@@ -23,11 +23,10 @@ namespace basecross{
 
 		void LoadScene(int stageNum);
 		void PlayerMoveEnabled();
+		void ClearCheck();
 
 		//十字キー用
 		void ButtonControl();
-		// カメラの変更
-		void ChangeCamera();
 
 		//エフェクトをステージに登録する
 		void StageEffect();
@@ -62,6 +61,9 @@ namespace basecross{
 		// RT長押し
 		void OnHoldRTrigger() {} // 押している間
 		void OnReleaseRTrigger() {} // 離している間
+
+		// カメラの変更
+		void ChangeCamera();
 
 		void DrawStrings();
 	};

@@ -20,8 +20,19 @@ namespace basecross {
 		// 動かせるか
 		bool m_MoveEnabledFlg = false;
 		float m_PlayerMoveTime = 5.0f;
-		//カメラの移動
+		// プレイヤーのカメラ
+		PlayerCamStateNum m_PlayerCameraStateNum;
+		//オープニングカメラの移動が終わったか
 		bool m_OpeningCameraMoveEnd = false;
+		//ゴールカメラの移動が終わったか
+		bool m_GoalCameraMoveEnd = false;
+		GoalCamStateNum m_GoalCameraStateNum;
+		//カメラのオフセット
+		Vec3 m_MyCamOffset = Vec3(0.0f, 40.0f, -7.0f); // MyCamera
+		Vec3 m_GoalCamOffset = Vec3(0.0f, 10.0f, -7.0f); // GoalCamera
+		// 現在のカメラの名前
+		wstring m_CameraName = L"";
+		wstring m_PlayerCameraState = L"";
 		//魔法陣が見えるようになった
 		bool m_MagicSircleEnabledLook = false;
 		//魔法陣が降り切った
@@ -47,6 +58,10 @@ namespace basecross {
 		//現在のシーンの番号
 		int m_NowSceneNum = 0;
 
+		//テスト用フラグ
+		bool m_TestFlg = false;
+		//テスト用テキスト
+		wstring m_TestText = L"";
 		//InputHandler<GameStage> m_InputHandler;
 
 		static GameManager* GM;
@@ -65,6 +80,7 @@ namespace basecross {
 			SetSelectingButton(0);
 			SetMoveEnabledFlg(false); 
 			SetOpeningCameraMoveEnd(false);
+			SetGoalCameraMoveEnd(false);
 			SetMagicSircleMoved(false);
 			SetMagicSircleEnabledLook(false);
 		}
@@ -129,6 +145,15 @@ namespace basecross {
 		{
 			m_MoveEnabledFlg = moveEnabledFlg;
 		}
+		//プレイヤーカメラのステートの番号
+		PlayerCamStateNum GetPlayerCameraMoveState()
+		{
+			return m_PlayerCameraStateNum;
+		}
+		void SetPlayerCameraMoveState(PlayerCamStateNum playerCamMoveState)
+		{
+			m_PlayerCameraStateNum = playerCamMoveState;
+		}
 		//オープニングカメラの移動が終わったか
 		bool GetOpeningCameraMoveEnd()
 		{
@@ -137,6 +162,51 @@ namespace basecross {
 		void SetOpeningCameraMoveEnd(bool opCamMoveEnd)
 		{
 			m_OpeningCameraMoveEnd = opCamMoveEnd;
+		}
+		//ゴールカメラの移動が終わったか
+		bool GetGoalCameraMoveEnd()
+		{
+			return m_GoalCameraMoveEnd;
+		}
+		void SetGoalCameraMoveEnd(bool goalCamMoveEnd)
+		{
+			m_GoalCameraMoveEnd = goalCamMoveEnd;
+		}
+		//ゴールカメラのステートの番号
+		GoalCamStateNum GetGoalCameraMoveState()
+		{
+			return m_GoalCameraStateNum;
+		}
+		void SetGoalCameraMoveState(GoalCamStateNum goalCamMoveState)
+		{
+			m_GoalCameraStateNum = goalCamMoveState;
+		}
+		//カメラの座標に使うオフセット
+		Vec3 GetMyCameraOffset()
+		{
+			return m_MyCamOffset;
+		}
+		Vec3 GetGoalCameraOffset()
+		{
+			return m_GoalCamOffset;
+		}
+		// 現在のカメラの名前
+		wstring GetCameraName()
+		{
+			return m_CameraName;
+		}
+		void SetCameraName(wstring camName)
+		{
+			m_CameraName = camName;
+		}
+		// 現在のプレイヤーカメラのステート
+		wstring GetPlayerCameraStateName()
+		{
+			return m_PlayerCameraState;
+		}
+		void SetPlayerCameraStateName(wstring camPlayerState)
+		{
+			m_PlayerCameraState = camPlayerState;
 		}
 		//魔法陣が見えるようになった
 		bool GetMagicSircleEnabledLook()
@@ -245,5 +315,23 @@ namespace basecross {
 			m_MaxButtonNum = maxButtonNum;
 		}
 
+		//テスト用フラグ
+		bool GetTestFlg()
+		{
+			return m_TestFlg;
+		}
+		void SetTestFlg(bool testFlg)
+		{
+			m_TestFlg = testFlg;
+		}
+		// テスト用テキスト
+		wstring GetTestText()
+		{
+			return m_TestText;
+		}
+		void SetTestText(wstring testText)
+		{
+			m_TestText = testText;
+		}
 	};
 }

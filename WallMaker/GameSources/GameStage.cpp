@@ -19,12 +19,18 @@ namespace basecross {
 		m_OpeningCameraView = ObjectFactory::Create<SingleView>(GetThis<Stage>());
 		auto ptrOpeningCamera = ObjectFactory::Create<OpeningCamera>();
 		m_OpeningCameraView->SetCamera(ptrOpeningCamera);
-		//MyCamera用のビュー
-		m_MyCameraView = ObjectFactory::Create<SingleView>(GetThis<Stage>());
-		auto PtrCamera = ObjectFactory::Create<MyCamera>();
-		PtrCamera->SetEye(eye);
-		PtrCamera->SetAt(at);
-		m_MyCameraView->SetCamera(PtrCamera);
+		////MyCamera用のビュー
+		//m_MyCameraView = ObjectFactory::Create<SingleView>(GetThis<Stage>());
+		//auto PtrCamera = ObjectFactory::Create<MyCamera>();
+		//m_MyCameraView->SetCamera(PtrCamera);
+		////GoalCamera用のビュー
+		//m_GoalCameraView = ObjectFactory::Create<SingleView>(GetThis<Stage>());
+		//auto PtrGoalCamera = ObjectFactory::Create<GoalCamera>();
+		//m_GoalCameraView->SetCamera(PtrGoalCamera);
+		m_PlayerCameraView = ObjectFactory::Create<SingleView>(GetThis<Stage>());
+		auto ptrPlayerCamera = ObjectFactory::Create<PlayerCamera>();
+		m_PlayerCameraView->SetCamera(ptrPlayerCamera);
+
 		//初期状態ではm_OpeningCameraViewを使う
 		SetView(m_OpeningCameraView);
 		m_CameraSelect = CameraSelect_Stage1::openingCamera;
@@ -63,16 +69,16 @@ namespace basecross {
 			1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ,1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
 			1,47,48,48,48,49, 1,47,48,48,48,48,48,48,48,49, 1,47,48,48,48,48,48,48,48,49, 1,47,48,48,49, 1,
 			1,44, 0, 3, 0,46, 1,44, 0, 0, 0, 0, 0, 0,74,46, 1,44 ,0, 0, 0, 0, 0, 0, 0,46, 1,44, 0,72,46, 1,
-			1,44, 0, 0, 0,46, 1,44, 0, 0, 0, 0, 0, 0, 0,46, 1,44, 0, 0, 0, 0,42, 0, 0,46, 1,44, 0, 0,46, 1,
+			1,44, 0, 0, 0,46, 1,44, 6, 0, 0, 0, 0, 0, 0,46, 1,44, 0, 0, 0, 0,42, 0, 0,46, 1,44, 0, 0,46, 1,
 			1,44, 0, 0, 0, 0,48, 0, 0, 0, 0, 0, 0, 0, 0,46, 1,44, 0, 0, 0,46, 1, 8, 8, 8, 1,44, 0, 0,46, 1,
-			1,44, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3,46, 1,44, 0, 6, 0,46, 1,44, 0, 0,48, 0, 0, 0,46, 1,
+			1,44, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3,46, 1,44, 0, 0, 0,46, 1,44, 0, 0,48, 0, 0, 0,46, 1,
 			1,44, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,46, 1,44, 0, 0, 0,46, 1,44, 0, 0, 0, 0, 3, 0,46, 1,
 			1,44, 0, 0, 0, 0,42,42, 0, 0, 0, 0, 0, 0,42,43, 1,41,42,42,42,43, 1,41, 0, 0, 0, 0, 0, 0,46, 1,
 			1,44, 0, 0, 0,46, 1, 1, 8, 8, 8, 8, 8, 8, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,44, 0, 0, 0, 0, 0,46, 1,
 			1,44, 0, 0, 0,46, 1, 1, 8, 8, 8, 8, 8, 8, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,41,42,42, 0, 0, 0,46, 1,
 			1,44, 0, 0, 0,46, 1,47, 0, 0, 0, 0, 0,46, 1,47,48,48,48,48,48,48,49, 1, 1, 1, 1,44, 0, 0,46, 1,
 			1,44, 0, 0, 0,46, 1,44, 0, 0, 0, 0, 0,46, 1,44,42, 0, 0, 0, 0, 0,46, 1,47,48,48, 0, 0, 0,46, 1,
-			1,44, 0, 2, 0,46, 1,44, 0, 0, 0, 0, 0, 0, 0,46, 1,44, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,46, 1,
+			1,44, 2, 0, 0,46, 1,44, 0, 0, 0, 0, 0, 0, 0,46, 1,44, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,46, 1,
 			1,44, 0, 0, 0,46, 1,44, 3, 0, 0, 0, 0,46, 1,44,48, 0, 0, 0, 0,12,46, 1,44, 0, 0, 0, 0, 0,46, 1,
 			1,41,42,42,42,43, 1,41,42,42,42,42,42,43, 1,41,42,42,42,42,42,42,43, 1,41,42,42,42,42,42,43, 1,
 			1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1
@@ -196,37 +202,40 @@ namespace basecross {
 		//CreatePlayer(Vec3(0.0f, 1.0f, 0.0f));
 		CreateCameraman();
 
-		AddGameObject<GameManagement>(Vec3(0.0f), Vec3(0.0f), Vec3(0.0f));
+		auto gameManagement = AddGameObject<GameManagement>(Vec3(0.0f), Vec3(0.0f), Vec3(0.0f));
+		SetSharedGameObject(WstringKey::ShareObj_GameManagement, gameManagement);
 
 		auto gm = GameManager::GetInstance();
 		gm->InitGameManager();
 		gm->SetSceneNum(SceneNum::GameStage_1);
-
-		//auto multiFire = AddGameObject<MultiFire>();
-		//SetSharedGameObject(L"MultiFire", multiFire);
-		//auto multiFireBlue = AddGameObject<MultiFireBlue>();
-		//SetSharedGameObject(L"MultiFireBlue", multiFireBlue);
-		//auto breakWallEffect = AddGameObject<WallBreakEffect>();
-		//SetSharedGameObject(WstringKey::ShareObj_BreakWallEffect, breakWallEffect);
-		//auto reflectEffect = AddGameObject<ReflectBulletEffect>();
-		//SetSharedGameObject(WstringKey::ShareObj_ReflectBulletEffect, reflectEffect);
 
 		//BGM
 		auto ptrXA = App::GetApp()->GetXAudio2Manager();
 		m_BGM = ptrXA->Start(WstringKey::SE_MainBGM, XAUDIO2_LOOP_INFINITE, 0.5f);
 
 		CreateSpriteAndButton();
+
+		auto testObj = AddGameObject<TestObject>();
+		SetSharedGameObject(WstringKey::ShareObj_TestObject, testObj);
 	}
 
 	void GameStage::OnUpdate() 
 	{
 		auto gm = GameManager::GetInstance();
-
 		gm->ClearCheck(GetThis<Stage>());
 
 		if (gm->GetClearFlg() == true && gm->GetClearFlgChanged() == false)
 		{
-			CreateClearButton();
+			if (gm->GetGoalCameraMoveEnd() == true)
+			{
+				CreateClearButton();
+				gm->SetClearFlgChanged(true);
+			}
+			else
+			{
+				auto managerObj = GetSharedGameObject<GameManagement>(WstringKey::ShareObj_GameManagement);
+				managerObj->ChangeCamera();
+			}
 		}
 		else if (gm->GetDeathFlg() == true && gm->GetDeathFlgChanged() == false)
 		{
@@ -249,6 +258,13 @@ namespace basecross {
 			}
 		}
 
+		gm->SetCameraName(GetCameraSelectName());
+	}
+
+	void GameStage::OnUpdate2()
+	{
+		auto testObj = GetSharedGameObject<TestObject>(WstringKey::ShareObj_TestObject);
+		testObj->SetCamName(GetCameraSelectName());
 	}
 
 	void GameStage::CreateStage()
@@ -320,9 +336,15 @@ namespace basecross {
 	//カメラマンの作成
 	void GameStage::CreateCameraman() 
 	{
+		// オープニングカメラを登録
 		auto ptrOpeningCameraman = AddGameObject<OpeningCameraman>();
 		//シェア配列にOpeningCameramanを追加
-		SetSharedGameObject(L"OpeningCameraman", ptrOpeningCameraman);
+		SetSharedGameObject(WstringKey::ShareObj_OpeningCameraman, ptrOpeningCameraman);
+
+		//// ゴールカメラを登録
+		//auto ptrGoalCameraman = AddGameObject<GoalCameraman>();
+		////シェア配列にOpeningCameramanを追加
+		//SetSharedGameObject(WstringKey::ShareObj_GoalCameraman, ptrGoalCameraman);
 
 		auto ptrOpeningCamera = dynamic_pointer_cast<OpeningCamera>(m_OpeningCameraView->GetCamera());
 		if (ptrOpeningCamera) {
@@ -331,6 +353,10 @@ namespace basecross {
 			m_CameraSelect = CameraSelect_Stage1::openingCamera;
 		}
 
+		// ゴールカメラを登録
+		auto ptrPlayerCameraman = AddGameObject<PlayerCameraman>();
+		//シェア配列にOpeningCameramanを追加
+		SetSharedGameObject(WstringKey::ShareObj_PlayerCameraman, ptrPlayerCameraman);
 	}
 
 	void GameStage::CreateClearButton()
@@ -342,7 +368,7 @@ namespace basecross {
 		whiteSprite->SetFadeFlgChanged(false);
 		whiteSprite->SetDrawActive(true);
 
-		gm->SetClearFlgChanged(true);
+		//gm->SetClearFlgChanged(true);
 
 		auto clearSprite = AddGameObject<FadeSprite>(true, Vec2(800, 300), Vec2(0, 150), true, 1.0f, 0.0f, L"GAMECLEAR_TX", 1, Col4(1, 1, 1, 0.1f));
 		clearSprite->SetFadeFlgChanged(false);
@@ -436,15 +462,96 @@ namespace basecross {
 	}
 
 	void GameStage::ToMyCamera() {
-		auto ptrPlayer = GetSharedGameObject<Player>(WstringKey::ShareObj_Player);
+		auto gm = GameManager::GetInstance();
+
 		//MyCameraに変更
-		auto ptrMyCamera = dynamic_pointer_cast<MyCamera>(m_MyCameraView->GetCamera());
-		if (ptrMyCamera) {
-			ptrMyCamera->SetTargetObject(ptrPlayer);
-			//m_MyCameraViewを使う
-			SetView(m_MyCameraView);
-			m_CameraSelect = CameraSelect_Stage1::myCamera;
+		if (m_CameraSelect == CameraSelect_Stage1::openingCamera)
+		{
+			auto ptrPlayer = GetSharedGameObject<Player>(WstringKey::ShareObj_Player);
+			auto ptrMyCamera = dynamic_pointer_cast<MyCamera>(m_MyCameraView->GetCamera());
+			if (ptrMyCamera) {
+				ptrMyCamera->SetTargetObject(ptrPlayer);
+				auto playerPos = ptrPlayer->GetComponent<Transform>()->GetPosition();
+				auto eyePos = playerPos + gm->GetMyCameraOffset();
+				ptrMyCamera->SetEye(eyePos);
+
+				//m_MyCameraViewを使う
+				SetView(m_MyCameraView);
+				m_CameraSelect = CameraSelect_Stage1::myCamera;
+			}
 		}
 	}
+
+	void GameStage::ToPlayerCamera() {
+		auto gm = GameManager::GetInstance();
+
+		//MyCameraに変更
+		if (m_CameraSelect == CameraSelect_Stage1::openingCamera)
+		{
+			auto ptrPlayer = GetSharedGameObject<Player>(WstringKey::ShareObj_Player);
+			auto ptrPlayerCamera = dynamic_pointer_cast<PlayerCamera>(m_PlayerCameraView->GetCamera());
+			if (ptrPlayerCamera) {
+
+				//m_MyCameraViewを使う
+				SetView(m_PlayerCameraView);
+				m_CameraSelect = CameraSelect_Stage1::playerCamera;
+			}
+		}
+	}
+
+	void GameStage::ToGoalCamera() {
+		//GoalCameraに変更
+		if (m_CameraSelect == CameraSelect_Stage1::myCamera)
+		{
+			auto ptrGoalCam = GetSharedGameObject<GoalCameraman>(WstringKey::ShareObj_GoalCameraman);
+			auto ptrGoalCamera = dynamic_pointer_cast<GoalCamera>(m_GoalCameraView->GetCamera());
+			if (ptrGoalCamera) {
+				ptrGoalCamera->SetCameraObject(ptrGoalCam);
+
+				auto gm = GameManager::GetInstance();
+				//ステージの取得
+				auto scene = App::GetApp()->GetScene<Scene>();
+				auto stage = scene->GetActiveStage();
+				//プレイヤーの取得
+				auto share_player = stage->GetSharedGameObject<Player>(WstringKey::ShareObj_Player);
+				auto playerPos = share_player->GetPosition();
+				auto myCamPos = gm->GetMyCameraOffset();
+				Vec3 myPos = playerPos + myCamPos;
+				ptrGoalCamera->SetEye(myPos);
+				auto at = ptrGoalCamera->GetAt();
+				at = playerPos;
+				ptrGoalCamera->SetAt(playerPos);
+
+				ptrGoalCamera->SetUp(0, 1, 0); // カメラの上方向を示す単位ベクトル
+
+				//m_GoalCameraViewを使う
+				SetView(m_GoalCameraView);
+				m_CameraSelect = CameraSelect_Stage1::goalCamera;
+			}
+		}
+	}
+
+	wstring GameStage::GetCameraSelectName()
+	{
+		wstring camName = L"";
+		if (m_CameraSelect == CameraSelect_Stage1::openingCamera)
+		{
+			camName = L"OpeningCamera\n";
+		}
+		else if (m_CameraSelect == CameraSelect_Stage1::myCamera)
+		{
+			camName = L"MyCamera\n";
+		}
+		else if (m_CameraSelect == CameraSelect_Stage1::goalCamera)
+		{
+			camName = L"GoalCamera\n";
+		}
+		else if (m_CameraSelect == CameraSelect_Stage1::playerCamera)
+		{
+			camName = L"PlayerCamera\n";
+		}
+		return camName;
+	}
+
 }
 //end basecross

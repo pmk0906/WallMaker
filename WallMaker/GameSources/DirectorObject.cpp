@@ -22,6 +22,31 @@ namespace basecross{
 		SetAddType(true);
 	}
 
+	void MultiFire::OnUpdate()
+	{
+		//前回のターンからの時間
+		float ElapsedTime = App::GetApp()->GetElapsedTime();
+		for (auto ParticlePtr : GetParticleVec()) {
+			auto gm = GameManager::GetInstance();
+			if (gm->GetMoveEnabledFlg() == true)
+			{
+				ParticlePtr->AddTotalTime(ElapsedTime);
+			}
+			for (auto& rParticleSprite : ParticlePtr->GetParticleSpriteVec()) {
+				if (rParticleSprite.m_Active) {
+					//移動速度に従って移動させる
+					rParticleSprite.m_LocalPos += rParticleSprite.m_Velocity * ElapsedTime;
+
+
+					if (ParticlePtr->GetTotalTime() >= ParticlePtr->GetMaxTime()) {
+						//制限時間になったら
+						rParticleSprite.m_Active = false;
+					}
+				}
+			}
+		}
+	}
+
 	void MultiFire::InsertFire(const Vec3& Pos, int GenerateNum, Vec3 MoveSpeed) 
 	{
 		auto ptrParticle = InsertParticle(GenerateNum);
@@ -60,15 +85,27 @@ namespace basecross{
 
 	void MultiFireBlue::OnUpdate()
 	{
-		//auto gm = GameManager::GetInstance();
-		//if (gm->GetMoveEnabledFlg() == false)
-		//{
-		//	SetUpdateActive(false);
-		//}
-		//else
-		//{
-		//	SetUpdateActive(true);
-		//}
+		//前回のターンからの時間
+		float ElapsedTime = App::GetApp()->GetElapsedTime();
+		for (auto ParticlePtr : GetParticleVec()) {
+			auto gm = GameManager::GetInstance();
+			if (gm->GetMoveEnabledFlg() == true)
+			{
+				ParticlePtr->AddTotalTime(ElapsedTime);
+			}
+			for (auto& rParticleSprite : ParticlePtr->GetParticleSpriteVec()) {
+				if (rParticleSprite.m_Active) {
+					//移動速度に従って移動させる
+					rParticleSprite.m_LocalPos += rParticleSprite.m_Velocity * ElapsedTime;
+
+
+					if (ParticlePtr->GetTotalTime() >= ParticlePtr->GetMaxTime()) {
+						//制限時間になったら
+						rParticleSprite.m_Active = false;
+					}
+				}
+			}
+		}
 	}
 
 	void MultiFireBlue::InsertFire(const Vec3& Pos, int GenerateNum, Vec3 MoveSpeed) {
@@ -109,6 +146,31 @@ namespace basecross{
 		SetAddType(true);
 	}
 
+	void WallBreakEffect::OnUpdate()
+	{
+		//前回のターンからの時間
+		float ElapsedTime = App::GetApp()->GetElapsedTime();
+		for (auto ParticlePtr : GetParticleVec()) {
+			auto gm = GameManager::GetInstance();
+			if (gm->GetMoveEnabledFlg() == true)
+			{
+				ParticlePtr->AddTotalTime(ElapsedTime);
+			}
+			for (auto& rParticleSprite : ParticlePtr->GetParticleSpriteVec()) {
+				if (rParticleSprite.m_Active) {
+					//移動速度に従って移動させる
+					rParticleSprite.m_LocalPos += rParticleSprite.m_Velocity * ElapsedTime;
+
+
+					if (ParticlePtr->GetTotalTime() >= ParticlePtr->GetMaxTime()) {
+						//制限時間になったら
+						rParticleSprite.m_Active = false;
+					}
+				}
+			}
+		}
+	}
+
 	void WallBreakEffect::InsertEffect(const Vec3& Pos, int GenerateNum, Vec3 MoveSpeed) {
 		auto ptrParticle = InsertParticle(GenerateNum);
 		ptrParticle->SetEmitterPos(Pos);
@@ -143,6 +205,32 @@ namespace basecross{
 
 		//加算描画処理をする
 		SetAddType(true);
+	}
+
+	void ReflectBulletEffect::OnUpdate()
+	{
+
+		//前回のターンからの時間
+		float ElapsedTime = App::GetApp()->GetElapsedTime();
+		for (auto ParticlePtr : GetParticleVec()) {
+			auto gm = GameManager::GetInstance();
+			if (gm->GetMoveEnabledFlg() == true)
+			{
+				ParticlePtr->AddTotalTime(ElapsedTime);
+			}
+			for (auto& rParticleSprite : ParticlePtr->GetParticleSpriteVec()) {
+				if (rParticleSprite.m_Active) {
+					//移動速度に従って移動させる
+					rParticleSprite.m_LocalPos += rParticleSprite.m_Velocity * ElapsedTime;
+
+
+					if (ParticlePtr->GetTotalTime() >= ParticlePtr->GetMaxTime()) {
+						//制限時間になったら
+						rParticleSprite.m_Active = false;
+					}
+				}
+			}
+		}
 	}
 
 	void ReflectBulletEffect::InsertEffect(const Vec3& Pos, int GenerateNum, Vec3 MoveSpeed) {

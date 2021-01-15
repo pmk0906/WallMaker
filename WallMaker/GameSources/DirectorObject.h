@@ -17,6 +17,7 @@ namespace basecross{
 		virtual ~MultiFire();
 		//‰Šú‰»
 		virtual void OnCreate() override;
+		virtual void OnUpdate() override;
 		void InsertFire(const Vec3& Pos, int GenerateNum, Vec3 MoveSpeed);
 	};
 	//--------------------------------------------------------------------------------------
@@ -43,6 +44,7 @@ namespace basecross{
 		virtual ~WallBreakEffect();
 		//‰Šú‰»
 		virtual void OnCreate() override;
+		virtual void OnUpdate() override;
 		void InsertEffect(const Vec3& Pos, int GenerateNum, Vec3 MoveSpeed);
 	};
 
@@ -56,6 +58,7 @@ namespace basecross{
 		virtual ~ReflectBulletEffect();
 		//‰Šú‰»
 		virtual void OnCreate() override;
+		virtual void OnUpdate() override;
 		void InsertEffect(const Vec3& Pos, int GenerateNum, Vec3 MoveSpeed);
 	};
 

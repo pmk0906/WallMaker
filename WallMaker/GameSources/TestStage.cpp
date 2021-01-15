@@ -11,7 +11,7 @@ namespace basecross {
 	//--------------------------------------------------------------------------------------
 	//	ゲームステージクラス実体
 	//--------------------------------------------------------------------------------------
-	void TestStage::CreateViewLight() 
+	void TestStage::CreateViewLight()
 	{
 		const Vec3 eye(0.0f, 30.0f, -20.0f);
 		const Vec3 at(0.0f);
@@ -19,12 +19,10 @@ namespace basecross {
 		m_OpeningCameraView = ObjectFactory::Create<SingleView>(GetThis<Stage>());
 		auto ptrOpeningCamera = ObjectFactory::Create<OpeningCamera>();
 		m_OpeningCameraView->SetCamera(ptrOpeningCamera);
-		//MyCamera用のビュー
-		m_MyCameraView = ObjectFactory::Create<SingleView>(GetThis<Stage>());
-		auto PtrCamera = ObjectFactory::Create<MyCamera>();
-		PtrCamera->SetEye(eye);
-		PtrCamera->SetAt(at);
-		m_MyCameraView->SetCamera(PtrCamera);
+		m_PlayerCameraView = ObjectFactory::Create<SingleView>(GetThis<Stage>());
+		auto ptrPlayerCamera = ObjectFactory::Create<PlayerCamera>();
+		m_PlayerCameraView->SetCamera(ptrPlayerCamera);
+
 		//初期状態ではm_OpeningCameraViewを使う
 		SetView(m_OpeningCameraView);
 		m_CameraSelect = CameraSelect_TestStage::openingCamera;
@@ -195,24 +193,14 @@ namespace basecross {
 			throw;
 		}
 
-		// 床
-		float posX = 0.0f;
-		float posZ = 0.0f;
-		Vec3 stagePos = Vec3(posX, 0, posZ);
-		for (int l = 0; l < STAGE_LENGTH / 4; l++) {
-			for (int w = 0; w < STAGE_WIDTH / 4; w++) {
-				AddGameObject<Floor>(Vec3(12.0f, 1.0f, 12.0f), Vec3(0.0f), Vec3(w * 12 - STAGE_LENGTH - 12.0f, -0.5f, l * 12 - STAGE_WIDTH + 9));
-			}
-		}
-
-
-		//CreateStage();
-		CreateWall();
-		//CreatePlayer(Vec3(0.0f, 1.0f, 0.0f));
+		CreateStage();
 		CreateEnemy();
 		CreateUI();
+		//CreatePlayer(Vec3(0.0f, 1.0f, 0.0f));
+		CreateCameraman();
 
-		AddGameObject<GameManagement>(Vec3(0.0f), Vec3(0.0f), Vec3(0.0f));
+		auto gameManagement = AddGameObject<GameManagement>(Vec3(0.0f), Vec3(0.0f), Vec3(0.0f));
+		SetSharedGameObject(WstringKey::ShareObj_GameManagement, gameManagement);
 
 		auto gm = GameManager::GetInstance();
 		gm->InitGameManager();
@@ -222,27 +210,76 @@ namespace basecross {
 		auto ptrXA = App::GetApp()->GetXAudio2Manager();
 		m_BGM = ptrXA->Start(WstringKey::SE_MainBGM, XAUDIO2_LOOP_INFINITE, 0.5f);
 
-		//auto startSprite = AddGameObject<FadeSprite>(true, Vec2(800, 300), Vec2(0, 150), false, 0.0f, 3.0f, L"START_TX", 1, Col4(1, 1, 1, 1.0f));
+		CreateSpriteAndButton();
+
+		auto testObj = AddGameObject<TestObject>();
+		SetSharedGameObject(WstringKey::ShareObj_TestObject, testObj);
 
 	}
 
 	void TestStage::OnUpdate() 
 	{
+		auto gm = GameManager::GetInstance();
+		gm->ClearCheck(GetThis<Stage>());
+
+		if (gm->GetClearFlg() == true && gm->GetClearFlgChanged() == false)
+		{
+			if (gm->GetGoalCameraMoveEnd() == true)
+			{
+				CreateClearButton();
+				gm->SetClearFlgChanged(true);
+			}
+			else
+			{
+				auto managerObj = GetSharedGameObject<GameManagement>(WstringKey::ShareObj_GameManagement);
+				managerObj->ChangeCamera();
+			}
+		}
+		else if (gm->GetDeathFlg() == true && gm->GetDeathFlgChanged() == false)
+		{
+			CreateGameOverButton();
+		}
+		else if (gm->GetMagicSircleMoved() == true)
+		{
+			if (gm->GetPoseFlgChanged() == false)
+			{
+				if (gm->GetPoseFlg() == true)
+				{
+					SwitchPoseButton(true);
+					gm->SetPoseFlgChanged(true);
+				}
+				else
+				{
+					SwitchPoseButton(false);
+					gm->SetPoseFlgChanged(true);
+				}
+			}
+		}
+
+		gm->SetCameraName(GetCameraSelectName());
+	}
+
+	void TestStage::OnUpdate2()
+	{
+		auto testObj = GetSharedGameObject<TestObject>(WstringKey::ShareObj_TestObject);
+		testObj->SetCamName(GetCameraSelectName());
 	}
 
 	void TestStage::CreateStage()
 	{
-		//// 床
-		////AddGameObject<FixedBox>(Vec3(50.0f, 1.0f, 50.0f), Vec3(0.0f), Vec3(0.0f, -0.5f, 0.0f));
+		// 床
+		//AddGameObject<FixedBox>(Vec3(50.0f, 1.0f, 50.0f), Vec3(0.0f), Vec3(0.0f, -0.5f, 0.0f));
 		//int posX = 0;
 		//int posZ = 0;
 		//Vec3 stagePos = Vec3(posX, 0, posZ);
 		//for (int l = 0; l < STAGE_LENGTH; l++) {
 		//	for (int w = 0; w < STAGE_WIDTH; w++) {
-		//		//AddGameObject<Floor>(Vec3(3.0f, 1.0f, 3.0f), Vec3(0.0f), Vec3(w * 3 - STAGE_LENGTH, -0.5f, l * 3 - STAGE_WIDTH));
+		//		AddGameObject<Floor>(Vec3(3.0f, 1.0f, 3.0f), Vec3(0.0f), Vec3(w * 3 - STAGE_LENGTH, -0.5f, l * 3 - STAGE_WIDTH));
 		//	}
 		//}
 		AddGameObject<Floor>(Vec3(32.0f * 3.0f, 1.0f, 16.0f * 3.0f), Vec3(0.0f), Vec3(32.0f * 1.5f - 32.0f - 1.5f, 0.0f, -16.0f * 1.5f + 16.0f + 1.5f));
+
+		CreateWall();
 	}
 
 	void TestStage::CreateEnemy()
@@ -281,21 +318,28 @@ namespace basecross {
 	void TestStage::CreateUI()
 	{
 		//プレイヤーのライフ表示
-		AddGameObject<PlayerLife>(true, Vec2(100.0f), Vec3(-590.0f, 350.0f, 0.1f), 1.0f);
-		AddGameObject<PlayerLife>(true, Vec2(100.0f), Vec3(-490.0f, 350.0f, 0.1f), 2.0f);
-		AddGameObject<PlayerLife>(true, Vec2(100.0f), Vec3(-390.0f, 350.0f, 0.1f), 3.0f);
+		AddGameObject<PlayerLife>(true, Vec2(70.0f), Vec3(-469.0f, 311.0f, 0.1f), 1.0f);
+		AddGameObject<PlayerLife>(true, Vec2(70.0f), Vec3(-385.0f, 311.0f, 0.1f), 2.0f);
+		AddGameObject<PlayerLife>(true, Vec2(70.0f), Vec3(-299.0f, 311.0f, 0.1f), 3.0f);
+
+		AddGameObject<Sprite>(true, Vec2(400.0f, 200.0f), Vec2(-440.0f, 320.0f), L"HP_FRONT_UI_TX", 1.0f, Col4(1.0f));
+		AddGameObject<Sprite>(true, Vec2(300.0f, 150.0f), Vec2(-390.0f, 315.0f), L"HP_BACK_UI_TX", -1.0f, Col4(1.0f));
+
 		//壁のストック表示
-		AddGameObject<WallStock>(true, Vec2(100.0f), Vec3(+590.0f, 350.0f, 0.1f), 1.0f);
-		AddGameObject<WallStock>(true, Vec2(100.0f), Vec3(+490.0f, 350.0f, 0.1f), 2.0f);
-		AddGameObject<WallStock>(true, Vec2(100.0f), Vec3(+390.0f, 350.0f, 0.1f), 3.0f);
+		AddGameObject<WallStock>(true, Vec2(90.0f), Vec3(+500.0f, 313.0f, 0.1f), 1.0f);
+		AddGameObject<WallStock>(true, Vec2(90.0f), Vec3(+410.0f, 313.0f, 0.1f), 2.0f);
+		AddGameObject<WallStock>(true, Vec2(90.0f), Vec3(+320.0f, 313.0f, 0.1f), 3.0f);
+
+		AddGameObject<Sprite>(true, Vec2(400.0f, 200.0f), Vec2(450.0f, 265.0f), L"WALLSTICK_UI_TX", 1.0f, Col4(1.0f));
 	}
 
-
 	//カメラマンの作成
-	void TestStage::CreateCameraman() {
+	void TestStage::CreateCameraman()
+	{
+		// オープニングカメラを登録
 		auto ptrOpeningCameraman = AddGameObject<OpeningCameraman>();
 		//シェア配列にOpeningCameramanを追加
-		SetSharedGameObject(L"OpeningCameraman", ptrOpeningCameraman);
+		SetSharedGameObject(WstringKey::ShareObj_OpeningCameraman, ptrOpeningCameraman);
 
 		auto ptrOpeningCamera = dynamic_pointer_cast<OpeningCamera>(m_OpeningCameraView->GetCamera());
 		if (ptrOpeningCamera) {
@@ -304,6 +348,92 @@ namespace basecross {
 			m_CameraSelect = CameraSelect_TestStage::openingCamera;
 		}
 
+		// ゴールカメラを登録
+		auto ptrPlayerCameraman = AddGameObject<PlayerCameraman>();
+		//シェア配列にOpeningCameramanを追加
+		SetSharedGameObject(WstringKey::ShareObj_PlayerCameraman, ptrPlayerCameraman);
+	}
+
+	void TestStage::CreateClearButton()
+	{
+		auto gm = GameManager::GetInstance();
+
+		auto whiteSprite = dynamic_pointer_cast<FadeSprite>(WhiteSprite);
+		whiteSprite->SetColor(Col4(1.0f, 1.0f, 1.0f, 0.5f));
+		whiteSprite->SetFadeFlgChanged(false);
+		whiteSprite->SetDrawActive(true);
+
+		auto clearSprite = AddGameObject<FadeSprite>(true, Vec2(800, 300), Vec2(0, 150), true, 1.0f, 0.0f, L"GAMECLEAR_TX", 1, Col4(1, 1, 1, 0.1f));
+		clearSprite->SetFadeFlgChanged(false);
+
+		auto buttonSprite = AddGameObject<ButtonSprite>(true, Vec2(600, 100), Vec2(0, -70.0f), true, 1.0f, L"NEXTSTAGE_BUTTON_TX", 0, 2, Col4(1, 1, 1, 0.5f));
+		auto buttonSprite2 = AddGameObject<ButtonSprite>(true, Vec2(600, 100), Vec2(0, -220.0f), true, 1.0f, L"STAGESELECT_BUTTON_TX", 1, 2, Col4(1, 1, 1, 0.5f));
+		gm->SetMaxButtonNum(1);
+	}
+
+	void TestStage::CreateGameOverButton()
+	{
+		auto gm = GameManager::GetInstance();
+
+		auto whiteSprite = dynamic_pointer_cast<FadeSprite>(WhiteSprite);
+		whiteSprite->SetColor(Col4(0.0f, 0.0f, 0.0f, 0.5f));
+		whiteSprite->SetFadeFlgChanged(false);
+		whiteSprite->SetDrawActive(true);
+
+		gm->SetDeathFlgChanged(true);
+
+		auto clearSprite = AddGameObject<FadeSprite>(true, Vec2(800, 300), Vec2(0, 150), true, 1.0f, 0.0f, L"GAMEOVER_TX", 1, Col4(1, 1, 1, 0.1f));
+		clearSprite->SetFadeFlgChanged(false);
+
+		auto buttonSprite = AddGameObject<ButtonSprite>(true, Vec2(600, 100), Vec2(0, -70.0f), true, 1.0f, L"RETRY_BUTTON_TX", 0, 2, Col4(1, 1, 1, 0.5f));
+		auto buttonSprite2 = AddGameObject<ButtonSprite>(true, Vec2(600, 100), Vec2(0, -220.0f), true, 1.0f, L"STAGESELECT_BUTTON_TX", 1, 2, Col4(1, 1, 1, 0.5f));
+		gm->SetMaxButtonNum(1);
+	}
+
+	void TestStage::CreateSpriteAndButton()
+	{
+		WhiteSprite = AddGameObject<FadeSprite>(true, Vec2(1120, 630), Vec2(0, 0), true, 0.5f, 0.0f, L"WHITE_TX", 1, Col4(1, 1, 1, 0.5f));
+		WhiteSprite->SetDrawActive(false);
+
+		m_Button1 = AddGameObject<ButtonSprite>(true, Vec2(600, 100), Vec2(0, -60.0f), true, 1.0f, L"RETRY_BUTTON_TX", 0, 2, Col4(1, 1, 1, 0.5f));
+		m_Button1->SetDrawActive(false);
+		m_Button1->SetUpdateActive(false);
+		m_Button2 = AddGameObject<ButtonSprite>(true, Vec2(600, 100), Vec2(0, -150.0f), true, 1.0f, L"STAGESELECT_BUTTON_TX", 1, 2, Col4(1, 1, 1, 0.5f));
+		m_Button2->SetDrawActive(false);
+		m_Button2->SetUpdateActive(false);
+		m_Button3 = AddGameObject<ButtonSprite>(true, Vec2(600, 100), Vec2(0, -240.0f), true, 1.0f, L"GAMEBACK_BUTTON_TX", 2, 2, Col4(1, 1, 1, 0.5f));
+		m_Button3->SetDrawActive(false);
+		m_Button3->SetUpdateActive(false);
+	}
+
+	void TestStage::SwitchPoseButton(bool poseFlg)
+	{
+		auto gm = GameManager::GetInstance();
+
+		auto whiteSprite = dynamic_pointer_cast<FadeSprite>(WhiteSprite);
+		whiteSprite->SetDrawActive(poseFlg);
+		whiteSprite->SetUpdateActive(poseFlg);
+
+		m_Button1->SetDrawActive(poseFlg);
+		m_Button1->SetUpdateActive(poseFlg);
+		m_Button2->SetDrawActive(poseFlg);
+		m_Button2->SetUpdateActive(poseFlg);
+		m_Button3->SetDrawActive(poseFlg);
+		m_Button3->SetUpdateActive(poseFlg);
+
+		gm->SetPoseFlg(poseFlg);
+		gm->SetPoseFlgChanged(true);
+
+		if (poseFlg == true)
+		{
+			gm->SetMoveEnabledFlg(false);
+		}
+		else
+		{
+			gm->SetMoveEnabledFlg(true);
+		}
+
+		gm->SetMaxButtonNum(2);
 	}
 
 	void TestStage::StopBGM()
@@ -314,15 +444,95 @@ namespace basecross {
 	}
 
 	void TestStage::ToMyCamera() {
-		auto ptrPlayer = GetSharedGameObject<Player>(WstringKey::ShareObj_Player);
+		auto gm = GameManager::GetInstance();
+
 		//MyCameraに変更
-		auto ptrMyCamera = dynamic_pointer_cast<MyCamera>(m_MyCameraView->GetCamera());
-		if (ptrMyCamera) {
-			ptrMyCamera->SetTargetObject(ptrPlayer);
-			//m_MyCameraViewを使う
-			SetView(m_MyCameraView);
-			m_CameraSelect = CameraSelect_TestStage::myCamera;
+		if (m_CameraSelect == CameraSelect_TestStage::openingCamera)
+		{
+			auto ptrPlayer = GetSharedGameObject<Player>(WstringKey::ShareObj_Player);
+			auto ptrMyCamera = dynamic_pointer_cast<MyCamera>(m_MyCameraView->GetCamera());
+			if (ptrMyCamera) {
+				ptrMyCamera->SetTargetObject(ptrPlayer);
+				auto playerPos = ptrPlayer->GetComponent<Transform>()->GetPosition();
+				auto eyePos = playerPos + gm->GetMyCameraOffset();
+				ptrMyCamera->SetEye(eyePos);
+
+				//m_MyCameraViewを使う
+				SetView(m_MyCameraView);
+				m_CameraSelect = CameraSelect_TestStage::myCamera;
+			}
 		}
+	}
+
+	void TestStage::ToPlayerCamera() {
+		auto gm = GameManager::GetInstance();
+
+		//MyCameraに変更
+		if (m_CameraSelect == CameraSelect_TestStage::openingCamera)
+		{
+			auto ptrPlayer = GetSharedGameObject<Player>(WstringKey::ShareObj_Player);
+			auto ptrPlayerCamera = dynamic_pointer_cast<PlayerCamera>(m_PlayerCameraView->GetCamera());
+			if (ptrPlayerCamera) {
+
+				//m_MyCameraViewを使う
+				SetView(m_PlayerCameraView);
+				m_CameraSelect = CameraSelect_TestStage::playerCamera;
+			}
+		}
+	}
+
+	void TestStage::ToGoalCamera() {
+		//GoalCameraに変更
+		if (m_CameraSelect == CameraSelect_TestStage::myCamera)
+		{
+			auto ptrGoalCam = GetSharedGameObject<GoalCameraman>(WstringKey::ShareObj_GoalCameraman);
+			auto ptrGoalCamera = dynamic_pointer_cast<GoalCamera>(m_GoalCameraView->GetCamera());
+			if (ptrGoalCamera) {
+				ptrGoalCamera->SetCameraObject(ptrGoalCam);
+
+				auto gm = GameManager::GetInstance();
+				//ステージの取得
+				auto scene = App::GetApp()->GetScene<Scene>();
+				auto stage = scene->GetActiveStage();
+				//プレイヤーの取得
+				auto share_player = stage->GetSharedGameObject<Player>(WstringKey::ShareObj_Player);
+				auto playerPos = share_player->GetPosition();
+				auto myCamPos = gm->GetMyCameraOffset();
+				Vec3 myPos = playerPos + myCamPos;
+				ptrGoalCamera->SetEye(myPos);
+				auto at = ptrGoalCamera->GetAt();
+				at = playerPos;
+				ptrGoalCamera->SetAt(playerPos);
+
+				ptrGoalCamera->SetUp(0, 1, 0); // カメラの上方向を示す単位ベクトル
+
+				//m_GoalCameraViewを使う
+				SetView(m_GoalCameraView);
+				m_CameraSelect = CameraSelect_TestStage::goalCamera;
+			}
+		}
+	}
+
+	wstring TestStage::GetCameraSelectName()
+	{
+		wstring camName = L"";
+		if (m_CameraSelect == CameraSelect_TestStage::openingCamera)
+		{
+			camName = L"OpeningCamera\n";
+		}
+		else if (m_CameraSelect == CameraSelect_TestStage::myCamera)
+		{
+			camName = L"MyCamera\n";
+		}
+		else if (m_CameraSelect == CameraSelect_TestStage::goalCamera)
+		{
+			camName = L"GoalCamera\n";
+		}
+		else if (m_CameraSelect == CameraSelect_TestStage::playerCamera)
+		{
+			camName = L"PlayerCamera\n";
+		}
+		return camName;
 	}
 }
 //end basecross

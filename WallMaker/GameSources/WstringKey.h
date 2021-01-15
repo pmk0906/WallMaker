@@ -57,13 +57,21 @@ namespace WstringKey {
 	// プレイヤー
 	const wstring ShareObj_Player = L"ObjPlayer";
 	const wstring ShareObj_MagicSkeltonWall = L"ObjMagicSkeltonWall";
-	//宝箱
+	// GameManagement
+	const wstring ShareObj_GameManagement = L"ObjGameManagement";
+	// 宝箱
 	const wstring ShareObj_TreasureBox = L"ObjTreasureBox";
 	// フェード用スプライト
 	const wstring ShareObj_FadeSprite = L"ObjFadeSprite";
 	//パーティクル
 	const wstring ShareObj_BreakWallEffect = L"ObjBreakWallEffect";
 	const wstring ShareObj_ReflectBulletEffect = L"ObjReflectBulletEffect";
+	// カメラ
+	const wstring ShareObj_PlayerCameraman = L"ObjPlayerCameraman";
+	const wstring ShareObj_OpeningCameraman = L"ObjOpeningCameraman";
+	const wstring ShareObj_GoalCameraman = L"ObjGoalCameraman";
+	//テスト用
+	const wstring ShareObj_TestObject = L"ObjTestObject";
 
 	//シーン名
 	const wstring ToGameTitle = L"ToGameTitleScene";

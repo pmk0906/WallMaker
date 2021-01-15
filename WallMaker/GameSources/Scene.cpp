@@ -50,12 +50,14 @@ namespace basecross{
 		{
 			//タイトル
 			{L"TITLEL_LOGO_TX", L"Title.png"},
+			{L"TITLE_BACK", L"Title_Back.png"},
 			// ステージのテクスチャ
 			{L"TRACE_TX", L"trace.png"},
 			{L"FLOOR_TX", L"Floor.png"},
 			{L"FLOOR_4x4_TX", L"Floor_4x4.png"},
 			{L"WALL_TX", L"BlockWall.tga"},
 			{L"REFLECTWALL_TX", L"ReflectWall.tga"},
+			{L"REFLECTWALL_BLUE_TX", L"Reflect_Wall_0003.png"},
 			{L"BREAKWALL_TX", L"BreakWall.png"},
 			// ステージのUI
 			{L"HEART_UI_TX", L"HP_Life.png"},
@@ -193,8 +195,8 @@ namespace basecross{
 
 			//クリアする色を設定
 			Col4 Col;
-			Col.set(0.0f / 255.0f, 0.0f / 255.0f, 0.0f / 255.0f, 255.0f / 255.0f);
-			//Col.set(31.0f / 255.0f, 30.0f / 255.0f, 71.0f / 255.0f, 255.0f / 255.0f);
+			//Col.set(0.0f / 255.0f, 0.0f / 255.0f, 0.0f / 255.0f, 255.0f / 255.0f);
+			Col.set(31.0f / 255.0f, 30.0f / 255.0f, 71.0f / 255.0f, 255.0f / 255.0f);
 			SetClearColor(Col);
 			//自分自身にイベントを送る
 			//これにより各ステージやオブジェクトがCreate時にシーンにアクセスできる

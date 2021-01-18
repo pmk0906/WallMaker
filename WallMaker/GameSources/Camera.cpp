@@ -518,6 +518,7 @@ namespace basecross{
 		auto share_treasure = GetStage()->GetSharedGameObject<TreasureBox>(WstringKey::ShareObj_TreasureBox);
 		auto treasurePos = share_treasure->GetComponent<Transform>()->GetPosition();
 		auto startPos = (playerPos + treasurePos) * 0.5;
+
 		m_StartPos = Vec3(startPos.x, startPos.y + offset.y, startPos.z + offset.z);
 		m_EndPos = treasurePos + offset;
 		m_AtStartPos = startPos + offset;
@@ -612,6 +613,8 @@ namespace basecross{
 		Obj->ToGoalEnterBehavior();
 	}
 	void OpeningCameramanStartState::Execute(const shared_ptr<OpeningCameraman>& Obj) {
+
+		
 		if (Obj->ExcuteBehavior(7.0f)) {
 			Obj->GetStateMachine()->ChangeState(OpeningCameramanMoveState::Instance());
 		}

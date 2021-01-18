@@ -352,9 +352,9 @@ namespace basecross{
 		StageEffect();
 
 		// DrawString—p
-		auto strComp = AddComponent<StringSprite>();
-		strComp->SetBackColor(Col4(0, 0, 0, 0.5f));
-		strComp->SetTextRect(Rect2D<float>(50, 150, 400, 600));
+		//auto strComp = AddComponent<StringSprite>();
+		//strComp->SetBackColor(Col4(0, 0, 0, 0.5f));
+		//strComp->SetTextRect(Rect2D<float>(50, 150, 400, 600));
 	}
 
 	void GameManagement::OnUpdate()
@@ -365,7 +365,7 @@ namespace basecross{
 
 	void GameManagement::OnUpdate2()
 	{
-		DrawStrings();
+		//DrawStrings();
 	}
 
 	void GameManagement::DrawStrings()

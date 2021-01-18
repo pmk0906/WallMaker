@@ -369,7 +369,7 @@ namespace basecross{
 		ptrDraw->AddAnimation(WstringKey::AM_PlayerStand, 0, 30, true, 10.0f);
 		ptrDraw->AddAnimation(WstringKey::AM_PlayerWalk, 31, 29, true, 30.0f);
 		ptrDraw->AddAnimation(WstringKey::AM_PlayerStandMagic, 61, 29, true, 10.0f);
-		ptrDraw->AddAnimation(WstringKey::AM_PlayerWalkMagic, 91, 30, true, 30.0f);
+		ptrDraw->AddAnimation(WstringKey::AM_PlayerWalkMagic, 91, 29, true, 30.0f);
 		ptrDraw->ChangeCurrentAnimation(WstringKey::AM_PlayerStand);
 		SetMotionName(WstringKey::AM_PlayerStand);
 		//最初は透明にしておく
@@ -656,7 +656,7 @@ namespace basecross{
 
 		Mat4x4 spanMat; // モデルとトランスフォームの間の差分行列
 		spanMat.affineTransformation(
-			Vec3(0.55f, 0.5f, 5.0f),
+			Vec3(0.5f, 0.5f, 25.0f),
 			Vec3(0.0f, 0.0f, 0.0f),
 			Vec3(0.0f, 0.0f, 0.0f),
 			Vec3(0.0f, -0.5f, 0.0f)
@@ -667,6 +667,12 @@ namespace basecross{
 		//ptrColl->SetDrawActive(true);
 		//ptrColl->SetFixed(true);
 
+		//影をつける（シャドウマップを描画する）
+		auto ptrShadow = AddComponent<Shadowmap>();
+		//影の形(メッシュ)を指定
+		ptrShadow->SetMeshToTransformMatrix(spanMat);
+		ptrShadow->SetDrawActive(false);
+		SetAlphaActive(true);
 		//描画処理
 		auto ptrDraw = AddComponent<BcPNTnTStaticModelDraw>();
 		ptrDraw->SetMeshResource(L"MAGICWALL_MESH");
@@ -778,7 +784,7 @@ namespace basecross{
 
 		Mat4x4 spanMat; // モデルとトランスフォームの間の差分行列
 		spanMat.affineTransformation(
-			Vec3(0.55f, 0.5f, 5.0f),
+			Vec3(0.5f, 0.5f, 25.0f),
 			Vec3(0.0f, 0.0f, 0.0f),
 			Vec3(0.0f, 0.0f, 0.0f),
 			Vec3(0.0f, -0.5f, 0.0f)
@@ -788,6 +794,12 @@ namespace basecross{
 		ptrColl->SetAfterCollision(AfterCollision::None);
 		//ptrColl->SetDrawActive(true);
 
+		//影をつける（シャドウマップを描画する）
+		auto ptrShadow = AddComponent<Shadowmap>();
+		//影の形(メッシュ)を指定
+		ptrShadow->SetMeshToTransformMatrix(spanMat);
+		ptrShadow->SetDrawActive(false);
+		SetAlphaActive(true);
 		//描画処理
 		auto ptrDraw = AddComponent<BcPNTnTStaticModelDraw>();
 		ptrDraw->SetMeshResource(L"MAGICWALL_MESH");
@@ -804,9 +816,9 @@ namespace basecross{
 		//ptrDraw->SetTextureResource(L"MAGICWALL_TX");
 
 		// DrawString用
-		auto strComp = AddComponent<StringSprite>();
-		strComp->SetBackColor(Col4(0, 0, 0, 0.5f));
-		strComp->SetTextRect(Rect2D<float>(10, 600, 270, 210));
+		//auto strComp = AddComponent<StringSprite>();
+		//strComp->SetBackColor(Col4(0, 0, 0, 0.5f));
+		//strComp->SetTextRect(Rect2D<float>(10, 600, 270, 210));
 	}
 
 	void MagicSkeltonWall::OnUpdate()
@@ -817,7 +829,7 @@ namespace basecross{
 
 	void MagicSkeltonWall::OnUpdate2()
 	{
-		DrawStrings();
+		//DrawStrings();
 	}
 
 	void MagicSkeltonWall::OnCollisionEnter(shared_ptr<GameObject>& other) {

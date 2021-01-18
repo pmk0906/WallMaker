@@ -102,7 +102,9 @@ namespace basecross{
 			{WstringKey::Anim_Player, L"PL_Stand_Walk.bmf"},
 			{WstringKey::Anim_Player_Ver2, L"PL_Animation_ver2.bmf"},
 			{WstringKey::Anim_Enemy, L"Enemy_ver2.bmf"},
-			{WstringKey::Anim_EnemyBlue, L"Enemy_Blue_ver2.bmf"}
+			{WstringKey::Anim_EnemyBlue, L"Enemy_Blue_ver2.bmf"},
+			{WstringKey::Anim_EnemyBlack, L"Enemy_Black_ver2.bmf"},
+			{WstringKey::Anim_EnemyYellow, L"Enemy_Yellow_ver2.bmf"},
 		};
 		//スタティック
 		Pairs staticPairs[] =
@@ -195,8 +197,8 @@ namespace basecross{
 
 			//クリアする色を設定
 			Col4 Col;
-			//Col.set(0.0f / 255.0f, 0.0f / 255.0f, 0.0f / 255.0f, 255.0f / 255.0f);
-			Col.set(31.0f / 255.0f, 30.0f / 255.0f, 71.0f / 255.0f, 255.0f / 255.0f);
+			Col.set(0.0f / 255.0f, 0.0f / 255.0f, 0.0f / 255.0f, 255.0f / 255.0f);
+			//Col.set(31.0f / 255.0f, 30.0f / 255.0f, 71.0f / 255.0f, 255.0f / 255.0f);
 			SetClearColor(Col);
 			//自分自身にイベントを送る
 			//これにより各ステージやオブジェクトがCreate時にシーンにアクセスできる

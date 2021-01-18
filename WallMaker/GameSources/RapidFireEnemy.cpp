@@ -42,7 +42,7 @@ namespace basecross {
 
 		//•`‰æˆ—
 		auto ptrDraw = AddComponent<PNTBoneModelDraw>();
-		ptrDraw->SetMeshResource(WstringKey::Anim_Enemy);
+		ptrDraw->SetMeshResource(WstringKey::Anim_EnemyBlack);
 		ptrDraw->SetMeshToTransformMatrix(spanMat);
 		//ptrDraw->SetFogEnabled(true);
 		ptrDraw->SetOwnShadowActive(true);

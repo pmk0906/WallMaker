@@ -51,6 +51,65 @@ namespace basecross{
 		SetDrawLayer(-2);
 	}
 
+	//--------------------------------------------------
+	// 魔法壁
+	//--------------------------------------------------
+	// 構築と破棄
+	TestMagicWall::TestMagicWall(
+		const shared_ptr<Stage>& StagePtr,
+		const Vec3& Scale,
+		const Vec3& Rotation,
+		const Vec3& Position)
+		:
+		GameObject(StagePtr),
+		m_Scale(Scale),
+		m_Rotation(Rotation),
+		m_Position(Position)
+	{
+	}
+
+	TestMagicWall::~TestMagicWall()
+	{
+	}
+
+	void TestMagicWall::OnCreate()
+	{
+		auto ptrMyTrans = AddComponent<Transform>();
+		ptrMyTrans->SetScale(5.0f, 5.0f, 0.3f);
+		ptrMyTrans->SetRotation(Vec3(0.0f, m_Rotation.y, 0.0f));
+		ptrMyTrans->SetPosition(Vec3(m_Position.x, m_Position.y, m_Position.z));
+
+		AddTag(L"TagMagicWall");
+
+		Mat4x4 spanMat; // モデルとトランスフォームの間の差分行列
+		spanMat.affineTransformation(
+			Vec3(1.0, 1.0f, 25.0f),
+			Vec3(0.0f, 0.0f, 0.0f),
+			Vec3(0.0f, 0.0f, 0.0f),
+			Vec3(0.0f, -0.5f, 0.0f)
+		);
+
+		auto ptrColl = AddComponent<CollisionObb>();
+		ptrColl->SetAfterCollision(AfterCollision::None);
+		//ptrColl->SetDrawActive(true);
+		//ptrColl->SetFixed(true);
+
+		//描画処理
+		auto ptrDraw = AddComponent<BcPNTnTStaticModelDraw>();
+		ptrDraw->SetMeshResource(L"MAGICWALL_MESH");
+		ptrDraw->SetMeshToTransformMatrix(spanMat);
+		ptrDraw->SetLightingEnabled(false);
+		//ptrDraw->SetBlendState(BlendState::Additive);
+
+		//描画するテクスチャを設定
+		SetAlphaActive(true);
+		//ptrDraw->SetTextureResource(L"MAGICWALL_TX");
+	}
+
+	void TestMagicWall::OnUpdate()
+	{
+	}
+
 	///--------------------------------------------------
 	/// TestObject
 	///--------------------------------------------------

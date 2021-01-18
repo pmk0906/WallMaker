@@ -37,6 +37,8 @@ namespace WstringKey {
 	const wstring Anim_Player_Ver2 = L"AnimPlayerAnimation";
 	const wstring Anim_Enemy = L"AnimEnemy";
 	const wstring Anim_EnemyBlue = L"AnimEnemyBlue";
+	const wstring Anim_EnemyBlack = L"AnimEnemyBlack";
+	const wstring Anim_EnemyYellow = L"AnimEnemyYellow";
 
 	//‰¹
 	//BGM

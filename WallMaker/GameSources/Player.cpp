@@ -325,7 +325,7 @@ namespace basecross{
 
 			// SE
 				auto ptrXA = App::GetApp()->GetXAudio2Manager();
-				ptrXA->Start(WstringKey::SE_CreateMagicWall, 0, 0.5f);
+				ptrXA->Start(WstringKey::SE_CreateMagicWall, 0, 1.0f);
 			}
 		}
 	}

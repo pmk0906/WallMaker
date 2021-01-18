@@ -200,8 +200,8 @@ namespace basecross {
 		gm->SetSceneNum(SceneNum::GameStage_3);
 
 		//BGM
-		auto ptrXA = App::GetApp()->GetXAudio2Manager();
-		m_BGM = ptrXA->Start(WstringKey::SE_MainBGM, XAUDIO2_LOOP_INFINITE, 0.5f);
+		//auto ptrXA = App::GetApp()->GetXAudio2Manager();
+		//m_BGM = ptrXA->Start(WstringKey::SE_MainBGM, XAUDIO2_LOOP_INFINITE, 0.5f);
 
 		CreateSpriteAndButton();
 
@@ -316,11 +316,11 @@ namespace basecross {
 		AddGameObject<Sprite>(true, Vec2(300.0f, 150.0f), Vec2(-390.0f, 315.0f), L"HP_BACK_UI_TX", -1.0f, Col4(1.0f));
 
 		//壁のストック表示
-		AddGameObject<WallStock>(true, Vec2(90.0f), Vec3(+500.0f, 313.0f, 0.1f), 1.0f);
-		AddGameObject<WallStock>(true, Vec2(90.0f), Vec3(+410.0f, 313.0f, 0.1f), 2.0f);
-		AddGameObject<WallStock>(true, Vec2(90.0f), Vec3(+320.0f, 313.0f, 0.1f), 3.0f);
+		AddGameObject<WallStock>(true, Vec2(75.0f), Vec3(+575.0f, 316.0f, 0.1f), 1.0f);
+		AddGameObject<WallStock>(true, Vec2(75.0f), Vec3(+488.0f, 316.0f, 0.1f), 2.0f);
+		AddGameObject<WallStock>(true, Vec2(75.0f), Vec3(+402.0f, 316.0f, 0.1f), 3.0f);
 
-		AddGameObject<Sprite>(true, Vec2(400.0f, 200.0f), Vec2(450.0f, 265.0f), L"WALLSTICK_UI_TX", 1.0f, Col4(1.0f));
+		AddGameObject<Sprite>(true, Vec2(400.0f, 200.0f), Vec2(450.0f, 320.0f), L"WALLSTOCKFRONT_UI_TX", 1.0f, Col4(1.0f));
 	}
 
 	//カメラマンの作成

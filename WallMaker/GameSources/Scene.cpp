@@ -65,6 +65,8 @@ namespace basecross{
 			{L"HP_BACK_UI_TX", L"HP_UI_Back.png"},
 			{L"WALLSTOCK_UI_TX", L"UI_MagicWall.png"},
 			{L"WALLSTICK_UI_TX", L"MagicStick_UI.png"},
+			{L"WALLSTOCKFRONT_UI_TX", L"MagicWall_UI_02.png"},
+			{L"WALLSTOCKBACK_UI_TX", L"MagicWall_UI_Back02.png"},
 			{L"GAMESELECT_BG_TX", L"Select_BackGround.png"},
 			{L"WHITE_TX", L"White.png"},
 			//エフェクト

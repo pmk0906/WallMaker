@@ -161,6 +161,9 @@ namespace basecross{
 			if (wButtons & XINPUT_GAMEPAD_DPAD_LEFT) {
 				if (gm->GetSelectingButtonNum() > 0)
 				{
+					auto ptrXA = App::GetApp()->GetXAudio2Manager();
+					ptrXA->Start(WstringKey::SE_Cursol, 0, 1.0f);
+
 					gm->SetSelectingButtonMinus();
 					testFlg = true;
 				}
@@ -169,6 +172,9 @@ namespace basecross{
 			if (wButtons & XINPUT_GAMEPAD_DPAD_RIGHT) {
 				if (gm->GetSelectingButtonNum() < gm->GetMaxButtonNum())
 				{
+					auto ptrXA = App::GetApp()->GetXAudio2Manager();
+					ptrXA->Start(WstringKey::SE_Cursol, 0, 1.0f);
+
 					gm->SetSelectingButtonPlus();
 					testFlg = false;
 				}
@@ -184,6 +190,9 @@ namespace basecross{
 			if (wButtons & XINPUT_GAMEPAD_DPAD_UP) {
 				if (gm->GetSelectingButtonNum() > 0)
 				{
+					auto ptrXA = App::GetApp()->GetXAudio2Manager();
+					ptrXA->Start(WstringKey::SE_Cursol, 0, 1.0f);
+
 					gm->SetSelectingButtonMinus();
 					testFlg = true;
 				}
@@ -192,6 +201,9 @@ namespace basecross{
 			if (wButtons & XINPUT_GAMEPAD_DPAD_DOWN) {
 				if (gm->GetSelectingButtonNum() < gm->GetMaxButtonNum())
 				{
+					auto ptrXA = App::GetApp()->GetXAudio2Manager();
+					ptrXA->Start(WstringKey::SE_Cursol, 0, 1.0f);
+
 					gm->SetSelectingButtonPlus();
 					testFlg = false;
 				}
@@ -271,9 +283,13 @@ namespace basecross{
 		auto gm = GameManager::GetInstance();
 		if (gm->GetFadeFlgChanged() == true)
 		{
+			auto ptrXA = App::GetApp()->GetXAudio2Manager();
+			ptrXA->Start(WstringKey::SE_Enter, 0, 1.0f);
+
 			gm->SetLoadSceneNum(SceneNum::StageSelect);
 			gm->SetFadeFlgChanged(false);
 			ExitScene();
+
 		}
 	}
 
@@ -310,6 +326,9 @@ namespace basecross{
 				break;
 			}
 
+			auto ptrXA = App::GetApp()->GetXAudio2Manager();
+			ptrXA->Start(WstringKey::SE_Enter, 0, 1.0f);
+
 			gm->SetFadeFlgChanged(false);
 			ExitScene();
 		}
@@ -320,6 +339,9 @@ namespace basecross{
 		//LoadScene(SceneNum::Title);
 		if (gm->GetFadeFlgChanged() == true)
 		{
+			auto ptrXA = App::GetApp()->GetXAudio2Manager();
+			ptrXA->Start(WstringKey::SE_Cancel, 0, 1.0f);
+
 			gm->SetLoadSceneNum(SceneNum::Title);
 			gm->SetFadeFlgChanged(false);
 			ExitScene();
@@ -340,10 +362,14 @@ namespace basecross{
 				case 0: // リトライ
 					//LoadScene(gm->GetSceneNum());
 					gm->SetLoadSceneNum(gm->GetSceneNum());
+					gm->SetFadeFlgChanged(false);
+					ExitScene();
 					break;
 				case 1:	// ステージセレクト
 					//LoadScene((int)SceneNum::StageSelect);
 					gm->SetLoadSceneNum(SceneNum::StageSelect);
+					gm->SetFadeFlgChanged(false);
+					ExitScene();
 					break;
 				case 2: // ゲームに戻る
 					gm->SetPoseFlg(false);
@@ -352,8 +378,9 @@ namespace basecross{
 				default:
 					break;
 				}
-				gm->SetFadeFlgChanged(false);
-				ExitScene();
+
+				auto ptrXA = App::GetApp()->GetXAudio2Manager();
+				ptrXA->Start(WstringKey::SE_Enter, 0, 1.0f);
 			}
 		}
 		//クリアした場合
@@ -382,6 +409,10 @@ namespace basecross{
 				default:
 					break;
 				}
+
+				auto ptrXA = App::GetApp()->GetXAudio2Manager();
+				ptrXA->Start(WstringKey::SE_Enter, 0, 1.0f);
+
 				gm->SetFadeFlgChanged(false);
 				ExitScene();
 			}
@@ -404,6 +435,9 @@ namespace basecross{
 				default:
 					break;
 				}
+				auto ptrXA = App::GetApp()->GetXAudio2Manager();
+				ptrXA->Start(WstringKey::SE_Enter, 0, 1.0f);
+
 				gm->SetFadeFlgChanged(false);
 				ExitScene();
 			}

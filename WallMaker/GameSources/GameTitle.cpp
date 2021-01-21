@@ -92,7 +92,7 @@ namespace basecross{
 
 		//BGM
 		auto ptrXA = App::GetApp()->GetXAudio2Manager();
-		m_BGM = ptrXA->Start(WstringKey::SE_GameTitle, 0, 1.0f);
+		m_BGM = ptrXA->Start(WstringKey::BGM_GameTitle, 0, 1.0f);
 	}
 
 	void GameTitle::OnUpdate()

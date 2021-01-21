@@ -200,8 +200,8 @@ namespace basecross {
 		gm->SetSceneNum(SceneNum::GameStage_3);
 
 		//BGM
-		//auto ptrXA = App::GetApp()->GetXAudio2Manager();
-		//m_BGM = ptrXA->Start(WstringKey::SE_MainBGM, XAUDIO2_LOOP_INFINITE, 0.5f);
+		auto ptrXA = App::GetApp()->GetXAudio2Manager();
+		m_BGM = ptrXA->Start(WstringKey::BGM_MainBGM, XAUDIO2_LOOP_INFINITE, 0.5f);
 
 		CreateSpriteAndButton();
 

@@ -42,6 +42,9 @@ namespace WstringKey {
 
 	//音
 	//BGM
+	const wstring BGM_MainBGM = L"BGM_MAINBGM";
+	const wstring BGM_GameTitle = L"SE_GameTitle";
+	const wstring BGM_GameSelect = L"SE_GameSelect";
 	//SE
 	const wstring SE_CreateMagicWall = L"SE_CraeteMagicWall";
 	const wstring SE_Bullet = L"SE_Bullet";
@@ -49,11 +52,11 @@ namespace WstringKey {
 	const wstring SE_EnemyDamage = L"SE_EnemyDamage";
 	const wstring SE_BreakWall = L"SE_BreakWall";
 	const wstring SE_PlayerDamage = L"SE_PlayerDamage";
-	const wstring SE_MainBGM = L"SE_MainBGM";
 	const wstring SE_GameClear = L"SE_GameClear";
-	const wstring SE_GameTitle = L"SE_GameTitle";
-	const wstring SE_GameSelect = L"SE_GameSelect";
 	const wstring SE_BreakStageWall = L"SE_BreakStageWall";
+	const wstring SE_Enter = L"SE_ENTER";
+	const wstring SE_Cancel = L"SE_CANCEL";
+	const wstring SE_Cursol = L"SE_CURSOL";
 
 	// シェアオブジェクト用
 	// プレイヤー

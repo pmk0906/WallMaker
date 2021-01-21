@@ -50,6 +50,9 @@ namespace basecross {
 		int m_SelectingButtonNum = 0;
 		//ボタンの番号の最大値
 		int m_MaxButtonNum = 0;
+		// フェードインアウト用のフラグ
+		bool m_FadeFlg = false;
+		bool m_FadeFlgChanged = false;
 
 		//ステージの数
 		int m_StageNumMax = 5;
@@ -57,6 +60,7 @@ namespace basecross {
 		bool m_StageNumArray[5] = {true, true, true, true, true};
 		//現在のシーンの番号
 		int m_NowSceneNum = 0;
+		int m_LoadSceneNum = 0;
 
 		//テスト用フラグ
 		bool m_TestFlg = false;
@@ -83,6 +87,8 @@ namespace basecross {
 			SetGoalCameraMoveEnd(false);
 			SetMagicSircleMoved(false);
 			SetMagicSircleEnabledLook(false);
+			SetFadeFlgChanged(true);
+			SetLoadSceneNum(0);
 		}
 
 		//シーンの番号
@@ -102,6 +108,15 @@ namespace basecross {
 		int GetStageNumMax()
 		{
 			return m_StageNumMax;
+		}
+		//読み込むシーンの番号
+		void SetLoadSceneNum(int loadSceneNum)
+		{
+			m_LoadSceneNum = loadSceneNum;
+		}
+		int GetLoadSceneNum()
+		{
+			return m_LoadSceneNum;
 		}
 
 		//宝とプレイヤーのフラグを見てフラグを切り替え
@@ -313,6 +328,24 @@ namespace basecross {
 		void SetMaxButtonNum(int maxButtonNum)
 		{
 			m_MaxButtonNum = maxButtonNum;
+		}
+		// クリアフラグ
+		bool GetFadeFlg()
+		{
+			return m_FadeFlg;
+		}
+		void SetFadeFlg(bool flg)
+		{
+			m_FadeFlg = flg;
+		}
+		// クリアフラグが変わったか
+		bool GetFadeFlgChanged()
+		{
+			return m_FadeFlgChanged;
+		}
+		void SetFadeFlgChanged(bool flg)
+		{
+			m_FadeFlgChanged = flg;
 		}
 
 		//テスト用フラグ

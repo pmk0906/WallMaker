@@ -22,6 +22,8 @@ namespace basecross{
 		InputHandler<GameManagement> m_InputHandler;
 
 		void LoadScene(int stageNum);
+		void EnterScene();
+		void ExitScene();
 		void PlayerMoveEnabled();
 		void ClearCheck();
 
@@ -30,6 +32,11 @@ namespace basecross{
 
 		//エフェクトをステージに登録する
 		void StageEffect();
+
+		//フェードイン・アウト
+		void CreateFadeIn(wstring textureKey, Col4 color);
+		void CreateFadeOut(wstring textureKey, Col4 color);
+		shared_ptr<GameObject> m_FadeSprite;
 
 		//シーン毎のボタンの処理
 		void TitleButton_A();

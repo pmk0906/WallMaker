@@ -65,6 +65,53 @@ namespace basecross{
 			break;
 		}
 		PostEvent(0.0f, GetThis<ObjectInterface>(), App::GetApp()->GetScene<Scene>(), sceneKey);
+
+	}
+
+	//シーンに入った時のフェードイン
+	void GameManagement::EnterScene()
+	{
+		auto gm = GameManager::GetInstance();
+
+		wstring sceneKey;
+		switch (gm->GetSceneNum())
+		{
+		case SceneNum::Title:
+		case SceneNum::StageSelect:
+		case SceneNum::GameStage_1:
+		case SceneNum::GameStage_2:
+		case SceneNum::GameStage_3:
+		case SceneNum::GameStage_4:
+		case SceneNum::GameStage_5:
+		case SceneNum::GameStage_Test:
+			CreateFadeIn(L"WHITE_TX", Col4(1.0f, 1.0f, 1.0f, 1.0f));
+			break;
+		default:
+			break;
+		}
+	}
+
+	//シーンを読み込む
+	void GameManagement::ExitScene()
+	{
+		auto gm = GameManager::GetInstance();
+
+		wstring sceneKey;
+		switch (gm->GetSceneNum())
+		{
+		case SceneNum::Title:
+		case SceneNum::StageSelect:
+		case SceneNum::GameStage_1:
+		case SceneNum::GameStage_2:
+		case SceneNum::GameStage_3:
+		case SceneNum::GameStage_4:
+		case SceneNum::GameStage_5:
+		case SceneNum::GameStage_Test:
+			CreateFadeOut(L"WHITE_TX", Col4(1.0f, 1.0f, 1.0f, 0.0f));
+			break;
+		default:
+			break;
+		}
 	}
 
 	void GameManagement::PlayerMoveEnabled()
@@ -83,8 +130,8 @@ namespace basecross{
 		}
 		else
 		{
-			auto delta = App::GetApp()->GetElapsedTime();
-			m_Timer += delta;
+			//auto delta = App::GetApp()->GetElapsedTime();
+			//m_Timer += delta;
 		}
 	}
 
@@ -162,17 +209,6 @@ namespace basecross{
 
 		if (stageNum == SceneNum::GameStage_1)
 		{
-			//if (gm->GetClearFlg() == true && gm->GetClearFlgChanged() == false)
-			//{
-			//	auto ptrGameGtage = GetTypeStage<GameStage>();
-			//	ptrGameGtage->ToGoalCamera();
-			//	//ptrGameGtage->SetView(ptrGameGtage->GetGoalCamera());
-			//}
-			//else
-			//{
-			//	auto ptrGameGtage = GetTypeStage<GameStage>();
-			//	ptrGameGtage->ToMyCamera();
-			//}
 			auto ptrGameGtage = GetTypeStage<GameStage>();
 			ptrGameGtage->ToPlayerCamera();
 		}
@@ -218,40 +254,77 @@ namespace basecross{
 		GetStage()->SetSharedGameObject(WstringKey::ShareObj_ReflectBulletEffect, reflectEffect);
 	}
 
+	void GameManagement::CreateFadeIn(wstring textureKey, Col4 color)
+	{
+		auto fadeSprite = GetStage()->AddGameObject<FadeSprite>(true, Vec2(1280, 800), Vec2(0, 0), false, 0.0f, 1.0f, textureKey, 3, color);
+		fadeSprite->SetFadeFlgChanged(false);
+	}
+	void GameManagement::CreateFadeOut(wstring textureKey, Col4 color)
+	{
+		auto fadeSprite = GetStage()->AddGameObject<FadeSprite>(true, Vec2(1280, 800), Vec2(0, 0), true, 1.0f, 0.0f, textureKey, 3, color);
+		fadeSprite->SetFadeFlgChanged(false);
+	}
+
 	void GameManagement::TitleButton_A()
 	{
-		LoadScene(SceneNum::StageSelect);
+		//LoadScene(SceneNum::StageSelect);
+		auto gm = GameManager::GetInstance();
+		if (gm->GetFadeFlgChanged() == true)
+		{
+			gm->SetLoadSceneNum(SceneNum::StageSelect);
+			gm->SetFadeFlgChanged(false);
+			ExitScene();
+		}
 	}
 
 	//ステージセレクト中のボタン
 	void GameManagement::StageSelectButton_A()
 	{
 		auto gm = GameManager::GetInstance();
-		auto selectingButtonNum = gm->GetSelectingButtonNum();
-		switch (selectingButtonNum)
+		if (gm->GetFadeFlgChanged() == true)
 		{
-		case 0:
-			LoadScene((int)SceneNum::GameStage_1);
-			break;
-		case 1:
-			LoadScene((int)SceneNum::GameStage_2);
-			break;
-		case 2:
-			LoadScene((int)SceneNum::GameStage_3);
-			break;
-		case 3:
-			LoadScene((int)SceneNum::GameStage_4);
-			break;
-		case 4:
-			LoadScene((int)SceneNum::GameStage_5);
-			break;
-		default:
-			break;
+			auto selectingButtonNum = gm->GetSelectingButtonNum();
+			switch (selectingButtonNum)
+			{
+			case 0:
+				//LoadScene((int)SceneNum::GameStage_1);
+				gm->SetLoadSceneNum(SceneNum::GameStage_1);
+				break;
+			case 1:
+				//LoadScene((int)SceneNum::GameStage_2);
+				gm->SetLoadSceneNum(SceneNum::GameStage_2);
+				break;
+			case 2:
+				//LoadScene((int)SceneNum::GameStage_3);
+				gm->SetLoadSceneNum(SceneNum::GameStage_3);
+				break;
+			case 3:
+				//LoadScene((int)SceneNum::GameStage_4);
+				gm->SetLoadSceneNum(SceneNum::GameStage_4);
+				break;
+			case 4:
+				//LoadScene((int)SceneNum::GameStage_5);
+				gm->SetLoadSceneNum(SceneNum::GameStage_5);
+				break;
+			default:
+				break;
+			}
+
+			gm->SetFadeFlgChanged(false);
+			ExitScene();
 		}
 	}
 	void GameManagement::StageSelectButton_B()
 	{
-		LoadScene(SceneNum::Title);
+		auto gm = GameManager::GetInstance();
+		//LoadScene(SceneNum::Title);
+		if (gm->GetFadeFlgChanged() == true)
+		{
+			gm->SetLoadSceneNum(SceneNum::Title);
+			gm->SetFadeFlgChanged(false);
+			ExitScene();
+
+		}
 	}
 
 	//ゲームステージ内でのボタン
@@ -260,57 +333,79 @@ namespace basecross{
 		auto gm = GameManager::GetInstance();
 		if (gm->GetPoseFlg() == true)
 		{
-			switch (gm->GetSelectingButtonNum())
+			if (gm->GetFadeFlgChanged() == true)
 			{
-			case 0: // リトライ
-				LoadScene(gm->GetSceneNum());
-				break;
-			case 1:	// ステージセレクト
-				LoadScene((int)SceneNum::StageSelect);
-				break;
-			case 2: // ゲームに戻る
-				gm->SetPoseFlg(false);
-				gm->SetPoseFlgChanged(false);
-				break;
-			default:
-				break;
+				switch (gm->GetSelectingButtonNum())
+				{
+				case 0: // リトライ
+					//LoadScene(gm->GetSceneNum());
+					gm->SetLoadSceneNum(gm->GetSceneNum());
+					break;
+				case 1:	// ステージセレクト
+					//LoadScene((int)SceneNum::StageSelect);
+					gm->SetLoadSceneNum(SceneNum::StageSelect);
+					break;
+				case 2: // ゲームに戻る
+					gm->SetPoseFlg(false);
+					gm->SetPoseFlgChanged(false);
+					break;
+				default:
+					break;
+				}
+				gm->SetFadeFlgChanged(false);
+				ExitScene();
 			}
 		}
 		//クリアした場合
 		if (gm->GetClearFlgChanged() == true)
 		{
-			switch (gm->GetSelectingButtonNum())
+			if (gm->GetFadeFlgChanged() == true)
 			{
-			case 0: // 次のステージへ
-				if (gm->GetNextSceneNum() == SceneNum::End)
+				switch (gm->GetSelectingButtonNum())
 				{
-					LoadScene(SceneNum::StageSelect);
+				case 0: // 次のステージへ
+					if (gm->GetNextSceneNum() == SceneNum::End)
+					{
+						//LoadScene(SceneNum::StageSelect);
+						gm->SetLoadSceneNum(SceneNum::StageSelect);
+					}
+					else
+					{
+						//LoadScene(gm->GetNextSceneNum());
+						gm->SetLoadSceneNum(gm->GetNextSceneNum());
+					}
+					break;
+				case 1: // ステージセレクトへ
+					//LoadScene((int)SceneNum::StageSelect);
+					gm->SetLoadSceneNum(SceneNum::StageSelect);
+					break;
+				default:
+					break;
 				}
-				else
-				{
-					LoadScene(gm->GetNextSceneNum());
-				}
-				break;
-			case 1: // ステージセレクトへ
-				LoadScene((int)SceneNum::StageSelect);
-				break;
-			default:
-				break;
+				gm->SetFadeFlgChanged(false);
+				ExitScene();
 			}
 		}
 		//ゲームオーバーになった場合
 		if (gm->GetDeathFlgChanged() == true)
 		{
-			switch (gm->GetSelectingButtonNum())
+			if (gm->GetFadeFlgChanged() == true)
 			{
-			case 0: // リトライ
-				LoadScene(gm->GetSceneNum());
-				break;
-			case 1: // ステージセレクトへ
-				LoadScene((int)SceneNum::StageSelect);
-				break;
-			default:
-				break;
+				switch (gm->GetSelectingButtonNum())
+				{
+				case 0: // リトライ
+					//LoadScene(gm->GetSceneNum());
+					gm->SetLoadSceneNum(gm->GetSceneNum());
+					break;
+				case 1: // ステージセレクトへ
+					//LoadScene((int)SceneNum::StageSelect);
+					gm->SetLoadSceneNum(SceneNum::StageSelect);
+					break;
+				default:
+					break;
+				}
+				gm->SetFadeFlgChanged(false);
+				ExitScene();
 			}
 		}
 		//カメラの移動が終わってない場合
@@ -350,6 +445,7 @@ namespace basecross{
 		ptrTrans->SetPosition(m_Position);
 
 		StageEffect();
+		EnterScene();
 
 		// DrawString用
 		//auto strComp = AddComponent<StringSprite>();
@@ -359,8 +455,23 @@ namespace basecross{
 
 	void GameManagement::OnUpdate()
 	{
+		auto gm = GameManager::GetInstance();
+
 		ButtonControl();
 		PlayerMoveEnabled();
+
+		if (gm->GetFadeFlgChanged() == false)
+		{
+			if (1.0f < m_Timer)
+			{
+				LoadScene(gm->GetLoadSceneNum());
+			}
+			else
+			{
+				auto delta = App::GetApp()->GetElapsedTime();
+				m_Timer += delta;
+			}
+		}
 	}
 
 	void GameManagement::OnUpdate2()

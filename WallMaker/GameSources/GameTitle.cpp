@@ -87,6 +87,9 @@ namespace basecross{
 		gm->SetSceneNum(SceneNum::Title);
 		gm->SetMaxButtonNum(0);
 
+		//auto fadeSprite = AddGameObject<FadeSprite>(true, Vec2(1280, 800), Vec2(0, 0), true, 1.0f, 0.0f, L"WHITE_TX", 1, Col4(1, 1, 1, 1.0f));
+		//fadeSprite->SetFadeFlgChanged(false);
+
 		//BGM
 		auto ptrXA = App::GetApp()->GetXAudio2Manager();
 		m_BGM = ptrXA->Start(WstringKey::SE_GameTitle, 0, 1.0f);

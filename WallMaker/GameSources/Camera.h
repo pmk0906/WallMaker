@@ -70,7 +70,7 @@ namespace basecross{
 		float m_TotalTime;
 
 		Vec3 offset = Vec3(0.0f, 40.0f, -7.0f);
-		Vec3 m_MyCamOffset = Vec3(0.0f, 40.0f, -7.0f);
+		Vec3 m_MyCamOffset = Vec3(0.0f, 10.0f, -7.0f);
 		Vec3 m_GoalCamOffset = Vec3(0.0f, 10.0f, -7.0f);
 
 

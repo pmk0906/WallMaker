@@ -3,7 +3,7 @@
 
 ////範囲内に入ったプレイヤーを狙い弾を撃つ敵
 namespace basecross {
-	class EnemyFirst : public GameObject 
+	class ReflectEnemy : public GameObject
 	{
 		shared_ptr<GameObject> m_Shield = nullptr;
 		shared_ptr<GameObject> m_RayObject = nullptr;
@@ -15,10 +15,6 @@ namespace basecross {
 
 		Col4 m_color = { 1.0f, 0.0f, 0.0f, 1.0f };
 
-		//ラインオブジェクト（weak_ptr）
-		weak_ptr<ActionLine> m_ActionLine;
-		weak_ptr<Player> ptrPlayer;
-
 		float m_EnemyHP;
 		float m_RotY;
 		float m_FireTime;
@@ -26,11 +22,11 @@ namespace basecross {
 		bool flg_Ray;
 
 	public:
-		EnemyFirst(const shared_ptr<Stage>& StagePtr,
+		ReflectEnemy(const shared_ptr<Stage>& StagePtr,
 			const Vec3& Scale,
 			const Vec3& Rotation,
 			const Vec3& Position);
-		virtual ~EnemyFirst();
+		virtual ~ReflectEnemy();
 
 		void OnCreate() override;
 		void OnUpdate() override;
@@ -55,3 +51,4 @@ namespace basecross {
 		void SetFlgRay(bool rayFlg);
 	};
 }
+

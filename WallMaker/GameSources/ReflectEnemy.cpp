@@ -1,9 +1,9 @@
 #include "stdafx.h"
 #include "Project.h"
 
-////範囲内に入ったプレイヤーをロックオンして３連射する敵
+////範囲内に入ったプレイヤーを狙い弾を撃つ敵
 namespace basecross {
-	RapidFireEnemy::RapidFireEnemy(
+	ReflectEnemy::ReflectEnemy(
 		const shared_ptr<Stage>& StagePtr,
 		const Vec3& Scale,
 		const Vec3& Rotation,
@@ -14,9 +14,9 @@ namespace basecross {
 		m_Rotation(Rotation),
 		m_Position(Position)
 	{}
-	RapidFireEnemy::~RapidFireEnemy() {}
+	ReflectEnemy::~ReflectEnemy() {}
 
-	void RapidFireEnemy::OnCreate()
+	void ReflectEnemy::OnCreate()
 	{
 		Mat4x4 spanMat; // モデルとトランスフォームの間の差分行列
 		spanMat.affineTransformation(
@@ -38,11 +38,12 @@ namespace basecross {
 
 		//タグをつける
 		AddTag(L"EnemyFirst");
+		//タグをつける
 		AddTag(WstringKey::Tag_DrawActiveFalse);
 
 		//描画処理
 		auto ptrDraw = AddComponent<PNTBoneModelDraw>();
-		ptrDraw->SetMeshResource(WstringKey::Anim_EnemyBlack);
+		ptrDraw->SetMeshResource(WstringKey::Anim_Enemy);
 		ptrDraw->SetMeshToTransformMatrix(spanMat);
 		//ptrDraw->SetFogEnabled(true);
 		ptrDraw->SetOwnShadowActive(true);
@@ -52,12 +53,13 @@ namespace basecross {
 
 		Initialize();
 		CreateShield();
+		//CreateRay();
 	}
 
-	void RapidFireEnemy::OnUpdate()
+	void ReflectEnemy::OnUpdate()
 	{
-		auto gm = GameManager::GetInstance();
 
+		auto gm = GameManager::GetInstance();
 		if (gm->GetMoveEnabledFlg() == true)
 		{
 			auto transComp = GetComponent<Transform>();
@@ -66,45 +68,38 @@ namespace basecross {
 
 			auto objs = GetStage()->GetGameObjectVec();
 
-			auto& app = App::GetApp();
-			float delta = app->GetElapsedTime();
-
 			Vec3 playerPos(0.0f, 0.0f, 0.0f);
 
 			for (auto& obj : objs)
 			{
 				auto player = dynamic_pointer_cast<Player>(obj);
-				//auto gameStage = dynamic_pointer_cast<GameStage>(GetStage());
+				//auto gameStage = dynamic_pointer_cast<GameStage>(obj);
 
-				if (player) 
+				if (player)
 				{
 					playerPos = player->GetPosition();
 				}
 			}
 
+			//auto rayObject = dynamic_pointer_cast<RayObject>(m_RayObject);
+
 			auto enemyToPlayer = playerPos - enemyPos;
 
-			if (enemyToPlayer.length() <= 20.0f)
+			if (enemyToPlayer.length() <= 20.0f /*&& rayObject->GetRayFlg() == true*/)
 			{
-				m_LockOnTime += delta;
-
 				LookPlayer();
 
-				if (m_FireTime >= 0.3f && flg_LockOn)
+				if (m_FireTime >= 3.0f)
 				{
 					Fire();
 				}
+
+				Reload();
 			}
 
-			else
-			{
-				m_LockOnTime = 0.0f;
-			}
-
-			Reload();
-			LockOn();
 			Die();
 			FireEffect();
+
 		}
 		if (gm->GetPoseFlg() == false)
 		{
@@ -114,60 +109,51 @@ namespace basecross {
 		}
 	}
 
-
-	void RapidFireEnemy::Initialize()
+	void ReflectEnemy::Initialize()
 	{
 		m_EnemyHP = 1.0f;
 		m_RotY = 0.0f;
-		m_FireTime = 1.0f;
-		m_LockOnTime = 0.0f;
+		m_FireTime = 0.0f;
 
-		m_FireCount = 0;
-
-		flg_LockOn = false;
+		flg_Ray = true;
 	}
 
-	void RapidFireEnemy::Fire()
+	void ReflectEnemy::Fire()
 	{
 		auto transComp = GetComponent<Transform>();
-		
+
 		auto forward_player = transComp->GetForword();
 
 		auto pos = transComp->GetPosition();
 
-		auto enemybullet = GetStage()->AddGameObject<EnemyBullet>();
+		auto enemybullet = GetStage()->AddGameObject<ReflectBullet>();
 		auto bulletTrans = enemybullet->GetComponent<Transform>();
 
-		auto scale_player = transComp->GetScale();
+		auto bulletPos = enemybullet->GetPosition();
 
-		bulletTrans->SetPosition(pos + forward_player * scale_player.x);
+		auto scale_enemy = transComp->GetScale();
+
+		bulletPos = pos + forward_player * scale_enemy.x;
+
+		bulletTrans->SetPosition(bulletPos);
 		enemybullet->SetDir(forward_player);
 
 		m_FireTime = 0.0f;
-
-		m_FireCount++;
 
 		auto ptrXA = App::GetApp()->GetXAudio2Manager();
 		ptrXA->Start(WstringKey::SE_Bullet, 0, 1.0f);
 	}
 
-	void RapidFireEnemy::Reload()
+	void ReflectEnemy::Reload()
 	{
 		auto& app = App::GetApp();
 
 		float delta = app->GetElapsedTime();
 
 		m_FireTime += delta;
-
-		if (m_FireCount >= 3)
-		{
-			m_FireCount = 0;
-			m_LockOnTime = 0.0f;
-			flg_LockOn = false;
-		}
 	}
 
-	void RapidFireEnemy::LookPlayer()
+	void ReflectEnemy::LookPlayer()
 	{
 		auto& app = App::GetApp();
 
@@ -205,52 +191,59 @@ namespace basecross {
 		}
 
 		transComp->SetRotation(0.0f, -m_RotY, 0.0f);
-
 	}
 
-	void RapidFireEnemy::LockOn()
-	{
-		if (m_LockOnTime >= 4.0f)
-		{
-			flg_LockOn = true;
-		}
-	}
-
-	void RapidFireEnemy::Damage(float damage)
+	void ReflectEnemy::Damage(float damage)
 	{
 		m_EnemyHP -= damage;
 	}
 
-	void RapidFireEnemy::Die()
+	void ReflectEnemy::Die()
 	{
-		auto ptrChild = dynamic_pointer_cast<RapidShield>(m_Shield);
+		auto ptrChild = dynamic_pointer_cast<ReflectShield>(m_Shield);
 
 		if (m_EnemyHP <= 0.0f)
 		{
 			//SetDrawActive(false);
 			//SetUpdateActive(false);
-			GetStage()->RemoveGameObject<RapidFireEnemy>(GetThis<RapidFireEnemy>());
+			GetStage()->RemoveGameObject<ReflectEnemy>(GetThis<ReflectEnemy>());
 
 			ptrChild->DirectDie();
 
-			GenerataFire(50, Vec3(50.0f));
+			GenerataFire(30, Vec3(50.0f));
 		}
 	}
 
-	void RapidFireEnemy::CreateShield()
+	void ReflectEnemy::CreateShield()
 	{
-		m_Shield = GetStage()->AddGameObject<RapidShield>(GetThis<RapidFireEnemy>());
+		m_Shield = GetStage()->AddGameObject<ReflectShield>(GetThis<ReflectEnemy>());
 	}
 
-	void RapidFireEnemy::FireEffect()
+	void ReflectEnemy::CreateRay()
 	{
-		if (m_LockOnTime >= 3.0f)
+		auto transComp = GetComponent<Transform>();
+		auto pos = transComp->GetPosition();
+
+		m_RayObject = GetStage()->AddGameObject<RayObject>(GetThis<EnemyFirst>());
+
+		auto rayTrans = m_RayObject->GetComponent<Transform>();
+
+		auto rayPos = rayTrans->GetPosition();
+
+		rayPos = pos;
+
+		rayTrans->SetPosition(rayPos);
+	}
+
+	void ReflectEnemy::FireEffect()
+	{
+		if (m_FireTime >= 2.0f)
 		{
 			GenerataFire(2, Vec3(10.0f));
 		}
 	}
 
-	void RapidFireEnemy::GenerataFire(int GenerateNum, Vec3 MoveSpeed)
+	void ReflectEnemy::GenerataFire(int GenerateNum, Vec3 MoveSpeed)
 	{
 		auto ptrTrans = GetComponent<Transform>();
 		auto forward_player = ptrTrans->GetForword();
@@ -262,7 +255,27 @@ namespace basecross {
 		}
 	}
 
-	Vec3 RapidFireEnemy::GetPosition() const
+	float ReflectEnemy::GetHp()
+	{
+		return m_EnemyHP;
+	}
+
+	float ReflectEnemy::GetFireTime()
+	{
+		return m_FireTime;
+	}
+
+	bool ReflectEnemy::GetFlgRay()
+	{
+		return flg_Ray;
+	}
+
+	void ReflectEnemy::SetFlgRay(bool rayFlg)
+	{
+		flg_Ray = rayFlg;
+	}
+
+	Vec3 ReflectEnemy::GetPosition() const
 	{
 		return GetComponent<Transform>()->GetPosition();
 	}

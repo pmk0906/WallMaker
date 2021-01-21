@@ -26,6 +26,8 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)GameStage5.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)RayBullet.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)RayObject.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ReflectBullet.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ReflectEnemy.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)TestStage.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)EnemyBullet.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)EnemyFirst.h" />
@@ -61,6 +63,8 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)GameStage5.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)RayBullet.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)RayObject.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)ReflectBullet.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)ReflectEnemy.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)TestStage.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)EnemyBullet.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)EnemyFirst.cpp" />

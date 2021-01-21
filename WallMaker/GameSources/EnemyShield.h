@@ -27,6 +27,7 @@ namespace basecross {
 		void Damage(float damage);
 		void Die();
 		void DirectDie();
+		void SetColor();
 		void GenerataFire(int GenerateNum, Vec3 MoveSpeed);
 
 		Vec3 GetPosition() const;
@@ -56,6 +57,7 @@ namespace basecross {
 		void Damage(float damage);
 		void Die();
 		void DirectDie();
+		void SetColor();
 		void GenerataFire(int GenerateNum, Vec3 MoveSpeed);
 
 		Vec3 GetPosition() const;
@@ -85,6 +87,7 @@ namespace basecross {
 		void Damage(float damage);
 		void Die();
 		void DirectDie();
+		void SetColor();
 		void GenerataFire(int GenerateNum, Vec3 MoveSpeed);
 
 		Vec3 GetPosition() const;
@@ -114,6 +117,7 @@ namespace basecross {
 		void Damage(float damage);
 		void Die();
 		void DirectDie();
+		void SetColor();
 		void GenerataFire(int GenerateNum, Vec3 MoveSpeed);
 
 		Vec3 GetPosition() const;
@@ -143,6 +147,37 @@ namespace basecross {
 		void Damage(float damage);
 		void Die();
 		void DirectDie();
+		void SetColor();
+		void GenerataFire(int GenerateNum, Vec3 MoveSpeed);
+
+		Vec3 GetPosition() const;
+	};
+
+	class ReflectShield : public GameObject
+	{
+		const shared_ptr<GameObject>& m_Parent;
+
+		float m_Hp;
+
+	public:
+		ReflectShield(const shared_ptr<Stage>& stage, const shared_ptr<GameObject>& Parent);
+
+		/*{
+
+		}*/
+
+		~ReflectShield()
+		{
+
+		}
+
+		void OnCreate() override;
+		void OnUpdate() override;
+		void Initialize();
+		void Damage(float damage);
+		void Die();
+		void DirectDie();
+		void SetColor();
 		void GenerataFire(int GenerateNum, Vec3 MoveSpeed);
 
 		Vec3 GetPosition() const;

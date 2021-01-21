@@ -209,7 +209,7 @@ namespace basecross {
 
 	void DangerEnemy::FireEffect()
 	{
-		if (m_FireTime >= 2.0f)
+		if (m_FireTime >= 4.0f)
 		{
 			GenerataFire(2, Vec3(10.0f));
 		}

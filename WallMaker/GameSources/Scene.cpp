@@ -93,7 +93,7 @@ namespace basecross{
 			{L"GAMECLEAR_TX", L"Tx_GameClear.png"},
 			{L"GAMEOVER_TX", L"Tx_GameOver.png"},
 			{L"POSE_TX", L"Tx_Paused.png"},
-			{L"STAGESELECT_TX", L"Tx_StageSelect.png"},
+			{L"STAGESELECT_TX", L"Tx_StageSelect_ver2.png"},
 			{L"A_START_TX", L"Tx_Start.png"}, // Aボタンでスタート
 			{L"START_TX", L"Tx_GameStart.png"} // ゲーム開始
 		};
@@ -121,7 +121,12 @@ namespace basecross{
 			{L"DANGER_BULLET_MESH", L"Bullet_Red.bmf"},
 			{L"THORN_BULLET_MESH", L"Bullet_Red_thorn.bmf"},
 			{L"PURPLE_BULLET_MESH", L"Bullet_Purple.bmf"},
-			{L"BLUE_BULLET_MESH", L"Bullet_Blue.bmf"}
+			{L"BLUE_BULLET_MESH", L"Bullet_Blue.bmf"},
+			{L"RED_SHIELD", L"Shield_Red.bmf"},
+			{L"ORANGE_SHIELD", L"Shield_Orange.bmf"},
+			{L"YELLOW_SHIELD", L"Shield_Yellow.bmf"},
+			{L"GREEN_SHIELD", L"Shield_LightBlue.bmf"},
+			{L"BLUE_SHIELD", L"Shield_Blue.bmf"}
 
 		};
 		//タンジェント有りスタティック

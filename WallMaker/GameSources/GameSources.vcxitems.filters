@@ -101,6 +101,8 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)GameStage5.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)RayBullet.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)RayObject.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ReflectBullet.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)ReflectEnemy.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)Character.cpp">
@@ -186,5 +188,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)GameStage5.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)RayBullet.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)RayObject.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)ReflectBullet.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)ReflectEnemy.cpp" />
   </ItemGroup>
 </Project>

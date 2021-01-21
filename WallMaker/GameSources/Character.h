@@ -215,5 +215,47 @@ namespace basecross{
 		// 初期化
 		virtual void OnCreate()override;
 	};
+
+	class ActionLine : public GameObject {
+		weak_ptr<GameObject> m_StartObj;
+		weak_ptr<GameObject> m_EndObj;
+	public:
+		//--------------------------------------------------------------------------------------
+		/*!
+		@brief	コンストラクタ
+		@param[in]	StagePtr	ステージ
+		@param[in]	StartObj	スタートのオブジェクト
+		@param[in]	EndObj	エンドのオブジェクト
+		*/
+		//--------------------------------------------------------------------------------------
+		ActionLine(const shared_ptr<Stage>& StagePtr, const shared_ptr<GameObject>& StartObj,
+			const shared_ptr<GameObject>& EndObj);
+		virtual ~ActionLine() {}
+		//初期化
+		virtual void OnCreate() override;
+		//更新
+		virtual void OnUpdate() override;
+		//線のスタートオブジェクトの取得
+		shared_ptr<GameObject> GetStartObj() const {
+			return m_StartObj.lock();
+		}
+		//線のスタートオブジェクトの設定
+		void SetStartObj(const shared_ptr<GameObject>& Obj) {
+			m_StartObj = Obj;
+		}
+		//線のエンドオブジェクトの取得
+		shared_ptr<GameObject> GetEndObj() const {
+			return m_EndObj.lock();
+		}
+		//線のエンドオブジェクトの設定
+		void SetEndObj(const shared_ptr<GameObject>& Obj) {
+			m_EndObj = Obj;
+		}
+		//線のスタートとエンドオブジェクトの設定
+		void ResetObject(const shared_ptr<GameObject>& StartObj, const shared_ptr<GameObject>& EndObj) {
+			m_StartObj = StartObj;
+			m_EndObj = EndObj;
+		}
+	};
 }
 //end basecross

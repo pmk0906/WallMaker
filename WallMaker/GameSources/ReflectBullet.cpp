@@ -1,9 +1,9 @@
 #include "stdafx.h"
 #include "Project.h"
 
-////威力２の強力な弾
+////威力１の一般弾
 namespace basecross {
-	void DangerBullet::OnCreate()
+	void ReflectBullet::OnCreate()
 	{
 		Mat4x4 spanMat; // モデルとトランスフォームの間の差分行列
 		spanMat.affineTransformation(
@@ -15,16 +15,17 @@ namespace basecross {
 
 		//描画
 		auto ptrDraw = AddComponent<PNTStaticModelDraw>();
-		ptrDraw->SetMeshResource(L"THORN_BULLET_MESH");
+		ptrDraw->SetMeshResource(L"BULLET_MESH");
 		ptrDraw->SetMeshToTransformMatrix(spanMat);
 
 		// 衝突判定
-		auto ptrColl = AddComponent<CollisionSphere>();
+		auto ptrColl = AddComponent<CollisionObb>();
 		ptrColl->SetAfterCollision(AfterCollision::None);
 
 		AddTag(L"EnemyBullet");
 
 		Initialize();
+
 		auto myTrans = GetComponent<Transform>();
 
 		auto my_Scale = myTrans->GetScale();
@@ -32,49 +33,49 @@ namespace basecross {
 		myTrans->SetScale(0.7f, 0.7f, 0.7f);
 	}
 
-	void DangerBullet::OnUpdate()
+	void ReflectBullet::OnUpdate()
 	{
 		auto gm = GameManager::GetInstance();
-
-
 		if (gm->GetMoveEnabledFlg() == true)
 		{
-			auto &app = App::GetApp();
-			auto delta = app->GetElapsedTime();
-
-			m_DieTime += delta;
-
-			BulletMove();
-			Die();
-			SetMaxSpeed();
-			SetColor();
-			SetReflectflg();
-
-			if (flg_reflect == false)
+			if (gm->GetClearFlgChanged() == false)
 			{
-				GenerateFire(2, Vec3(1.0f, 1.0f, 1.0f));
-			}
-			else
-			{
-				GenerateFireBlue(2, Vec3(1.0f, 1.0f, 1.0f));
+				auto &app = App::GetApp();
+				auto delta = app->GetElapsedTime();
+
+				m_DieTime += delta;
+
+				BulletMove();
+				Die();
+				SetMaxSpeed();
+				SetColor();
+				SetReflectflg();
+
+				if (flg_reflect == false)
+				{
+					GenerateFire(1, Vec3(0.0f, 0.0f, 0.0f));
+				}
+				else
+				{
+					GenerateFireBlue(3, Vec3(0.0f, 0.0f, 0.0f));
+				}
 			}
 		}
 	}
 
-	void DangerBullet::Initialize()
+	void ReflectBullet::Initialize()
 	{
-		m_ReflectCount = 2;
-
 		m_BulletSpeed = 15.0f;
-		m_Attack = 2.0f;
+		m_Attack = 1.0f;
 		m_DieTime = 0.0f;
 		m_ReflectTime = 0.0f;
+		m_ReflectAbilty = 1.0f;
 
 		flg_reflect = false;
 		flg_reflectWall = false;
 	}
 
-	void DangerBullet::BulletMove()
+	void ReflectBullet::BulletMove()
 	{
 		auto &app = App::GetApp();
 		auto delta = app->GetElapsedTime();
@@ -87,7 +88,7 @@ namespace basecross {
 		transComp->SetPosition(pos);
 	}
 
-	void DangerBullet::Die()
+	void ReflectBullet::Die()
 	{
 		if (m_DieTime >= 5.0f)
 		{
@@ -96,17 +97,17 @@ namespace basecross {
 		}
 	}
 
-	void DangerBullet::SetDir(const Vec3& v)
+	void ReflectBullet::SetDir(const Vec3& v)
 	{
 		dir = v;
 	}
 
-	Vec3 DangerBullet::GetPosition() const
+	Vec3 ReflectBullet::GetPosition() const
 	{
 		return GetComponent<Transform>()->GetPosition();
 	}
 
-	Vec3 DangerBullet::Reflect(Vec3 wall, Vec3 bullet)
+	Vec3 ReflectBullet::Reflect(Vec3 wall, Vec3 bullet)
 	{
 		Vec3 reverse_BulletVec, newDir, length, reflection;
 		float projection;
@@ -124,7 +125,7 @@ namespace basecross {
 		return newDir.normalize();
 	}
 
-	void DangerBullet::SetMaxSpeed()
+	void ReflectBullet::SetMaxSpeed()
 	{
 		if (m_BulletSpeed >= MAX_SPEED)
 		{
@@ -132,7 +133,7 @@ namespace basecross {
 		}
 	}
 
-	void DangerBullet::SetColor()
+	void ReflectBullet::SetColor()
 	{
 		Mat4x4 spanMat; // モデルとトランスフォームの間の差分行列
 		spanMat.affineTransformation(
@@ -142,16 +143,7 @@ namespace basecross {
 			Vec3(0.0f, -3.0f, 0.0f)
 		);
 
-		if (m_ReflectCount == 1)
-		{
-			//描画
-			auto ptrDraw = AddComponent<PNTStaticModelDraw>();
-
-			ptrDraw->SetMeshResource(L"BULLET_MESH");
-			ptrDraw->SetMeshToTransformMatrix(spanMat);
-		}
-
-		if (flg_reflect && m_ReflectCount <= 0)
+		if (flg_reflect)
 		{
 			auto ptrDraw = AddComponent<PNTStaticModelDraw>();
 
@@ -160,7 +152,7 @@ namespace basecross {
 		}
 	}
 
-	void DangerBullet::GenerateFire(int GenerateNum, Vec3 MoveSpeed)
+	void ReflectBullet::GenerateFire(int GenerateNum, Vec3 MoveSpeed)
 	{
 		auto ptrTrans = GetComponent<Transform>();
 		auto PtrFire = GetStage()->GetSharedGameObject<MultiFire>(L"MultiFire", false);
@@ -169,7 +161,7 @@ namespace basecross {
 		}
 	}
 
-	void DangerBullet::GenerateFireBlue(int GenerateNum, Vec3 MoveSpeed)
+	void ReflectBullet::GenerateFireBlue(int GenerateNum, Vec3 MoveSpeed)
 	{
 		auto ptrTrans = GetComponent<Transform>();
 		auto PtrFire = GetStage()->GetSharedGameObject<MultiFireBlue>(L"MultiFireBlue", false);
@@ -178,7 +170,16 @@ namespace basecross {
 		}
 	}
 
-	void DangerBullet::SetReflectflg()
+	void ReflectBullet::GenerateReflectEffect(int GenerateNum, Vec3 MoveSpeed)
+	{
+		auto ptrTrans = GetComponent<Transform>();
+		auto PtrFire = GetStage()->GetSharedGameObject<ReflectBulletEffect>(WstringKey::ShareObj_ReflectBulletEffect, false);
+		if (PtrFire) {
+			PtrFire->InsertEffect(GetComponent<Transform>()->GetPosition(), GenerateNum, MoveSpeed);
+		}
+	}
+
+	void ReflectBullet::SetReflectflg()
 	{
 		if (m_ReflectTime >= 0.005f)
 		{
@@ -189,7 +190,7 @@ namespace basecross {
 	}
 
 	//当たった瞬間
-	void DangerBullet::OnCollisionEnter(shared_ptr<GameObject>& other)
+	void ReflectBullet::OnCollisionEnter(shared_ptr<GameObject>& other)
 	{
 		// 当たったのがプレイヤーなら
 		if (auto player = dynamic_pointer_cast<Player>(other))
@@ -197,6 +198,7 @@ namespace basecross {
 			if (flg_reflect == false)
 			{
 				player->Damage(ATTACK);
+
 				auto ptrXA = App::GetApp()->GetXAudio2Manager();
 				ptrXA->Start(WstringKey::SE_PlayerDamage, 0, 1.0f);
 			}
@@ -205,13 +207,17 @@ namespace basecross {
 			SetUpdateActive(false);
 		}
 
-		//　あたったのが壁なら
+		//　あたったのが魔法壁なら
 		if (auto magicWall = dynamic_pointer_cast<MagicWall>(other))
 		{
 			auto wallTrans = magicWall->GetComponent<Transform>();
 			auto myTrans = GetComponent<Transform>();
 
-			m_ReflectCount -= 1;
+			SetDir(Reflect(wallTrans->GetForword(), dir));
+			m_ReflectAbilty -= 1.0f;
+
+			auto ptrXA = App::GetApp()->GetXAudio2Manager();
+			ptrXA->Start(WstringKey::SE_Reflection, 0, 1.0f);
 
 			if (flg_reflect)
 			{
@@ -219,21 +225,9 @@ namespace basecross {
 				m_Attack += 1.0f;
 			}
 
-			if (m_ReflectCount <= 0)
-			{
-				flg_reflect = true;
+			flg_reflect = true;
 
-				SetDir(Reflect(wallTrans->GetForword(), dir));
-
-				auto ptrXA = App::GetApp()->GetXAudio2Manager();
-				ptrXA->Start(WstringKey::SE_Reflection, 0, 1.0f);
-			}
-
-			else
-			{
-				auto ptrXA = App::GetApp()->GetXAudio2Manager();
-				ptrXA->Start(WstringKey::SE_BreakWall, 0, 1.0f);
-			}
+			GenerateReflectEffect(30, Vec3(30.0f));
 
 			magicWall->Damage(m_Attack);
 		}
@@ -321,7 +315,7 @@ namespace basecross {
 				ptrXA->Start(WstringKey::SE_EnemyDamage, 0, 1.0f);
 			}
 
-			if (m_DieTime >= 0.3f)
+			if (m_DieTime >= 0.1f)
 			{
 				SetDrawActive(false);
 				SetUpdateActive(false);
@@ -338,7 +332,7 @@ namespace basecross {
 				ptrXA->Start(WstringKey::SE_EnemyDamage, 0, 1.0f);
 			}
 
-			if (m_DieTime >= 0.3f)
+			if (m_DieTime >= 0.1f)
 			{
 				SetDrawActive(false);
 				SetUpdateActive(false);
@@ -355,7 +349,7 @@ namespace basecross {
 				ptrXA->Start(WstringKey::SE_EnemyDamage, 0, 1.0f);
 			}
 
-			if (m_DieTime >= 0.3f)
+			if (m_DieTime >= 0.1f)
 			{
 				SetDrawActive(false);
 				SetUpdateActive(false);
@@ -372,7 +366,7 @@ namespace basecross {
 				ptrXA->Start(WstringKey::SE_EnemyDamage, 0, 1.0f);
 			}
 
-			if (m_DieTime >= 0.3f)
+			if (m_DieTime >= 0.1f)
 			{
 				SetDrawActive(false);
 				SetUpdateActive(false);
@@ -389,7 +383,7 @@ namespace basecross {
 				ptrXA->Start(WstringKey::SE_EnemyDamage, 0, 1.0f);
 			}
 
-			if (m_DieTime >= 0.3f)
+			if (m_DieTime >= 0.1f)
 			{
 				SetDrawActive(false);
 				SetUpdateActive(false);
@@ -406,13 +400,14 @@ namespace basecross {
 				ptrXA->Start(WstringKey::SE_EnemyDamage, 0, 1.0f);
 			}
 
-			if (m_DieTime >= 0.3f)
+			if (m_DieTime >= 0.1f)
 			{
 				SetDrawActive(false);
 				SetUpdateActive(false);
 			}
 		}
 
+		// 当たったのが反射壁なら
 		if (auto reflectWall = dynamic_pointer_cast<StageRefrectWall>(other))
 		{
 			auto wallTrans = reflectWall->GetComponent<Transform>();
@@ -423,11 +418,13 @@ namespace basecross {
 			auto &app = App::GetApp();
 			auto delta = app->GetElapsedTime();
 
-			if (flg_reflect && flg_reflectWall == false)
+			if (flg_reflect && flg_reflectWall == false || m_ReflectAbilty >= 1.0f)
 			{
 				pos -= 0.1f;
 
 				SetDir(Reflect(wallTrans->GetForword(), dir));
+
+				m_ReflectAbilty -= 1.0f;
 
 				m_BulletSpeed += 5.0f;
 				m_Attack += 1.0f;
@@ -435,6 +432,8 @@ namespace basecross {
 				flg_reflectWall = true;
 
 				m_ReflectTime += delta;
+
+				GenerateReflectEffect(30, Vec3(30.0f));
 			}
 
 			myTrans->SetPosition(pos);

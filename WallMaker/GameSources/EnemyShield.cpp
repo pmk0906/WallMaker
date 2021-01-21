@@ -50,6 +50,7 @@ namespace basecross {
 	void EnemyShield::OnUpdate()
 	{
 		Die();
+		SetColor();
 		//FireEffect();
 	}
 
@@ -86,6 +87,49 @@ namespace basecross {
 		//SetUpdateActive(false);
 		GetStage()->RemoveGameObject<EnemyShield>(GetThis<EnemyShield>());
 
+	}
+
+	void EnemyShield::SetColor()
+	{
+		if (m_Hp == 1.0f)
+		{
+			Mat4x4 spanMat; // モデルとトランスフォームの間の差分行列
+			spanMat.affineTransformation(
+				Vec3(1.0f, 1.0f, 2.0f),
+				Vec3(0.0f, 0.0f, 0.0f),
+				Vec3(0.0f, 0.0f, 0.0f),
+				Vec3(0.0f, 0.0f, 0.0f)
+			);
+
+			auto drawComp = AddComponent<BcPNTnTStaticModelDraw>();
+			drawComp->SetMeshResource(L"RED_SHIELD");
+		}
+		else if (m_Hp == 2.0f)
+		{
+			Mat4x4 spanMat; // モデルとトランスフォームの間の差分行列
+			spanMat.affineTransformation(
+				Vec3(1.0f, 1.0f, 2.0f),
+				Vec3(0.0f, 0.0f, 0.0f),
+				Vec3(0.0f, 0.0f, 0.0f),
+				Vec3(0.0f, 0.0f, 0.0f)
+			);
+
+			auto drawComp = AddComponent<BcPNTnTStaticModelDraw>();
+			drawComp->SetMeshResource(L"ORANGE_SHIELD");
+		}
+		else if (m_Hp == 3.0f)
+		{
+			Mat4x4 spanMat; // モデルとトランスフォームの間の差分行列
+			spanMat.affineTransformation(
+				Vec3(1.0f, 1.0f, 2.0f),
+				Vec3(0.0f, 0.0f, 0.0f),
+				Vec3(0.0f, 0.0f, 0.0f),
+				Vec3(0.0f, 0.0f, 0.0f)
+			);
+
+			auto drawComp = AddComponent<BcPNTnTStaticModelDraw>();
+			drawComp->SetMeshResource(L"YELLOW_SHIELD");
+		}
 	}
 
 	void EnemyShield::GenerataFire(int GenerateNum, Vec3 MoveSpeed)
@@ -143,6 +187,7 @@ namespace basecross {
 	void PatrolShield::OnUpdate()
 	{
 		Die();
+		SetColor();
 	}
 
 	void PatrolShield::Initialize()
@@ -178,6 +223,49 @@ namespace basecross {
 		//SetDrawActive(false);
 		//SetUpdateActive(false);
 		GetStage()->RemoveGameObject<PatrolShield>(GetThis<PatrolShield>());
+	}
+
+	void PatrolShield::SetColor()
+	{
+		if (m_Hp == 1.0f)
+		{
+			Mat4x4 spanMat; // モデルとトランスフォームの間の差分行列
+			spanMat.affineTransformation(
+				Vec3(1.0f, 1.0f, 2.0f),
+				Vec3(0.0f, 0.0f, 0.0f),
+				Vec3(0.0f, 0.0f, 0.0f),
+				Vec3(0.0f, 0.0f, 0.0f)
+			);
+
+			auto drawComp = AddComponent<BcPNTnTStaticModelDraw>();
+			drawComp->SetMeshResource(L"RED_SHIELD");
+		}
+		else if (m_Hp == 2.0f)
+		{
+			Mat4x4 spanMat; // モデルとトランスフォームの間の差分行列
+			spanMat.affineTransformation(
+				Vec3(1.0f, 1.0f, 2.0f),
+				Vec3(0.0f, 0.0f, 0.0f),
+				Vec3(0.0f, 0.0f, 0.0f),
+				Vec3(0.0f, 0.0f, 0.0f)
+			);
+
+			auto drawComp = AddComponent<BcPNTnTStaticModelDraw>();
+			drawComp->SetMeshResource(L"ORANGE_SHIELD");
+		}
+		else if (m_Hp == 3.0f)
+		{
+			Mat4x4 spanMat; // モデルとトランスフォームの間の差分行列
+			spanMat.affineTransformation(
+				Vec3(1.0f, 1.0f, 2.0f),
+				Vec3(0.0f, 0.0f, 0.0f),
+				Vec3(0.0f, 0.0f, 0.0f),
+				Vec3(0.0f, 0.0f, 0.0f)
+			);
+
+			auto drawComp = AddComponent<BcPNTnTStaticModelDraw>();
+			drawComp->SetMeshResource(L"YELLOW_SHIELD");
+		}
 	}
 
 	void PatrolShield::GenerataFire(int GenerateNum, Vec3 MoveSpeed)
@@ -235,6 +323,7 @@ namespace basecross {
 	void UPPatrolShield::OnUpdate()
 	{
 		Die();
+		SetColor();
 	}
 
 	void UPPatrolShield::Initialize()
@@ -270,6 +359,49 @@ namespace basecross {
 		//SetDrawActive(false);
 		//SetUpdateActive(false);
 		GetStage()->RemoveGameObject<UPPatrolShield>(GetThis<UPPatrolShield>());
+	}
+
+	void UPPatrolShield::SetColor()
+	{
+		if (m_Hp == 1.0f)
+		{
+			Mat4x4 spanMat; // モデルとトランスフォームの間の差分行列
+			spanMat.affineTransformation(
+				Vec3(1.0f, 1.0f, 2.0f),
+				Vec3(0.0f, 0.0f, 0.0f),
+				Vec3(0.0f, 0.0f, 0.0f),
+				Vec3(0.0f, 0.0f, 0.0f)
+			);
+
+			auto drawComp = AddComponent<BcPNTnTStaticModelDraw>();
+			drawComp->SetMeshResource(L"RED_SHIELD");
+		}
+		else if (m_Hp == 2.0f)
+		{
+			Mat4x4 spanMat; // モデルとトランスフォームの間の差分行列
+			spanMat.affineTransformation(
+				Vec3(1.0f, 1.0f, 2.0f),
+				Vec3(0.0f, 0.0f, 0.0f),
+				Vec3(0.0f, 0.0f, 0.0f),
+				Vec3(0.0f, 0.0f, 0.0f)
+			);
+
+			auto drawComp = AddComponent<BcPNTnTStaticModelDraw>();
+			drawComp->SetMeshResource(L"ORANGE_SHIELD");
+		}
+		else if (m_Hp == 3.0f)
+		{
+			Mat4x4 spanMat; // モデルとトランスフォームの間の差分行列
+			spanMat.affineTransformation(
+				Vec3(1.0f, 1.0f, 2.0f),
+				Vec3(0.0f, 0.0f, 0.0f),
+				Vec3(0.0f, 0.0f, 0.0f),
+				Vec3(0.0f, 0.0f, 0.0f)
+			);
+
+			auto drawComp = AddComponent<BcPNTnTStaticModelDraw>();
+			drawComp->SetMeshResource(L"YELLOW_SHIELD");
+		}
 	}
 
 	void UPPatrolShield::GenerataFire(int GenerateNum, Vec3 MoveSpeed)
@@ -327,6 +459,7 @@ namespace basecross {
 	void RapidShield::OnUpdate()
 	{
 		Die();
+		SetColor();
 	}
 
 	void RapidShield::Initialize()
@@ -361,6 +494,49 @@ namespace basecross {
 		//SetDrawActive(false);
 		//SetUpdateActive(false);
 		GetStage()->RemoveGameObject<RapidShield>(GetThis<RapidShield>());
+	}
+
+	void RapidShield::SetColor()
+	{
+		if (m_Hp == 1.0f)
+		{
+			Mat4x4 spanMat; // モデルとトランスフォームの間の差分行列
+			spanMat.affineTransformation(
+				Vec3(1.0f, 1.0f, 2.0f),
+				Vec3(0.0f, 0.0f, 0.0f),
+				Vec3(0.0f, 0.0f, 0.0f),
+				Vec3(0.0f, 0.0f, 0.0f)
+			);
+
+			auto drawComp = AddComponent<BcPNTnTStaticModelDraw>();
+			drawComp->SetMeshResource(L"RED_SHIELD");
+		}
+		else if (m_Hp == 2.0f)
+		{
+			Mat4x4 spanMat; // モデルとトランスフォームの間の差分行列
+			spanMat.affineTransformation(
+				Vec3(1.0f, 1.0f, 2.0f),
+				Vec3(0.0f, 0.0f, 0.0f),
+				Vec3(0.0f, 0.0f, 0.0f),
+				Vec3(0.0f, 0.0f, 0.0f)
+			);
+
+			auto drawComp = AddComponent<BcPNTnTStaticModelDraw>();
+			drawComp->SetMeshResource(L"ORANGE_SHIELD");
+		}
+		else if (m_Hp == 3.0f)
+		{
+			Mat4x4 spanMat; // モデルとトランスフォームの間の差分行列
+			spanMat.affineTransformation(
+				Vec3(1.0f, 1.0f, 2.0f),
+				Vec3(0.0f, 0.0f, 0.0f),
+				Vec3(0.0f, 0.0f, 0.0f),
+				Vec3(0.0f, 0.0f, 0.0f)
+			);
+
+			auto drawComp = AddComponent<BcPNTnTStaticModelDraw>();
+			drawComp->SetMeshResource(L"YELLOW_SHIELD");
+		}
 	}
 
 	void RapidShield::GenerataFire(int GenerateNum, Vec3 MoveSpeed)
@@ -416,11 +592,12 @@ namespace basecross {
 	void DangerShield::OnUpdate()
 	{
 		Die();
+		SetColor();
 	}
 
 	void DangerShield::Initialize()
 	{
-		m_Hp = 6.0f;
+		m_Hp = 5.0f;
 	}
 
 	Vec3 DangerShield::GetPosition() const
@@ -448,5 +625,211 @@ namespace basecross {
 		//SetDrawActive(false);
 		//SetUpdateActive(false);
 		GetStage()->RemoveGameObject<DangerShield>(GetThis<DangerShield>());
+	}
+
+	void DangerShield::SetColor()
+	{
+		if (m_Hp == 1.0f)
+		{
+			Mat4x4 spanMat; // モデルとトランスフォームの間の差分行列
+			spanMat.affineTransformation(
+				Vec3(1.0f, 1.0f, 2.0f),
+				Vec3(0.0f, 0.0f, 0.0f),
+				Vec3(0.0f, 0.0f, 0.0f),
+				Vec3(0.0f, 0.0f, 0.0f)
+			);
+
+			auto drawComp = AddComponent<BcPNTnTStaticModelDraw>();
+			drawComp->SetMeshResource(L"RED_SHIELD");
+		}
+		else if (m_Hp == 2.0f)
+		{
+			Mat4x4 spanMat; // モデルとトランスフォームの間の差分行列
+			spanMat.affineTransformation(
+				Vec3(1.0f, 1.0f, 2.0f),
+				Vec3(0.0f, 0.0f, 0.0f),
+				Vec3(0.0f, 0.0f, 0.0f),
+				Vec3(0.0f, 0.0f, 0.0f)
+			);
+
+			auto drawComp = AddComponent<BcPNTnTStaticModelDraw>();
+			drawComp->SetMeshResource(L"ORANGE_SHIELD");
+		}
+		else if (m_Hp == 3.0f)
+		{
+			Mat4x4 spanMat; // モデルとトランスフォームの間の差分行列
+			spanMat.affineTransformation(
+				Vec3(1.0f, 1.0f, 2.0f),
+				Vec3(0.0f, 0.0f, 0.0f),
+				Vec3(0.0f, 0.0f, 0.0f),
+				Vec3(0.0f, 0.0f, 0.0f)
+			);
+
+			auto drawComp = AddComponent<BcPNTnTStaticModelDraw>();
+			drawComp->SetMeshResource(L"YELLOW_SHIELD");
+		}
+		else if (m_Hp == 4.0f)
+		{
+			Mat4x4 spanMat; // モデルとトランスフォームの間の差分行列
+			spanMat.affineTransformation(
+				Vec3(1.0f, 1.0f, 2.0f),
+				Vec3(0.0f, 0.0f, 0.0f),
+				Vec3(0.0f, 0.0f, 0.0f),
+				Vec3(0.0f, 0.0f, 0.0f)
+			);
+
+			auto drawComp = AddComponent<BcPNTnTStaticModelDraw>();
+			drawComp->SetMeshResource(L"GREEN_SHIELD");
+		}
+		else if (m_Hp == 5.0f)
+		{
+			Mat4x4 spanMat; // モデルとトランスフォームの間の差分行列
+			spanMat.affineTransformation(
+				Vec3(1.0f, 1.0f, 2.0f),
+				Vec3(0.0f, 0.0f, 0.0f),
+				Vec3(0.0f, 0.0f, 0.0f),
+				Vec3(0.0f, 0.0f, 0.0f)
+			);
+
+			auto drawComp = AddComponent<BcPNTnTStaticModelDraw>();
+			drawComp->SetMeshResource(L"BLUE_SHIELD");
+		}
+	}
+
+	ReflectShield::ReflectShield(
+		const shared_ptr<Stage>& StagePtr,
+		const shared_ptr<GameObject>& Parent
+	) :
+		GameObject(StagePtr),
+		m_Parent(Parent)
+	{}
+	//EnemyShield::~EnemyShield() {}
+
+	void ReflectShield::OnCreate()
+	{
+		Mat4x4 spanMat; // モデルとトランスフォームの間の差分行列
+		spanMat.affineTransformation(
+			Vec3(1.0f, 1.0f, 2.0f),
+			Vec3(0.0f, 0.0f, 0.0f),
+			Vec3(0.0f, 0.0f, 0.0f),
+			Vec3(0.0f, 0.0f, 0.0f)
+		);
+
+		auto drawComp = AddComponent<BcPNTnTStaticModelDraw>();
+		drawComp->SetMeshResource(L"SHELD_MESH");
+
+		// 衝突判定
+		auto ptrColl = AddComponent<CollisionObb>();
+		ptrColl->SetAfterCollision(AfterCollision::None);
+		//ptrColl->SetDrawActive(true);
+
+		AddTag(L"EnemyShield");
+		//タグをつける
+		//AddTag(WstringKey::Tag_DrawActiveFalse);
+
+		Initialize();
+
+		auto myTrans = GetComponent<Transform>();
+		myTrans->SetParent(m_Parent->GetThis<GameObject>());
+
+		auto ptrMyTrans = AddComponent<Transform>();
+
+		ptrMyTrans->SetScale(Vec3(3.0f, 1.0f, 1.0f));
+		ptrMyTrans->SetRotation(Vec3(0.0f, XMConvertToRadians(180.0f), 0.0f));
+		ptrMyTrans->SetPosition(Vec3(0.0f, 0.0f, 2.5f));
+	}
+
+	void ReflectShield::OnUpdate()
+	{
+		Die();
+		SetColor();
+		//FireEffect();
+	}
+
+	void ReflectShield::Initialize()
+	{
+		m_Hp = 3.0f;
+	}
+
+	Vec3 ReflectShield::GetPosition() const
+	{
+		return GetComponent<Transform>()->GetPosition();
+	}
+
+	void ReflectShield::Damage(float damage)
+	{
+		m_Hp -= damage;
+	}
+
+	void ReflectShield::Die()
+	{
+		if (m_Hp <= 0.0f)
+		{
+			//SetDrawActive(false);
+			//SetUpdateActive(false);
+			GetStage()->RemoveGameObject<ReflectShield>(GetThis<ReflectShield>());
+
+			GenerataFire(30, Vec3(30.0f));
+		}
+	}
+
+	void ReflectShield::DirectDie()
+	{
+		//SetDrawActive(false);
+		//SetUpdateActive(false);
+		GetStage()->RemoveGameObject<ReflectShield>(GetThis<ReflectShield>());
+
+	}
+
+	void ReflectShield::SetColor()
+	{
+		if (m_Hp == 1.0f)
+		{
+			Mat4x4 spanMat; // モデルとトランスフォームの間の差分行列
+			spanMat.affineTransformation(
+				Vec3(1.0f, 1.0f, 2.0f),
+				Vec3(0.0f, 0.0f, 0.0f),
+				Vec3(0.0f, 0.0f, 0.0f),
+				Vec3(0.0f, 0.0f, 0.0f)
+			);
+
+			auto drawComp = AddComponent<BcPNTnTStaticModelDraw>();
+			drawComp->SetMeshResource(L"RED_SHIELD");
+		}
+		else if (m_Hp == 2.0f)
+		{
+			Mat4x4 spanMat; // モデルとトランスフォームの間の差分行列
+			spanMat.affineTransformation(
+				Vec3(1.0f, 1.0f, 2.0f),
+				Vec3(0.0f, 0.0f, 0.0f),
+				Vec3(0.0f, 0.0f, 0.0f),
+				Vec3(0.0f, 0.0f, 0.0f)
+			);
+
+			auto drawComp = AddComponent<BcPNTnTStaticModelDraw>();
+			drawComp->SetMeshResource(L"ORANGE_SHIELD");
+		}
+		else if (m_Hp == 3.0f)
+		{
+			Mat4x4 spanMat; // モデルとトランスフォームの間の差分行列
+			spanMat.affineTransformation(
+				Vec3(1.0f, 1.0f, 2.0f),
+				Vec3(0.0f, 0.0f, 0.0f),
+				Vec3(0.0f, 0.0f, 0.0f),
+				Vec3(0.0f, 0.0f, 0.0f)
+			);
+
+			auto drawComp = AddComponent<BcPNTnTStaticModelDraw>();
+			drawComp->SetMeshResource(L"YELLOW_SHIELD");
+		}
+	}
+
+	void ReflectShield::GenerataFire(int GenerateNum, Vec3 MoveSpeed)
+	{
+		auto myPos = GetComponent<Transform>()->GetWorldPosition();
+		auto PtrFire = GetStage()->GetSharedGameObject<MultiFire>(L"MultiFire", false);
+		if (PtrFire) {
+			PtrFire->InsertFire(myPos, GenerateNum, MoveSpeed);
+		}
 	}
 }

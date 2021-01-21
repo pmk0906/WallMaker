@@ -290,6 +290,18 @@ namespace basecross {
 			}
 		}
 
+		//　あたったのがシールドなら
+		if (auto shield = dynamic_pointer_cast<ReflectShield>(other))
+		{
+			if (flg_reflect)
+			{
+				shield->Damage(m_Attack);
+
+				SetDrawActive(false);
+				SetUpdateActive(false);
+			}
+		}
+
 		//当たったのが敵なら
 		if (auto enemy = dynamic_pointer_cast<EnemyFirst>(other))
 		{
@@ -364,6 +376,23 @@ namespace basecross {
 			if (flg_reflect)
 			{
 				dangerEnemy->Damage(m_Attack);
+
+				auto ptrXA = App::GetApp()->GetXAudio2Manager();
+				ptrXA->Start(WstringKey::SE_EnemyDamage, 0, 1.0f);
+			}
+
+			if (m_DieTime >= 0.1f)
+			{
+				SetDrawActive(false);
+				SetUpdateActive(false);
+			}
+		}
+
+		if (auto reflectEnemy = dynamic_pointer_cast<ReflectEnemy>(other))
+		{
+			if (flg_reflect)
+			{
+				reflectEnemy->Damage(m_Attack);
 
 				auto ptrXA = App::GetApp()->GetXAudio2Manager();
 				ptrXA->Start(WstringKey::SE_EnemyDamage, 0, 1.0f);

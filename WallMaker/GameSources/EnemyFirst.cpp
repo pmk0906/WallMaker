@@ -80,12 +80,24 @@ namespace basecross {
 					playerPos = player->GetPosition();
 				}
 			}
+			//auto ptrPoint = ptrPlayer.lock();
 
-			//auto rayObject = dynamic_pointer_cast<RayObject>(m_RayObject);
+			//auto ptrActionLine = m_ActionLine.lock();
+			//if (ptrActionLine) {
+			//	ptrActionLine->SetEndObj(ptrPoint);
+			//	
+			//	ptrActionLine->SetDrawActive(true);
+			//}
+			//else {
+			//	//Ray�̍쐬
+			//	auto ptrLine = GetStage()->AddGameObject<ActionLine>(enemyPos, ptrPoint);
+			//	ptrLine->SetDrawActive(true);
+			//	m_ActionLine = ptrLine;
+			//}
 
 			auto enemyToPlayer = playerPos - enemyPos;
 
-			if (enemyToPlayer.length() <= 20.0f /*&& rayObject->GetRayFlg() == true*/)
+			if (enemyToPlayer.length() <= 20.0f)
 			{
 				LookPlayer();
 

@@ -383,10 +383,12 @@ namespace basecross{
 		m_MagicSkeltonWall = GetStage()->AddGameObject<MagicSkeltonWall>(m_Scale, m_Rotation, m_Position, GetThis<Player>());
 		GetStage()->SetSharedGameObject(WstringKey::ShareObj_MagicSkeltonWall, m_MagicSkeltonWall);
 
+		m_RotY = 0.0f;
+
 		// DrawString用
-		/*auto strComp = AddComponent<StringSprite>();
+		auto strComp = AddComponent<StringSprite>();
 		strComp->SetBackColor(Col4(0, 0, 0, 0.5f));
-		strComp->SetTextRect(Rect2D<float>(1000, 110, 1270, 310));*/
+		strComp->SetTextRect(Rect2D<float>(1000, 110, 1270, 310));
 	}
 
 	void Player::OnUpdate()
@@ -405,6 +407,9 @@ namespace basecross{
 			auto ptrDraw = GetComponent<PNTBoneModelDraw>();
 			float elapsedTime = App::GetApp()->GetElapsedTime();
 			ptrDraw->UpdateAnimation(elapsedTime);
+
+			auto rotation = GetComponent<Transform>()->GetRotation();
+			m_RotY = rotation.y;
 		}
 		else
 		{
@@ -420,6 +425,37 @@ namespace basecross{
 				col.w = 1.0f;
 				ptrDraw->SetDiffuse(col);
 			}
+			//if (gm->GetTreasureBoxOpen() == true)
+			//{
+			//	auto& app = App::GetApp();
+
+			//	auto transComp = GetComponent<Transform>();
+			//	float delta = app->GetElapsedTime();
+			//	auto objs = GetStage()->GetGameObjectVec();
+			//	auto myPos = transComp->GetPosition();
+
+			//	Vec3 lookPos(myPos.x, myPos.y, myPos.z + 1.0f);
+
+			//	auto enemyToPlayer = lookPos - myPos;
+
+			//	auto forward = transComp->GetForword();
+
+			//	auto dir = enemyToPlayer.normalize();
+
+			//	float rot = XMConvertToRadians(90.0f) * delta; // １フレ―ム当たりの旋回角度
+
+
+			//	// 外積を用いてプレイヤーがいる方向に旋回する
+			//	if (forward.cross(dir).y < 0.0f) {
+			//		m_RotY += rot;
+			//	}
+			//	else {
+			//		m_RotY -= rot;
+			//	}
+
+			//	transComp->SetRotation(0.0f, m_RotY, 0.0f);
+
+			//}
 		}
 
 
@@ -427,7 +463,7 @@ namespace basecross{
 
 	void Player::OnUpdate2()
 	{
-		//DrawStrings();
+		DrawStrings();
 	}
 
 	void Player::OnCollisionEnter(shared_ptr<GameObject>& other) {
@@ -631,6 +667,8 @@ namespace basecross{
 				magicSkeltonWall->SetCollisionFlg(false);
 			}
 		}
+
+		GenerateEffect(10, Vec3(10.0f));
 	}
 
 	void MagicWall::Delete()
@@ -642,6 +680,15 @@ namespace basecross{
 
 
 			GetStage()->RemoveGameObject<MagicWall>(GetThis<MagicWall>());
+		}
+	}
+
+	void MagicWall::GenerateEffect(int GenerateNum, Vec3 MoveSpeed)
+	{
+		auto ptrTrans = GetComponent<Transform>();
+		auto PtrFire = GetStage()->GetSharedGameObject<ReflectBulletEffect>(WstringKey::ShareObj_ReflectBulletEffect, false);
+		if (PtrFire) {
+			PtrFire->InsertEffect(GetComponent<Transform>()->GetPosition(), GenerateNum, MoveSpeed);
 		}
 	}
 

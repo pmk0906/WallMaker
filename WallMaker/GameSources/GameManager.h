@@ -37,6 +37,10 @@ namespace basecross {
 		bool m_MagicSircleEnabledLook = false;
 		//魔法陣が降り切った
 		bool m_MagicSircleMoved = false;
+		//宝箱を開けても良いか
+		bool m_TreasureBoxOpenFlg = false;
+		//宝箱が開き終わったか
+		bool m_TreasureBoxOpened = false;
 		// クリアしたか
 		bool m_ClearFlg = false;
 		bool m_ClearFlgChanged = false;
@@ -81,6 +85,8 @@ namespace basecross {
 			SetDeathFlgChanged(false);
 			SetPoseFlg(false);
 			SetPoseFlgChanged(false);
+			SetTreasureBoxOpen(false);
+			SetTreasureBoxOpened(false); 
 			SetSelectingButton(0);
 			SetMoveEnabledFlg(false); 
 			SetOpeningCameraMoveEnd(false);
@@ -249,6 +255,24 @@ namespace basecross {
 		void SetPlayerMoveTime(float moveTime)
 		{
 			m_PlayerMoveTime = moveTime;
+		}
+		//宝箱を開けても良いか
+		bool GetTreasureBoxOpen()
+		{
+			return m_TreasureBoxOpenFlg;
+		}
+		void SetTreasureBoxOpen(bool treasureBoxOpenFlg)
+		{
+			m_TreasureBoxOpenFlg = treasureBoxOpenFlg;
+		}
+		// 宝箱が開いたか
+		bool GetTreasureBoxOpened()
+		{
+			return m_TreasureBoxOpened;
+		}
+		void SetTreasureBoxOpened(bool treasureBoxOpened)
+		{
+			m_TreasureBoxOpened = treasureBoxOpened;
 		}
 		// クリアフラグ
 		bool GetClearFlg()

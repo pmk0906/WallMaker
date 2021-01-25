@@ -155,6 +155,8 @@ namespace basecross{
 		auto playerPos = share_player->GetComponent<Transform>()->GetPosition();
 		auto share_treasure = GetStage()->GetSharedGameObject<TreasureBox>(WstringKey::ShareObj_TreasureBox);
 		auto treasurePos = share_treasure->GetComponent<Transform>()->GetPosition();
+
+
 		m_StartPos = treasurePos + offset;
 		m_EndPos = playerPos + offset;
 		m_AtStartPos = treasurePos;
@@ -414,6 +416,8 @@ namespace basecross{
 		auto gm = GameManager::GetInstance();
 		gm->SetPlayerCameraMoveState(PlayerCamStateNum::EndState);
 		gm->SetPlayerCameraStateName(L"EndState");
+
+		gm->SetTreasureBoxOpen(true);
 	}
 	void PlayerCameramanEndState::Execute(const shared_ptr<PlayerCameraman>& Obj) {
 	}
@@ -503,7 +507,7 @@ namespace basecross{
 		//ステートマシンの構築
 		m_StateMachine.reset(new StateMachine<OpeningCameraman>(GetThis<OpeningCameraman>()));
 		//最初のステートをOpeningCameramanToGoalStateに設定
-		m_StateMachine->ChangeState(OpeningCameramanMoveState::Instance());
+		m_StateMachine->ChangeState(OpeningCameramanStartState::Instance());
 	}
 	//操作
 	void OpeningCameraman::OnUpdate() {
@@ -519,12 +523,22 @@ namespace basecross{
 		auto treasurePos = share_treasure->GetComponent<Transform>()->GetPosition();
 		auto startPos = (playerPos + treasurePos) * 0.5;
 
-		m_StartPos = Vec3(startPos.x, startPos.y + offset.y, startPos.z + offset.z);
+		m_StartPos = treasurePos + offset;
 		m_EndPos = treasurePos + offset;
-		m_AtStartPos = startPos + offset;
+		m_AtStartPos = treasurePos;
 		m_AtEndPos = treasurePos;
 		m_AtPos = m_AtStartPos;
 		m_TotalTime = 0.0f;
+	}
+
+	void OpeningCameraman::ToGoalExcuteBehavior() {
+		auto delta = App::GetApp()->GetElapsedTime();
+		
+		m_TotalTime += delta;
+	}
+
+	float OpeningCameraman::GetTotalTime() {
+		return m_TotalTime;
 	}
 
 	void OpeningCameraman::ToStartEnterBehavior() {
@@ -613,9 +627,8 @@ namespace basecross{
 		Obj->ToGoalEnterBehavior();
 	}
 	void OpeningCameramanStartState::Execute(const shared_ptr<OpeningCameraman>& Obj) {
-
-		
-		if (Obj->ExcuteBehavior(7.0f)) {
+		//Obj->ToGoalExcuteBehavior();
+		if (Obj->ExcuteBehavior(1.0f)) {
 			Obj->GetStateMachine()->ChangeState(OpeningCameramanMoveState::Instance());
 		}
 	}

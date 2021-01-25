@@ -270,7 +270,7 @@ namespace basecross {
 
 		if (gm->GetClearFlg() == true && gm->GetClearFlgChanged() == false)
 		{
-			if (gm->GetGoalCameraMoveEnd() == true)
+			if (gm->GetTreasureBoxOpened() == true)
 			{
 				CreateClearButton();
 				gm->SetClearFlgChanged(true);

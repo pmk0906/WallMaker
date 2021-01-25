@@ -40,6 +40,9 @@ namespace basecross{
 		int m_WallStock = 3;
 		bool m_wallDecreaseFlg = false;
 
+
+		float m_RotY;
+
 		//•Ç‚Ì”‚ğ”‚¦‚é
 		void SetCountWall();
 		//•Ç‚ğ‘S‚ÄÁ‚·
@@ -149,7 +152,7 @@ namespace basecross{
 
 		void Delete();
 
-		void MagicWallCollisionRef();
+		void GenerateEffect(int GenerateNum, Vec3 MoveSpeed);
 
 	public:
 		//\’z‚Æ”jŠü

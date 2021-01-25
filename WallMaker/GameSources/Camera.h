@@ -231,6 +231,8 @@ namespace basecross{
 			return m_AtPos;
 		}
 		void ToGoalEnterBehavior();
+		void ToGoalExcuteBehavior();
+		float GetTotalTime();
 		void ToStartEnterBehavior();
 		bool ExcuteBehavior(float totaltime);
 		void EndStateEnterBehavior();

@@ -15,6 +15,8 @@ namespace basecross{
 		Vec3 m_Rotation;
 		Vec3 m_Position;
 
+		float m_Timer = 0.0f;
+
 		bool m_TreasureFlg = false;
 
 	public:
@@ -30,6 +32,7 @@ namespace basecross{
 
 		// ‰Šú‰»
 		virtual void OnCreate()override;
+		virtual void OnUpdate() override;
 		virtual void OnUpdate2()override;
 		virtual void OnCollisionEnter(shared_ptr<GameObject>& other)override;
 

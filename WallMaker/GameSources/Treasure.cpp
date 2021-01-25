@@ -46,12 +46,16 @@ namespace basecross{
 		//影をつける（シャドウマップを描画する）
 		auto ptrShadow = AddComponent<Shadowmap>();
 		//影の形（メッシュ）を設定
-		ptrShadow->SetMeshResource(L"TREASUREBOX_MESH");
+		ptrShadow->SetMeshResource(WstringKey::Anim_TreasureBox);
 		ptrShadow->SetMeshToTransformMatrix(spanMat);
 
-		auto ptrDraw = AddComponent<PNTStaticModelDraw>();
-		ptrDraw->SetMeshResource(L"TREASUREBOX_MESH");
+		auto ptrDraw = AddComponent<PNTBoneModelDraw>();
+		ptrDraw->SetMeshResource(WstringKey::Anim_TreasureBox);
 		ptrDraw->SetMeshToTransformMatrix(spanMat);
+
+		ptrDraw->AddAnimation(WstringKey::AM_TreasureBoxClosing, 0, 0, true, 30.0f);
+		ptrDraw->AddAnimation(WstringKey::AM_TreasureBoxOpen, 0, 30, false, 15.0f);
+		ptrDraw->ChangeCurrentAnimation(WstringKey::AM_TreasureBoxOpen);
 
 		AddTag(WstringKey::Tag_Treasure);
 
@@ -59,6 +63,26 @@ namespace basecross{
 		//auto strComp = AddComponent<StringSprite>();
 		//strComp->SetBackColor(Col4(0, 0, 0, 0.5f));
 		//strComp->SetTextRect(Rect2D<float>(10, 600, 270, 210));
+	}
+
+	void TreasureBox::OnUpdate()
+	{
+		auto gm = GameManager::GetInstance();
+		if (gm->GetTreasureBoxOpen() == true)
+		{
+			auto ptrDraw = GetComponent<PNTBoneModelDraw>();
+			float elapsedTime = App::GetApp()->GetElapsedTime();
+			ptrDraw->UpdateAnimation(elapsedTime);
+
+			if (m_Timer < 2.0f)
+			{
+				m_Timer += elapsedTime;
+			}
+			else
+			{
+				gm->SetTreasureBoxOpened(true);
+			}
+		}
 	}
 
 	void TreasureBox::OnUpdate2()

@@ -34,6 +34,71 @@ namespace basecross{
 		void InsertFire(const Vec3& Pos, int GenerateNum, Vec3 MoveSpeed);
 	};
 
+	class RedFire : public MultiParticle {
+	public:
+		//\’z‚Æ”jŠü
+		RedFire(shared_ptr<Stage>& StagePtr);
+		virtual ~RedFire();
+		//‰Šú‰»
+		virtual void OnCreate() override;
+		virtual void OnUpdate() override;
+		void InsertFire(const Vec3& Pos, int GenerateNum, Vec3 MoveSpeed);
+	};
+
+	class OrangeFire : public MultiParticle {
+	public:
+		//\’z‚Æ”jŠü
+		OrangeFire(shared_ptr<Stage>& StagePtr);
+		virtual ~OrangeFire();
+		//‰Šú‰»
+		virtual void OnCreate() override;
+		virtual void OnUpdate() override;
+		void InsertFire(const Vec3& Pos, int GenerateNum, Vec3 MoveSpeed);
+	};
+
+	class YellowFire : public MultiParticle {
+	public:
+		//\’z‚Æ”jŠü
+		YellowFire(shared_ptr<Stage>& StagePtr);
+		virtual ~YellowFire();
+		//‰Šú‰»
+		virtual void OnCreate() override;
+		virtual void OnUpdate() override;
+		void InsertFire(const Vec3& Pos, int GenerateNum, Vec3 MoveSpeed);
+	};
+
+	class GreenFire : public MultiParticle {
+	public:
+		//\’z‚Æ”jŠü
+		GreenFire(shared_ptr<Stage>& StagePtr);
+		virtual ~GreenFire();
+		//‰Šú‰»
+		virtual void OnCreate() override;
+		virtual void OnUpdate() override;
+		void InsertFire(const Vec3& Pos, int GenerateNum, Vec3 MoveSpeed);
+	};
+
+	class BlueFire : public MultiParticle {
+	public:
+		//\’z‚Æ”jŠü
+		BlueFire(shared_ptr<Stage>& StagePtr);
+		virtual ~BlueFire();
+		//‰Šú‰»
+		virtual void OnCreate() override;
+		virtual void OnUpdate() override;
+		void InsertFire(const Vec3& Pos, int GenerateNum, Vec3 MoveSpeed);
+	};
+
+	class BlackFire : public MultiParticle {
+	public:
+		//\’z‚Æ”jŠü
+		BlackFire(shared_ptr<Stage>& StagePtr);
+		virtual ~BlackFire();
+		//‰Šú‰»
+		virtual void OnCreate() override;
+		virtual void OnUpdate() override;
+		void InsertFire(const Vec3& Pos, int GenerateNum, Vec3 MoveSpeed);
+	};
 	//--------------------------------------------------------------------------------------
 	///	•Ç‚ğ‰ó‚µ‚½‚Æ‚«‚Ì‰Œ
 	//--------------------------------------------------------------------------------------

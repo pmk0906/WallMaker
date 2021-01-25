@@ -30,6 +30,7 @@ namespace basecross {
 		void SetColor();
 		void GenerataFire(int GenerateNum, Vec3 MoveSpeed);
 
+		float GetHP() const;
 		Vec3 GetPosition() const;
 	};
 
@@ -60,6 +61,7 @@ namespace basecross {
 		void SetColor();
 		void GenerataFire(int GenerateNum, Vec3 MoveSpeed);
 
+		float GetHP() const;
 		Vec3 GetPosition() const;
 	};
 
@@ -90,6 +92,7 @@ namespace basecross {
 		void SetColor();
 		void GenerataFire(int GenerateNum, Vec3 MoveSpeed);
 
+		float GetHP() const;
 		Vec3 GetPosition() const;
 	};
 
@@ -120,6 +123,7 @@ namespace basecross {
 		void SetColor();
 		void GenerataFire(int GenerateNum, Vec3 MoveSpeed);
 
+		float GetHP() const;
 		Vec3 GetPosition() const;
 	};
 
@@ -150,6 +154,7 @@ namespace basecross {
 		void SetColor();
 		void GenerataFire(int GenerateNum, Vec3 MoveSpeed);
 
+		float GetHP() const;
 		Vec3 GetPosition() const;
 	};
 
@@ -180,6 +185,7 @@ namespace basecross {
 		void SetColor();
 		void GenerataFire(int GenerateNum, Vec3 MoveSpeed);
 
+		float GetHP() const;
 		Vec3 GetPosition() const;
 	};
 }

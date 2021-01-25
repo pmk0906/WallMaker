@@ -80,6 +80,7 @@ namespace basecross {
 					playerPos = player->GetPosition();
 				}
 			}
+
 			//auto ptrPoint = ptrPlayer.lock();
 
 			//auto ptrActionLine = m_ActionLine.lock();

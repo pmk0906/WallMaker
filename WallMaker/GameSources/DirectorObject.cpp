@@ -128,6 +128,348 @@ namespace basecross{
 		}
 	}
 
+	RedFire::RedFire(shared_ptr<Stage>& StagePtr) :
+		MultiParticle(StagePtr)
+	{}
+	RedFire::~RedFire() {}
+
+	//初期化
+	void RedFire::OnCreate() {
+		//加算描画処理をする
+		SetAddType(true);
+	}
+
+	void RedFire::OnUpdate()
+	{
+		//前回のターンからの時間
+		float ElapsedTime = App::GetApp()->GetElapsedTime();
+		for (auto ParticlePtr : GetParticleVec()) {
+			auto gm = GameManager::GetInstance();
+			if (gm->GetMoveEnabledFlg() == true)
+			{
+				ParticlePtr->AddTotalTime(ElapsedTime);
+			}
+			for (auto& rParticleSprite : ParticlePtr->GetParticleSpriteVec()) {
+				if (rParticleSprite.m_Active) {
+					//移動速度に従って移動させる
+					rParticleSprite.m_LocalPos += rParticleSprite.m_Velocity * ElapsedTime;
+
+
+					if (ParticlePtr->GetTotalTime() >= ParticlePtr->GetMaxTime()) {
+						//制限時間になったら
+						rParticleSprite.m_Active = false;
+					}
+				}
+			}
+		}
+	}
+
+	void RedFire::InsertFire(const Vec3& Pos, int GenerateNum, Vec3 MoveSpeed)
+	{
+		auto ptrParticle = InsertParticle(GenerateNum);
+		ptrParticle->SetEmitterPos(Pos);
+		ptrParticle->SetTextureResource(L"RED_BULLET_TX");
+		ptrParticle->SetMaxTime(1.0f);
+		for (auto& rParticleSprite : ptrParticle->GetParticleSpriteVec()) {
+			rParticleSprite.m_LocalPos.x = Util::RandZeroToOne() * 0.1f - 0.05f;
+			rParticleSprite.m_LocalPos.y = Util::RandZeroToOne() * 0.1f;
+			rParticleSprite.m_LocalPos.z = Util::RandZeroToOne() * 0.1f - 0.05f;
+			//各パーティクルの移動速度を指定
+			rParticleSprite.m_Velocity = Vec3(
+				rParticleSprite.m_LocalPos.x * MoveSpeed.x,
+				rParticleSprite.m_LocalPos.y * MoveSpeed.y,
+				rParticleSprite.m_LocalPos.z * MoveSpeed.z
+			);
+			//色の指定
+			rParticleSprite.m_Color = Col4(1.0f, 1.0f, 1.0f, 1.0f);
+		}
+	}
+
+	OrangeFire::OrangeFire(shared_ptr<Stage>& StagePtr) :
+		MultiParticle(StagePtr)
+	{}
+	OrangeFire::~OrangeFire() {}
+
+	//初期化
+	void OrangeFire::OnCreate() {
+		//加算描画処理をする
+		SetAddType(true);
+	}
+
+	void OrangeFire::OnUpdate()
+	{
+		//前回のターンからの時間
+		float ElapsedTime = App::GetApp()->GetElapsedTime();
+		for (auto ParticlePtr : GetParticleVec()) {
+			auto gm = GameManager::GetInstance();
+			if (gm->GetMoveEnabledFlg() == true)
+			{
+				ParticlePtr->AddTotalTime(ElapsedTime);
+			}
+			for (auto& rParticleSprite : ParticlePtr->GetParticleSpriteVec()) {
+				if (rParticleSprite.m_Active) {
+					//移動速度に従って移動させる
+					rParticleSprite.m_LocalPos += rParticleSprite.m_Velocity * ElapsedTime;
+
+
+					if (ParticlePtr->GetTotalTime() >= ParticlePtr->GetMaxTime()) {
+						//制限時間になったら
+						rParticleSprite.m_Active = false;
+					}
+				}
+			}
+		}
+	}
+
+	void OrangeFire::InsertFire(const Vec3& Pos, int GenerateNum, Vec3 MoveSpeed)
+	{
+		auto ptrParticle = InsertParticle(GenerateNum);
+		ptrParticle->SetEmitterPos(Pos);
+		ptrParticle->SetTextureResource(L"ORANGE_BULLET_TX");
+		ptrParticle->SetMaxTime(1.0f);
+		for (auto& rParticleSprite : ptrParticle->GetParticleSpriteVec()) {
+			rParticleSprite.m_LocalPos.x = Util::RandZeroToOne() * 0.1f - 0.05f;
+			rParticleSprite.m_LocalPos.y = Util::RandZeroToOne() * 0.1f;
+			rParticleSprite.m_LocalPos.z = Util::RandZeroToOne() * 0.1f - 0.05f;
+			//各パーティクルの移動速度を指定
+			rParticleSprite.m_Velocity = Vec3(
+				rParticleSprite.m_LocalPos.x * MoveSpeed.x,
+				rParticleSprite.m_LocalPos.y * MoveSpeed.y,
+				rParticleSprite.m_LocalPos.z * MoveSpeed.z
+			);
+			//色の指定
+			rParticleSprite.m_Color = Col4(1.0f, 1.0f, 1.0f, 1.0f);
+		}
+	}
+
+	YellowFire::YellowFire(shared_ptr<Stage>& StagePtr) :
+		MultiParticle(StagePtr)
+	{}
+	YellowFire::~YellowFire() {}
+
+	//初期化
+	void YellowFire::OnCreate() {
+		//加算描画処理をする
+		SetAddType(true);
+	}
+
+	void YellowFire::OnUpdate()
+	{
+		//前回のターンからの時間
+		float ElapsedTime = App::GetApp()->GetElapsedTime();
+		for (auto ParticlePtr : GetParticleVec()) {
+			auto gm = GameManager::GetInstance();
+			if (gm->GetMoveEnabledFlg() == true)
+			{
+				ParticlePtr->AddTotalTime(ElapsedTime);
+			}
+			for (auto& rParticleSprite : ParticlePtr->GetParticleSpriteVec()) {
+				if (rParticleSprite.m_Active) {
+					//移動速度に従って移動させる
+					rParticleSprite.m_LocalPos += rParticleSprite.m_Velocity * ElapsedTime;
+
+
+					if (ParticlePtr->GetTotalTime() >= ParticlePtr->GetMaxTime()) {
+						//制限時間になったら
+						rParticleSprite.m_Active = false;
+					}
+				}
+			}
+		}
+	}
+
+	void YellowFire::InsertFire(const Vec3& Pos, int GenerateNum, Vec3 MoveSpeed)
+	{
+		auto ptrParticle = InsertParticle(GenerateNum);
+		ptrParticle->SetEmitterPos(Pos);
+		ptrParticle->SetTextureResource(L"YELLOW_BULLET_TX");
+		ptrParticle->SetMaxTime(1.0f);
+		for (auto& rParticleSprite : ptrParticle->GetParticleSpriteVec()) {
+			rParticleSprite.m_LocalPos.x = Util::RandZeroToOne() * 0.1f - 0.05f;
+			rParticleSprite.m_LocalPos.y = Util::RandZeroToOne() * 0.1f;
+			rParticleSprite.m_LocalPos.z = Util::RandZeroToOne() * 0.1f - 0.05f;
+			//各パーティクルの移動速度を指定
+			rParticleSprite.m_Velocity = Vec3(
+				rParticleSprite.m_LocalPos.x * MoveSpeed.x,
+				rParticleSprite.m_LocalPos.y * MoveSpeed.y,
+				rParticleSprite.m_LocalPos.z * MoveSpeed.z
+			);
+			//色の指定
+			rParticleSprite.m_Color = Col4(1.0f, 1.0f, 1.0f, 1.0f);
+		}
+	}
+
+	GreenFire::GreenFire(shared_ptr<Stage>& StagePtr) :
+		MultiParticle(StagePtr)
+	{}
+	GreenFire::~GreenFire() {}
+
+	//初期化
+	void GreenFire::OnCreate() {
+		//加算描画処理をする
+		SetAddType(true);
+	}
+
+	void GreenFire::OnUpdate()
+	{
+		//前回のターンからの時間
+		float ElapsedTime = App::GetApp()->GetElapsedTime();
+		for (auto ParticlePtr : GetParticleVec()) {
+			auto gm = GameManager::GetInstance();
+			if (gm->GetMoveEnabledFlg() == true)
+			{
+				ParticlePtr->AddTotalTime(ElapsedTime);
+			}
+			for (auto& rParticleSprite : ParticlePtr->GetParticleSpriteVec()) {
+				if (rParticleSprite.m_Active) {
+					//移動速度に従って移動させる
+					rParticleSprite.m_LocalPos += rParticleSprite.m_Velocity * ElapsedTime;
+
+
+					if (ParticlePtr->GetTotalTime() >= ParticlePtr->GetMaxTime()) {
+						//制限時間になったら
+						rParticleSprite.m_Active = false;
+					}
+				}
+			}
+		}
+	}
+
+	void GreenFire::InsertFire(const Vec3& Pos, int GenerateNum, Vec3 MoveSpeed)
+	{
+		auto ptrParticle = InsertParticle(GenerateNum);
+		ptrParticle->SetEmitterPos(Pos);
+		ptrParticle->SetTextureResource(L"GREEN_BULLET_TX");
+		ptrParticle->SetMaxTime(1.0f);
+		for (auto& rParticleSprite : ptrParticle->GetParticleSpriteVec()) {
+			rParticleSprite.m_LocalPos.x = Util::RandZeroToOne() * 0.1f - 0.05f;
+			rParticleSprite.m_LocalPos.y = Util::RandZeroToOne() * 0.1f;
+			rParticleSprite.m_LocalPos.z = Util::RandZeroToOne() * 0.1f - 0.05f;
+			//各パーティクルの移動速度を指定
+			rParticleSprite.m_Velocity = Vec3(
+				rParticleSprite.m_LocalPos.x * MoveSpeed.x,
+				rParticleSprite.m_LocalPos.y * MoveSpeed.y,
+				rParticleSprite.m_LocalPos.z * MoveSpeed.z
+			);
+			//色の指定
+			rParticleSprite.m_Color = Col4(1.0f, 1.0f, 1.0f, 1.0f);
+		}
+	}
+
+	BlueFire::BlueFire(shared_ptr<Stage>& StagePtr) :
+		MultiParticle(StagePtr)
+	{}
+	BlueFire::~BlueFire() {}
+
+	//初期化
+	void BlueFire::OnCreate() {
+		//加算描画処理をする
+		SetAddType(true);
+	}
+
+	void BlueFire::OnUpdate()
+	{
+		//前回のターンからの時間
+		float ElapsedTime = App::GetApp()->GetElapsedTime();
+		for (auto ParticlePtr : GetParticleVec()) {
+			auto gm = GameManager::GetInstance();
+			if (gm->GetMoveEnabledFlg() == true)
+			{
+				ParticlePtr->AddTotalTime(ElapsedTime);
+			}
+			for (auto& rParticleSprite : ParticlePtr->GetParticleSpriteVec()) {
+				if (rParticleSprite.m_Active) {
+					//移動速度に従って移動させる
+					rParticleSprite.m_LocalPos += rParticleSprite.m_Velocity * ElapsedTime;
+
+
+					if (ParticlePtr->GetTotalTime() >= ParticlePtr->GetMaxTime()) {
+						//制限時間になったら
+						rParticleSprite.m_Active = false;
+					}
+				}
+			}
+		}
+	}
+
+	void BlueFire::InsertFire(const Vec3& Pos, int GenerateNum, Vec3 MoveSpeed)
+	{
+		auto ptrParticle = InsertParticle(GenerateNum);
+		ptrParticle->SetEmitterPos(Pos);
+		ptrParticle->SetTextureResource(L"BLUE_BULLET_TX");
+		ptrParticle->SetMaxTime(1.0f);
+		for (auto& rParticleSprite : ptrParticle->GetParticleSpriteVec()) {
+			rParticleSprite.m_LocalPos.x = Util::RandZeroToOne() * 0.1f - 0.05f;
+			rParticleSprite.m_LocalPos.y = Util::RandZeroToOne() * 0.1f;
+			rParticleSprite.m_LocalPos.z = Util::RandZeroToOne() * 0.1f - 0.05f;
+			//各パーティクルの移動速度を指定
+			rParticleSprite.m_Velocity = Vec3(
+				rParticleSprite.m_LocalPos.x * MoveSpeed.x,
+				rParticleSprite.m_LocalPos.y * MoveSpeed.y,
+				rParticleSprite.m_LocalPos.z * MoveSpeed.z
+			);
+			//色の指定
+			rParticleSprite.m_Color = Col4(1.0f, 1.0f, 1.0f, 1.0f);
+		}
+	}
+
+	BlackFire::BlackFire(shared_ptr<Stage>& StagePtr) :
+		MultiParticle(StagePtr)
+	{}
+	BlackFire::~BlackFire() {}
+
+	//初期化
+	void BlackFire::OnCreate() {
+		//加算描画処理をする
+		SetAddType(true);
+	}
+
+	void BlackFire::OnUpdate()
+	{
+		//前回のターンからの時間
+		float ElapsedTime = App::GetApp()->GetElapsedTime();
+		for (auto ParticlePtr : GetParticleVec()) {
+			auto gm = GameManager::GetInstance();
+			if (gm->GetMoveEnabledFlg() == true)
+			{
+				ParticlePtr->AddTotalTime(ElapsedTime);
+			}
+			for (auto& rParticleSprite : ParticlePtr->GetParticleSpriteVec()) {
+				if (rParticleSprite.m_Active) {
+					//移動速度に従って移動させる
+					rParticleSprite.m_LocalPos += rParticleSprite.m_Velocity * ElapsedTime;
+
+
+					if (ParticlePtr->GetTotalTime() >= ParticlePtr->GetMaxTime()) {
+						//制限時間になったら
+						rParticleSprite.m_Active = false;
+					}
+				}
+			}
+		}
+	}
+
+	void BlackFire::InsertFire(const Vec3& Pos, int GenerateNum, Vec3 MoveSpeed)
+	{
+		auto ptrParticle = InsertParticle(GenerateNum);
+		ptrParticle->SetEmitterPos(Pos);
+		ptrParticle->SetTextureResource(L"ENEMY_BULLET_TX");
+		ptrParticle->SetMaxTime(1.0f);
+		for (auto& rParticleSprite : ptrParticle->GetParticleSpriteVec()) {
+			rParticleSprite.m_LocalPos.x = Util::RandZeroToOne() * 0.1f - 0.05f;
+			rParticleSprite.m_LocalPos.y = Util::RandZeroToOne() * 0.1f;
+			rParticleSprite.m_LocalPos.z = Util::RandZeroToOne() * 0.1f - 0.05f;
+			//各パーティクルの移動速度を指定
+			rParticleSprite.m_Velocity = Vec3(
+				rParticleSprite.m_LocalPos.x * MoveSpeed.x,
+				rParticleSprite.m_LocalPos.y * MoveSpeed.y,
+				rParticleSprite.m_LocalPos.z * MoveSpeed.z
+			);
+			//色の指定
+			rParticleSprite.m_Color = Col4(1.0f, 1.0f, 1.0f, 1.0f);
+		}
+	}
+
 	//--------------------------------------------------------------------------------------
 	///	壁を壊した時のエフェクト
 	//--------------------------------------------------------------------------------------

@@ -59,6 +59,11 @@ namespace basecross {
 		m_Hp = 3.0f;
 	}
 
+	float EnemyShield::GetHP() const
+	{
+		return m_Hp;
+	}
+
 	Vec3 EnemyShield::GetPosition() const
 	{
 		return GetComponent<Transform>()->GetPosition();
@@ -193,6 +198,11 @@ namespace basecross {
 	void PatrolShield::Initialize()
 	{
 		m_Hp = 3.0f;
+	}
+
+	float PatrolShield::GetHP() const
+	{
+		return m_Hp;
 	}
 
 	Vec3 PatrolShield::GetPosition() const
@@ -331,6 +341,11 @@ namespace basecross {
 		m_Hp = 3.0f;
 	}
 
+	float UPPatrolShield::GetHP() const
+	{
+		return m_Hp;
+	}
+
 	Vec3 UPPatrolShield::GetPosition() const
 	{
 		return GetComponent<Transform>()->GetPosition();
@@ -467,6 +482,11 @@ namespace basecross {
 		m_Hp = 3.0f;
 	}
 
+	float RapidShield::GetHP() const
+	{
+		return m_Hp;
+	}
+
 	Vec3 RapidShield::GetPosition() const
 	{
 		return GetComponent<Transform>()->GetPosition();
@@ -598,6 +618,11 @@ namespace basecross {
 	void DangerShield::Initialize()
 	{
 		m_Hp = 5.0f;
+	}
+
+	float DangerShield::GetHP() const
+	{
+		return m_Hp;
 	}
 
 	Vec3 DangerShield::GetPosition() const
@@ -749,6 +774,11 @@ namespace basecross {
 	void ReflectShield::Initialize()
 	{
 		m_Hp = 3.0f;
+	}
+
+	float ReflectShield::GetHP() const
+	{
+		return m_Hp;
 	}
 
 	Vec3 ReflectShield::GetPosition() const

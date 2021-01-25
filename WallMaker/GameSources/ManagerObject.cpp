@@ -260,6 +260,18 @@ namespace basecross{
 		GetStage()->SetSharedGameObject(L"MultiFire", multiFire);
 		auto multiFireBlue = GetStage()->AddGameObject<MultiFireBlue>();
 		GetStage()->SetSharedGameObject(L"MultiFireBlue", multiFireBlue);
+		auto redFire = GetStage()->AddGameObject<RedFire>();
+		GetStage()->SetSharedGameObject(WstringKey::ShareObj_RedFire, redFire);
+		auto orangeFire = GetStage()->AddGameObject<OrangeFire>();
+		GetStage()->SetSharedGameObject(WstringKey::ShareObj_OrangeFire, orangeFire);
+		auto yellowFire = GetStage()->AddGameObject<YellowFire>();
+		GetStage()->SetSharedGameObject(WstringKey::ShareObj_YellowFire, yellowFire);
+		auto greenFire = GetStage()->AddGameObject<GreenFire>();
+		GetStage()->SetSharedGameObject(WstringKey::ShareObj_GreenFire, greenFire);
+		auto blueFire = GetStage()->AddGameObject<BlueFire>();
+		GetStage()->SetSharedGameObject(WstringKey::ShareObj_BlueFire, blueFire);
+		auto blackFire = GetStage()->AddGameObject<BlackFire>();
+		GetStage()->SetSharedGameObject(WstringKey::ShareObj_BlackFire, blackFire);
 		auto breakWallEffect = GetStage()->AddGameObject<WallBreakEffect>();
 		GetStage()->SetSharedGameObject(WstringKey::ShareObj_BreakWallEffect, breakWallEffect);
 		auto reflectEffect = GetStage()->AddGameObject<ReflectBulletEffect>();

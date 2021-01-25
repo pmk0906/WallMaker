@@ -29,6 +29,10 @@ namespace WstringKey {
 	const wstring AM_PlayerWalkMagic = L"PlayerWalkMagic";
 	//敵
 	const wstring AM_EnemyGearSpin = L"EnemyGearSpin";
+	//宝箱
+	const wstring AM_TreasureBoxClosing = L"TreasureBoxClosing";
+	const wstring AM_TreasureBoxOpen = L"TreasureBoxOpen";
+
 
 	// アニメーション用
 	// プレイヤー
@@ -39,6 +43,7 @@ namespace WstringKey {
 	const wstring Anim_EnemyBlue = L"AnimEnemyBlue";
 	const wstring Anim_EnemyBlack = L"AnimEnemyBlack";
 	const wstring Anim_EnemyYellow = L"AnimEnemyYellow";
+	const wstring Anim_TreasureBox = L"AnimTreasureBox";
 
 	//音
 	//BGM
@@ -57,6 +62,11 @@ namespace WstringKey {
 	const wstring SE_Enter = L"SE_ENTER";
 	const wstring SE_Cancel = L"SE_CANCEL";
 	const wstring SE_Cursol = L"SE_CURSOL";
+	const wstring SE_BULLET_RED = L"SE_BULLET_RED";
+	const wstring SE_BULLET_ORANGE = L"SE_BULLET_ORANGE";
+	const wstring SE_BULLET_YELLOW = L"SE_BULLET_YELLOW";
+	const wstring SE_BULLET_GREEN = L"SE_BULLET_GREEN";
+	const wstring SE_BULLET_BLUE = L"SE_BULLET_BLUE";
 
 	// シェアオブジェクト用
 	// プレイヤー
@@ -71,6 +81,13 @@ namespace WstringKey {
 	//パーティクル
 	const wstring ShareObj_BreakWallEffect = L"ObjBreakWallEffect";
 	const wstring ShareObj_ReflectBulletEffect = L"ObjReflectBulletEffect";
+	const wstring ShareObj_RedFire = L"RED_BULLET_TX";
+	const wstring ShareObj_OrangeFire = L"ORANGE_BULLET_TX";
+	const wstring ShareObj_YellowFire = L"YELLOW_BULLET_TX";
+	const wstring ShareObj_GreenFire = L"GREEN_BULLET_TX";
+	const wstring ShareObj_BlueFire = L"BLUE_BULLET_TX";
+	const wstring ShareObj_BlackFire = L"ENEMY_BULLET_TX";
+
 	// カメラ
 	const wstring ShareObj_PlayerCameraman = L"ObjPlayerCameraman";
 	const wstring ShareObj_OpeningCameraman = L"ObjOpeningCameraman";

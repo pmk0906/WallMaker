@@ -74,6 +74,12 @@ namespace basecross{
 			{L"BLUEFIRE_TX", L"BlueFire.png"},
 			{L"BREAK_TX", L"Break.png"},
 			{L"REFLECT_TX", L"Reflect0005.png"},
+			{L"RED_BULLET_TX",L"fire_Red.png"},
+			{L"ORANGE_BULLET_TX",L"fire_Orange.png"},
+			{L"YELLOW_BULLET_TX",L"fire_Yellow.png"},
+			{L"GREEN_BULLET_TX",L"fire_LightBlue.png"},
+			{L"BLUE_BULLET_TX",L"fire_Blue.png"},
+			{L"ENEMY_BULLET_TX",L"fire_Black.png"},
 			//ボタン
 			{L"NEXTSTAGE_BUTTON_TX", L"Tx_NextStageButton.png"},
 			{L"STAGESELECT_BUTTON_TX", L"Tx_StageSelectButton.png"},
@@ -107,18 +113,22 @@ namespace basecross{
 			{WstringKey::Anim_EnemyBlue, L"Enemy_Blue_ver2.bmf"},
 			{WstringKey::Anim_EnemyBlack, L"Enemy_Black_ver2.bmf"},
 			{WstringKey::Anim_EnemyYellow, L"Enemy_Yellow_ver2.bmf"},
+			{WstringKey::Anim_TreasureBox,L"TreasureBox.bmf"}
 		};
 		//スタティック
 		Pairs staticPairs[] =
 		{
 			{L"TREASURE_MESH", L"Treasure.bmf"},
-			{L"TREASUREBOX_MESH", L"TreasureBox.bmf"},
 			{L"SHELD_MESH", L"Shield.bmf"},
 			{L"ENEMY_MESH", L"Enemy.bmf"},
 			{L"STOPENEMY_MESH", L"StopEnemy.bmf"},
 			{L"COLORENEMY_MESH", L"StopEnemy0002.bmf"},
 			{L"BULLET_MESH", L"Bullet_Green.bmf"},
-			{L"DANGER_BULLET_MESH", L"Bullet_Red.bmf"},
+			{L"RED_BULLET", L"Bullet_Red.bmf"},
+			{L"ORANGE_BULLET",L"Bullet_Orange.bmf"},
+			{L"YELLOW_BULLET",L"Bullet_Yellow.bmf"},
+			{L"GREEN_BULLET",L"Bullet_LightBlue.bmf"},
+			{L"BLUE_BULLET", L"Bullet_Blue.bmf"},
 			{L"THORN_BULLET_MESH", L"Bullet_Red_thorn.bmf"},
 			{L"PURPLE_BULLET_MESH", L"Bullet_Purple.bmf"},
 			{L"BLUE_BULLET_MESH", L"Bullet_Blue.bmf"},
@@ -126,7 +136,9 @@ namespace basecross{
 			{L"ORANGE_SHIELD", L"Shield_Orange.bmf"},
 			{L"YELLOW_SHIELD", L"Shield_Yellow.bmf"},
 			{L"GREEN_SHIELD", L"Shield_LightBlue.bmf"},
-			{L"BLUE_SHIELD", L"Shield_Blue.bmf"}
+			{L"BLUE_SHIELD", L"Shield_Blue.bmf"},
+			{L"ENEMY_BULLET",L"Enemy_Bullet.bmf"},
+			{L"ENEMY_BULLET_DANGER",L"Enemy_Bullet_Thorn.bmf"}
 
 		};
 		//タンジェント有りスタティック
@@ -156,7 +168,12 @@ namespace basecross{
 			{L"SE_BreakStageWall", L"BreakStageWall.wav"},
 			{L"SE_ENTER", L"Enter.wav"},
 			{L"SE_CANCEL", L"Cancel.wav"},
-			{L"SE_CURSOL", L"Cursol.wav"}
+			{L"SE_CURSOL", L"Cursol.wav"},
+			{L"SE_BULLET_RED",L"power1.wav"},
+			{L"SE_BULLET_ORANGE",L"power2.wav"},
+			{L"SE_BULLET_YELLOW",L"power3.wav"},
+			{L"SE_BULLET_GREEN",L"power4.wav"},
+			{L"SE_BULLET_BLUE",L"power5.wav"}
 		};
 
 		// テクスチャ

@@ -15,7 +15,7 @@ namespace basecross {
 
 		//描画
 		auto ptrDraw = AddComponent<PNTStaticModelDraw>();
-		ptrDraw->SetMeshResource(L"BULLET_MESH");
+		ptrDraw->SetMeshResource(L"ENEMY_BULLET");
 		ptrDraw->SetMeshToTransformMatrix(spanMat);
 
 		// 衝突判定
@@ -48,16 +48,17 @@ namespace basecross {
 				BulletMove();
 				Die();
 				SetMaxSpeed();
-				SetColor();
+				SetMaxAttack();
+				//SetColor();
 				SetReflectflg();
 
 				if (flg_reflect == false)
 				{
-					GenerateFire(1, Vec3(0.0f, 0.0f, 0.0f));
+					BulletEffectBlack(3, Vec3(0.0f, 0.0f, 0.0f));
 				}
 				else
 				{
-					GenerateFireBlue(3, Vec3(0.0f, 0.0f, 0.0f));
+					SetColor();
 				}
 			}
 		}
@@ -132,6 +133,14 @@ namespace basecross {
 		}
 	}
 
+	void EnemyBullet::SetMaxAttack()
+	{
+		if (m_Attack >= MAX_ATTACK)
+		{
+			m_Attack = MAX_ATTACK;
+		}
+	}
+
 	void EnemyBullet::SetColor()
 	{
 		Mat4x4 spanMat; // モデルとトランスフォームの間の差分行列
@@ -144,10 +153,51 @@ namespace basecross {
 
 		if (flg_reflect)
 		{
-			auto ptrDraw = AddComponent<PNTStaticModelDraw>();
+			if (m_Attack == 1.0f)
+			{
+				auto ptrDraw = AddComponent<PNTStaticModelDraw>();
 
-			ptrDraw->SetMeshResource(L"BLUE_BULLET_MESH");
-			ptrDraw->SetMeshToTransformMatrix(spanMat);
+				ptrDraw->SetMeshResource(L"RED_BULLET");
+				ptrDraw->SetMeshToTransformMatrix(spanMat);
+
+				BulletEffectRed(3, Vec3(0.0f, 0.0f, 0.0f));
+			}
+			else if (m_Attack == 2.0f)
+			{
+				auto ptrDraw = AddComponent<PNTStaticModelDraw>();
+
+				ptrDraw->SetMeshResource(L"ORANGE_BULLET");
+				ptrDraw->SetMeshToTransformMatrix(spanMat);
+
+				BulletEffectOrange(3, Vec3(0.0f, 0.0f, 0.0f));
+			}
+			else if (m_Attack == 3.0f)
+			{
+				auto ptrDraw = AddComponent<PNTStaticModelDraw>();
+
+				ptrDraw->SetMeshResource(L"YELLOW_BULLET");
+				ptrDraw->SetMeshToTransformMatrix(spanMat);
+
+				BulletEffectYellow(3, Vec3(0.0f, 0.0f, 0.0f));
+			}
+			else if (m_Attack == 4.0f)
+			{
+				auto ptrDraw = AddComponent<PNTStaticModelDraw>();
+
+				ptrDraw->SetMeshResource(L"GREEN_BULLET");
+				ptrDraw->SetMeshToTransformMatrix(spanMat);
+
+				BulletEffectGreen(3, Vec3(0.0f, 0.0f, 0.0f));
+			}
+			else if (m_Attack == 5.0f)
+			{
+				auto ptrDraw = AddComponent<PNTStaticModelDraw>();
+
+				ptrDraw->SetMeshResource(L"BLUE_BULLET");
+				ptrDraw->SetMeshToTransformMatrix(spanMat);
+
+				BulletEffectBlue(3, Vec3(0.0f, 0.0f, 0.0f));
+			}
 		}
 	}
 
@@ -169,6 +219,60 @@ namespace basecross {
 		}
 	}
 
+	void EnemyBullet::BulletEffectRed(int GenerateNum, Vec3 MoveSpeed)
+	{
+		auto ptrTrans = GetComponent<Transform>();
+		auto PtrFire = GetStage()->GetSharedGameObject<RedFire>(WstringKey::ShareObj_RedFire, false);
+		if (PtrFire) {
+			PtrFire->InsertFire(GetComponent<Transform>()->GetPosition(), GenerateNum, MoveSpeed);
+		}
+	}
+
+	void EnemyBullet::BulletEffectOrange(int GenerateNum, Vec3 MoveSpeed)
+	{
+		auto ptrTrans = GetComponent<Transform>();
+		auto PtrFire = GetStage()->GetSharedGameObject<OrangeFire>(WstringKey::ShareObj_OrangeFire, false);
+		if (PtrFire) {
+			PtrFire->InsertFire(GetComponent<Transform>()->GetPosition(), GenerateNum, MoveSpeed);
+		}
+	}
+
+	void EnemyBullet::BulletEffectYellow(int GenerateNum, Vec3 MoveSpeed)
+	{
+		auto ptrTrans = GetComponent<Transform>();
+		auto PtrFire = GetStage()->GetSharedGameObject<YellowFire>(WstringKey::ShareObj_YellowFire, false);
+		if (PtrFire) {
+			PtrFire->InsertFire(GetComponent<Transform>()->GetPosition(), GenerateNum, MoveSpeed);
+		}
+	}
+
+	void EnemyBullet::BulletEffectGreen(int GenerateNum, Vec3 MoveSpeed)
+	{
+		auto ptrTrans = GetComponent<Transform>();
+		auto PtrFire = GetStage()->GetSharedGameObject<GreenFire>(WstringKey::ShareObj_GreenFire, false);
+		if (PtrFire) {
+			PtrFire->InsertFire(GetComponent<Transform>()->GetPosition(), GenerateNum, MoveSpeed);
+		}
+	}
+
+	void EnemyBullet::BulletEffectBlue(int GenerateNum, Vec3 MoveSpeed)
+	{
+		auto ptrTrans = GetComponent<Transform>();
+		auto PtrFire = GetStage()->GetSharedGameObject<BlueFire>(WstringKey::ShareObj_BlueFire, false);
+		if (PtrFire) {
+			PtrFire->InsertFire(GetComponent<Transform>()->GetPosition(), GenerateNum, MoveSpeed);
+		}
+	}
+
+	void EnemyBullet::BulletEffectBlack(int GenerateNum, Vec3 MoveSpeed)
+	{
+		auto ptrTrans = GetComponent<Transform>();
+		auto PtrFire = GetStage()->GetSharedGameObject<BlackFire>(WstringKey::ShareObj_BlackFire, false);
+		if (PtrFire) {
+			PtrFire->InsertFire(GetComponent<Transform>()->GetPosition(), GenerateNum, MoveSpeed);
+		}
+	}
+
 	void EnemyBullet::GenerateReflectEffect(int GenerateNum, Vec3 MoveSpeed)
 	{
 		auto ptrTrans = GetComponent<Transform>();
@@ -180,7 +284,7 @@ namespace basecross {
 
 	void EnemyBullet::SetReflectflg()
 	{
-		if (m_ReflectTime >= 0.005f)
+		if (m_ReflectTime >= 0.01f)
 		{
 			flg_reflectWall = false;
 
@@ -196,7 +300,7 @@ namespace basecross {
 		{
 			if (flg_reflect == false)
 			{
-				player->Damage(ATTACK);
+				player->Damage(m_Attack);
 
 				auto ptrXA = App::GetApp()->GetXAudio2Manager();
 				ptrXA->Start(WstringKey::SE_PlayerDamage, 0, 1.0f);
@@ -235,10 +339,17 @@ namespace basecross {
 		{
 			if (flg_reflect)
 			{
-				shield->Damage(m_Attack);
+				if (m_Attack < shield->GetHP())
+				{
+					shield->Damage(m_Attack);
 
-				SetDrawActive(false);
-				SetUpdateActive(false);
+					SetDrawActive(false);
+					SetUpdateActive(false);
+				}
+				else if (m_Attack >= shield->GetHP())
+				{
+					shield->Damage(m_Attack);
+				}
 			}
 		}
 
@@ -247,10 +358,17 @@ namespace basecross {
 		{
 			if (flg_reflect)
 			{
-				shield->Damage(m_Attack);
+				if (m_Attack < shield->GetHP())
+				{
+					shield->Damage(m_Attack);
 
-				SetDrawActive(false);
-				SetUpdateActive(false);
+					SetDrawActive(false);
+					SetUpdateActive(false);
+				}
+				else if (m_Attack >= shield->GetHP())
+				{
+					shield->Damage(m_Attack);
+				}
 			}
 		}
 
@@ -259,10 +377,17 @@ namespace basecross {
 		{
 			if (flg_reflect)
 			{
-				shield->Damage(m_Attack);
+				if (m_Attack < shield->GetHP())
+				{
+					shield->Damage(m_Attack);
 
-				SetDrawActive(false);
-				SetUpdateActive(false);
+					SetDrawActive(false);
+					SetUpdateActive(false);
+				}
+				else if (m_Attack >= shield->GetHP())
+				{
+					shield->Damage(m_Attack);
+				}
 			}
 		}
 
@@ -271,10 +396,17 @@ namespace basecross {
 		{
 			if (flg_reflect)
 			{
-				shield->Damage(m_Attack);
+				if (m_Attack < shield->GetHP())
+				{
+					shield->Damage(m_Attack);
 
-				SetDrawActive(false);
-				SetUpdateActive(false);
+					SetDrawActive(false);
+					SetUpdateActive(false);
+				}
+				else if (m_Attack >= shield->GetHP())
+				{
+					shield->Damage(m_Attack);
+				}
 			}
 		}
 
@@ -283,10 +415,17 @@ namespace basecross {
 		{
 			if (flg_reflect)
 			{
-				shield->Damage(m_Attack);
+				if (m_Attack < shield->GetHP())
+				{
+					shield->Damage(m_Attack);
 
-				SetDrawActive(false);
-				SetUpdateActive(false);
+					SetDrawActive(false);
+					SetUpdateActive(false);
+				}
+				else if (m_Attack >= shield->GetHP())
+				{
+					shield->Damage(m_Attack);
+				}
 			}
 		}
 
@@ -295,10 +434,17 @@ namespace basecross {
 		{
 			if (flg_reflect)
 			{
-				shield->Damage(m_Attack);
+				if (m_Attack < shield->GetHP())
+				{
+					shield->Damage(m_Attack);
 
-				SetDrawActive(false);
-				SetUpdateActive(false);
+					SetDrawActive(false);
+					SetUpdateActive(false);
+				}
+				else if (m_Attack >= shield->GetHP())
+				{
+					shield->Damage(m_Attack);
+				}
 			}
 		}
 
@@ -418,18 +564,96 @@ namespace basecross {
 
 			if (flg_reflect && flg_reflectWall == false)
 			{
-				pos -= 0.1f;
+				if (m_Attack == 1.0f)
+				{
+					auto ptrXA = App::GetApp()->GetXAudio2Manager();
+					ptrXA->Start(WstringKey::SE_BULLET_RED, 0, 10.0f);
 
-				SetDir(Reflect(wallTrans->GetForword(), dir));
+					pos -= 0.1f;
 
-				m_BulletSpeed += 5.0f;
-				m_Attack += 1.0f;
+					SetDir(Reflect(wallTrans->GetForword(), dir));
 
-				flg_reflectWall = true;
+					m_BulletSpeed += 10.0f;
+					m_Attack += 1.0f;
 
-				m_ReflectTime += delta;
+					flg_reflectWall = true;
 
-				GenerateReflectEffect(30, Vec3(30.0f));
+					m_ReflectTime += delta;
+
+					GenerateReflectEffect(30, Vec3(30.0f));
+				}
+				else if (m_Attack == 2.0f)
+				{
+					auto ptrXA = App::GetApp()->GetXAudio2Manager();
+					ptrXA->Start(WstringKey::SE_BULLET_ORANGE, 0, 10.0f);
+
+					pos -= 0.1f;
+
+					SetDir(Reflect(wallTrans->GetForword(), dir));
+
+					m_BulletSpeed += 10.0f;
+					m_Attack += 1.0f;
+
+					flg_reflectWall = true;
+
+					m_ReflectTime += delta;
+
+					GenerateReflectEffect(30, Vec3(30.0f));
+				}
+				else if (m_Attack == 3.0f)
+				{
+					auto ptrXA = App::GetApp()->GetXAudio2Manager();
+					ptrXA->Start(WstringKey::SE_BULLET_YELLOW, 0, 10.0f);
+
+					pos -= 0.1f;
+
+					SetDir(Reflect(wallTrans->GetForword(), dir));
+
+					m_BulletSpeed += 10.0f;
+					m_Attack += 1.0f;
+
+					flg_reflectWall = true;
+
+					m_ReflectTime += delta;
+
+					GenerateReflectEffect(30, Vec3(30.0f));
+				}
+				else if (m_Attack == 4.0f)
+				{
+					auto ptrXA = App::GetApp()->GetXAudio2Manager();
+					ptrXA->Start(WstringKey::SE_BULLET_GREEN, 0, 10.0f);
+
+					pos -= 0.1f;
+
+					SetDir(Reflect(wallTrans->GetForword(), dir));
+
+					m_BulletSpeed += 10.0f;
+					m_Attack += 1.0f;
+
+					flg_reflectWall = true;
+
+					m_ReflectTime += delta;
+
+					GenerateReflectEffect(30, Vec3(30.0f));
+				}
+				else if (m_Attack == 5.0f)
+				{
+					auto ptrXA = App::GetApp()->GetXAudio2Manager();
+					ptrXA->Start(WstringKey::SE_BULLET_BLUE, 0, 10.0f);
+
+					pos -= 0.1f;
+
+					SetDir(Reflect(wallTrans->GetForword(), dir));
+
+					m_BulletSpeed += 10.0f;
+					m_Attack += 1.0f;
+
+					flg_reflectWall = true;
+
+					m_ReflectTime += delta;
+
+					GenerateReflectEffect(30, Vec3(30.0f));
+				}
 			}
 
 			myTrans->SetPosition(pos);
@@ -438,7 +662,7 @@ namespace basecross {
 		if (auto stageWall = dynamic_pointer_cast<StageWall>(other))
 		{
 			SetDrawActive(false);
-			SetUpdateActive(false);	
+			SetUpdateActive(false);
 		}
 
 		if (auto cannon = dynamic_pointer_cast<Cannon>(other))

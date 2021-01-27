@@ -37,10 +37,14 @@ namespace basecross {
 		bool m_MagicSircleEnabledLook = false;
 		//魔法陣が降り切った
 		bool m_MagicSircleMoved = false;
+		// 宝箱にプレイヤーが触れたか
+		bool m_TreasureFlg = false;
 		//宝箱を開けても良いか
 		bool m_TreasureBoxOpenFlg = false;
 		//宝箱が開き終わったか
 		bool m_TreasureBoxOpened = false;
+		//宝箱が開いたあとにプレイヤーのゴールモーションが終わったか
+		bool m_GoalMotionEnd = false;
 		// クリアしたか
 		bool m_ClearFlg = false;
 		bool m_ClearFlgChanged = false;
@@ -85,8 +89,10 @@ namespace basecross {
 			SetDeathFlgChanged(false);
 			SetPoseFlg(false);
 			SetPoseFlgChanged(false);
+			SetTreasureFlg(false);
 			SetTreasureBoxOpen(false);
 			SetTreasureBoxOpened(false); 
+			SetGoalMotionEnd(false);
 			SetSelectingButton(0);
 			SetMoveEnabledFlg(false); 
 			SetOpeningCameraMoveEnd(false);
@@ -130,18 +136,7 @@ namespace basecross {
 		{
 			for (auto obj : stage->GetGameObjectVec())
 			{
-				//宝
-				if (obj->FindTag(WstringKey::Tag_Treasure))
-				{
-					if (auto treasure = dynamic_pointer_cast<TreasureBox>(obj))
-					{
-						if (treasure->GetTreasureFlg() == true)
-						{
-							m_ClearFlg = true;
-							SetMoveEnabledFlg(false);
-						}
-					}
-				}
+
 				//プレイヤー
 				if (obj->FindTag(WstringKey::Tag_Player))
 				{
@@ -154,6 +149,12 @@ namespace basecross {
 						}
 					}
 				}
+			}
+			//宝
+			if (GetTreasureFlg() == true)
+			{
+				m_ClearFlg = true;
+				SetMoveEnabledFlg(false);
 			}
 		}
 
@@ -256,6 +257,15 @@ namespace basecross {
 		{
 			m_PlayerMoveTime = moveTime;
 		}
+		//宝箱にプレイヤーが触れたか
+		bool GetTreasureFlg()
+		{
+			return m_TreasureFlg;
+		}
+		void SetTreasureFlg(bool treasureFlg)
+		{
+			m_TreasureFlg = treasureFlg;
+		}
 		//宝箱を開けても良いか
 		bool GetTreasureBoxOpen()
 		{
@@ -273,6 +283,15 @@ namespace basecross {
 		void SetTreasureBoxOpened(bool treasureBoxOpened)
 		{
 			m_TreasureBoxOpened = treasureBoxOpened;
+		}
+		//宝箱が開いたあとにプレイヤーのゴールモーションが終わったか
+		bool GetGoalMotionEnd()
+		{
+			return m_GoalMotionEnd;
+		}
+		void SetGoalMotionEnd(bool goalMotionEnd)
+		{
+			m_GoalMotionEnd = goalMotionEnd;
 		}
 		// クリアフラグ
 		bool GetClearFlg()

@@ -109,7 +109,9 @@ namespace basecross{
 	void TreasureBox::OnCollisionEnter(shared_ptr<GameObject>& other) {
 		if (auto player = dynamic_pointer_cast<Player>(other))
 		{
-			SetTreasureFlg(true);
+			//SetTreasureFlg(true);
+			auto gm = GameManager::GetInstance();
+			gm->SetTreasureFlg(true);
 		}
 	}
 	

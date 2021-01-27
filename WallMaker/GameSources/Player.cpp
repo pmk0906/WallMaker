@@ -283,31 +283,6 @@ namespace basecross{
 			utiPtr->RotToHead(angleR, 1.0f);
 		}
 	}
-	void Player::MovePlayer2() {
-
-		// 前のフレームからの経過時間を取得する（単位：秒）
-		float delta = App::GetApp()->GetElapsedTime();
-
-		auto device = App::GetApp()->GetInputDevice(); // 入力装置を取得する
-		auto pad = device.GetControlerVec()[0]; // 入力装置の中から０番目のパッドを取得する
-
-		auto transComp = GetComponent<Transform>();
-		auto pos = transComp->GetPosition(); // 今現在の座標を取得する
-
-		float PlayerSpeed = 10.0f;
-
-		// それぞれの座標(XYZ)に移動量を加える
-		pos.x += PlayerSpeed * pad.fThumbLX * delta; // 秒間5ｍ移動
-		//pos.y = 1.0f;
-		pos.z += PlayerSpeed * pad.fThumbLY * delta;
-
-		// スティックが倒れていたらその向きに回転させる
-		if (pad.fThumbLX != 0.0f && pad.fThumbLY != 0.0f) {
-			// atan2f関数を用いて、スティックのXYをラジアン角に変換する
-			transComp->SetRotation(0.0f, atan2f(-pad.fThumbLY, pad.fThumbLX), 0.0f); // X軸中心の回転, Y軸中心の回転, Z軸中心の回転をラジアン角で設定する
-			forward = Vec3(pad.fThumbLX, 0, pad.fThumbLY).normalize();
-		}
-	}
 
 	void Player::CreateMagicWall()
 	{
@@ -327,6 +302,50 @@ namespace basecross{
 				auto ptrXA = App::GetApp()->GetXAudio2Manager();
 				ptrXA->Start(WstringKey::SE_CreateMagicWall, 0, 1.0f);
 			}
+		}
+	}
+
+	void Player::MotionUpdate(wstring motionKey)
+	{
+		auto ptrDraw = GetComponent<PNTBoneModelDraw>();
+		ptrDraw->ChangeCurrentAnimation(motionKey);
+		SetMotionName(motionKey);
+		float elapsedTime = App::GetApp()->GetElapsedTime();
+		ptrDraw->UpdateAnimation(elapsedTime);
+	}
+
+	void Player::LookCamera()
+	{
+		auto& app = App::GetApp();
+
+		auto transComp = GetComponent<Transform>();
+		float delta = app->GetElapsedTime();
+		auto objs = GetStage()->GetGameObjectVec();
+		auto myPos = transComp->GetPosition();
+
+		Vec3 lookPos(myPos.x, myPos.y, myPos.z + 1.0f);
+
+		auto enemyToPlayer = lookPos - myPos;
+
+		auto forward = transComp->GetForword();
+
+		auto dir = enemyToPlayer.normalize();
+
+		float rot = XMConvertToRadians(90.0f) * delta; // １フレ―ム当たりの旋回角度
+
+		if (m_GoalTimer < m_GoalSpinTimer)
+		{
+			// 外積を用いてプレイヤーがいる方向に旋回する
+			if (forward.cross(dir).y < 0.0f) {
+				m_RotY += rot;
+			}
+			else {
+				m_RotY -= rot;
+			}
+
+			transComp->SetRotation(0.0f, m_RotY, 0.0f);
+
+			m_GoalTimer += delta;
 		}
 	}
 
@@ -370,6 +389,8 @@ namespace basecross{
 		ptrDraw->AddAnimation(WstringKey::AM_PlayerWalk, 31, 29, true, 30.0f);
 		ptrDraw->AddAnimation(WstringKey::AM_PlayerStandMagic, 61, 29, true, 10.0f);
 		ptrDraw->AddAnimation(WstringKey::AM_PlayerWalkMagic, 91, 29, true, 30.0f);
+		ptrDraw->AddAnimation(WstringKey::AM_PlayerDamage, 121, 29, true, 30.0f);
+		ptrDraw->AddAnimation(WstringKey::AM_PlayerGoal, 151, 29, false, 10.0f);
 		ptrDraw->ChangeCurrentAnimation(WstringKey::AM_PlayerStand);
 		SetMotionName(WstringKey::AM_PlayerStand);
 		//最初は透明にしておく
@@ -411,8 +432,9 @@ namespace basecross{
 			auto rotation = GetComponent<Transform>()->GetRotation();
 			m_RotY = rotation.y;
 		}
-		else
+		else //動く許可がない時
 		{
+			// スタート時に魔法陣が見えたら
 			if (gm->GetMagicSircleEnabledLook() == true)
 			{
 				auto ptrShadow = GetComponent<Shadowmap>();
@@ -425,40 +447,69 @@ namespace basecross{
 				col.w = 1.0f;
 				ptrDraw->SetDiffuse(col);
 			}
-			//if (gm->GetTreasureBoxOpen() == true)
-			//{
-			//	auto& app = App::GetApp();
+			// 宝箱にプレイヤーが触れたら
+			if (gm->GetTreasureFlg() == true)
+			{
+				auto ptrDraw = GetComponent<PNTBoneModelDraw>();
 
-			//	auto transComp = GetComponent<Transform>();
-			//	float delta = app->GetElapsedTime();
-			//	auto objs = GetStage()->GetGameObjectVec();
-			//	auto myPos = transComp->GetPosition();
+				float elapsedTime = App::GetApp()->GetElapsedTime();
 
-			//	Vec3 lookPos(myPos.x, myPos.y, myPos.z + 1.0f);
+				// ゴール時にGoalStandFlgがfalseなら
+				if (m_GoalStandFlg == false)
+				{
+					//今のモーションがAM_PlayerStandでは無いなら
+					if (GetMotionName() != WstringKey::AM_PlayerStand)
+					{
+						ptrDraw = GetComponent<PNTBoneModelDraw>();
+						ptrDraw->ChangeCurrentAnimation(WstringKey::AM_PlayerStand);
+						SetMotionName(WstringKey::AM_PlayerStand);
+					}
+					m_GoalStandFlg = true;
+				}
 
-			//	auto enemyToPlayer = lookPos - myPos;
+				//宝箱の見た目が開いていたら
+				if (gm->GetTreasureBoxOpen() == true)
+				{
+					// タイマーが回転する時間を超えていない場合
+					if (m_GoalTimer < m_GoalSpinTimer)
+					{
+						LookCamera();
+					}
+				}
+				else
+				{
+					m_RotY = GetComponent<Transform>()->GetRotation().y;
+				}
+				// タイマーが回転する時間を超えている場合
+				if(m_GoalSpinTimer <= m_GoalTimer)
+				{
+					//今のモーションがAM_PlayerGoalでは無いなら
+					if (GetMotionName() != WstringKey::AM_PlayerGoal)
+					{
+						auto ptrDraw = GetComponent<PNTBoneModelDraw>();
+						ptrDraw->ChangeCurrentAnimation(WstringKey::AM_PlayerGoal);
+						SetMotionName(WstringKey::AM_PlayerGoal);
+					}
 
-			//	auto forward = transComp->GetForword();
+					// タイマーが3秒を超えていない場合
+					if (m_Timer < 3.0f)
+					{
+						//float elapsedTime = App::GetApp()->GetElapsedTime();
+						//m_Timer + elapsedTime;
+					}
+					//3秒を超えた場合
+					else
+					{
+						gm->SetGoalMotionEnd(true);
+					}
+					m_Timer += elapsedTime;
+				}
 
-			//	auto dir = enemyToPlayer.normalize();
-
-			//	float rot = XMConvertToRadians(90.0f) * delta; // １フレ―ム当たりの旋回角度
+				ptrDraw->UpdateAnimation(elapsedTime);
 
 
-			//	// 外積を用いてプレイヤーがいる方向に旋回する
-			//	if (forward.cross(dir).y < 0.0f) {
-			//		m_RotY += rot;
-			//	}
-			//	else {
-			//		m_RotY -= rot;
-			//	}
-
-			//	transComp->SetRotation(0.0f, m_RotY, 0.0f);
-
-			//}
+			}
 		}
-
-
 	}
 
 	void Player::OnUpdate2()
@@ -467,14 +518,21 @@ namespace basecross{
 	}
 
 	void Player::OnCollisionEnter(shared_ptr<GameObject>& other) {
-		if (auto magicWall = dynamic_pointer_cast<MagicWall>(other))
+		if (auto treasureBox = dynamic_pointer_cast<TreasureBox>(other))
 		{
-			//magicWall->SetHp(0.0f);
+			if (GetMotionName() != WstringKey::AM_PlayerStand)
+			{
+				auto ptrDraw = GetComponent<PNTBoneModelDraw>();
+				ptrDraw->ChangeCurrentAnimation(WstringKey::AM_PlayerStand);
+				SetMotionName(WstringKey::AM_PlayerStand);
+			}
 		}
 	}
 
 	void Player::DrawStrings()
 	{
+		auto gm = GameManager::GetInstance();
+
 		//文字列表示
 		auto pos = GetComponent<Transform>()->GetPosition();
 		wstring playerPos(L"PlayerPos.x:");
@@ -516,7 +574,19 @@ namespace basecross{
 		wstring arrivingWall(L"ステージに存在する壁の枚数 : ");
 		arrivingWall += Util::UintToWStr(m_ArrivedWall) + L"\n";
 
-		wstring str = playerPos + playerRotation + playerRStick + wallStock + testFlg + arrivingWall + L"\n";
+		wstring goalMotionEnd(L"m_Timer : ");
+		goalMotionEnd += Util::FloatToWStr(m_Timer) + L"\n";
+
+		//if (m_Timer < 3.0f)
+		//{
+		//	goalMotionEnd += L"true\n";
+		//}
+		//else
+		//{
+		//	goalMotionEnd += L"false\n";
+		//}
+
+		wstring str = playerPos + playerRotation + playerRStick + wallStock + testFlg + arrivingWall + goalMotionEnd + L"\n";
 		auto ptrString = GetComponent<StringSprite>();
 		ptrString->SetText(str);
 	}

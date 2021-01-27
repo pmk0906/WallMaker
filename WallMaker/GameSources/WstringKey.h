@@ -27,6 +27,8 @@ namespace WstringKey {
 	const wstring AM_PlayerWalk = L"PlayerWalk";
 	const wstring AM_PlayerStandMagic = L"PlayerStandMagic";
 	const wstring AM_PlayerWalkMagic = L"PlayerWalkMagic";
+	const wstring AM_PlayerDamage = L"PlayerDamage";
+	const wstring AM_PlayerGoal = L"PlayerGoal";
 	//“G
 	const wstring AM_EnemyGearSpin = L"EnemyGearSpin";
 	//•ó” 

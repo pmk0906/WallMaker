@@ -21,7 +21,7 @@ namespace basecross{
 		float m_HoldSpeed = 3.0f;
 		//HP
 		float m_PlayerHp = 3.0f;
-
+		//死んだかのフラグ
 		bool m_PlayerDiedFlg = false;
 
 		//プレイヤーの透明度
@@ -39,10 +39,18 @@ namespace basecross{
 		const int m_MaxWallStock = 3;
 		int m_WallStock = 3;
 		bool m_wallDecreaseFlg = false;
-
-
+		
+		//ゴール時のモーション用フラグ
+		bool m_GoalStandFlg = false;
+		// ゴール時に回転
+		float m_GoalTimer = 0.0f;
+		float m_GoalSpinTimer = 2.0f;
+		// 回転時に使用する角度
 		float m_RotY;
-
+		//ダメージを受けた時用のタイマー
+		float m_InvincibleTime = 0.0f;
+		// ダメージ後の無敵時間
+		float m_InvincibleTimeLimit = 0.5f;
 		//壁の数を数える
 		void SetCountWall();
 		//壁を全て消す
@@ -63,11 +71,19 @@ namespace basecross{
 		Vec3 GetMoveVectorR() const;
 		//プレイヤーの移動
 		void MovePlayer();
-		void MovePlayer2();
 		Vec3 forward = Vec3(1, 0, 0);
 
 		// 魔法壁の生成
 		void CreateMagicWall();
+
+		// ゴールモーション用フラグ
+		bool GoalMotionEndFlg;
+		float m_Timer = 0.0f;
+		//モーションの更新
+		void MotionUpdate(wstring motionKey);
+		//ゴール時にカメラを向く
+		void LookCamera();
+
 
 		//入力ハンドラー
 		InputHandler<Player> m_InputHandler;

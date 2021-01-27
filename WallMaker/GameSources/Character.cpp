@@ -273,6 +273,7 @@ namespace basecross{
 
 		//タグをつける
 		AddTag(WstringKey::Tag_DrawActiveFalse);
+		AddTag(WstringKey::Tag_Wall);
 		auto ptrDraw = AddComponent<BcPNTStaticDraw>();
 		ptrDraw->SetMeshResource(L"DEFAULT_CUBE");
 		ptrDraw->SetOwnShadowActive(false);
@@ -317,6 +318,7 @@ namespace basecross{
 
 		//タグをつける
 		AddTag(WstringKey::Tag_DrawActiveFalse);
+		AddTag(WstringKey::Tag_Wall);
 		//影をつける（シャドウマップを描画する）
 		//auto shadowPtr = AddComponent<Shadowmap>();
 		////影の形（メッシュ）を設定
@@ -357,6 +359,7 @@ namespace basecross{
 
 		//タグをつける
 		AddTag(WstringKey::Tag_DrawActiveFalse);
+		AddTag(WstringKey::Tag_Wall);
 		//影をつける（シャドウマップを描画する）
 		//auto shadowPtr = AddComponent<Shadowmap>();
 		////影の形（メッシュ）を設定

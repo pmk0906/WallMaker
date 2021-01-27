@@ -54,5 +54,6 @@ namespace basecross {
 
 		bool GetFlgRay();
 		void SetFlgRay(bool rayFlg);
+		//
 	};
 }

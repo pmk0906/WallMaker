@@ -36,8 +36,6 @@
 #include "TestStage.h"
 #include "Cannon.h"
 #include "DirectorObject.h"
-#include "RayObject.h"
-#include "RayBullet.h"
 #include "ReflectBullet.h"
 #include "ReflectEnemy.h"
 

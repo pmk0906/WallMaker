@@ -60,51 +60,55 @@ namespace basecross {
 
 		if (gm->GetMoveEnabledFlg() == true)
 		{
-			auto transComp = GetComponent<Transform>();
-
-			auto enemyPos = transComp->GetPosition();
-
-			auto objs = GetStage()->GetGameObjectVec();
-
-			auto& app = App::GetApp();
-			float delta = app->GetElapsedTime();
-
-			Vec3 playerPos(0.0f, 0.0f, 0.0f);
-
-			for (auto& obj : objs)
+			if (flg_FindPlayer)
 			{
-				auto player = dynamic_pointer_cast<Player>(obj);
-				//auto gameStage = dynamic_pointer_cast<GameStage>(GetStage());
+				auto transComp = GetComponent<Transform>();
 
-				if (player) 
+				auto enemyPos = transComp->GetPosition();
+
+				auto objs = GetStage()->GetGameObjectVec();
+
+				auto& app = App::GetApp();
+				float delta = app->GetElapsedTime();
+
+				Vec3 playerPos(0.0f, 0.0f, 0.0f);
+
+				for (auto& obj : objs)
 				{
-					playerPos = player->GetPosition();
+					auto player = dynamic_pointer_cast<Player>(obj);
+					//auto gameStage = dynamic_pointer_cast<GameStage>(GetStage());
+
+					if (player)
+					{
+						playerPos = player->GetPosition();
+					}
 				}
-			}
 
-			auto enemyToPlayer = playerPos - enemyPos;
+				auto enemyToPlayer = playerPos - enemyPos;
 
-			if (enemyToPlayer.length() <= 20.0f)
-			{
-				m_LockOnTime += delta;
-
-				LookPlayer();
-
-				if (m_FireTime >= 0.3f && flg_LockOn)
+				if (enemyToPlayer.length() <= 20.0f)
 				{
-					Fire();
-				}
-			}
+					m_LockOnTime += delta;
 
-			else
-			{
-				m_LockOnTime = 0.0f;
+					LookPlayer();
+
+					if (m_FireTime >= 0.3f && flg_LockOn)
+					{
+						Fire();
+					}
+				}
+
+				else
+				{
+					m_LockOnTime = 0.0f;
+				}
 			}
 
 			Reload();
 			LockOn();
 			Die();
 			FireEffect();
+			FindPlayer();
 		}
 		if (gm->GetPoseFlg() == false)
 		{
@@ -125,6 +129,7 @@ namespace basecross {
 		m_FireCount = 0;
 
 		flg_LockOn = false;
+		flg_FindPlayer = true;
 	}
 
 	void RapidFireEnemy::Fire()
@@ -240,6 +245,24 @@ namespace basecross {
 	void RapidFireEnemy::CreateShield()
 	{
 		m_Shield = GetStage()->AddGameObject<RapidShield>(GetThis<RapidFireEnemy>());
+	}
+
+	void RapidFireEnemy::FindPlayer()
+	{
+		auto playerPtr = GetStage()->GetSharedGameObject<Player>(WstringKey::ShareObj_Player);
+		Vec3 playerPos = playerPtr->GetComponent<Transform>()->GetPosition();
+		Vec3 myPos = GetComponent<Transform>()->GetPosition();
+		auto& objVec = GetStage()->GetGameObjectVec();
+		flg_FindPlayer = true;
+		for (auto v : objVec) {
+			if (v->FindTag(WstringKey::Tag_Wall)) {
+				OBB obb = v->GetComponent<CollisionObb>()->GetObb();
+				if (HitTest::SEGMENT_OBB(playerPos, myPos, obb)) {
+					flg_FindPlayer = false;
+					break;
+				}
+			}
+		}
 	}
 
 	void RapidFireEnemy::FireEffect()

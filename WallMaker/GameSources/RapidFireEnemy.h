@@ -22,6 +22,7 @@ namespace basecross {
 		int m_FireCount;
 
 		bool flg_LockOn;
+		bool flg_FindPlayer;
 
 	public:
 		RapidFireEnemy(const shared_ptr<Stage>& StagePtr,
@@ -41,6 +42,7 @@ namespace basecross {
 		void Damage(float damage);
 		void Die();
 		void CreateShield();
+		void FindPlayer();
 		void FireEffect();
 		void GenerataFire(int GenerateNum, Vec3 MoveSpeed);
 

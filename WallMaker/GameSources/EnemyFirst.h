@@ -24,6 +24,7 @@ namespace basecross {
 		float m_FireTime;
 
 		bool flg_Ray;
+		bool flg_FindPlayer;
 
 	public:
 		EnemyFirst(const shared_ptr<Stage>& StagePtr,
@@ -42,7 +43,7 @@ namespace basecross {
 		void Damage(float damage);
 		void Die();
 		void CreateShield();
-		void CreateRay();
+		void FindPlayer();
 		void FireEffect();
 		void GenerataFire(int GenerateNum, Vec3 MoveSpeed);
 

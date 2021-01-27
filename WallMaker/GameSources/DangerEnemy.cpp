@@ -60,40 +60,43 @@ namespace basecross {
 
 		if (gm->GetMoveEnabledFlg() == true)
 		{
-			auto transComp = GetComponent<Transform>();
-
-			auto enemyPos = transComp->GetPosition();
-
-			auto objs = GetStage()->GetGameObjectVec();
-
-			Vec3 playerPos(0.0f, 0.0f, 0.0f);
-
-			for (auto& obj : objs)
+			if (flg_FindPlayer)
 			{
-				auto player = dynamic_pointer_cast<Player>(obj);
-				//auto gameStage = dynamic_pointer_cast<GameStage>(GetStage());
+				auto transComp = GetComponent<Transform>();
 
-				if (player) {
-					playerPos = player->GetPosition();
-				}
-			}
+				auto enemyPos = transComp->GetPosition();
 
-			auto enemyToPlayer = playerPos - enemyPos;
+				auto objs = GetStage()->GetGameObjectVec();
 
-			if (enemyToPlayer.length() <= 20.0f)
-			{
-				LookPlayer();
+				Vec3 playerPos(0.0f, 0.0f, 0.0f);
 
-				if (m_FireTime >= 5.0f)
+				for (auto& obj : objs)
 				{
-					Fire();
+					auto player = dynamic_pointer_cast<Player>(obj);
+					//auto gameStage = dynamic_pointer_cast<GameStage>(GetStage());
+
+					if (player) {
+						playerPos = player->GetPosition();
+					}
 				}
-				Reload();
+
+				auto enemyToPlayer = playerPos - enemyPos;
+
+				if (enemyToPlayer.length() <= 20.0f)
+				{
+					LookPlayer();
+
+					if (m_FireTime >= 5.0f)
+					{
+						Fire();
+					}
+					Reload();
+				}
 			}
 
 			Die();
 			FireEffect();
-
+			FindPlayer();
 		}
 		if (gm->GetPoseFlg() == false)
 		{
@@ -108,6 +111,8 @@ namespace basecross {
 		m_EnemyHP = 2.0f;
 		m_RotY = 0.0f;
 		m_FireTime = 0.0f;
+
+		flg_FindPlayer = true;
 	}
 
 	void DangerEnemy::Fire()
@@ -205,6 +210,24 @@ namespace basecross {
 	void DangerEnemy::CreateShield()
 	{
 		m_Shield = GetStage()->AddGameObject<DangerShield>(GetThis<DangerEnemy>());
+	}
+	
+	void DangerEnemy::FindPlayer()
+	{
+		auto playerPtr = GetStage()->GetSharedGameObject<Player>(WstringKey::ShareObj_Player);
+		Vec3 playerPos = playerPtr->GetComponent<Transform>()->GetPosition();
+		Vec3 myPos = GetComponent<Transform>()->GetPosition();
+		auto& objVec = GetStage()->GetGameObjectVec();
+		flg_FindPlayer = true;
+		for (auto v : objVec) {
+			if (v->FindTag(WstringKey::Tag_Wall)) {
+				OBB obb = v->GetComponent<CollisionObb>()->GetObb();
+				if (HitTest::SEGMENT_OBB(playerPos, myPos, obb)) {
+					flg_FindPlayer = false;
+					break;
+				}
+			}
+		}
 	}
 
 	void DangerEnemy::FireEffect()

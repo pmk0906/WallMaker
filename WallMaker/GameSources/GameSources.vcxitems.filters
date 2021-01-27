@@ -99,8 +99,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)GameStage3.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)GameStage4.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)GameStage5.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)RayBullet.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)RayObject.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ReflectBullet.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ReflectEnemy.h" />
   </ItemGroup>
@@ -186,8 +184,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)GameStage3.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)GameStage4.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)GameStage5.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)RayBullet.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)RayObject.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ReflectBullet.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ReflectEnemy.cpp" />
   </ItemGroup>

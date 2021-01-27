@@ -53,7 +53,6 @@ namespace basecross {
 
 		Initialize();
 		CreateShield();
-		//CreateRay();
 	}
 
 	void ReflectEnemy::OnUpdate()
@@ -62,44 +61,47 @@ namespace basecross {
 		auto gm = GameManager::GetInstance();
 		if (gm->GetMoveEnabledFlg() == true)
 		{
-			auto transComp = GetComponent<Transform>();
-
-			auto enemyPos = transComp->GetPosition();
-
-			auto objs = GetStage()->GetGameObjectVec();
-
-			Vec3 playerPos(0.0f, 0.0f, 0.0f);
-
-			for (auto& obj : objs)
+			if (flg_FindPlayer)
 			{
-				auto player = dynamic_pointer_cast<Player>(obj);
-				//auto gameStage = dynamic_pointer_cast<GameStage>(obj);
+				auto transComp = GetComponent<Transform>();
 
-				if (player)
+				auto enemyPos = transComp->GetPosition();
+
+				auto objs = GetStage()->GetGameObjectVec();
+
+				Vec3 playerPos(0.0f, 0.0f, 0.0f);
+
+				for (auto& obj : objs)
 				{
-					playerPos = player->GetPosition();
-				}
-			}
+					auto player = dynamic_pointer_cast<Player>(obj);
+					//auto gameStage = dynamic_pointer_cast<GameStage>(obj);
 
-			//auto rayObject = dynamic_pointer_cast<RayObject>(m_RayObject);
-
-			auto enemyToPlayer = playerPos - enemyPos;
-
-			if (enemyToPlayer.length() <= 20.0f /*&& rayObject->GetRayFlg() == true*/)
-			{
-				LookPlayer();
-
-				if (m_FireTime >= 3.0f)
-				{
-					Fire();
+					if (player)
+					{
+						playerPos = player->GetPosition();
+					}
 				}
 
-				Reload();
+				//auto rayObject = dynamic_pointer_cast<RayObject>(m_RayObject);
+
+				auto enemyToPlayer = playerPos - enemyPos;
+
+				if (enemyToPlayer.length() <= 20.0f /*&& rayObject->GetRayFlg() == true*/)
+				{
+					LookPlayer();
+
+					if (m_FireTime >= 3.0f)
+					{
+						Fire();
+					}
+
+					Reload();
+				}
 			}
 
 			Die();
 			FireEffect();
-
+			FindPlayer();
 		}
 		if (gm->GetPoseFlg() == false)
 		{
@@ -116,6 +118,7 @@ namespace basecross {
 		m_FireTime = 0.0f;
 
 		flg_Ray = true;
+		flg_FindPlayer = true;
 	}
 
 	void ReflectEnemy::Fire()
@@ -219,20 +222,22 @@ namespace basecross {
 		m_Shield = GetStage()->AddGameObject<ReflectShield>(GetThis<ReflectEnemy>());
 	}
 
-	void ReflectEnemy::CreateRay()
+	void ReflectEnemy::FindPlayer()
 	{
-		auto transComp = GetComponent<Transform>();
-		auto pos = transComp->GetPosition();
-
-		m_RayObject = GetStage()->AddGameObject<RayObject>(GetThis<EnemyFirst>());
-
-		auto rayTrans = m_RayObject->GetComponent<Transform>();
-
-		auto rayPos = rayTrans->GetPosition();
-
-		rayPos = pos;
-
-		rayTrans->SetPosition(rayPos);
+		auto playerPtr = GetStage()->GetSharedGameObject<Player>(WstringKey::ShareObj_Player);
+		Vec3 playerPos = playerPtr->GetComponent<Transform>()->GetPosition();
+		Vec3 myPos = GetComponent<Transform>()->GetPosition();
+		auto& objVec = GetStage()->GetGameObjectVec();
+		flg_FindPlayer = true;
+		for (auto v : objVec) {
+			if (v->FindTag(WstringKey::Tag_Wall)) {
+				OBB obb = v->GetComponent<CollisionObb>()->GetObb();
+				if (HitTest::SEGMENT_OBB(playerPos, myPos, obb)) {
+					flg_FindPlayer = false;
+					break;
+				}
+			}
+		}
 	}
 
 	void ReflectEnemy::FireEffect()

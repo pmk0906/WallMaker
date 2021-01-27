@@ -18,6 +18,8 @@ namespace basecross {
 		float m_RotY;
 		float m_FireTime;
 
+		bool flg_FindPlayer;
+
 	public:
 		DangerEnemy(const shared_ptr<Stage>& StagePtr,
 			const Vec3& Scale,
@@ -35,6 +37,7 @@ namespace basecross {
 		void Damage(float damage);
 		void Die();
 		void CreateShield();
+		void FindPlayer();
 		void FireEffect();
 		void GenerataFire(int GenerateNum, Vec3 MoveSpeed);
 

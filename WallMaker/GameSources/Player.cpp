@@ -305,6 +305,32 @@ namespace basecross{
 		}
 	}
 
+	void Player::InvincibleBehaviour()
+	{
+		//ダメ―ジを受けていたら
+		if (m_DamageFlg == true)
+		{
+			if (m_InvincibleTime < m_InvincibleTimeLimit)
+			{
+				if (GetMotionName() != WstringKey::AM_PlayerDamage) {
+					auto ptrDraw = GetComponent<PNTBoneModelDraw>();
+					ptrDraw->ChangeCurrentAnimation(WstringKey::AM_PlayerDamage);
+					SetMotionName(WstringKey::AM_PlayerDamage);
+				}
+
+				SetDrawActive(!GetDrawActive());
+
+				auto elapsedTime = App::GetApp()->GetElapsedTime();
+				m_InvincibleTime += elapsedTime;
+			}
+			else
+			{
+				SetDrawActive(true);
+				m_DamageFlg = false;
+			}
+		}
+	}
+
 	void Player::MotionUpdate(wstring motionKey)
 	{
 		auto ptrDraw = GetComponent<PNTBoneModelDraw>();
@@ -389,7 +415,7 @@ namespace basecross{
 		ptrDraw->AddAnimation(WstringKey::AM_PlayerWalk, 31, 29, true, 30.0f);
 		ptrDraw->AddAnimation(WstringKey::AM_PlayerStandMagic, 61, 29, true, 10.0f);
 		ptrDraw->AddAnimation(WstringKey::AM_PlayerWalkMagic, 91, 29, true, 30.0f);
-		ptrDraw->AddAnimation(WstringKey::AM_PlayerDamage, 121, 29, true, 30.0f);
+		ptrDraw->AddAnimation(WstringKey::AM_PlayerDamage, 121, 29, false, 45.0f);
 		ptrDraw->AddAnimation(WstringKey::AM_PlayerGoal, 151, 29, false, 10.0f);
 		ptrDraw->ChangeCurrentAnimation(WstringKey::AM_PlayerStand);
 		SetMotionName(WstringKey::AM_PlayerStand);
@@ -419,11 +445,16 @@ namespace basecross{
 		{
 			////コントローラチェックして入力があればコマンド呼び出し
 			m_InputHandler.PushHandle(GetThis<Player>());
-			MovePlayer();
+			if (m_DamageFlg == false)
+			{
+				MovePlayer();
+			}
 			//WallStockDecrease();
 			SetCountWall();
 			Die();
 			DrawActiveSwitch();
+
+			InvincibleBehaviour();
 
 			auto ptrDraw = GetComponent<PNTBoneModelDraw>();
 			float elapsedTime = App::GetApp()->GetElapsedTime();
@@ -577,16 +608,18 @@ namespace basecross{
 		wstring goalMotionEnd(L"m_Timer : ");
 		goalMotionEnd += Util::FloatToWStr(m_Timer) + L"\n";
 
-		//if (m_Timer < 3.0f)
-		//{
-		//	goalMotionEnd += L"true\n";
-		//}
-		//else
-		//{
-		//	goalMotionEnd += L"false\n";
-		//}
+		wstring damageFlg(L"DamageFlg : ");
+		 
+		if (m_DamageFlg == true)
+		{
+			damageFlg += L"true\n";
+		}
+		else
+		{
+			damageFlg += L"false\n";
+		}
 
-		wstring str = playerPos + playerRotation + playerRStick + wallStock + testFlg + arrivingWall + goalMotionEnd + L"\n";
+		wstring str = playerPos + playerRotation + playerRStick + wallStock + testFlg + arrivingWall + goalMotionEnd + damageFlg + L"\n";
 		auto ptrString = GetComponent<StringSprite>();
 		ptrString->SetText(str);
 	}
@@ -632,7 +665,12 @@ namespace basecross{
 
 	void Player::Damage(float damage)
 	{
-		m_PlayerHp -= damage;
+		if (m_DamageFlg == false)
+		{
+			m_InvincibleTime = 0.0f;
+			m_PlayerHp -= damage;
+			m_DamageFlg = true;
+		}
 	}
 
 	void Player::Die()

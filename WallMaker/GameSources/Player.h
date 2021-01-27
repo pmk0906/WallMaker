@@ -47,10 +47,16 @@ namespace basecross{
 		float m_GoalSpinTimer = 2.0f;
 		// 回転時に使用する角度
 		float m_RotY;
+
 		//ダメージを受けた時用のタイマー
 		float m_InvincibleTime = 0.0f;
 		// ダメージ後の無敵時間
 		float m_InvincibleTimeLimit = 0.5f;
+		// ダメージを受けた時のフラグ
+		bool m_DamageFlg = false;
+		// ダメージ後の無敵時間
+		void InvincibleBehaviour();
+
 		//壁の数を数える
 		void SetCountWall();
 		//壁を全て消す

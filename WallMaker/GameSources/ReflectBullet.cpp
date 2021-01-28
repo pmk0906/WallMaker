@@ -67,7 +67,7 @@ namespace basecross {
 	void ReflectBullet::Initialize()
 	{
 		m_BulletSpeed = 15.0f;
-		m_Attack = 1.0f;
+		m_Attack = 0.0f;
 		m_DieTime = 0.0f;
 		m_ReflectTime = 0.0f;
 		m_ReflectAbilty = 1.0f;
@@ -291,10 +291,7 @@ namespace basecross {
 		{
 			if (flg_reflect == false)
 			{
-				player->Damage(m_Attack);
-
-				auto ptrXA = App::GetApp()->GetXAudio2Manager();
-				ptrXA->Start(WstringKey::SE_PlayerDamage, 0, 1.0f);
+				player->Damage(DAMAGE);
 			}
 
 			SetDrawActive(false);
@@ -307,23 +304,46 @@ namespace basecross {
 			auto wallTrans = magicWall->GetComponent<Transform>();
 			auto myTrans = GetComponent<Transform>();
 
+			m_BulletSpeed += 5.0f;
+			m_Attack += 1.0f;
+
 			SetDir(Reflect(wallTrans->GetForword(), dir));
 			m_ReflectAbilty -= 1.0f;
 
 			auto ptrXA = App::GetApp()->GetXAudio2Manager();
 			ptrXA->Start(WstringKey::SE_Reflection, 0, 1.0f);
 
-			if (flg_reflect)
-			{
-				m_BulletSpeed += 5.0f;
-				m_Attack += 1.0f;
-			}
-
 			flg_reflect = true;
 
 			GenerateReflectEffect(30, Vec3(30.0f));
 
 			magicWall->Damage(m_Attack);
+
+			if (m_Attack == 1.0f)
+			{
+				auto ptrXA = App::GetApp()->GetXAudio2Manager();
+				ptrXA->Start(WstringKey::SE_BULLET_RED, 0, 10.0f);
+			}
+			else if (m_Attack == 2.0f)
+			{
+				auto ptrXA = App::GetApp()->GetXAudio2Manager();
+				ptrXA->Start(WstringKey::SE_BULLET_ORANGE, 0, 10.0f);
+			}
+			else if (m_Attack == 3.0f)
+			{
+				auto ptrXA = App::GetApp()->GetXAudio2Manager();
+				ptrXA->Start(WstringKey::SE_BULLET_YELLOW, 0, 10.0f);
+			}
+			else if (m_Attack == 4.0f)
+			{
+				auto ptrXA = App::GetApp()->GetXAudio2Manager();
+				ptrXA->Start(WstringKey::SE_BULLET_GREEN, 0, 10.0f);
+			}
+			else if (m_Attack >= 5.0f)
+			{
+				auto ptrXA = App::GetApp()->GetXAudio2Manager();
+				ptrXA->Start(WstringKey::SE_BULLET_BLUE, 0, 10.0f);
+			}
 		}
 
 		//　あたったのがシールドなら
@@ -554,101 +574,66 @@ namespace basecross {
 			auto &app = App::GetApp();
 			auto delta = app->GetElapsedTime();
 
-			if (flg_reflect && flg_reflectWall == false || m_ReflectAbilty >= 1.0f)
+			if (flg_reflect && flg_reflectWall == false)
 			{
+				m_BulletSpeed += 10.0f;
+				m_Attack += 1.0f;
+
+				pos -= 0.1f;
+
+				SetDir(Reflect(wallTrans->GetForword(), dir));
+
+				flg_reflectWall = true;
+
+				m_ReflectTime += delta;
+
+				GenerateReflectEffect(30, Vec3(30.0f));
+
 				if (m_Attack == 1.0f)
 				{
 					auto ptrXA = App::GetApp()->GetXAudio2Manager();
 					ptrXA->Start(WstringKey::SE_BULLET_RED, 0, 10.0f);
-
-					pos -= 0.1f;
-
-					SetDir(Reflect(wallTrans->GetForword(), dir));
-
-					m_BulletSpeed += 10.0f;
-					m_Attack += 1.0f;
-
-					flg_reflectWall = true;
-
-					m_ReflectTime += delta;
-
-					GenerateReflectEffect(30, Vec3(30.0f));
 				}
 				else if (m_Attack == 2.0f)
 				{
 					auto ptrXA = App::GetApp()->GetXAudio2Manager();
 					ptrXA->Start(WstringKey::SE_BULLET_ORANGE, 0, 10.0f);
-
-					pos -= 0.1f;
-
-					SetDir(Reflect(wallTrans->GetForword(), dir));
-
-					m_BulletSpeed += 10.0f;
-					m_Attack += 1.0f;
-
-					flg_reflectWall = true;
-
-					m_ReflectTime += delta;
-
-					GenerateReflectEffect(30, Vec3(30.0f));
 				}
 				else if (m_Attack == 3.0f)
 				{
 					auto ptrXA = App::GetApp()->GetXAudio2Manager();
 					ptrXA->Start(WstringKey::SE_BULLET_YELLOW, 0, 10.0f);
-
-					pos -= 0.1f;
-
-					SetDir(Reflect(wallTrans->GetForword(), dir));
-
-					m_BulletSpeed += 10.0f;
-					m_Attack += 1.0f;
-
-					flg_reflectWall = true;
-
-					m_ReflectTime += delta;
-
-					GenerateReflectEffect(30, Vec3(30.0f));
 				}
 				else if (m_Attack == 4.0f)
 				{
 					auto ptrXA = App::GetApp()->GetXAudio2Manager();
 					ptrXA->Start(WstringKey::SE_BULLET_GREEN, 0, 10.0f);
-
-					pos -= 0.1f;
-
-					SetDir(Reflect(wallTrans->GetForword(), dir));
-
-					m_BulletSpeed += 10.0f;
-					m_Attack += 1.0f;
-
-					flg_reflectWall = true;
-
-					m_ReflectTime += delta;
-
-					GenerateReflectEffect(30, Vec3(30.0f));
 				}
-				else if (m_Attack == 5.0f)
+				else if (m_Attack >= 5.0f)
 				{
 					auto ptrXA = App::GetApp()->GetXAudio2Manager();
 					ptrXA->Start(WstringKey::SE_BULLET_BLUE, 0, 10.0f);
-
-					pos -= 0.1f;
-
-					SetDir(Reflect(wallTrans->GetForword(), dir));
-
-					m_BulletSpeed += 10.0f;
-					m_Attack += 1.0f;
-
-					flg_reflectWall = true;
-
-					m_ReflectTime += delta;
-
-					GenerateReflectEffect(30, Vec3(30.0f));
 				}
+			}
+			else if (m_ReflectAbilty >= 1.0f)
+			{
+				pos -= 0.1f;
+
+				SetDir(Reflect(wallTrans->GetForword(), dir));
+
+				flg_reflectWall = true;
+
+				m_ReflectTime += delta;
+
+				GenerateReflectEffect(30, Vec3(30.0f));
+
+				auto ptrXA = App::GetApp()->GetXAudio2Manager();
+				ptrXA->Start(WstringKey::SE_Reflection, 0, 1.0f);
 			}
 
 			myTrans->SetPosition(pos);
+
+			m_ReflectAbilty -= 1.0f;
 		}
 
 		if (auto stageWall = dynamic_pointer_cast<StageWall>(other))

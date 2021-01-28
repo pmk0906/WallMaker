@@ -67,9 +67,10 @@ namespace basecross {
 		m_ReflectCount = 2;
 
 		m_BulletSpeed = 15.0f;
-		m_Attack = 2.0f;
+		m_Attack = 1.0f;
 		m_DieTime = 0.0f;
 		m_ReflectTime = 0.0f;
+		m_Damage = 2.0f;
 
 		flg_reflect = false;
 		flg_reflectWall = false;
@@ -309,9 +310,7 @@ namespace basecross {
 		{
 			if (flg_reflect == false)
 			{
-				player->Damage(m_Attack);
-				auto ptrXA = App::GetApp()->GetXAudio2Manager();
-				ptrXA->Start(WstringKey::SE_PlayerDamage, 0, 1.0f);
+				player->Damage(m_Damage);
 			}
 
 			SetDrawActive(false);
@@ -326,14 +325,11 @@ namespace basecross {
 
 			m_ReflectCount -= 1;
 
-			if (flg_reflect)
+			if (m_ReflectCount <= 0)
 			{
 				m_BulletSpeed += 5.0f;
 				m_Attack += 1.0f;
-			}
 
-			if (m_ReflectCount <= 0)
-			{
 				flg_reflect = true;
 
 				SetDir(Reflect(wallTrans->GetForword(), dir));
@@ -342,15 +338,44 @@ namespace basecross {
 
 				auto ptrXA = App::GetApp()->GetXAudio2Manager();
 				ptrXA->Start(WstringKey::SE_Reflection, 0, 1.0f);
+
+				if (m_Attack == 1.0f)
+				{
+					auto ptrXA = App::GetApp()->GetXAudio2Manager();
+					ptrXA->Start(WstringKey::SE_BULLET_RED, 0, 10.0f);
+				}
+				else if (m_Attack == 2.0f)
+				{
+					auto ptrXA = App::GetApp()->GetXAudio2Manager();
+					ptrXA->Start(WstringKey::SE_BULLET_ORANGE, 0, 10.0f);
+				}
+				else if (m_Attack == 3.0f)
+				{
+					auto ptrXA = App::GetApp()->GetXAudio2Manager();
+					ptrXA->Start(WstringKey::SE_BULLET_YELLOW, 0, 10.0f);
+				}
+				else if (m_Attack == 4.0f)
+				{
+					auto ptrXA = App::GetApp()->GetXAudio2Manager();
+					ptrXA->Start(WstringKey::SE_BULLET_GREEN, 0, 10.0f);
+				}
+				else if (m_Attack >= 5.0f)
+				{
+					auto ptrXA = App::GetApp()->GetXAudio2Manager();
+					ptrXA->Start(WstringKey::SE_BULLET_BLUE, 0, 10.0f);
+				}
 			}
 
 			else
 			{
+				m_Attack -= 1.0f;
+				m_Damage -= 1.0f;
+
 				auto ptrXA = App::GetApp()->GetXAudio2Manager();
 				ptrXA->Start(WstringKey::SE_BreakWall, 0, 1.0f);
 			}
 
-			magicWall->Damage(m_Attack);
+			magicWall->Damage(m_Damage);
 		}
 
 		//　あたったのがシールドなら
@@ -582,6 +607,9 @@ namespace basecross {
 
 			if (flg_reflect && flg_reflectWall == false)
 			{
+				m_BulletSpeed += 10.0f;
+				m_Attack += 1.0f;
+
 				if (m_Attack == 1.0f)
 				{
 					auto ptrXA = App::GetApp()->GetXAudio2Manager();
@@ -591,8 +619,7 @@ namespace basecross {
 
 					SetDir(Reflect(wallTrans->GetForword(), dir));
 
-					m_BulletSpeed += 10.0f;
-					m_Attack += 1.0f;
+					
 
 					flg_reflectWall = true;
 
@@ -609,8 +636,7 @@ namespace basecross {
 
 					SetDir(Reflect(wallTrans->GetForword(), dir));
 
-					m_BulletSpeed += 10.0f;
-					m_Attack += 1.0f;
+					
 
 					flg_reflectWall = true;
 
@@ -627,8 +653,7 @@ namespace basecross {
 
 					SetDir(Reflect(wallTrans->GetForword(), dir));
 
-					m_BulletSpeed += 10.0f;
-					m_Attack += 1.0f;
+					
 
 					flg_reflectWall = true;
 
@@ -645,8 +670,7 @@ namespace basecross {
 
 					SetDir(Reflect(wallTrans->GetForword(), dir));
 
-					m_BulletSpeed += 10.0f;
-					m_Attack += 1.0f;
+					
 
 					flg_reflectWall = true;
 
@@ -654,7 +678,7 @@ namespace basecross {
 
 					GenerateReflectEffect(30, Vec3(30.0f));
 				}
-				else if (m_Attack == 5.0f)
+				else if (m_Attack >= 5.0f)
 				{
 					auto ptrXA = App::GetApp()->GetXAudio2Manager();
 					ptrXA->Start(WstringKey::SE_BULLET_BLUE, 0, 10.0f);
@@ -663,8 +687,7 @@ namespace basecross {
 
 					SetDir(Reflect(wallTrans->GetForword(), dir));
 
-					m_BulletSpeed += 10.0f;
-					m_Attack += 1.0f;
+					
 
 					flg_reflectWall = true;
 

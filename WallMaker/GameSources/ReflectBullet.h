@@ -9,6 +9,7 @@ namespace basecross {
 
 		const float MAX_SPEED = 25.0f;
 		const float MAX_ATTACK = 5.0f;
+		const float DAMAGE = 1.0f;
 
 		float m_BulletSpeed; // 弾の移動スピ―ド
 		float m_Attack; // 弾の威力

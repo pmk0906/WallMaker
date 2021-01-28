@@ -15,6 +15,7 @@ namespace basecross {
 		float m_Attack; // ’e‚ÌˆĞ—Í
 		float m_DieTime; // ’e‚Ì¶‘¶ŠÔ
 		float m_ReflectTime;
+		float m_Hp;
 
 		bool flg_reflect;
 		bool flg_reflectWall;

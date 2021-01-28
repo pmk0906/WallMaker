@@ -71,6 +71,7 @@ namespace basecross {
 		m_DieTime = 0.0f;
 		m_ReflectTime = 0.0f;
 		m_Damage = 2.0f;
+		m_Hp = 0.0f;
 
 		flg_reflect = false;
 		flg_reflectWall = false;
@@ -329,6 +330,7 @@ namespace basecross {
 			{
 				m_BulletSpeed += 5.0f;
 				m_Attack += 1.0f;
+				m_Hp += 1.0f;
 
 				flg_reflect = true;
 
@@ -609,91 +611,42 @@ namespace basecross {
 			{
 				m_BulletSpeed += 10.0f;
 				m_Attack += 1.0f;
+				m_Hp += 1.0f;
+
+				pos -= 0.1f;
+
+				SetDir(Reflect(wallTrans->GetForword(), dir));
+
+				flg_reflectWall = true;
+
+				m_ReflectTime += delta;
+
+				GenerateReflectEffect(30, Vec3(30.0f));
 
 				if (m_Attack == 1.0f)
 				{
 					auto ptrXA = App::GetApp()->GetXAudio2Manager();
 					ptrXA->Start(WstringKey::SE_BULLET_RED, 0, 10.0f);
-
-					pos -= 0.1f;
-
-					SetDir(Reflect(wallTrans->GetForword(), dir));
-
-					
-
-					flg_reflectWall = true;
-
-					m_ReflectTime += delta;
-
-					GenerateReflectEffect(30, Vec3(30.0f));
 				}
 				else if (m_Attack == 2.0f)
 				{
 					auto ptrXA = App::GetApp()->GetXAudio2Manager();
 					ptrXA->Start(WstringKey::SE_BULLET_ORANGE, 0, 10.0f);
-
-					pos -= 0.1f;
-
-					SetDir(Reflect(wallTrans->GetForword(), dir));
-
-					
-
-					flg_reflectWall = true;
-
-					m_ReflectTime += delta;
-
-					GenerateReflectEffect(30, Vec3(30.0f));
 				}
 				else if (m_Attack == 3.0f)
 				{
 					auto ptrXA = App::GetApp()->GetXAudio2Manager();
 					ptrXA->Start(WstringKey::SE_BULLET_YELLOW, 0, 10.0f);
-
-					pos -= 0.1f;
-
-					SetDir(Reflect(wallTrans->GetForword(), dir));
-
-					
-
-					flg_reflectWall = true;
-
-					m_ReflectTime += delta;
-
-					GenerateReflectEffect(30, Vec3(30.0f));
 				}
 				else if (m_Attack == 4.0f)
 				{
 					auto ptrXA = App::GetApp()->GetXAudio2Manager();
 					ptrXA->Start(WstringKey::SE_BULLET_GREEN, 0, 10.0f);
-
-					pos -= 0.1f;
-
-					SetDir(Reflect(wallTrans->GetForword(), dir));
-
-					
-
-					flg_reflectWall = true;
-
-					m_ReflectTime += delta;
-
-					GenerateReflectEffect(30, Vec3(30.0f));
 				}
 				else if (m_Attack >= 5.0f)
 				{
 					auto ptrXA = App::GetApp()->GetXAudio2Manager();
 					ptrXA->Start(WstringKey::SE_BULLET_BLUE, 0, 10.0f);
-
-					pos -= 0.1f;
-
-					SetDir(Reflect(wallTrans->GetForword(), dir));
-
-					
-
-					flg_reflectWall = true;
-
-					m_ReflectTime += delta;
-
-					GenerateReflectEffect(30, Vec3(30.0f));
 				}
 			}
 
@@ -717,13 +670,16 @@ namespace basecross {
 			if (flg_reflect)
 			{
 				breakWall->Damage(m_Attack);
+				m_Hp -= 1.0f;
 
 				auto ptrXA = App::GetApp()->GetXAudio2Manager();
 				ptrXA->Start(WstringKey::SE_BreakStageWall, 0, 1.0f);
 			}
-
-			SetDrawActive(false);
-			SetUpdateActive(false);
+			if (flg_reflect == false || m_Hp <= 0.0f)
+			{
+				SetDrawActive(false);
+				SetUpdateActive(false);
+			}
 		}
 	}
 }

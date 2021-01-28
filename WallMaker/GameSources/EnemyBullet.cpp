@@ -70,6 +70,7 @@ namespace basecross {
 		m_Attack = 0.0f;
 		m_DieTime = 0.0f;
 		m_ReflectTime = 0.0f;
+		m_Hp = 0.0f;
 
 		flg_reflect = false;
 		flg_reflectWall = false;
@@ -315,6 +316,7 @@ namespace basecross {
 
 			m_BulletSpeed += 5.0f;
 			m_Attack += 1.0f;
+			m_Hp += 1.0f;
 
 			SetDir(Reflect(wallTrans->GetForword(), dir));
 
@@ -586,6 +588,7 @@ namespace basecross {
 			{
 				m_BulletSpeed += 10.0f;
 				m_Attack += 1.0f;
+				m_Hp += 1.0f;
 
 				pos -= 0.1f;
 
@@ -644,13 +647,17 @@ namespace basecross {
 			if (flg_reflect)
 			{
 				breakWall->Damage(m_Attack);
+				m_Hp -= 1.0f;
 
 				auto ptrXA = App::GetApp()->GetXAudio2Manager();
 				ptrXA->Start(WstringKey::SE_BreakStageWall, 0, 1.0f);
 			}
 
-			SetDrawActive(false);
-			SetUpdateActive(false);
+			if (flg_reflect == false || m_Hp <= 0.0f)
+			{
+				SetDrawActive(false);
+				SetUpdateActive(false);
+			}
 		}
 	}
 }

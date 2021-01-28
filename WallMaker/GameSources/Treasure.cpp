@@ -36,7 +36,7 @@ namespace basecross{
 			Vec3(0.5f, 0.5f, 0.5f),
 			Vec3(0.0f, 0.0f, 0.0f),
 			Vec3(0.0f, XMConvertToRadians(180.0f), 0.0f),
-			Vec3(0.0f, -0.5f, -0.2f)
+			Vec3(0.0f, -0.73f, -0.2f)
 		);
 
 		auto ptrColl = AddComponent<CollisionObb>();

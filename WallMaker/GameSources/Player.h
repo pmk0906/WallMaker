@@ -45,6 +45,12 @@ namespace basecross{
 		// ゴール時に回転
 		float m_GoalTimer = 0.0f;
 		float m_GoalSpinTimer = 2.0f;
+		// 死亡時に回転
+		float m_DeathTimer = 0.0f;
+		float m_DeathSpinTimer = 1.0f;
+		//　死亡したあとに倒れる
+		float m_FallDownTimer = 0.0f;
+		float m_FallDownTimeLimit = 1.0f;
 		// 回転時に使用する角度
 		float m_RotY;
 
@@ -67,6 +73,9 @@ namespace basecross{
 		float m_DrawActiveFloorLength = 45.0f;
 		void DrawActiveSwitch();
 
+		// 最初に上に魔法陣が出たら見えるようにする
+		void VisiblePlayer();
+
 		//RTriggerについて
 		void RTriggerHandler();
 		// プレイヤーが使用するコントローラの入力
@@ -81,14 +90,22 @@ namespace basecross{
 
 		// 魔法壁の生成
 		void CreateMagicWall();
+		// モーションを登録する
+		void MotionSetting();
+		//クリア時の動作
+		void ClearBehaviour();
+		//死亡時の動作
+		void GameOverBehaviour();
 
 		// ゴールモーション用フラグ
 		bool GoalMotionEndFlg;
 		float m_Timer = 0.0f;
 		//モーションの更新
-		void MotionUpdate(wstring motionKey);
+		void MotionChange(wstring motionKey);
+		void AnimationUpdate();
 		//ゴール時にカメラを向く
 		void LookCamera();
+
 
 
 		//入力ハンドラー

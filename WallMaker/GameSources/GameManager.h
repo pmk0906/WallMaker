@@ -29,7 +29,7 @@ namespace basecross {
 		GoalCamStateNum m_GoalCameraStateNum;
 		//カメラのオフセット
 		Vec3 m_MyCamOffset = Vec3(0.0f, 40.0f, -7.0f); // MyCamera
-		Vec3 m_GoalCamOffset = Vec3(0.0f, 10.0f, -7.0f); // GoalCamera
+		Vec3 m_GoalCamOffset = Vec3(0.0f, 3.0f, -10.0f); // GoalCamera
 		// 現在のカメラの名前
 		wstring m_CameraName = L"";
 		wstring m_PlayerCameraState = L"";
@@ -37,6 +37,8 @@ namespace basecross {
 		bool m_MagicSircleEnabledLook = false;
 		//魔法陣が降り切った
 		bool m_MagicSircleMoved = false;
+		// カメラのズームが終わったか
+		bool CameraZoomEnd = false;
 		// 宝箱にプレイヤーが触れたか
 		bool m_TreasureFlg = false;
 		//宝箱を開けても良いか
@@ -45,6 +47,8 @@ namespace basecross {
 		bool m_TreasureBoxOpened = false;
 		//宝箱が開いたあとにプレイヤーのゴールモーションが終わったか
 		bool m_GoalMotionEnd = false;
+		// プレイヤーの死亡演出が終わったか
+		bool m_DeathMotionEnd = false;
 		// クリアしたか
 		bool m_ClearFlg = false;
 		bool m_ClearFlgChanged = false;
@@ -93,6 +97,8 @@ namespace basecross {
 			SetTreasureBoxOpen(false);
 			SetTreasureBoxOpened(false); 
 			SetGoalMotionEnd(false);
+			SetDeathMotionEnd(false);
+			SetCameraZoomEnd(false);
 			SetSelectingButton(0);
 			SetMoveEnabledFlg(false); 
 			SetOpeningCameraMoveEnd(false);
@@ -136,7 +142,6 @@ namespace basecross {
 		{
 			for (auto obj : stage->GetGameObjectVec())
 			{
-
 				//プレイヤー
 				if (obj->FindTag(WstringKey::Tag_Player))
 				{
@@ -144,7 +149,7 @@ namespace basecross {
 					{
 						if (player->GetPlayerDiedFlg() == true)
 						{
-							m_DeathFlg = true;
+							SetDeathFlg(true);
 							SetMoveEnabledFlg(false);
 						}
 					}
@@ -153,7 +158,7 @@ namespace basecross {
 			//宝
 			if (GetTreasureFlg() == true)
 			{
-				m_ClearFlg = true;
+				SetClearFlg(true);
 				SetMoveEnabledFlg(false);
 			}
 		}
@@ -293,6 +298,15 @@ namespace basecross {
 		{
 			m_GoalMotionEnd = goalMotionEnd;
 		}
+		//プレイヤーの死んだモーションが終わったか
+		bool GetDeathMotionEnd()
+		{
+			return m_DeathMotionEnd;
+		}
+		void SetDeathMotionEnd(bool deathMotionEnd)
+		{
+			m_DeathMotionEnd = deathMotionEnd;
+		}
 		// クリアフラグ
 		bool GetClearFlg()
 		{
@@ -328,6 +342,15 @@ namespace basecross {
 		void SetDeathFlgChanged(bool flg)
 		{
 			m_DeathFlgChanged = flg;
+		}
+		//カメラのズームが終わったか
+		bool GetCameraZoomEnd()
+		{
+			return CameraZoomEnd;
+		}
+		void SetCameraZoomEnd(bool cameraZoomEnd)
+		{
+			CameraZoomEnd = cameraZoomEnd;
 		}
 		//ポーズ状態
 		bool GetPoseFlg()

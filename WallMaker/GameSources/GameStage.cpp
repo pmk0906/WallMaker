@@ -231,15 +231,14 @@ namespace basecross {
 				CreateClearButton();
 				gm->SetClearFlgChanged(true);
 			}
-			else
-			{
-				auto managerObj = GetSharedGameObject<GameManagement>(WstringKey::ShareObj_GameManagement);
-				managerObj->ChangeCamera();
-			}
 		}
 		else if (gm->GetDeathFlg() == true && gm->GetDeathFlgChanged() == false)
 		{
-			CreateGameOverButton();
+			if (gm->GetDeathMotionEnd() == true)
+			{
+				CreateGameOverButton();
+				gm->SetDeathFlgChanged(true);
+			}
 		}
 		else if (gm->GetMagicSircleMoved() == true)
 		{
@@ -318,19 +317,20 @@ namespace basecross {
 	void GameStage::CreateUI()
 	{
 		//プレイヤーのライフ表示
-		AddGameObject<PlayerLife>(true, Vec2(70.0f), Vec3(-469.0f, 311.0f, 0.1f), 1.0f);
-		AddGameObject<PlayerLife>(true, Vec2(70.0f), Vec3(-385.0f, 311.0f, 0.1f), 2.0f);
-		AddGameObject<PlayerLife>(true, Vec2(70.0f), Vec3(-299.0f, 311.0f, 0.1f), 3.0f);
+		AddGameObject<PlayerLife>(true, Vec2(70.0f), Vec3(-469.0f, 336.0f, 0.1f), 1.0f);
+		AddGameObject<PlayerLife>(true, Vec2(70.0f), Vec3(-385.0f, 336.0f, 0.1f), 2.0f);
+		AddGameObject<PlayerLife>(true, Vec2(70.0f), Vec3(-299.0f, 336.0f, 0.1f), 3.0f);
 
-		AddGameObject<Sprite>(true, Vec2(400.0f, 200.0f), Vec2(-440.0f, 320.0f), L"HP_FRONT_UI_TX", 1.0f, Col4(1.0f));
-		AddGameObject<Sprite>(true, Vec2(300.0f, 150.0f), Vec2(-390.0f, 315.0f), L"HP_BACK_UI_TX", -1.0f, Col4(1.0f));
-
+		AddGameObject<Sprite>(true, Vec2(400.0f, 200.0f), Vec2(-440.0f, 345.0f), L"HP_FRONT_UI_TX", 1.0f, Col4(1.0f));
+		AddGameObject<Sprite>(true, Vec2(300.0f, 150.0f), Vec2(-390.0f, 340.0f), L"HP_BACK_UI_TX", -1.0f, Col4(1.0f));
+		
 		//壁のストック表示
-		AddGameObject<WallStock>(true, Vec2(75.0f), Vec3(+575.0f, 316.0f, 0.1f), 1.0f);
-		AddGameObject<WallStock>(true, Vec2(75.0f), Vec3(+488.0f, 316.0f, 0.1f), 2.0f);
-		AddGameObject<WallStock>(true, Vec2(75.0f), Vec3(+402.0f, 316.0f, 0.1f), 3.0f);
-
-		AddGameObject<Sprite>(true, Vec2(400.0f, 200.0f), Vec2(450.0f, 320.0f), L"WALLSTOCKFRONT_UI_TX", 1.0f, Col4(1.0f));
+		AddGameObject<WallStock>(true, Vec2(70.0f), Vec3(+468.0f, 340.0f, 0.1f), 1.0f);
+		AddGameObject<WallStock>(true, Vec2(70.0f), Vec3(+384.0f, 340.0f, 0.1f), 2.0f);
+		AddGameObject<WallStock>(true, Vec2(70.0f), Vec3(+297.0f, 340.0f, 0.1f), 3.0f);
+		
+		AddGameObject<Sprite>(true, Vec2(400.0f, 200.0f), Vec2(430.0f, 345.0f), L"WALLSTOCKFRONT_UI_TX", 1.0f, Col4(1.0f));
+		AddGameObject<Sprite>(true, Vec2(400.0f, 200.0f), Vec2(430.0f, 345.0f), L"WALLSTOCKBACK_UI_TX", -1.0f, Col4(1.0f));
 	}
 
 	//カメラマンの作成

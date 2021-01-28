@@ -182,35 +182,8 @@ namespace basecross{
 		m_TotalTime = 0.0f;
 	}
 
-	void PlayerCameraman::ClearEnterBehavior()
+	void PlayerCameraman::ZoomEnterBehavior()
 	{
-		//auto share_player = GetStage()->GetSharedGameObject<Player>(WstringKey::ShareObj_Player);
-		//auto playerPos = share_player->GetPosition();
-		//auto share_treasure = GetStage()->GetSharedGameObject<TreasureBox>(WstringKey::ShareObj_TreasureBox);
-		//auto treasurePos = share_treasure->GetComponent<Transform>()->GetPosition();
-		//Vec3 endPos = (playerPos + treasurePos) * 0.5f;
-		//m_StartPos = GetComponent<Transform>()->GetPosition();
-		//m_EndPos = endPos + m_GoalCamOffset;
-		//m_AtStartPos = playerPos;
-		//m_AtEndPos = endPos;
-		//m_AtPos = m_AtStartPos;
-		////m_TotalTime = 0.0f;
-
-		//auto gm = GameManager::GetInstance();
-		//auto share_player = GetStage()->GetSharedGameObject<Player>(WstringKey::ShareObj_Player);
-		//auto playerPos = share_player->GetComponent<Transform>()->GetPosition();
-		//auto share_treasure = GetStage()->GetSharedGameObject<TreasureBox>(WstringKey::ShareObj_TreasureBox);
-		//auto treasurePos = share_treasure->GetComponent<Transform>()->GetPosition();
-		//auto middlePos = playerPos; //(playerPos + treasurePos) * 0.5;
-		//auto startPos = playerPos + gm->GetMyCameraOffset();
-		//auto endPos = middlePos + gm->GetGoalCameraOffset();
-		//m_StartPos = startPos;
-		//m_EndPos = endPos;
-		//m_AtStartPos = playerPos;
-		//m_AtEndPos = middlePos;
-		//m_AtPos = m_AtStartPos;
-		//m_TotalTime = 0.0f;
-
 		auto gm = GameManager::GetInstance();
 		auto share_player = GetStage()->GetSharedGameObject<Player>(WstringKey::ShareObj_Player);
 		auto playerPos = share_player->GetComponent<Transform>()->GetPosition();
@@ -240,7 +213,28 @@ namespace basecross{
 		m_AtPos = easing.EaseInOut(EasingType::Cubic, m_AtStartPos, m_AtEndPos, m_TotalTime, totaltime);
 		auto ptrTrans = GetComponent<Transform>();
 		ptrTrans->SetPosition(TgtPos);
+
 		return false;
+	}
+
+	void PlayerCameraman::ZoomDrawSwitch()
+	{
+		auto playerPos = GetComponent<Transform>()->GetPosition();
+
+		for (auto obj : GetStage()->GetGameObjectVec())
+		{
+			//if (obj->FindTag(WstringKey::Tag_DrawActiveFalse))
+			//{
+				auto otherPos = obj->GetComponent<Transform>()->GetPosition();
+				auto len = playerPos - otherPos;
+
+				if (len.length() <= 5.0f)
+				{
+					obj->SetDrawActive(false);
+				}
+			//}
+		}
+
 	}
 
 	void PlayerCameraman::MoveToPlayer()
@@ -299,60 +293,8 @@ namespace basecross{
 		//}
 	}
 
-
-	////--------------------------------------------------------------------------------------
-	////	class OpeningCameramanToGoalState : public ObjState<PlayerCameraman>;
-	////--------------------------------------------------------------------------------------
-	//shared_ptr<PlayerCameramanToTreasureState> PlayerCameramanToTreasureState::Instance() {
-	//	static shared_ptr<PlayerCameramanToTreasureState> instance(new PlayerCameramanToTreasureState);
-	//	return instance;
-	//}
-	//void PlayerCameramanToTreasureState::Enter(const shared_ptr<PlayerCameraman>& Obj) {
-	//	auto gm = GameManager::GetInstance();
-	//	gm->SetPlayerCameraMoveState(PlayerCamStateNum::ToTreasureState);
-	//	Obj->ToTreasureEnterBehavior();
-	//}
-	//void PlayerCameramanToTreasureState::Execute(const shared_ptr<PlayerCameraman>& Obj) {
-	//	Obj->GetStateMachine()->ChangeState(PlayerCameramanToStartPointState::Instance());
-	//}
-	//void PlayerCameramanToTreasureState::Exit(const shared_ptr<PlayerCameraman>& Obj) {
-	//}
-	////--------------------------------------------------------------------------------------
-	////	class OpeningCameramanToStartState : public ObjState<PlayerCameraman>;
-	////--------------------------------------------------------------------------------------
-	//shared_ptr<PlayerCameramanToStartPointState> PlayerCameramanToStartPointState::Instance() {
-	//	static shared_ptr<PlayerCameramanToStartPointState> instance(new PlayerCameramanToStartPointState);
-	//	return instance;
-	//}
-	//void PlayerCameramanToStartPointState::Enter(const shared_ptr<PlayerCameraman>& Obj) {
-	//	auto gm = GameManager::GetInstance();
-	//	gm->SetPlayerCameraMoveState(PlayerCamStateNum::ToStartPointState);
-
-	//	Obj->ToStartPointEnterBehavior();
-	//}
-	//void PlayerCameramanToStartPointState::Execute(const shared_ptr<PlayerCameraman>& Obj) {
-	//	auto gm = GameManager::GetInstance();
-	//	if (gm->GetMoveEnabledFlg() == false)
-	//	{
-	//		if (gm->GetPoseFlg() == false)
-	//		{
-	//			if (gm->GetOpeningCameraMoveEnd() == false) {
-	//				if (Obj->ExcuteBehavior(7.0f)) {
-	//					Obj->GetStateMachine()->ChangeState(PlayerCameramanMoveToPlayerState::Instance());
-	//				}
-	//			}
-	//		}
-	//	}
-	//	if (gm->GetOpeningCameraMoveEnd() == true)
-	//	{
-	//		Obj->GetStateMachine()->ChangeState(PlayerCameramanMoveToPlayerState::Instance());
-	//	}
-	//}
-	//void PlayerCameramanToStartPointState::Exit(const shared_ptr<PlayerCameraman>& Obj) {
-	//}
-
 	//--------------------------------------------------------------------------------------
-	//	class OpeningCameramanEndState : public ObjState<PlayerCameraman>;
+	//	class PlayerCameramanMoveToPlayerState : public ObjState<PlayerCameraman>;
 	//--------------------------------------------------------------------------------------
 	shared_ptr<PlayerCameramanMoveToPlayerState> PlayerCameramanMoveToPlayerState::Instance() {
 		static shared_ptr<PlayerCameramanMoveToPlayerState> instance(new PlayerCameramanMoveToPlayerState);
@@ -366,47 +308,49 @@ namespace basecross{
 	}
 	void PlayerCameramanMoveToPlayerState::Execute(const shared_ptr<PlayerCameraman>& Obj) {
 		auto gm = GameManager::GetInstance();
-		//Obj->MoveToPlayerExcuteBehavior();
 		Obj->MoveToPlayer();
 
-		if (gm->GetClearFlg() == true && gm->GetClearFlgChanged() == false)
+		if (gm->GetClearFlg() == true || gm->GetDeathFlg() == true)
 		{
-			gm->SetPlayerCameraMoveState(PlayerCamStateNum::ClearState);
-			Obj->GetStateMachine()->ChangeState(PlayerCameramanClearState::Instance());
+			gm->SetPlayerCameraMoveState(PlayerCamStateNum::ZoomState);
+			Obj->GetStateMachine()->ChangeState(PlayerCameramanZoomState::Instance());
 		}
 	}
 	void PlayerCameramanMoveToPlayerState::Exit(const shared_ptr<PlayerCameraman>& Obj) {
 	}
 	//--------------------------------------------------------------------------------------
-	//	class OpeningCameramanEndState : public ObjState<PlayerCameraman>;
+	//	class PlayerCameramanZoomState : public ObjState<PlayerCameraman>;
 	//--------------------------------------------------------------------------------------
-	shared_ptr<PlayerCameramanClearState> PlayerCameramanClearState::Instance() {
-		static shared_ptr<PlayerCameramanClearState> instance(new PlayerCameramanClearState);
+	shared_ptr<PlayerCameramanZoomState> PlayerCameramanZoomState::Instance() {
+		static shared_ptr<PlayerCameramanZoomState> instance(new PlayerCameramanZoomState);
 		return instance;
 	}
-	void PlayerCameramanClearState::Enter(const shared_ptr<PlayerCameraman>& Obj) {
+	void PlayerCameramanZoomState::Enter(const shared_ptr<PlayerCameraman>& Obj) {
 		auto gm = GameManager::GetInstance();
-		gm->SetPlayerCameraMoveState(PlayerCamStateNum::ClearState);
-		gm->SetPlayerCameraStateName(L"ClearState");
+		gm->SetPlayerCameraMoveState(PlayerCamStateNum::ZoomState);
+		gm->SetPlayerCameraStateName(L"ZoomState");
 
-		Obj->ClearEnterBehavior();
-
-		gm->SetTestFlg(true);
+		Obj->ZoomEnterBehavior();
 	}
-	void PlayerCameramanClearState::Execute(const shared_ptr<PlayerCameraman>& Obj) {
+	void PlayerCameramanZoomState::Execute(const shared_ptr<PlayerCameraman>& Obj) {
 		auto gm = GameManager::GetInstance();
 
 		if (Obj->ExcuteBehavior(3.0f)) {
 			Obj->GetStateMachine()->ChangeState(PlayerCameramanEndState::Instance());
 		}
 
+		Obj->ZoomDrawSwitch();
+
 	}
-	void PlayerCameramanClearState::Exit(const shared_ptr<PlayerCameraman>& Obj) {
+	void PlayerCameramanZoomState::Exit(const shared_ptr<PlayerCameraman>& Obj) {
 		auto gm = GameManager::GetInstance();
-		gm->SetGoalCameraMoveEnd(true);
+		if (gm->GetClearFlg()  == true)
+		{
+			gm->SetGoalCameraMoveEnd(true);
+		}
 	}
 	//--------------------------------------------------------------------------------------
-	//	class OpeningCameramanEndState : public ObjState<PlayerCameraman>;
+	//	class PlayerCameramanEndState : public ObjState<PlayerCameraman>;
 	//--------------------------------------------------------------------------------------
 	shared_ptr<PlayerCameramanEndState> PlayerCameramanEndState::Instance() {
 		static shared_ptr<PlayerCameramanEndState> instance(new PlayerCameramanEndState);
@@ -417,9 +361,19 @@ namespace basecross{
 		gm->SetPlayerCameraMoveState(PlayerCamStateNum::EndState);
 		gm->SetPlayerCameraStateName(L"EndState");
 
-		gm->SetTreasureBoxOpen(true);
+		if (gm->GetClearFlg() == true)
+		{
+			gm->SetTreasureBoxOpen(true);
+		}
+		else if (gm->GetDeathFlg() == true)
+		{
+			gm->SetCameraZoomEnd(true);
+		}
 	}
 	void PlayerCameramanEndState::Execute(const shared_ptr<PlayerCameraman>& Obj) {
+
+		Obj->ZoomDrawSwitch();
+
 	}
 	void PlayerCameramanEndState::Exit(const shared_ptr<PlayerCameraman>& Obj) {
 	}
@@ -450,7 +404,7 @@ namespace basecross{
 			SetAt(playerPos);
 			SetUp(0, 0, 1); // カメラの上方向を示す単位ベクトル
 		}
-		if (gm->GetPlayerCameraMoveState() == PlayerCamStateNum::ClearState)
+		if (gm->GetPlayerCameraMoveState() == PlayerCamStateNum::ZoomState)
 		{
 			auto gm = GameManager::GetInstance();
 			//ステージの取得

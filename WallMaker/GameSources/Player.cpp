@@ -107,6 +107,19 @@ namespace basecross{
 		}
 	}
 
+	void Player::VisiblePlayer()
+	{
+		auto ptrShadow = GetComponent<Shadowmap>();
+		ptrShadow->SetMeshResource(WstringKey::Anim_Player);
+		ptrShadow->SetDrawActive(true);
+		//見えるようにする
+		auto ptrDraw = GetComponent<PNTBoneModelDraw>();
+		auto delta = App::GetApp()->GetElapsedTime();
+		auto col = ptrDraw->GetDiffuse();
+		col.w = 1.0f;
+		ptrDraw->SetDiffuse(col);
+	}
+
 	// RTriggerフラグ切り替え
 	void Player::RTriggerHandler()
 	{
@@ -114,7 +127,6 @@ namespace basecross{
 		{
 			m_BeforePushRTFlg = m_PushRTFlg;
 		}
-
 	}
 
 	// プレイヤーが使用するコントローラの入力
@@ -233,23 +245,12 @@ namespace basecross{
 
 			if (GetRTriggerPushFlg() == true)
 			{
-				if (GetMotionName() != WstringKey::AM_PlayerWalkMagic)
-				{
-					auto ptrDraw = GetComponent<PNTBoneModelDraw>();
-					ptrDraw->ChangeCurrentAnimation(WstringKey::AM_PlayerWalkMagic);
-					SetMotionName(WstringKey::AM_PlayerWalkMagic);
-				}
-
+				MotionChange(WstringKey::AM_PlayerWalkMagic);
 				m_Speed = m_HoldSpeed;
 			}
 			else
 			{
-				if (GetMotionName() != WstringKey::AM_PlayerWalk) {
-					auto ptrDraw = GetComponent<PNTBoneModelDraw>();
-					ptrDraw->ChangeCurrentAnimation(WstringKey::AM_PlayerWalk);
-					SetMotionName(WstringKey::AM_PlayerWalk);
-				}
-
+				MotionChange(WstringKey::AM_PlayerWalk);
 				m_Speed = m_DefaultSpeed;
 			}
 		}
@@ -257,22 +258,11 @@ namespace basecross{
 		{
 			if (GetRTriggerPushFlg() == true)
 			{
-				if (GetMotionName() != WstringKey::AM_PlayerStandMagic)
-				{
-					auto ptrDraw = GetComponent<PNTBoneModelDraw>();
-					ptrDraw->ChangeCurrentAnimation(WstringKey::AM_PlayerStandMagic);
-					SetMotionName(WstringKey::AM_PlayerStandMagic);
-				}
-
+				MotionChange(WstringKey::AM_PlayerStandMagic);
 			}
 			else 
 			{
-				if (GetMotionName() != WstringKey::AM_PlayerStand)
-				{
-					auto ptrDraw = GetComponent<PNTBoneModelDraw>();
-					ptrDraw->ChangeCurrentAnimation(WstringKey::AM_PlayerStand);
-					SetMotionName(WstringKey::AM_PlayerStand);
-				}
+				MotionChange(WstringKey::AM_PlayerStand);
 			}
 
 		}
@@ -288,7 +278,6 @@ namespace basecross{
 	{
 		if (m_WallStock > 0)
 		{
-				m_TestFlg = true;
 			auto ptrChild = dynamic_pointer_cast<MagicSkeltonWall>(m_MagicSkeltonWall);
 			if (ptrChild->GetCollisionFlg() == false)
 			{
@@ -298,10 +287,96 @@ namespace basecross{
 					Vec3(rot.toRotVec().y),
 					Vec3(ptrChild->GetPosition()));
 
-			// SE
+				// SE
 				auto ptrXA = App::GetApp()->GetXAudio2Manager();
 				ptrXA->Start(WstringKey::SE_CreateMagicWall, 0, 1.0f);
 			}
+		}
+	}
+
+	void Player::MotionSetting()
+	{
+		auto ptrDraw = AddComponent<PNTBoneModelDraw>();
+		//アニメーションの追加
+		ptrDraw->AddAnimation(WstringKey::AM_PlayerStand, 0, 30, true, 10.0f);
+		ptrDraw->AddAnimation(WstringKey::AM_PlayerWalk, 31, 29, true, 30.0f);
+		ptrDraw->AddAnimation(WstringKey::AM_PlayerStandMagic, 61, 29, true, 10.0f);
+		ptrDraw->AddAnimation(WstringKey::AM_PlayerWalkMagic, 91, 29, true, 30.0f);
+		ptrDraw->AddAnimation(WstringKey::AM_PlayerDamage, 121, 29, false, 45.0f);
+		ptrDraw->AddAnimation(WstringKey::AM_PlayerGoal, 151, 29, false, 15.0f);
+		ptrDraw->AddAnimation(WstringKey::AM_PlayerDeath, 181, 29, false, 30.0f);
+		ptrDraw->ChangeCurrentAnimation(WstringKey::AM_PlayerStand);
+		SetMotionName(WstringKey::AM_PlayerStand);
+	}
+
+	void Player::ClearBehaviour()
+	{
+		auto gm = GameManager::GetInstance();
+		auto ptrDraw = GetComponent<PNTBoneModelDraw>();
+		float elapsedTime = App::GetApp()->GetElapsedTime();
+
+		// ゴール時にGoalStandFlgがfalseなら
+		if (m_GoalStandFlg == false)
+		{
+			MotionChange(WstringKey::AM_PlayerStand);
+			m_GoalStandFlg = true;
+		}
+
+		//宝箱の見た目が開いていたら
+		if (gm->GetTreasureBoxOpen() == true)
+		{
+			// タイマーが回転する時間を超えていない場合
+			if (m_GoalTimer < m_GoalSpinTimer)
+			{
+				LookCamera();
+			}
+		}
+		else
+		{
+			m_RotY = GetComponent<Transform>()->GetRotation().y;
+		}
+		// タイマーが回転する時間を超えている場合
+		if (m_GoalSpinTimer <= m_GoalTimer)
+		{
+			//今のモーションがAM_PlayerGoalでは無いなら
+			MotionChange(WstringKey::AM_PlayerGoal);
+
+			// タイマーが3秒を超えていない場合
+			if (m_Timer > 2.0f)
+			{
+				gm->SetGoalMotionEnd(true);
+			}
+			m_Timer += elapsedTime;
+		}
+
+		ptrDraw->UpdateAnimation(elapsedTime);
+
+	}
+
+	void Player::GameOverBehaviour()
+	{
+		auto gm = GameManager::GetInstance();
+		float elapsedTime = App::GetApp()->GetElapsedTime();
+
+		//宝箱の見た目が開いていたら
+		if (gm->GetCameraZoomEnd() == true)
+		{
+			////回転する時間を超えた場合
+			if (m_FallDownTimer < m_FallDownTimeLimit)
+			{
+				MotionChange(WstringKey::AM_PlayerDeath); 
+				AnimationUpdate();
+
+				m_FallDownTimer += elapsedTime;
+			}
+			else
+			{
+				gm->SetDeathMotionEnd(true);
+			}
+		}
+		else
+		{
+			m_RotY = GetComponent<Transform>()->GetRotation().y;
 		}
 	}
 
@@ -310,32 +385,42 @@ namespace basecross{
 		//ダメ―ジを受けていたら
 		if (m_DamageFlg == true)
 		{
-			if (m_InvincibleTime < m_InvincibleTimeLimit)
-			{
-				if (GetMotionName() != WstringKey::AM_PlayerDamage) {
-					auto ptrDraw = GetComponent<PNTBoneModelDraw>();
-					ptrDraw->ChangeCurrentAnimation(WstringKey::AM_PlayerDamage);
-					SetMotionName(WstringKey::AM_PlayerDamage);
+			if (0.0f < m_PlayerHp) {
+				if (m_InvincibleTime < m_InvincibleTimeLimit)
+				{
+					if (GetMotionName() != WstringKey::AM_PlayerDamage) {
+						auto ptrDraw = GetComponent<PNTBoneModelDraw>();
+						ptrDraw->ChangeCurrentAnimation(WstringKey::AM_PlayerDamage);
+						SetMotionName(WstringKey::AM_PlayerDamage);
+					}
+
+					SetDrawActive(!GetDrawActive());
+
+					auto elapsedTime = App::GetApp()->GetElapsedTime();
+					m_InvincibleTime += elapsedTime;
 				}
-
-				SetDrawActive(!GetDrawActive());
-
-				auto elapsedTime = App::GetApp()->GetElapsedTime();
-				m_InvincibleTime += elapsedTime;
-			}
-			else
-			{
-				SetDrawActive(true);
-				m_DamageFlg = false;
+				else
+				{
+					SetDrawActive(true);
+					m_DamageFlg = false;
+				}
 			}
 		}
 	}
 
-	void Player::MotionUpdate(wstring motionKey)
+	void Player::MotionChange(wstring motionKey)
+	{
+		if (GetMotionName() != motionKey)
+		{
+			auto ptrDraw = GetComponent<PNTBoneModelDraw>();
+			ptrDraw->ChangeCurrentAnimation(motionKey);
+			SetMotionName(motionKey);
+		}
+	}
+
+	void Player::AnimationUpdate()
 	{
 		auto ptrDraw = GetComponent<PNTBoneModelDraw>();
-		ptrDraw->ChangeCurrentAnimation(motionKey);
-		SetMotionName(motionKey);
 		float elapsedTime = App::GetApp()->GetElapsedTime();
 		ptrDraw->UpdateAnimation(elapsedTime);
 	}
@@ -404,21 +489,13 @@ namespace basecross{
 		ptrShadow->SetDrawActive(false);
 		SetAlphaActive(true);
 
-
 		//描画コンポーネントの設定
 		auto ptrDraw = AddComponent<PNTBoneModelDraw>();
 		//描画するメッシュを設定
 		ptrDraw->SetMeshResource(WstringKey::Anim_Player_Ver2);
 		ptrDraw->SetMeshToTransformMatrix(spanMat);
 		//アニメーションの追加
-		ptrDraw->AddAnimation(WstringKey::AM_PlayerStand, 0, 30, true, 10.0f);
-		ptrDraw->AddAnimation(WstringKey::AM_PlayerWalk, 31, 29, true, 30.0f);
-		ptrDraw->AddAnimation(WstringKey::AM_PlayerStandMagic, 61, 29, true, 10.0f);
-		ptrDraw->AddAnimation(WstringKey::AM_PlayerWalkMagic, 91, 29, true, 30.0f);
-		ptrDraw->AddAnimation(WstringKey::AM_PlayerDamage, 121, 29, false, 45.0f);
-		ptrDraw->AddAnimation(WstringKey::AM_PlayerGoal, 151, 29, false, 10.0f);
-		ptrDraw->ChangeCurrentAnimation(WstringKey::AM_PlayerStand);
-		SetMotionName(WstringKey::AM_PlayerStand);
+		MotionSetting();
 		//最初は透明にしておく
 		auto col = ptrDraw->GetDiffuse();
 		col.w = 0.0f;
@@ -433,9 +510,9 @@ namespace basecross{
 		m_RotY = 0.0f;
 
 		// DrawString用
-		auto strComp = AddComponent<StringSprite>();
-		strComp->SetBackColor(Col4(0, 0, 0, 0.5f));
-		strComp->SetTextRect(Rect2D<float>(1000, 110, 1270, 310));
+		//auto strComp = AddComponent<StringSprite>();
+		//strComp->SetBackColor(Col4(0, 0, 0, 0.5f));
+		//strComp->SetTextRect(Rect2D<float>(1000, 110, 1270, 310));
 	}
 
 	void Player::OnUpdate()
@@ -453,12 +530,8 @@ namespace basecross{
 			SetCountWall();
 			Die();
 			DrawActiveSwitch();
-
 			InvincibleBehaviour();
-
-			auto ptrDraw = GetComponent<PNTBoneModelDraw>();
-			float elapsedTime = App::GetApp()->GetElapsedTime();
-			ptrDraw->UpdateAnimation(elapsedTime);
+			AnimationUpdate();
 
 			auto rotation = GetComponent<Transform>()->GetRotation();
 			m_RotY = rotation.y;
@@ -468,84 +541,23 @@ namespace basecross{
 			// スタート時に魔法陣が見えたら
 			if (gm->GetMagicSircleEnabledLook() == true)
 			{
-				auto ptrShadow = GetComponent<Shadowmap>();
-				ptrShadow->SetMeshResource(WstringKey::Anim_Player);
-				ptrShadow->SetDrawActive(true);
-				//見えるようにする
-				auto ptrDraw = GetComponent<PNTBoneModelDraw>();
-				auto delta = App::GetApp()->GetElapsedTime();
-				auto col = ptrDraw->GetDiffuse();
-				col.w = 1.0f;
-				ptrDraw->SetDiffuse(col);
+				VisiblePlayer();
 			}
 			// 宝箱にプレイヤーが触れたら
 			if (gm->GetTreasureFlg() == true)
 			{
-				auto ptrDraw = GetComponent<PNTBoneModelDraw>();
-
-				float elapsedTime = App::GetApp()->GetElapsedTime();
-
-				// ゴール時にGoalStandFlgがfalseなら
-				if (m_GoalStandFlg == false)
-				{
-					//今のモーションがAM_PlayerStandでは無いなら
-					if (GetMotionName() != WstringKey::AM_PlayerStand)
-					{
-						ptrDraw = GetComponent<PNTBoneModelDraw>();
-						ptrDraw->ChangeCurrentAnimation(WstringKey::AM_PlayerStand);
-						SetMotionName(WstringKey::AM_PlayerStand);
-					}
-					m_GoalStandFlg = true;
-				}
-
-				//宝箱の見た目が開いていたら
-				if (gm->GetTreasureBoxOpen() == true)
-				{
-					// タイマーが回転する時間を超えていない場合
-					if (m_GoalTimer < m_GoalSpinTimer)
-					{
-						LookCamera();
-					}
-				}
-				else
-				{
-					m_RotY = GetComponent<Transform>()->GetRotation().y;
-				}
-				// タイマーが回転する時間を超えている場合
-				if(m_GoalSpinTimer <= m_GoalTimer)
-				{
-					//今のモーションがAM_PlayerGoalでは無いなら
-					if (GetMotionName() != WstringKey::AM_PlayerGoal)
-					{
-						auto ptrDraw = GetComponent<PNTBoneModelDraw>();
-						ptrDraw->ChangeCurrentAnimation(WstringKey::AM_PlayerGoal);
-						SetMotionName(WstringKey::AM_PlayerGoal);
-					}
-
-					// タイマーが3秒を超えていない場合
-					if (m_Timer < 3.0f)
-					{
-						//float elapsedTime = App::GetApp()->GetElapsedTime();
-						//m_Timer + elapsedTime;
-					}
-					//3秒を超えた場合
-					else
-					{
-						gm->SetGoalMotionEnd(true);
-					}
-					m_Timer += elapsedTime;
-				}
-
-				ptrDraw->UpdateAnimation(elapsedTime);
-
-
+				ClearBehaviour();
+			}
+			else if (gm->GetDeathFlg() == true)
+			{
+				GameOverBehaviour();
 			}
 		}
 	}
 
 	void Player::OnUpdate2()
 	{
-		DrawStrings();
+		//DrawStrings();
 	}
 
 	void Player::OnCollisionEnter(shared_ptr<GameObject>& other) {
@@ -670,6 +682,9 @@ namespace basecross{
 			m_InvincibleTime = 0.0f;
 			m_PlayerHp -= damage;
 			m_DamageFlg = true;
+
+			auto ptrXA = App::GetApp()->GetXAudio2Manager();
+			ptrXA->Start(WstringKey::SE_PlayerDamage, 0, 1.0f);
 		}
 	}
 
@@ -679,8 +694,8 @@ namespace basecross{
 		{
 			SetPlayerDiedFlg(true);
 
-			SetDrawActive(false);
-			SetUpdateActive(false);
+			//SetDrawActive(false);
+			//SetUpdateActive(false);
 		}
 	}
 	//BGMを止める

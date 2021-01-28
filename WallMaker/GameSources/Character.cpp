@@ -368,7 +368,7 @@ namespace basecross{
 		ptrDraw->SetMeshResource(L"DEFAULT_CUBE");
 		//ptrDraw->SetTextureResource(WstringKey::Tx_Floor);
 		//ptrDraw->SetFogEnabled(true);
-		ptrDraw->SetOwnShadowActive(true);
+		ptrDraw->SetOwnShadowActive(false);
 		ptrDraw->SetLightingEnabled(false);
 		//描画するテクスチャを設定
 		ptrDraw->SetTextureResource(L"BREAKWALL_TX");

@@ -12,7 +12,7 @@ namespace basecross{
 		ToTreasureState,
 		ToStartPointState,
 		MoveToPlayerState,
-		ClearState,
+		ZoomState,
 		EndState
 	};
 	enum GoalCamStateNum
@@ -101,39 +101,15 @@ namespace basecross{
 		void MoveToPlayerEnterBehavior();
 		void MoveToPlayerExcuteBehavior();
 		void MoveToPlayer();
-		void ClearEnterBehavior();
+		void ZoomEnterBehavior();
 		bool ExcuteBehavior(float totaltime);
+		void ZoomDrawSwitch();
 
 		//ï`âÊêÿÇËë÷Ç¶
 		float m_DrawActiveLength = 35.0f;
 		float m_DrawActiveFloorLength = 40.0f;
 		void DrawActiveSwitch();
 	};
-
-	////--------------------------------------------------------------------------------------
-	////	class PlayerCameramanToTreasureState : public ObjState<PlayerCameraman>;
-	////--------------------------------------------------------------------------------------
-	//class PlayerCameramanToTreasureState : public ObjState<PlayerCameraman>
-	//{
-	//	PlayerCameramanToTreasureState() {}
-	//public:
-	//	static shared_ptr<PlayerCameramanToTreasureState> Instance();
-	//	virtual void Enter(const shared_ptr<PlayerCameraman>& Obj)override;
-	//	virtual void Execute(const shared_ptr<PlayerCameraman>& Obj)override;
-	//	virtual void Exit(const shared_ptr<PlayerCameraman>& Obj)override;
-	//};
-	////--------------------------------------------------------------------------------------
-	////	class PlayerCameramanToStartPointState : public ObjState<PlayerCameraman>;
-	////--------------------------------------------------------------------------------------
-	//class PlayerCameramanToStartPointState : public ObjState<PlayerCameraman>
-	//{
-	//	PlayerCameramanToStartPointState() {}
-	//public:
-	//	static shared_ptr<PlayerCameramanToStartPointState> Instance();
-	//	virtual void Enter(const shared_ptr<PlayerCameraman>& Obj)override;
-	//	virtual void Execute(const shared_ptr<PlayerCameraman>& Obj)override;
-	//	virtual void Exit(const shared_ptr<PlayerCameraman>& Obj)override;
-	//};
 
 	//--------------------------------------------------------------------------------------
 	//	class PlayerCameramanMoveToPlayerState : public ObjState<PlayerCameraman>;
@@ -150,11 +126,11 @@ namespace basecross{
 	//--------------------------------------------------------------------------------------
 	//	class PlayerCameramanClearState : public ObjState<PlayerCameraman>;
 	//--------------------------------------------------------------------------------------
-	class PlayerCameramanClearState : public ObjState<PlayerCameraman>
+	class PlayerCameramanZoomState : public ObjState<PlayerCameraman>
 	{
-		PlayerCameramanClearState() {}
+		PlayerCameramanZoomState() {}
 	public:
-		static shared_ptr<PlayerCameramanClearState> Instance();
+		static shared_ptr<PlayerCameramanZoomState> Instance();
 		virtual void Enter(const shared_ptr<PlayerCameraman>& Obj)override;
 		virtual void Execute(const shared_ptr<PlayerCameraman>& Obj)override;
 		virtual void Exit(const shared_ptr<PlayerCameraman>& Obj)override;

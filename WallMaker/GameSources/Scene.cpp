@@ -49,7 +49,7 @@ namespace basecross{
 		Pairs txPairs[] =
 		{
 			//タイトル
-			{L"TITLEL_LOGO_TX", L"Title.png"},
+			{L"TITLEL_LOGO_TX", L"Title_Ver2.png"},
 			{L"TITLE_BACK", L"Title_Back.png"},
 			// ステージのテクスチャ
 			{L"TRACE_TX", L"trace.png"},

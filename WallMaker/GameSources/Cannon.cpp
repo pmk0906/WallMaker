@@ -43,7 +43,7 @@ namespace basecross {
 
 		//•`‰æˆ—
 		auto ptrDraw = AddComponent<PNTStaticModelDraw>();
-		ptrDraw->SetMeshResource(L"STOPENEMY_MESH");
+		ptrDraw->SetMeshResource(L"CANNON_MESH");
 		ptrDraw->SetMeshToTransformMatrix(spanMat);
 		//ptrDraw->SetFogEnabled(true);
 		ptrDraw->SetOwnShadowActive(true);

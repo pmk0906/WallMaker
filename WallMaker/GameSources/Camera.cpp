@@ -223,16 +223,19 @@ namespace basecross{
 
 		for (auto obj : GetStage()->GetGameObjectVec())
 		{
-			//if (obj->FindTag(WstringKey::Tag_DrawActiveFalse))
-			//{
-				auto otherPos = obj->GetComponent<Transform>()->GetPosition();
-				auto len = playerPos - otherPos;
-
-				if (len.length() <= 5.0f)
+			if (obj->FindTag(WstringKey::Tag_DrawActiveFalse))
+			{
+				if (!obj->FindTag(WstringKey::Tag_Floor))
 				{
-					obj->SetDrawActive(false);
+					auto otherPos = obj->GetComponent<Transform>()->GetPosition();
+					auto len = playerPos - otherPos;
+
+					if (len.length() <= 8.0f)
+					{
+						obj->SetDrawActive(false);
+					}
 				}
-			//}
+			}
 		}
 
 	}

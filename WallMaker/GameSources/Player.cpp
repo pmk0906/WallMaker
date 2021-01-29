@@ -303,7 +303,7 @@ namespace basecross{
 		ptrDraw->AddAnimation(WstringKey::AM_PlayerStandMagic, 61, 29, true, 10.0f);
 		ptrDraw->AddAnimation(WstringKey::AM_PlayerWalkMagic, 91, 29, true, 30.0f);
 		ptrDraw->AddAnimation(WstringKey::AM_PlayerDamage, 121, 29, false, 45.0f);
-		ptrDraw->AddAnimation(WstringKey::AM_PlayerGoal, 151, 29, false, 15.0f);
+		ptrDraw->AddAnimation(WstringKey::AM_PlayerGoal, 151, 29, false, 29.0f);
 		ptrDraw->AddAnimation(WstringKey::AM_PlayerDeath, 181, 29, false, 30.0f);
 		ptrDraw->ChangeCurrentAnimation(WstringKey::AM_PlayerStand);
 		SetMotionName(WstringKey::AM_PlayerStand);
@@ -341,8 +341,8 @@ namespace basecross{
 			//今のモーションがAM_PlayerGoalでは無いなら
 			MotionChange(WstringKey::AM_PlayerGoal);
 
-			// タイマーが3秒を超えていない場合
-			if (m_Timer > 2.0f)
+			// タイマーが3秒を超えた場合
+			if (m_Timer > 1.0f)
 			{
 				gm->SetGoalMotionEnd(true);
 			}
@@ -358,7 +358,6 @@ namespace basecross{
 		auto gm = GameManager::GetInstance();
 		float elapsedTime = App::GetApp()->GetElapsedTime();
 
-		//宝箱の見た目が開いていたら
 		if (gm->GetCameraZoomEnd() == true)
 		{
 			////回転する時間を超えた場合

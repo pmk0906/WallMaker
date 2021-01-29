@@ -122,6 +122,7 @@ namespace basecross{
 			{L"SHELD_MESH", L"Shield.bmf"},
 			{L"ENEMY_MESH", L"Enemy.bmf"},
 			{L"STOPENEMY_MESH", L"StopEnemy.bmf"},
+			{L"CANNON_MESH", L"Cannon.bmf"},
 			{L"COLORENEMY_MESH", L"StopEnemy0002.bmf"},
 			{L"BULLET_MESH", L"Bullet_Green.bmf"},
 			{L"RED_BULLET", L"Bullet_Red.bmf"},

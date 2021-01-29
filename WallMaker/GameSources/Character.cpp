@@ -29,9 +29,9 @@ namespace basecross{
 		ptrTrans->SetRotation(m_Rotation);
 		ptrTrans->SetPosition(m_Position);
 
-		// 衝突判定
+		//// 衝突判定
 		auto ptrColl = AddComponent<CollisionObb>();
-		ptrColl->SetFixed(true);
+		//ptrColl->SetFixed(true);
 
 		//タグをつける
 		AddTag(L"FixedBox");
@@ -40,7 +40,7 @@ namespace basecross{
 		////影の形（メッシュ）を設定
 		//shadowPtr->SetMeshResource(L"DEFAULT_DODECAHEDRON");
 		auto ptrDraw = AddComponent<BcPNTStaticDraw>();
-		ptrDraw->SetMeshResource(L"DEFAULT_DODECAHEDRON");
+		ptrDraw->SetMeshResource(L"DEFAULT_CUBE");
 		//ptrDraw->SetTextureResource(WstringKey::Tx_Floor);
 		//ptrDraw->SetFogEnabled(true);
 		ptrDraw->SetOwnShadowActive(true);
@@ -49,6 +49,17 @@ namespace basecross{
 		SetAlphaActive(false);
 
 		SetDrawLayer(-2);
+	}
+
+	void FixedBox::OnUpdate()
+	{
+		//auto delta = App::GetApp()->GetElapsedTime();
+		//auto myTrans = GetComponent<Transform>();
+		//auto myRot = myTrans->GetRotation();
+
+		//float rot = XMConvertToRadians(90.0f) * delta; // １フレ―ム当たりの旋回角度
+
+		//myTrans->SetRotation(0.0f, myRot.y += rot, 0.0f);
 	}
 
 	//--------------------------------------------------

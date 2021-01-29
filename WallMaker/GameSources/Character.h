@@ -15,6 +15,8 @@ namespace basecross{
 		Vec3 m_Rotation;
 		Vec3 m_Position;
 
+		float m_RotY;
+
 	public:
 		// \’z‚Æ”jŠü
 		FixedBox(
@@ -26,6 +28,7 @@ namespace basecross{
 
 		// ‰Šú‰»
 		virtual void OnCreate()override;
+		virtual void OnUpdate() override;
 	};
 
 	class TestMagicWall : public GameObject

@@ -198,6 +198,10 @@ namespace basecross {
 
 		if (gm->GetClearFlg() == true && gm->GetClearFlgChanged() == false)
 		{
+			if (gm->GetTreasureBoxOpen() == true)
+			{
+				ChangeBGM(L"BGM_GameClear");
+			}
 			if (gm->GetGoalMotionEnd() == true)
 			{
 				CreateClearButton();
@@ -206,6 +210,10 @@ namespace basecross {
 		}
 		else if (gm->GetDeathFlg() == true && gm->GetDeathFlgChanged() == false)
 		{
+			if (gm->GetCameraZoomEnd() == true)
+			{
+				ChangeBGM(L"BGM_GameOver");
+			}
 			if (gm->GetDeathMotionEnd() == true)
 			{
 				CreateGameOverButton();
@@ -423,6 +431,28 @@ namespace basecross {
 		auto ptrXA = App::GetApp()->GetXAudio2Manager();
 
 		ptrXA->Stop(m_BGM);
+	}
+
+	void GameStage2::ChangeBGM(wstring bgmKey)
+	{
+		if (GetBgmName() != bgmKey)
+		{
+			StopBGM();
+			//BGM
+			auto ptrXA = App::GetApp()->GetXAudio2Manager();
+			m_BGM = ptrXA->Start(bgmKey, XAUDIO2_LOOP_INFINITE, 0.5f);
+			SetBgmName(bgmKey);
+		}
+	}
+
+	void GameStage2::SetBgmName(wstring bgmName)
+	{
+		m_BgmName = bgmName;
+	}
+
+	wstring GameStage2::GetBgmName()
+	{
+		return m_BgmName;
 	}
 
 	void GameStage2::ToMyCamera() {

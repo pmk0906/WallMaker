@@ -64,6 +64,7 @@ namespace basecross {
 		void CreateSpriteAndButton();
 		void SwitchPoseButton(bool poseFlg);
 
+
 	public:
 		//ç\ízÇ∆îjä¸
 		GameStage() :Stage() {}
@@ -80,9 +81,15 @@ namespace basecross {
 
 		void StopBGM();
 
+
 		void ToMyCamera();
 		void ToPlayerCamera();
 		void ToGoalCamera();
+
+		void ChangeBGM(wstring bgmKey);
+		wstring m_BgmName = L"";
+		void SetBgmName(wstring bgmName);
+		wstring GetBgmName();
 
 		wstring GetCameraSelectName();
 

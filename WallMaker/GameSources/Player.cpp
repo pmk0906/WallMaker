@@ -303,7 +303,7 @@ namespace basecross{
 		ptrDraw->AddAnimation(WstringKey::AM_PlayerStandMagic, 61, 29, true, 10.0f);
 		ptrDraw->AddAnimation(WstringKey::AM_PlayerWalkMagic, 91, 29, true, 30.0f);
 		ptrDraw->AddAnimation(WstringKey::AM_PlayerDamage, 121, 29, false, 45.0f);
-		ptrDraw->AddAnimation(WstringKey::AM_PlayerGoal, 151, 29, false, 29.0f);
+		ptrDraw->AddAnimation(WstringKey::AM_PlayerGoal, 151, 27, false, 27.0f);
 		ptrDraw->AddAnimation(WstringKey::AM_PlayerDeath, 181, 29, false, 30.0f);
 		ptrDraw->ChangeCurrentAnimation(WstringKey::AM_PlayerStand);
 		SetMotionName(WstringKey::AM_PlayerStand);

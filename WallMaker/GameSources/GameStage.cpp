@@ -11,7 +11,7 @@ namespace basecross {
 	//--------------------------------------------------------------------------------------
 	//	ゲームステージクラス実体
 	//--------------------------------------------------------------------------------------
-	void GameStage::CreateViewLight() 
+	void GameStage::CreateViewLight()
 	{
 		const Vec3 eye(0.0f, 30.0f, -20.0f);
 		const Vec3 at(0.0f);
@@ -44,10 +44,10 @@ namespace basecross {
 	{
 		int mapRows = 16;
 		int mapCols = 32;
-		
+
 		auto map = new int[mapRows * mapCols];
 
-		const int mapData[] = 
+		const int mapData[] =
 		{
 			//1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ,1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
 			//1,47,48,48,48,48,48,48,48,48,48,48,48,48,49, 1, 1, 1,47,48,48,48,48,48,48,48,48,48,48,48,49, 1,
@@ -71,12 +71,12 @@ namespace basecross {
 			1,44, 0, 3, 0,46, 1,44, 0, 0, 0, 0, 0, 0,74,46, 1,44 ,0, 0, 0, 0, 0, 0, 0,46, 1,44, 0,72,46, 1,
 			1,44, 0, 0, 0,46, 1,44, 0, 0, 0, 0, 0, 0, 0,46, 1,44, 0, 0, 0, 0,42, 0, 0,46, 1,44, 0, 0,46, 1,
 			1,44, 0, 0, 0, 0,48, 0, 0, 0, 0, 0, 0, 0, 0,46, 1,44, 0, 0, 0,46, 1, 8, 8, 8, 1,44, 0, 0,46, 1,
-			1,44, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3,46, 1,44, 0, 6, 0,46, 1,44, 0, 0,48, 0, 0, 0,46, 1,
+			1,44, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3,46, 1,44, 0, 0, 0,46, 1,44, 0, 0,48, 0, 0, 0,46, 1,
 			1,44, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,46, 1,44, 0, 0, 0,46, 1,44, 0, 0, 0, 0, 3, 0,46, 1,
 			1,44, 0, 0, 0, 0,42,42, 0, 0, 0, 0, 0, 0,42,43, 1,41,42,42,42,43, 1,41, 0, 0, 0, 0, 0, 0,46, 1,
 			1,44, 0, 0, 0,46, 1, 1, 8, 8, 8, 8, 8, 8, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,44, 0, 0, 0, 0, 0,46, 1,
 			1,44, 0, 0, 0,46, 1, 1, 8, 8, 8, 8, 8, 8, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,41,42,42, 0, 0, 0,46, 1,
-			1,44, 0, 0, 0,46, 1,47, 0, 0, 0, 0, 0,46, 1,47,48,48,48,48,48,48,49, 1, 1, 1, 1,44, 0, 0,46, 1,
+			1,44, 0, 0, 6,46, 1,47, 0, 0, 0, 0, 0,46, 1,47,48,48,48,48,48,48,49, 1, 1, 1, 1,44, 0, 0,46, 1,
 			1,44, 0, 0, 0,46, 1,44, 0, 0, 0, 0, 0,46, 1,44,42, 0, 0, 0, 0, 0,46, 1,47,48,48, 0, 0, 0,46, 1,
 			1,44, 0, 2, 0,46, 1,44, 0, 0, 0, 0, 0, 0, 0,46, 1,44, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,46, 1,
 			1,44, 0, 0, 0,46, 1,44, 3, 0, 0, 0, 0,46, 1,44,48, 0, 0, 0, 0,12,46, 1,44, 0, 0, 0, 0, 0,46, 1,
@@ -107,7 +107,7 @@ namespace basecross {
 				case 5: // 連射的
 					AddGameObject<RapidFireEnemy>(Vec3(2.0f, 1.0f, 3.5f), Vec3(0.0f), Vec3(pos.x, 1.5f, pos.z));
 					break;
-				// 反射壁(テンキーの配置参照)
+					// 反射壁(テンキーの配置参照)
 				case 41:
 					AddGameObject<StageRefrectWall>(Vec3(scale), Vec3(0.0f, XMConvertToRadians(90.0f), 0.0f), Vec3(pos.x - 1.3f, 1.5f, pos.z));
 					AddGameObject<StageRefrectWall>(Vec3(scale), Vec3(0.0f), Vec3(pos.x, 1.5f, pos.z - 1.3f));
@@ -186,7 +186,7 @@ namespace basecross {
 
 	}
 
-	void GameStage::OnCreate() 
+	void GameStage::OnCreate()
 	{
 		try {
 			//ビューとライトの作成
@@ -219,13 +219,17 @@ namespace basecross {
 		SetSharedGameObject(WstringKey::ShareObj_TestObject, testObj);
 	}
 
-	void GameStage::OnUpdate() 
+	void GameStage::OnUpdate()
 	{
 		auto gm = GameManager::GetInstance();
 		gm->ClearCheck(GetThis<Stage>());
 
 		if (gm->GetClearFlg() == true && gm->GetClearFlgChanged() == false)
 		{
+			if (gm->GetTreasureBoxOpen() == true)
+			{
+				ChangeBGM(L"BGM_GameClear");
+			}
 			if (gm->GetGoalMotionEnd() == true)
 			{
 				CreateClearButton();
@@ -234,6 +238,10 @@ namespace basecross {
 		}
 		else if (gm->GetDeathFlg() == true && gm->GetDeathFlgChanged() == false)
 		{
+			if (gm->GetCameraZoomEnd() == true)
+			{
+				ChangeBGM(L"BGM_GameOver");
+			}
 			if (gm->GetDeathMotionEnd() == true)
 			{
 				CreateGameOverButton();
@@ -323,18 +331,18 @@ namespace basecross {
 
 		AddGameObject<Sprite>(true, Vec2(400.0f, 200.0f), Vec2(-440.0f, 345.0f), L"HP_FRONT_UI_TX", 1.0f, Col4(1.0f));
 		AddGameObject<Sprite>(true, Vec2(300.0f, 150.0f), Vec2(-390.0f, 340.0f), L"HP_BACK_UI_TX", -1.0f, Col4(1.0f));
-		
+
 		//壁のストック表示
 		AddGameObject<WallStock>(true, Vec2(70.0f), Vec3(+468.0f, 340.0f, 0.1f), 1.0f);
 		AddGameObject<WallStock>(true, Vec2(70.0f), Vec3(+384.0f, 340.0f, 0.1f), 2.0f);
 		AddGameObject<WallStock>(true, Vec2(70.0f), Vec3(+297.0f, 340.0f, 0.1f), 3.0f);
-		
+
 		AddGameObject<Sprite>(true, Vec2(400.0f, 200.0f), Vec2(430.0f, 345.0f), L"WALLSTOCKFRONT_UI_TX", 1.0f, Col4(1.0f));
 		AddGameObject<Sprite>(true, Vec2(400.0f, 200.0f), Vec2(430.0f, 345.0f), L"WALLSTOCKBACK_UI_TX", -1.0f, Col4(1.0f));
 	}
 
 	//カメラマンの作成
-	void GameStage::CreateCameraman() 
+	void GameStage::CreateCameraman()
 	{
 		// オープニングカメラを登録
 		auto ptrOpeningCameraman = AddGameObject<OpeningCameraman>();
@@ -457,8 +465,29 @@ namespace basecross {
 	void GameStage::StopBGM()
 	{
 		auto ptrXA = App::GetApp()->GetXAudio2Manager();
-
 		ptrXA->Stop(m_BGM);
+	}
+
+	void GameStage::ChangeBGM(wstring bgmKey)
+	{
+		if (GetBgmName() != bgmKey)
+		{
+			StopBGM();
+			//BGM
+			auto ptrXA = App::GetApp()->GetXAudio2Manager();
+			m_BGM = ptrXA->Start(bgmKey, XAUDIO2_LOOP_INFINITE, 0.5f);
+			SetBgmName(bgmKey);
+		}
+	}
+
+	void GameStage::SetBgmName(wstring bgmName)
+	{
+		m_BgmName = bgmName;
+	}
+
+	wstring GameStage::GetBgmName()
+	{
+		return m_BgmName;
 	}
 
 	void GameStage::ToMyCamera() {

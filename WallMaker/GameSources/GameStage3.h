@@ -82,6 +82,11 @@ namespace basecross {
 		void ToPlayerCamera();
 		void ToGoalCamera();
 
+		void ChangeBGM(wstring bgmKey);
+		wstring m_BgmName = L"";
+		void SetBgmName(wstring bgmName);
+		wstring GetBgmName();
+
 		wstring GetCameraSelectName();
 
 	};

@@ -59,6 +59,7 @@ namespace WstringKey {
 	const wstring SE_Reflection = L"SE_Reflection";
 	const wstring SE_EnemyDamage = L"SE_EnemyDamage";
 	const wstring SE_BreakWall = L"SE_BreakWall";
+	const wstring SE_SheildUnbreak = L"SE_SheildUnbreak";
 	const wstring SE_PlayerDamage = L"SE_PlayerDamage";
 	const wstring SE_GameClear = L"SE_GameClear";
 	const wstring SE_BreakStageWall = L"SE_BreakStageWall";

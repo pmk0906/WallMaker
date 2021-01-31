@@ -108,7 +108,7 @@ namespace basecross {
 
 	void DangerEnemy::Initialize()
 	{
-		m_EnemyHP = 2.0f;
+		m_EnemyHP = 1.0f;
 		m_RotY = 0.0f;
 		m_FireTime = 0.0f;
 

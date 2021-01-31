@@ -82,6 +82,9 @@ namespace basecross {
 			//SetUpdateActive(false);
 			GetStage()->RemoveGameObject<EnemyShield>(GetThis<EnemyShield>());
 
+			auto ptrXA = App::GetApp()->GetXAudio2Manager();
+			ptrXA->Start(WstringKey::SE_BreakWall, 0, 3.0f);
+
 			GenerataFire(30, Vec3(30.0f));
 		}
 	}
@@ -222,6 +225,9 @@ namespace basecross {
 			//SetDrawActive(false);
 			//SetUpdateActive(false);
 			GetStage()->RemoveGameObject<PatrolShield>(GetThis<PatrolShield>());
+
+			auto ptrXA = App::GetApp()->GetXAudio2Manager();
+			ptrXA->Start(WstringKey::SE_BreakWall, 0, 3.0f);
 
 			GenerataFire(50, Vec3(30.0f));
 
@@ -364,6 +370,9 @@ namespace basecross {
 			//SetUpdateActive(false);
 			GetStage()->RemoveGameObject<UPPatrolShield>(GetThis<UPPatrolShield>());
 
+			auto ptrXA = App::GetApp()->GetXAudio2Manager();
+			ptrXA->Start(WstringKey::SE_BreakWall, 0, 3.0f);
+
 			GenerataFire(50, Vec3(30.0f));
 
 		}
@@ -505,6 +514,9 @@ namespace basecross {
 			//SetUpdateActive(false);
 			GetStage()->RemoveGameObject<RapidShield>(GetThis<RapidShield>());
 
+			auto ptrXA = App::GetApp()->GetXAudio2Manager();
+			ptrXA->Start(WstringKey::SE_BreakWall, 0, 3.0f);
+
 			GenerataFire(50, Vec3(30.0f));
 		}
 	}
@@ -617,7 +629,7 @@ namespace basecross {
 
 	void DangerShield::Initialize()
 	{
-		m_Hp = 5.0f;
+		m_Hp = 4.0f;
 	}
 
 	float DangerShield::GetHP() const
@@ -642,6 +654,20 @@ namespace basecross {
 			//SetDrawActive(false);
 			//SetUpdateActive(false);
 			GetStage()->RemoveGameObject<DangerShield>(GetThis<DangerShield>());
+
+			auto ptrXA = App::GetApp()->GetXAudio2Manager();
+			ptrXA->Start(WstringKey::SE_BreakWall, 0, 1.0f);
+
+			GenerataFire(30, Vec3(30.0f));
+		}
+	}
+
+	void DangerShield::GenerataFire(int GenerateNum, Vec3 MoveSpeed)
+	{
+		auto myPos = GetComponent<Transform>()->GetWorldPosition();
+		auto PtrFire = GetStage()->GetSharedGameObject<MultiFire>(L"MultiFire", false);
+		if (PtrFire) {
+			PtrFire->InsertFire(myPos, GenerateNum, MoveSpeed);
 		}
 	}
 
@@ -798,6 +824,9 @@ namespace basecross {
 			//SetDrawActive(false);
 			//SetUpdateActive(false);
 			GetStage()->RemoveGameObject<ReflectShield>(GetThis<ReflectShield>());
+
+			auto ptrXA = App::GetApp()->GetXAudio2Manager();
+			ptrXA->Start(WstringKey::SE_BreakWall, 0, 3.0f);
 
 			GenerataFire(30, Vec3(30.0f));
 		}

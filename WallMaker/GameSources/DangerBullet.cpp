@@ -389,6 +389,9 @@ namespace basecross {
 				{
 					shield->Damage(m_Attack);
 
+					auto ptrXA = App::GetApp()->GetXAudio2Manager();
+					ptrXA->Start(WstringKey::SE_SheildUnbreak, 0, 2.0f);
+
 					SetDrawActive(false);
 					SetUpdateActive(false);
 				}
@@ -407,6 +410,9 @@ namespace basecross {
 				if (m_Attack < shield->GetHP())
 				{
 					shield->Damage(m_Attack);
+
+					auto ptrXA = App::GetApp()->GetXAudio2Manager();
+					ptrXA->Start(WstringKey::SE_SheildUnbreak, 0, 2.0f);
 
 					SetDrawActive(false);
 					SetUpdateActive(false);
@@ -427,6 +433,9 @@ namespace basecross {
 				{
 					shield->Damage(m_Attack);
 
+					auto ptrXA = App::GetApp()->GetXAudio2Manager();
+					ptrXA->Start(WstringKey::SE_SheildUnbreak, 0, 2.0f);
+
 					SetDrawActive(false);
 					SetUpdateActive(false);
 				}
@@ -445,6 +454,9 @@ namespace basecross {
 				if (m_Attack < shield->GetHP())
 				{
 					shield->Damage(m_Attack);
+
+					auto ptrXA = App::GetApp()->GetXAudio2Manager();
+					ptrXA->Start(WstringKey::SE_SheildUnbreak, 0, 2.0f);
 
 					SetDrawActive(false);
 					SetUpdateActive(false);
@@ -465,6 +477,9 @@ namespace basecross {
 				{
 					shield->Damage(m_Attack);
 
+					auto ptrXA = App::GetApp()->GetXAudio2Manager();
+					ptrXA->Start(WstringKey::SE_SheildUnbreak, 0, 2.0f);
+
 					SetDrawActive(false);
 					SetUpdateActive(false);
 				}
@@ -483,6 +498,9 @@ namespace basecross {
 				if (m_Attack < shield->GetHP())
 				{
 					shield->Damage(m_Attack);
+
+					auto ptrXA = App::GetApp()->GetXAudio2Manager();
+					ptrXA->Start(WstringKey::SE_SheildUnbreak, 0, 2.0f);
 
 					SetDrawActive(false);
 					SetUpdateActive(false);

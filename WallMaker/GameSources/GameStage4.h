@@ -32,7 +32,7 @@ namespace basecross {
 		//ステージの奥行
 		const int STAGE_LENGTH = 20;
 		//ステージの横幅
-		const int STAGE_WIDTH = 32;
+		const int STAGE_WIDTH = 28;
 
 		InputHandler<GameStage4> m_InputHandler;
 

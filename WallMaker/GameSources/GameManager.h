@@ -11,6 +11,11 @@ namespace basecross {
 		GameStage_3,
 		GameStage_4,
 		GameStage_5,
+		GameStage_6,
+		GameStage_7,
+		GameStage_8,
+		GameStage_9,
+		GameStage_10,
 		End,
 		GameStage_Test
 	};
@@ -29,7 +34,7 @@ namespace basecross {
 		GoalCamStateNum m_GoalCameraStateNum;
 		//カメラのオフセット
 		Vec3 m_MyCamOffset = Vec3(0.0f, 40.0f, -7.0f); // MyCamera
-		Vec3 m_GoalCamOffset = Vec3(0.0f, 3.0f, -10.0f); // GoalCamera
+		Vec3 m_GoalCamOffset = Vec3(0.0f, 3.0f, -5.0f); // GoalCamera
 		// 現在のカメラの名前
 		wstring m_CameraName = L"";
 		wstring m_PlayerCameraState = L"";
@@ -67,9 +72,9 @@ namespace basecross {
 		bool m_FadeFlgChanged = false;
 
 		//ステージの数
-		int m_StageNumMax = 5;
+		int m_StageNumMax = 6;
 		//開放されたステージ
-		bool m_StageNumArray[5] = {true, true, true, true, true};
+		bool m_StageNumArray[6] = {true, true, true, true, true, true};
 		//現在のシーンの番号
 		int m_NowSceneNum = 0;
 		int m_LoadSceneNum = 0;
@@ -378,13 +383,23 @@ namespace basecross {
 		{
 			m_SelectingButtonNum = buttonNum;
 		}
+		//プラス
 		void SetSelectingButtonPlus()
 		{
 			m_SelectingButtonNum++;
 		}
+		void SetSelectingButtonPlus_5()
+		{
+			m_SelectingButtonNum += 5;
+		}
+		// マイナス
 		void SetSelectingButtonMinus()
 		{
 			m_SelectingButtonNum--;
+		}
+		void SetSelectingButtonMinus_5()
+		{
+			m_SelectingButtonNum -= 5;
 		}
 		// 現在のボタンの番号の最大値
 		int GetMaxButtonNum()

@@ -101,6 +101,11 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)GameStage5.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ReflectBullet.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ReflectEnemy.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)GameStage6.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)GameStage7.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)GameStage8.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)GameStage9.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)GameStage10.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)Character.cpp">
@@ -186,5 +191,10 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)GameStage5.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ReflectBullet.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ReflectEnemy.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)GameStage6.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)GameStage7.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)GameStage8.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)GameStage9.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)GameStage10.cpp" />
   </ItemGroup>
 </Project>

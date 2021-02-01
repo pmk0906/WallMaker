@@ -57,7 +57,27 @@ namespace basecross{
 			break;
 		case SceneNum::GameStage_5:
 			sceneKey = WstringKey::ToGameStage5;
-			gm->SetSceneNum(SceneNum::GameStage_4);
+			gm->SetSceneNum(SceneNum::GameStage_5);
+			break;
+		case SceneNum::GameStage_6:
+			sceneKey = WstringKey::ToGameStage6;
+			gm->SetSceneNum(SceneNum::GameStage_6);
+			break;
+		case SceneNum::GameStage_7:
+			sceneKey = WstringKey::ToGameStage7;
+			gm->SetSceneNum(SceneNum::GameStage_7);
+			break;
+		case SceneNum::GameStage_8:
+			sceneKey = WstringKey::ToGameStage8;
+			gm->SetSceneNum(SceneNum::GameStage_8);
+			break;
+		case SceneNum::GameStage_9:
+			sceneKey = WstringKey::ToGameStage9;
+			gm->SetSceneNum(SceneNum::GameStage_9);
+			break;
+		case SceneNum::GameStage_10:
+			sceneKey = WstringKey::ToGameStage10;
+			gm->SetSceneNum(SceneNum::GameStage_10);
 			break;
 		case SceneNum::GameStage_Test:
 			sceneKey = WstringKey::ToGameTestStage;
@@ -83,6 +103,11 @@ namespace basecross{
 		case SceneNum::GameStage_3:
 		case SceneNum::GameStage_4:
 		case SceneNum::GameStage_5:
+		case SceneNum::GameStage_6:
+		case SceneNum::GameStage_7:
+		case SceneNum::GameStage_8:
+		case SceneNum::GameStage_9:
+		case SceneNum::GameStage_10:
 		case SceneNum::GameStage_Test:
 			CreateFadeIn(L"WHITE_TX", Col4(1.0f, 1.0f, 1.0f, 1.0f));
 			break;
@@ -106,6 +131,11 @@ namespace basecross{
 		case SceneNum::GameStage_3:
 		case SceneNum::GameStage_4:
 		case SceneNum::GameStage_5:
+		case SceneNum::GameStage_6:
+		case SceneNum::GameStage_7:
+		case SceneNum::GameStage_8:
+		case SceneNum::GameStage_9:
+		case SceneNum::GameStage_10:
 		case SceneNum::GameStage_Test:
 			CreateFadeOut(L"WHITE_TX", Col4(1.0f, 1.0f, 1.0f, 0.0f));
 			break;
@@ -179,12 +209,37 @@ namespace basecross{
 					testFlg = false;
 				}
 			}
+			//Dパッド上
+			if (wButtons & XINPUT_GAMEPAD_DPAD_UP) {
+				if (4 < gm->GetSelectingButtonNum())
+				{
+					auto ptrXA = App::GetApp()->GetXAudio2Manager();
+					ptrXA->Start(WstringKey::SE_Cursol, 0, 1.0f);
+
+					gm->SetSelectingButtonMinus_5();
+				}
+			}
+			//Dパッド下
+			if (wButtons & XINPUT_GAMEPAD_DPAD_DOWN) {
+				if (gm->GetSelectingButtonNum() < 5)
+				{
+					auto ptrXA = App::GetApp()->GetXAudio2Manager();
+					ptrXA->Start(WstringKey::SE_Cursol, 0, 1.0f);
+
+					gm->SetSelectingButtonPlus_5();
+				}
+			}
 			break;
 		case SceneNum::GameStage_1:
 		case SceneNum::GameStage_2:
 		case SceneNum::GameStage_3:
 		case SceneNum::GameStage_4:
 		case SceneNum::GameStage_5:
+		case SceneNum::GameStage_6:
+		case SceneNum::GameStage_7:
+		case SceneNum::GameStage_8:
+		case SceneNum::GameStage_9:
+		case SceneNum::GameStage_10:
 		case SceneNum::GameStage_Test:
 			//Dパッド上
 			if (wButtons & XINPUT_GAMEPAD_DPAD_UP) {
@@ -244,14 +299,36 @@ namespace basecross{
 			auto ptrGameGtage = GetTypeStage<GameStage5>();
 			ptrGameGtage->ToPlayerCamera();
 		}
+		else if (stageNum == SceneNum::GameStage_6)
+		{
+			auto ptrGameGtage = GetTypeStage<GameStage6>();
+			ptrGameGtage->ToPlayerCamera();
+		}
+		else if (stageNum == SceneNum::GameStage_7)
+		{
+			auto ptrGameGtage = GetTypeStage<GameStage7>();
+			ptrGameGtage->ToPlayerCamera();
+		}
+		else if (stageNum == SceneNum::GameStage_8)
+		{
+			auto ptrGameGtage = GetTypeStage<GameStage8>();
+			ptrGameGtage->ToPlayerCamera();
+		}
+		else if (stageNum == SceneNum::GameStage_9)
+		{
+			auto ptrGameGtage = GetTypeStage<GameStage9>();
+			ptrGameGtage->ToPlayerCamera();
+		}
+		else if (stageNum == SceneNum::GameStage_10)
+		{
+			auto ptrGameGtage = GetTypeStage<GameStage10>();
+			ptrGameGtage->ToPlayerCamera();
+		}
 		else if (stageNum == SceneNum::GameStage_Test)
 		{
 			auto ptrGameGtage = GetTypeStage<TestStage>();
 			ptrGameGtage->ToPlayerCamera();
 		}
-
-		//auto testObj = GetStage()->GetSharedGameObject<TestObject>(WstringKey::ShareObj_TestObject);
-		//testObj->SetTestFlg(!testObj->GetTestFlg());
 	}
 
 	void GameManagement::StageEffect()
@@ -291,7 +368,6 @@ namespace basecross{
 
 	void GameManagement::TitleButton_A()
 	{
-		//LoadScene(SceneNum::StageSelect);
 		auto gm = GameManager::GetInstance();
 		if (gm->GetFadeFlgChanged() == true)
 		{
@@ -315,24 +391,34 @@ namespace basecross{
 			switch (selectingButtonNum)
 			{
 			case 0:
-				//LoadScene((int)SceneNum::GameStage_1);
 				gm->SetLoadSceneNum(SceneNum::GameStage_1);
 				break;
 			case 1:
-				//LoadScene((int)SceneNum::GameStage_2);
 				gm->SetLoadSceneNum(SceneNum::GameStage_2);
 				break;
 			case 2:
-				//LoadScene((int)SceneNum::GameStage_3);
 				gm->SetLoadSceneNum(SceneNum::GameStage_3);
 				break;
 			case 3:
-				//LoadScene((int)SceneNum::GameStage_4);
 				gm->SetLoadSceneNum(SceneNum::GameStage_4);
 				break;
 			case 4:
-				//LoadScene((int)SceneNum::GameStage_5);
 				gm->SetLoadSceneNum(SceneNum::GameStage_5);
+				break;
+			case 5:
+				gm->SetLoadSceneNum(SceneNum::GameStage_6);
+				break;
+			case 6:
+				gm->SetLoadSceneNum(SceneNum::GameStage_7);
+				break;
+			case 7:
+				gm->SetLoadSceneNum(SceneNum::GameStage_8);
+				break;
+			case 8:
+				gm->SetLoadSceneNum(SceneNum::GameStage_9);
+				break;
+			case 9:
+				gm->SetLoadSceneNum(SceneNum::GameStage_10);
 				break;
 			default:
 				break;
@@ -559,6 +645,9 @@ namespace basecross{
 		case (int)SceneNum::GameStage_5:
 			sceneNum += L"ゲームステージ５\n";
 			break;
+		case (int)SceneNum::GameStage_6:
+			sceneNum += L"ゲームステージ６\n";
+			break;
 		case (int)SceneNum::GameStage_Test:
 			sceneNum += L"テストステージ\n";
 			break;
@@ -583,11 +672,16 @@ namespace basecross{
 		switch (gm->GetSceneNum())
 		{
 		case (int)SceneNum::GameStage_1:
-			camName += gm->GetCameraName();
 		case (int)SceneNum::GameStage_2:
 		case (int)SceneNum::GameStage_3:
 		case (int)SceneNum::GameStage_4:
 		case (int)SceneNum::GameStage_5:
+		case (int)SceneNum::GameStage_6:
+		case (int)SceneNum::GameStage_7:
+		case (int)SceneNum::GameStage_8:
+		case (int)SceneNum::GameStage_9:
+		case (int)SceneNum::GameStage_10:
+			camName += gm->GetCameraName();
 			break;
 		default:
 			camName += L"なし\n";
@@ -598,11 +692,16 @@ namespace basecross{
 		switch (gm->GetSceneNum())
 		{
 		case (int)SceneNum::GameStage_1:
-			playerCamState += gm->GetPlayerCameraStateName();
 		case (int)SceneNum::GameStage_2:
 		case (int)SceneNum::GameStage_3:
 		case (int)SceneNum::GameStage_4:
 		case (int)SceneNum::GameStage_5:
+		case (int)SceneNum::GameStage_6:
+		case (int)SceneNum::GameStage_7:
+		case (int)SceneNum::GameStage_8:
+		case (int)SceneNum::GameStage_9:
+		case (int)SceneNum::GameStage_10:
+			playerCamState += gm->GetPlayerCameraStateName();
 			break;
 		default:
 			playerCamState += L"なし\n";
@@ -644,6 +743,11 @@ namespace basecross{
 		case (int)SceneNum::GameStage_3:
 		case (int)SceneNum::GameStage_4:
 		case (int)SceneNum::GameStage_5:
+		case (int)SceneNum::GameStage_6:
+		case (int)SceneNum::GameStage_7:
+		case (int)SceneNum::GameStage_8:
+		case (int)SceneNum::GameStage_9:
+		case (int)SceneNum::GameStage_10:
 		case(int)SceneNum::GameStage_Test:
 			GameStageButton_A();
 			break;
@@ -668,6 +772,11 @@ namespace basecross{
 		case (int)SceneNum::GameStage_3:
 		case (int)SceneNum::GameStage_4:
 		case (int)SceneNum::GameStage_5:
+		case (int)SceneNum::GameStage_6:
+		case (int)SceneNum::GameStage_7:
+		case (int)SceneNum::GameStage_8:
+		case (int)SceneNum::GameStage_9:
+		case (int)SceneNum::GameStage_10:
 			GameStageButton_B();
 			break;
 		default:
@@ -688,6 +797,11 @@ namespace basecross{
 		case (int)SceneNum::GameStage_3:
 		case (int)SceneNum::GameStage_4:
 		case (int)SceneNum::GameStage_5:
+		case (int)SceneNum::GameStage_6:
+		case (int)SceneNum::GameStage_7:
+		case (int)SceneNum::GameStage_8:
+		case (int)SceneNum::GameStage_9:
+		case (int)SceneNum::GameStage_10:
 			GameStageButton_Start();
 			break;
 		default:

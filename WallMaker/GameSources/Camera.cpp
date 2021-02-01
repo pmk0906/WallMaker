@@ -59,6 +59,36 @@ namespace basecross{
 			auto ptrGameGtage = GetTypeStage<GameStage5>();
 			ptrGameGtage->ToMyCamera();
 		}
+		else if (stageNum == SceneNum::GameStage_6)
+		{
+			auto ptrGameGtage = GetTypeStage<GameStage6>();
+			ptrGameGtage->ToMyCamera();
+		}
+		else if (stageNum == SceneNum::GameStage_6)
+		{
+			auto ptrGameGtage = GetTypeStage<GameStage6>();
+			ptrGameGtage->ToMyCamera();
+		}
+		else if (stageNum == SceneNum::GameStage_7)
+		{
+			auto ptrGameGtage = GetTypeStage<GameStage7>();
+			ptrGameGtage->ToMyCamera();
+		}
+		else if (stageNum == SceneNum::GameStage_8)
+		{
+			auto ptrGameGtage = GetTypeStage<GameStage8>();
+			ptrGameGtage->ToMyCamera();
+		}
+		else if (stageNum == SceneNum::GameStage_9)
+		{
+			auto ptrGameGtage = GetTypeStage<GameStage9>();
+			ptrGameGtage->ToMyCamera();
+		}
+		else if (stageNum == SceneNum::GameStage_10)
+		{
+			auto ptrGameGtage = GetTypeStage<GameStage10>();
+			ptrGameGtage->ToMyCamera();
+		}
 		else if (stageNum == SceneNum::GameStage_Test)
 		{
 			auto ptrGameGtage = GetTypeStage<TestStage>();
@@ -230,7 +260,7 @@ namespace basecross{
 					auto otherPos = obj->GetComponent<Transform>()->GetPosition();
 					auto len = playerPos - otherPos;
 
-					if (len.length() <= 8.0f)
+					if (len.length() <= 6.0f)
 					{
 						obj->SetDrawActive(false);
 					}

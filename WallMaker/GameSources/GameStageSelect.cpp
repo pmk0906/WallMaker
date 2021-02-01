@@ -33,11 +33,18 @@ namespace basecross{
 
 		AddGameObject<Sprite>(true, Vec2(600, 150), Vec2(0, 250), L"STAGESELECT_TX", 1, Col4(1.0f, 1.0f, 1.0f, 1.0f));
 
-		auto buttonSprite  = AddGameObject<ButtonSprite>(true, Vec2(150, 150), Vec2(-400, 50.0f), true, 1.0f, L"STAGE_1_TX", 0, 2, Col4(1, 1, 1, 0.5f));
-		auto buttonSprite2 = AddGameObject<ButtonSprite>(true, Vec2(150, 150), Vec2(-200, 50.0f), true, 1.0f, L"STAGE_2_TX", 1, 2, Col4(1, 1, 1, 0.5f));
-		auto buttonSprite3 = AddGameObject<ButtonSprite>(true, Vec2(150, 150), Vec2(0, 50.0f),    true, 1.0f, L"STAGE_3_TX", 2, 2, Col4(1, 1, 1, 0.5f));
-		auto buttonSprite4 = AddGameObject<ButtonSprite>(true, Vec2(150, 150), Vec2(200, 50.0f),  true, 1.0f, L"STAGE_4_TX", 3, 2, Col4(1, 1, 1, 0.5f));
-		auto buttonSprite5 = AddGameObject<ButtonSprite>(true, Vec2(150, 150), Vec2(400, 50.0f),  true, 1.0f, L"STAGE_5_LOCK_TX", 4, 2, Col4(1, 1, 1, 0.5f));
+		auto buttonSprite   = AddGameObject<ButtonSprite>(true, Vec2(150, 150), Vec2(-400,   50.0f), true, 1.0f, L"STAGE_1_TX",  0, 2, Col4(1, 1, 1, 0.5f));
+		auto buttonSprite2  = AddGameObject<ButtonSprite>(true, Vec2(150, 150), Vec2(-200,   50.0f), true, 1.0f, L"STAGE_2_TX",  1, 2, Col4(1, 1, 1, 0.5f));
+		auto buttonSprite3  = AddGameObject<ButtonSprite>(true, Vec2(150, 150), Vec2(   0,   50.0f), true, 1.0f, L"STAGE_3_TX",  2, 2, Col4(1, 1, 1, 0.5f));
+		auto buttonSprite4  = AddGameObject<ButtonSprite>(true, Vec2(150, 150), Vec2( 200,   50.0f), true, 1.0f, L"STAGE_4_TX",  3, 2, Col4(1, 1, 1, 0.5f));
+		auto buttonSprite5  = AddGameObject<ButtonSprite>(true, Vec2(150, 150), Vec2( 400,   50.0f), true, 1.0f, L"STAGE_5_TX",  4, 2, Col4(1, 1, 1, 0.5f));
+
+		auto buttonSprite6  = AddGameObject<ButtonSprite>(true, Vec2(150, 150), Vec2(-400, -150.0f), true, 1.0f, L"STAGE_6_TX",  5, 2, Col4(1, 1, 1, 0.5f));
+		auto buttonSprite7  = AddGameObject<ButtonSprite>(true, Vec2(150, 150), Vec2(-200, -150.0f), true, 1.0f, L"STAGE_7_TX",  6, 2, Col4(1, 1, 1, 0.5f));
+		auto buttonSprite8  = AddGameObject<ButtonSprite>(true, Vec2(150, 150), Vec2(   0, -150.0f), true, 1.0f, L"STAGE_8_TX",  7, 2, Col4(1, 1, 1, 0.5f));
+		auto buttonSprite9  = AddGameObject<ButtonSprite>(true, Vec2(150, 150), Vec2( 200, -150.0f), true, 1.0f, L"STAGE_9_TX",  8, 2, Col4(1, 1, 1, 0.5f));
+		auto buttonSprite10 = AddGameObject<ButtonSprite>(true, Vec2(150, 150), Vec2( 400, -150.0f), true, 1.0f, L"STAGE_10_TX", 9, 2, Col4(1, 1, 1, 0.5f));
+
 
 	}
 
@@ -56,7 +63,7 @@ namespace basecross{
 
 		auto gm = GameManager::GetInstance();
 		gm->InitGameManager();
-		gm->SetMaxButtonNum(4);
+		gm->SetMaxButtonNum(9);
 	}
 
 	void GameStageSelect::OnUpdate()

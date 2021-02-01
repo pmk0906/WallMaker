@@ -30,9 +30,9 @@ namespace basecross {
 		CameraSelect_Stage3 m_CameraSelect;
 
 		//ステージの奥行
-		const int STAGE_LENGTH = 16;
+		const int STAGE_LENGTH = 24;
 		//ステージの横幅
-		const int STAGE_WIDTH = 32;
+		const int STAGE_WIDTH = 16;
 
 		shared_ptr<SoundItem> m_BGM;
 

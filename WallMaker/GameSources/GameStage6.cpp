@@ -1,5 +1,5 @@
 /*!
-@file GameStage.cpp
+@file GameStage6.cpp
 @brief ゲームステージ実体
 */
 
@@ -11,7 +11,7 @@ namespace basecross {
 	//--------------------------------------------------------------------------------------
 	//	ゲームステージクラス実体
 	//--------------------------------------------------------------------------------------
-	void GameStage::CreateViewLight()
+	void GameStage6::CreateViewLight()
 	{
 		const Vec3 eye(0.0f, 30.0f, -20.0f);
 		const Vec3 at(0.0f);
@@ -33,55 +33,42 @@ namespace basecross {
 
 		//初期状態ではm_OpeningCameraViewを使う
 		SetView(m_OpeningCameraView);
-		m_CameraSelect = CameraSelect_Stage1::openingCamera;
+		m_CameraSelect = CameraSelect_Stage6::openingCamera;
 		//マルチライトの作成
 		auto PtrMultiLight = CreateLight<MultiLight>();
 		//デフォルトのライティングを指定
 		PtrMultiLight->SetDefaultLighting();
 	}
 
-	void GameStage::CreateWall()
+	void GameStage6::CreateWall()
 	{
-		int mapRows = 16;
-		int mapCols = 32;
+		int mapRows = 20;
+		int mapCols = 28;
 
 		auto map = new int[mapRows * mapCols];
 
 		const int mapData[] =
 		{
-			//1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ,1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-			//1,47,48,48,48,48,48,48,48,48,48,48,48,48,49, 1, 1, 1,47,48,48,48,48,48,48,48,48,48,48,48,49, 1,
-			//1,44, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,49, 1,47 ,3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3,46, 1,
-			//1,44, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0,46, 1,44, 0, 0, 0,42,42,42,42, 0, 0, 0, 0, 0,46, 1,
-			//1,41,42,42,42,42,42, 0, 0, 0, 0, 0, 0, 0, 0,46, 1,44, 0, 0,46, 1, 1, 1, 1,41, 0, 0, 0, 0,46, 1,
-			//1, 1, 1, 1, 1, 1, 1,44, 0, 0, 0, 0, 0, 0, 0,46, 1,44, 0, 0, 0,48,48,48,49, 1,44, 0, 0, 0,46, 1,
-			//1,47,48,48,48,48,48, 0, 0, 0, 0, 0, 0, 0, 0,46, 1,44, 0, 0, 0, 0, 0, 0,46, 1,41, 0, 0, 0,46, 1,
-			//1,44, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,46, 1,44, 0, 0, 0, 0, 3, 0, 0,49, 1,44, 0, 0,46, 1,
-			//1,44, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,46, 1,41, 0, 0, 0, 0, 0, 0, 0,46, 1,44, 0, 3,46, 1,
-			//1,44, 0, 0, 0, 0, 0, 0, 0,42,42,42,42,42,42,43, 1, 1,41,42,42,42, 0, 0, 0,46, 1,44, 0, 0,46, 1,
-			//1,44, 0, 0, 0, 0, 0, 0,46, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,44, 0, 0,46, 1,44, 0, 0,46, 1,
-			//1,44, 0, 0, 0, 0, 0, 0, 0,48,48,48,48,48,48,48,48,48,48,48,48,48, 0, 0, 0,46, 1,44, 0, 0,46, 1,
-			//1,44, 0, 5, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0,46, 1,44, 6, 0,46, 1,
-			//1,44, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,46, 1,44, 0, 2,46, 1,
-			//1,41,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,43, 1,41,42,42,43, 1,
-			//1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1
-
-			1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ,1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-			1,47,48,48,48,49, 1,47,48,48,48,48,48,48,48,49, 1,47,48,48,48,48,48,48,48,49, 1,47,48,48,49, 1,
-			1,44, 0, 3, 0,46, 1,44, 0, 0, 0, 0, 0, 0,74,46, 1,44 ,0, 0, 0, 0, 0, 0, 0,46, 1,44, 0,72,46, 1,
-			1,44, 0, 0, 0,46, 1,44, 0, 0, 0, 0, 0, 0, 0,46, 1,44, 0, 0, 0, 0,42, 0, 0,46, 1,44, 0, 0,46, 1,
-			1,44, 0, 0, 0, 0,48, 0, 0, 0, 0, 0, 0, 0, 0,46, 1,44, 0, 0, 0,46, 1, 8, 8, 8, 1,44, 0, 0,46, 1,
-			1,44, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3,46, 1,44, 0, 6, 0,46, 1,44, 0, 0,48, 0, 0, 0,46, 1,
-			1,44, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,46, 1,44, 0, 0, 0,46, 1,44, 0, 0, 0, 0, 3, 0,46, 1,
-			1,44, 0, 0, 0, 0,42,42, 0, 0, 0, 0, 0, 0,42,43, 1,41,42,42,42,43, 1,41, 0, 0, 0, 0, 0, 0,46, 1,
-			1,44, 0, 0, 0,46, 1, 1, 8, 8, 8, 8, 8, 8, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,44, 0, 0, 0, 0, 0,46, 1,
-			1,44, 0, 0, 0,46, 1, 1, 8, 8, 8, 8, 8, 8, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,41,42,42, 0, 0, 0,46, 1,
-			1,44, 0, 0, 0,46, 1,47, 0, 0, 0, 0, 0,46, 1,47,48,48,48,48,48,48,49, 1, 1, 1, 1,44, 0, 0,46, 1,
-			1,44, 0, 0, 0,46, 1,44, 0, 0, 0, 0, 0,46, 1,44,42, 0, 0, 0, 0, 0,46, 1,47,48,48, 0, 0, 0,46, 1,
-			1,44, 0, 2, 0,46, 1,44, 0, 0, 0, 0, 0, 0, 0,46, 1,44, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,46, 1,
-			1,44, 0, 0, 0,46, 1,44, 3, 0, 0, 0, 0,46, 1,44,48, 0, 0, 0, 0,12,46, 1,44, 0, 0, 0, 0, 0,46, 1,
-			1,41,42,42,42,43, 1,41,42,42,42,42,42,43, 1,41,42,42,42,42,42,42,43, 1,41,42,42,42,42,42,43, 1,
-			1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1
+			001,001,001,001,001,001,001,001,001,001,001,001,001,001,001,001,001,001,001,001,001,001,001,001,001,001,001,001,
+			001,047, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 49,001,
+			001,044,000,000,000,000,000,003,000,000,000,000,000,000,000,042,000,000,003,000,000,000,000,042,000,000,046,001,
+			001,044,003,000,042,000,000,000,000,000,000,000,003,000,046,001,044,000,042,042,000,000,046,001,044,000,046,001,
+			001,044,000,046,001,044,000,000,042,000,000,042,042,042,000, 48,000,046,001,001,044,000,003, 48,000,000,046,001,
+			001,044,000,000, 48,000,000,046,001,044,046,001,001,001,044,000,000,000, 48, 48,000,000,000,000,000,000,046,001,
+			001,041,000,042,042,000,000,046,001,044,000, 48, 48, 48,000,000,042,000,000,000,000,000,000,042,042,000,043,001,
+			001,001,000,001,001,044,003,046,001,044,000,000,000,000,005,046,001,044,000,000,000,000,046,001,001,000,001,001,
+			001,000,000,000,001,044,000,000, 48,000,000,000,042,000,000,046,001,044,000,003,042,000,046,001,000,000,000,001,
+			001,000,002,000,001,044,000,000,000,000,000,046,001,044,000,046,001,044,000,046,001,044,046,001,000,006,000,001,
+			001,000,000,000,001,044,000,000,000,003,000,046,001,044,000,046,001,044,000,046,001,044,046,001,000,000,000,001,
+			001,000,000,000,001,044,000,000,042,000,000,000, 48,000,000,046,001,044,000,000, 48,000,046,001,000,000,000,001,
+			001,001,000,001,001,044,005,046,001,044,000,000,000,000,003,046,001,044,000,003,000,000,046,001,001,000,001,001,
+			001,047,000, 48, 48,000,000,046,001,044,000,042,042,042,000,000, 48,000,000,000,000,000,000, 48, 48,000, 49,001,
+			001,044,000,000,042,000,000,046,001,044,046,001,001,001,044,000,000,000,042,042,000,000,000,000,000,000,046,001,
+			001,044,000,046,001,044,000,000, 48,000,000, 48, 48, 48,000,042,000,046,001,001,044,000,  9,042,000,000,046,001,
+			001,044,  9,000, 48,000,000,000,000,000,000,000,005,000,046,001,044,000, 48, 48,000,000,046,001,044,000,046,001,
+			001,044,000,000,000,000,000,005,000,000,000,000,000,000,000, 48,000,000,005,000,000,000,000, 48,000,000,046,001,
+			001,041,042,042,042,042,042,042,042,042,042,042,042,042,042,042,042,042,042,042,042,042,042,042,042,042,043,001,
+			001,001,001,001,001,001,001,001,001,001,001,001,001,001,001,001,001,001,001,001,001,001,001,001,001,001,001,001,
 		};
 
 		memcpy(map, mapData, sizeof(int) * mapRows * mapCols);
@@ -95,7 +82,12 @@ namespace basecross {
 				case 0:
 					break;
 				case 1: // 普通の壁
+					//AddGameObject<StageWall>(Vec3(3.0f, 3.0f, 3.0f), Vec3(0.0f), Vec3(pos.x, 1.5f, pos.z)); // 一段
 					AddGameObject<StageWall>(Vec3(3.0f, 6.0f, 3.0f), Vec3(0.0f), Vec3(pos.x, 3.0f, pos.z)); // 二段
+					//AddGameObject<StageWall>(Vec3(3.0f, 9.0f, 3.0f), Vec3(0.0f), Vec3(pos.x, 4.5f, pos.z)); // 三段
+
+					//AddGameObject<StageWall>(Vec3(3.0f, 3.0f, 3.0f), Vec3(0.0f), Vec3(pos.x, 1.5f, pos.z)); // 二段
+					//AddGameObject<StageWall>(Vec3(3.0f, 3.0f, 3.0f), Vec3(0.0f), Vec3(pos.x, 4.5f, pos.z)); // 二段
 					break;
 				case 2: // プレイヤー生成
 					CreatePlayer(pos);
@@ -108,24 +100,24 @@ namespace basecross {
 					AddGameObject<RapidFireEnemy>(Vec3(2.0f, 1.0f, 3.5f), Vec3(0.0f), Vec3(pos.x, 1.5f, pos.z));
 					break;
 					// 反射壁(テンキーの配置参照)
-				case 41:
+				case 041:
 					AddGameObject<StageRefrectWall>(Vec3(scale), Vec3(0.0f, XMConvertToRadians(90.0f), 0.0f), Vec3(pos.x - 1.3f, 1.5f, pos.z));
 					AddGameObject<StageRefrectWall>(Vec3(scale), Vec3(0.0f), Vec3(pos.x, 1.5f, pos.z - 1.3f));
 					break;
-				case 42:
+				case 042:
 					AddGameObject<StageRefrectWall>(Vec3(scale), Vec3(0.0f), Vec3(pos.x, 1.5f, pos.z - 1.3f));
 					break;
-				case 43:
+				case 043:
 					AddGameObject<StageRefrectWall>(Vec3(scale), Vec3(0.0f, XMConvertToRadians(90.0f), 0.0f), Vec3(pos.x + 1.3f, 1.5f, pos.z));
 					AddGameObject<StageRefrectWall>(Vec3(scale), Vec3(0.0f), Vec3(pos.x, 1.5f, pos.z - 1.3f));
 					break;
-				case 44:
+				case 044:
 					AddGameObject<StageRefrectWall>(Vec3(scale), Vec3(0.0f, XMConvertToRadians(90.0f), 0.0f), Vec3(pos.x - 1.3f, 1.5f, pos.z));
 					break;
-				case 46:
+				case 046:
 					AddGameObject<StageRefrectWall>(Vec3(scale), Vec3(0.0f, XMConvertToRadians(90.0f), 0.0f), Vec3(pos.x + 1.3f, 1.5f, pos.z));
 					break;
-				case 47:
+				case 047:
 					AddGameObject<StageRefrectWall>(Vec3(scale), Vec3(0.0f, XMConvertToRadians(90.0f), 0.0f), Vec3(pos.x - 1.3f, 1.5f, pos.z));
 					AddGameObject<StageRefrectWall>(Vec3(scale), Vec3(0.0f), Vec3(pos.x, 1.5f, pos.z + 1.3f));
 					break;
@@ -136,13 +128,21 @@ namespace basecross {
 					AddGameObject<StageRefrectWall>(Vec3(scale), Vec3(0.0f, XMConvertToRadians(90.0f), 0.0f), Vec3(pos.x + 1.3f, 1.5f, pos.z));
 					AddGameObject<StageRefrectWall>(Vec3(scale), Vec3(0.0f), Vec3(pos.x, 1.5f, pos.z + 1.3f));
 					break;
-				case 72:
+				case 441:
+					AddGameObject<StageRefrectWall>(Vec3(scale), Vec3(0.0f), Vec3(pos.x, 1.5f, pos.z - 1.3f));
+					AddGameObject<StageRefrectWall>(Vec3(scale), Vec3(0.0f), Vec3(pos.x, 1.5f, pos.z + 1.3f));
+					break;
+				case 442:
+					AddGameObject<StageRefrectWall>(Vec3(scale), Vec3(0.0f, XMConvertToRadians(90.0f), 0.0f), Vec3(pos.x - 1.3f, 1.5f, pos.z));
+					AddGameObject<StageRefrectWall>(Vec3(scale), Vec3(0.0f, XMConvertToRadians(90.0f), 0.0f), Vec3(pos.x + 1.3f, 1.5f, pos.z));
+					break;
+				case 072:
 					AddGameObject<Cannon>(Vec3(2.0f, 3.0f, 2.0f), Vec3(0.0f, XMConvertToRadians(180.0f), 0.0f), Vec3(pos.x, 1.5f, pos.z));
 					break;
-				case 74:
+				case 074:
 					AddGameObject<Cannon>(Vec3(2.0f, 3.0f, 2.0f), Vec3(0.0f, XMConvertToRadians(270.0f), 0.0f), Vec3(pos.x, 1.5f, pos.z));
 					break;
-				case 76:
+				case 076:
 					AddGameObject<Cannon>(Vec3(2.0f, 3.0f, 2.0f), Vec3(0.0f, XMConvertToRadians(90.0f), 0.0f), Vec3(pos.x, 1.5f, pos.z));
 					break;
 				case 78:
@@ -166,9 +166,6 @@ namespace basecross {
 					AddGameObject<PatrolEnemyUPDown>(Vec3(2.0f, 1.0f, 3.5f), Vec3(0.0f, XMConvertToRadians(270), 0.0f),
 						Vec3(pos.x, 1.5f, pos.z));
 					break;
-				case 13:
-					AddGameObject<MoveEnableReflectBlock>(Vec3(2.0f, 3.0f, 2.0f), Vec3(0.0f), Vec3(pos.x, 1.5f, pos.z));
-					break;
 				default:
 					break;
 				}
@@ -181,12 +178,12 @@ namespace basecross {
 		}
 	}
 
-	void GameStage::DrawStrings()
+	void GameStage6::DrawStrings()
 	{
 
 	}
 
-	void GameStage::OnCreate()
+	void GameStage6::OnCreate()
 	{
 		try {
 			//ビューとライトの作成
@@ -207,7 +204,7 @@ namespace basecross {
 
 		auto gm = GameManager::GetInstance();
 		gm->InitGameManager();
-		gm->SetSceneNum(SceneNum::GameStage_1);
+		gm->SetSceneNum(SceneNum::GameStage_6);
 
 		//BGM
 		auto ptrXA = App::GetApp()->GetXAudio2Manager();
@@ -219,7 +216,7 @@ namespace basecross {
 		SetSharedGameObject(WstringKey::ShareObj_TestObject, testObj);
 	}
 
-	void GameStage::OnUpdate()
+	void GameStage6::OnUpdate()
 	{
 		auto gm = GameManager::GetInstance();
 		gm->ClearCheck(GetThis<Stage>());
@@ -268,13 +265,13 @@ namespace basecross {
 		gm->SetCameraName(GetCameraSelectName());
 	}
 
-	void GameStage::OnUpdate2()
+	void GameStage6::OnUpdate2()
 	{
 		auto testObj = GetSharedGameObject<TestObject>(WstringKey::ShareObj_TestObject);
 		testObj->SetCamName(GetCameraSelectName());
 	}
 
-	void GameStage::CreateStage()
+	void GameStage6::CreateStage()
 	{
 		// 床
 		float posX = 0.0f;
@@ -282,7 +279,7 @@ namespace basecross {
 		Vec3 stagePos = Vec3(posX, 0, posZ);
 		for (int l = 0; l < STAGE_LENGTH / 4; l++) {
 			for (int w = 0; w < STAGE_WIDTH / 4; w++) {
-				AddGameObject<Floor>(Vec3(12.0f, 1.0f, 12.0f), Vec3(0.0f), Vec3(w * 12 - STAGE_LENGTH - 12.0f, -0.5f, l * 12 - STAGE_WIDTH + 9));
+				AddGameObject<Floor>(Vec3(12.0f, 1.0f, 12.0f), Vec3(0.0f), Vec3(w * 12 - STAGE_WIDTH + 4.5f, -0.5f, l * 12 - STAGE_LENGTH - 12.5f));
 			}
 		}
 		//床一枚のみ
@@ -292,7 +289,7 @@ namespace basecross {
 
 	}
 
-	void GameStage::CreateEnemy()
+	void GameStage6::CreateEnemy()
 	{
 		////敵①
 		//AddGameObject<EnemyFirst>(Vec3(2.0f, 1.0f, 3.5f), Vec3(0.0f), Vec3(-5.0f, 1.5f, 0.0f));
@@ -315,14 +312,14 @@ namespace basecross {
 		//AddGameObject<Cannon>(Vec3(2.0f, 1.0f, 3.5f), Vec3(0.0f), Vec3(-5.0f, 1.5f, -3.0f));
 	}
 
-	void GameStage::CreatePlayer(Vec3 pos)
+	void GameStage6::CreatePlayer(Vec3 pos)
 	{
 		auto player = AddGameObject<Player>(Vec3(1.5f), Vec3(0.0f), Vec3(pos.x, 2.0f, pos.z));
 		SetSharedGameObject(WstringKey::ShareObj_Player, player);
 
 	}
 
-	void GameStage::CreateUI()
+	void GameStage6::CreateUI()
 	{
 		//プレイヤーのライフ表示
 		AddGameObject<PlayerLife>(true, Vec2(70.0f), Vec3(-469.0f, 336.0f, 0.1f), 1.0f);
@@ -342,7 +339,7 @@ namespace basecross {
 	}
 
 	//カメラマンの作成
-	void GameStage::CreateCameraman()
+	void GameStage6::CreateCameraman()
 	{
 		// オープニングカメラを登録
 		auto ptrOpeningCameraman = AddGameObject<OpeningCameraman>();
@@ -358,7 +355,7 @@ namespace basecross {
 		if (ptrOpeningCamera) {
 			ptrOpeningCamera->SetCameraObject(ptrOpeningCameraman);
 			SetView(m_OpeningCameraView);
-			m_CameraSelect = CameraSelect_Stage1::openingCamera;
+			m_CameraSelect = CameraSelect_Stage6::openingCamera;
 		}
 
 		// ゴールカメラを登録
@@ -367,7 +364,7 @@ namespace basecross {
 		SetSharedGameObject(WstringKey::ShareObj_PlayerCameraman, ptrPlayerCameraman);
 	}
 
-	void GameStage::CreateClearButton()
+	void GameStage6::CreateClearButton()
 	{
 		auto gm = GameManager::GetInstance();
 
@@ -387,7 +384,7 @@ namespace basecross {
 		gm->SetSelectingButton(0);
 	}
 
-	void GameStage::CreateGameOverButton()
+	void GameStage6::CreateGameOverButton()
 	{
 		auto gm = GameManager::GetInstance();
 
@@ -407,7 +404,7 @@ namespace basecross {
 		gm->SetSelectingButton(0);
 	}
 
-	void GameStage::CreateSpriteAndButton()
+	void GameStage6::CreateSpriteAndButton()
 	{
 		WhiteSprite = AddGameObject<FadeSprite>(true, Vec2(1120, 630), Vec2(0, 0), true, 0.5f, 0.0f, L"WHITE_TX", 1, Col4(1, 1, 1, 0.5f));
 		WhiteSprite->SetDrawActive(false);
@@ -426,7 +423,7 @@ namespace basecross {
 		m_Button3->SetUpdateActive(false);
 	}
 
-	void GameStage::SwitchPoseButton(bool poseFlg)
+	void GameStage6::SwitchPoseButton(bool poseFlg)
 	{
 		auto gm = GameManager::GetInstance();
 
@@ -462,13 +459,13 @@ namespace basecross {
 		gm->SetMaxButtonNum(2);
 	}
 
-	void GameStage::StopBGM()
+	void GameStage6::StopBGM()
 	{
 		auto ptrXA = App::GetApp()->GetXAudio2Manager();
 		ptrXA->Stop(m_BGM);
 	}
 
-	void GameStage::ChangeBGM(wstring bgmKey)
+	void GameStage6::ChangeBGM(wstring bgmKey)
 	{
 		if (GetBgmName() != bgmKey)
 		{
@@ -480,21 +477,21 @@ namespace basecross {
 		}
 	}
 
-	void GameStage::SetBgmName(wstring bgmName)
+	void GameStage6::SetBgmName(wstring bgmName)
 	{
 		m_BgmName = bgmName;
 	}
 
-	wstring GameStage::GetBgmName()
+	wstring GameStage6::GetBgmName()
 	{
 		return m_BgmName;
 	}
 
-	void GameStage::ToMyCamera() {
+	void GameStage6::ToMyCamera() {
 		auto gm = GameManager::GetInstance();
 
 		//MyCameraに変更
-		if (m_CameraSelect == CameraSelect_Stage1::openingCamera)
+		if (m_CameraSelect == CameraSelect_Stage6::openingCamera)
 		{
 			auto ptrPlayer = GetSharedGameObject<Player>(WstringKey::ShareObj_Player);
 			auto ptrMyCamera = dynamic_pointer_cast<MyCamera>(m_MyCameraView->GetCamera());
@@ -506,16 +503,16 @@ namespace basecross {
 
 				//m_MyCameraViewを使う
 				SetView(m_MyCameraView);
-				m_CameraSelect = CameraSelect_Stage1::myCamera;
+				m_CameraSelect = CameraSelect_Stage6::myCamera;
 			}
 		}
 	}
 
-	void GameStage::ToPlayerCamera() {
+	void GameStage6::ToPlayerCamera() {
 		auto gm = GameManager::GetInstance();
 
 		//MyCameraに変更
-		if (m_CameraSelect == CameraSelect_Stage1::openingCamera)
+		if (m_CameraSelect == CameraSelect_Stage6::openingCamera)
 		{
 			auto ptrPlayer = GetSharedGameObject<Player>(WstringKey::ShareObj_Player);
 			auto ptrPlayerCamera = dynamic_pointer_cast<PlayerCamera>(m_PlayerCameraView->GetCamera());
@@ -523,14 +520,14 @@ namespace basecross {
 
 				//m_MyCameraViewを使う
 				SetView(m_PlayerCameraView);
-				m_CameraSelect = CameraSelect_Stage1::playerCamera;
+				m_CameraSelect = CameraSelect_Stage6::playerCamera;
 			}
 		}
 	}
 
-	void GameStage::ToGoalCamera() {
+	void GameStage6::ToGoalCamera() {
 		//GoalCameraに変更
-		if (m_CameraSelect == CameraSelect_Stage1::myCamera)
+		if (m_CameraSelect == CameraSelect_Stage6::myCamera)
 		{
 			auto ptrGoalCam = GetSharedGameObject<GoalCameraman>(WstringKey::ShareObj_GoalCameraman);
 			auto ptrGoalCamera = dynamic_pointer_cast<GoalCamera>(m_GoalCameraView->GetCamera());
@@ -555,27 +552,27 @@ namespace basecross {
 
 				//m_GoalCameraViewを使う
 				SetView(m_GoalCameraView);
-				m_CameraSelect = CameraSelect_Stage1::goalCamera;
+				m_CameraSelect = CameraSelect_Stage6::goalCamera;
 			}
 		}
 	}
 
-	wstring GameStage::GetCameraSelectName()
+	wstring GameStage6::GetCameraSelectName()
 	{
 		wstring camName = L"";
-		if (m_CameraSelect == CameraSelect_Stage1::openingCamera)
+		if (m_CameraSelect == CameraSelect_Stage6::openingCamera)
 		{
 			camName = L"OpeningCamera\n";
 		}
-		else if (m_CameraSelect == CameraSelect_Stage1::myCamera)
+		else if (m_CameraSelect == CameraSelect_Stage6::myCamera)
 		{
 			camName = L"MyCamera\n";
 		}
-		else if (m_CameraSelect == CameraSelect_Stage1::goalCamera)
+		else if (m_CameraSelect == CameraSelect_Stage6::goalCamera)
 		{
 			camName = L"GoalCamera\n";
 		}
-		else if (m_CameraSelect == CameraSelect_Stage1::playerCamera)
+		else if (m_CameraSelect == CameraSelect_Stage6::playerCamera)
 		{
 			camName = L"PlayerCamera\n";
 		}

@@ -49,7 +49,7 @@ namespace basecross{
 		Pairs txPairs[] =
 		{
 			//タイトル
-			{L"TITLEL_LOGO_TX", L"Title_Ver2.png"},
+			{L"TITLEL_LOGO_TX", L"Title_Ver3.png"},
 			{L"TITLE_BACK", L"Title_Back.png"},
 			// ステージのテクスチャ
 			{L"TRACE_TX", L"trace.png"},
@@ -95,6 +95,11 @@ namespace basecross{
 			{L"STAGE_4_LOCK_TX", L"LockSelect_4.png"},
 			{L"STAGE_5_TX", L"Select_5.png"},
 			{L"STAGE_5_LOCK_TX", L"LockSelect_5.png"},
+			{L"STAGE_6_TX", L"Select_6.png"},
+			{L"STAGE_7_TX", L"Select_7.png"},
+			{L"STAGE_8_TX", L"Select_8.png"},
+			{L"STAGE_9_TX", L"Select_9.png"},
+			{L"STAGE_10_TX", L"Select_10.png"},
 			//文字
 			{L"GAMECLEAR_TX", L"Tx_GameClear.png"},
 			{L"GAMEOVER_TX", L"Tx_GameOver.png"},
@@ -168,6 +173,7 @@ namespace basecross{
 			{L"BGM_GameOver", L"GameOverBGM.wav"},
 			{L"SE_GameTitle", L"GameTitle.wav"},
 			{L"SE_GameSelect", L"GameSelect.wav"},
+			{L"SE_WallRecovery", L"WallRecovery.wav"},
 			{WstringKey::SE_BreakStageWall, L"BreakStageWall2.wav"},
 			{L"SE_ENTER", L"Enter.wav"},
 			{L"SE_CANCEL", L"Cancel.wav"},
@@ -176,7 +182,8 @@ namespace basecross{
 			{L"SE_BULLET_ORANGE",L"power2.wav"},
 			{L"SE_BULLET_YELLOW",L"power3.wav"},
 			{L"SE_BULLET_GREEN",L"power4.wav"},
-			{L"SE_BULLET_BLUE",L"power5.wav"}
+			{L"SE_BULLET_BLUE",L"power5.wav"},
+			{L"SE_EXCLUSION", L"Exclusion.wav"},
 		};
 
 		// テクスチャ
@@ -265,6 +272,21 @@ namespace basecross{
 		}
 		else if (event->m_MsgStr == WstringKey::ToGameStage5) {
 			ResetActiveStage<GameStage5>();
+		}
+		else if (event->m_MsgStr == WstringKey::ToGameStage6) {
+			ResetActiveStage<GameStage6>();
+		}
+		else if (event->m_MsgStr == WstringKey::ToGameStage7) {
+			ResetActiveStage<GameStage7>();
+		}
+		else if (event->m_MsgStr == WstringKey::ToGameStage8) {
+			ResetActiveStage<GameStage8>();
+		}
+		else if (event->m_MsgStr == WstringKey::ToGameStage9) {
+			ResetActiveStage<GameStage9>();
+		}
+		else if (event->m_MsgStr == WstringKey::ToGameStage10) {
+			ResetActiveStage<GameStage10>();
 		}
 		else if (event->m_MsgStr == WstringKey::ToGameTestStage) {
 			ResetActiveStage<TestStage>();

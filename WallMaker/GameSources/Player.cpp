@@ -62,6 +62,9 @@ namespace basecross{
 				{
 					magicWall->SetHp(0.0f);
 					m_TestFlg = false;
+					// SE
+					auto ptrXA = App::GetApp()->GetXAudio2Manager();
+					ptrXA->Start(L"SE_WallRecovery", 0, 1.0f);
 				}
 			}
 		}
@@ -291,6 +294,18 @@ namespace basecross{
 				auto ptrXA = App::GetApp()->GetXAudio2Manager();
 				ptrXA->Start(WstringKey::SE_CreateMagicWall, 0, 1.0f);
 			}
+			else
+			{
+				// SE
+				auto ptrXA = App::GetApp()->GetXAudio2Manager();
+				ptrXA->Start(L"SE_EXCLUSION", 0, 1.0f);
+			}
+		}
+		else
+		{
+			// SE
+			auto ptrXA = App::GetApp()->GetXAudio2Manager();
+			ptrXA->Start(L"SE_EXCLUSION", 0, 1.0f);
 		}
 	}
 

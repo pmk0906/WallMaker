@@ -107,5 +107,10 @@ namespace WstringKey {
 	const wstring ToGameStage3 = L"ToGameScene3";
 	const wstring ToGameStage4 = L"ToGameScene4";
 	const wstring ToGameStage5 = L"ToGameScene5";
+	const wstring ToGameStage6 = L"ToGameScene6";
+	const wstring ToGameStage7 = L"ToGameScene7";
+	const wstring ToGameStage8 = L"ToGameScene8";
+	const wstring ToGameStage9 = L"ToGameScene9";
+	const wstring ToGameStage10 = L"ToGameScene10";
 	const wstring ToGameTestStage = L"ToGameTestStage";
 }

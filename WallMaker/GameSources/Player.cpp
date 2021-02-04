@@ -532,6 +532,10 @@ namespace basecross{
 	void Player::OnUpdate()
 	{
 		auto gm = GameManager::GetInstance();
+		if (gm->GetGameStartFlg() == true)
+		{
+			DrawActiveSwitch();
+		}
 		if (gm->GetMoveEnabledFlg() == true)
 		{
 			////コントローラチェックして入力があればコマンド呼び出し
@@ -543,7 +547,7 @@ namespace basecross{
 			//WallStockDecrease();
 			SetCountWall();
 			Die();
-			DrawActiveSwitch();
+			//DrawActiveSwitch();
 			InvincibleBehaviour();
 			AnimationUpdate();
 
@@ -676,6 +680,23 @@ namespace basecross{
 	void Player::WallStockDecreaseFlg()
 	{
 		m_wallDecreaseFlg = true;
+	}
+
+	void Player::AllWallDelete()
+	{
+		auto stage = GetStage();
+		for (auto obj : stage->GetGameObjectVec())
+		{
+			// 魔法壁が残ってるなら
+			if (obj->FindTag(WstringKey::Tag_MagicWall))
+			{
+				if (auto magicWall = dynamic_pointer_cast<MagicWall>(obj))
+				{
+					magicWall->SetHp(0.0f);
+					m_TestFlg = false;
+				}
+			}
+		}
 	}
 
 	void Player::SetMotionName(wstring motionName)

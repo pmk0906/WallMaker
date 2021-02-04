@@ -20,8 +20,39 @@ namespace basecross {
 		GameStage_Test
 	};
 
+	enum StageObjectNum
+	{
+		ObjNum_StageWall = 001,
+		ObjNum_Player = 002,
+		ObjNum_EnemyFirst = 003,
+		ObjNum_ReflectWall_1 = 041,
+		ObjNum_RefrectWall_2 = 042,
+		ObjNum_ReflectWall_3 = 043,
+		ObjNum_RefrectWall_4 = 044,
+		ObjNum_ReflectWall_5 = 045,
+		ObjNum_RefrectWall_6 = 046,
+		ObjNum_ReflectWall_7 = 047,
+		ObjNum_RefrectWall_8 = 48,
+		ObjNum_ReflectWall_9 = 49,
+		ObjNum_ReflectWall_28 = 441,
+		ObjNum_RefrectWall_46 = 442,
+		ObjNum_RapidFireEnemy = 005,
+		ObjNum_Treasure = 006,
+		ObjNum_Cannon_2 = 072,
+		ObjNum_Cannon_4 = 074,
+		ObjNum_Cannon_6 = 076,
+		ObjNum_Cannon_8 = 78,
+		ObjNum_BreakWall = 8,
+		ObjNum_DangerEnemy = 9,
+		ObjNum_PatrolEnemy_down = 10,
+		ObjNum_PatrolEnemy_6 = 11,
+		ObjNum_PatrolEnemy_4 = 12,
+	};
+
 	class GameManager {
 	private:
+		//ゲームが始まったか
+		bool m_GameStart = false;
 		// 動かせるか
 		bool m_MoveEnabledFlg = false;
 		float m_PlayerMoveTime = 5.0f;
@@ -67,6 +98,8 @@ namespace basecross {
 		int m_SelectingButtonNum = 0;
 		//ボタンの番号の最大値
 		int m_MaxButtonNum = 0;
+		//フェードインに使用する時間
+		float m_FadeTimeLimit = 1.0f;
 		// フェードインアウト用のフラグ
 		bool m_FadeFlg = false;
 		bool m_FadeFlgChanged = false;
@@ -92,6 +125,7 @@ namespace basecross {
 		// ゲームマネージャー初期化
 		void InitGameManager()
 		{
+			SetGameStartFlg(false);
 			SetClearFlg(false);
 			SetClearFlgChanged(false); 
 			SetDeathFlg(false);
@@ -168,6 +202,15 @@ namespace basecross {
 			}
 		}
 
+		//ゲームが始まったか
+		bool GetGameStartFlg()
+		{
+			return m_GameStart;
+		}
+		void SetGameStartFlg(bool gameStart)
+		{
+			m_GameStart = gameStart;
+		}
 		//プレイヤーの行動許可
 		bool GetMoveEnabledFlg()
 		{

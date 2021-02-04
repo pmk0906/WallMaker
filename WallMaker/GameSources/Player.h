@@ -151,6 +151,8 @@ namespace basecross{
 		//壁のストックを減らす
 		void WallStockDecrease();
 		void WallStockDecreaseFlg();
+		//全ての壁を消す
+		void AllWallDelete();
 
 		//モーションの名前を登録
 		void SetMotionName(wstring motionName);

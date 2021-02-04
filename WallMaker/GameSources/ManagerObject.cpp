@@ -10,7 +10,7 @@ namespace basecross{
 	///--------------------------------------------------
 	/// GameManagement
 	///--------------------------------------------------
-	GameManagement::GameManagement(
+	ManagerObject::ManagerObject(
 		const shared_ptr<Stage>& StagePtr,
 		const Vec3& Scale,
 		const Vec3& Rotation,
@@ -21,25 +21,25 @@ namespace basecross{
 		m_Rotation(Rotation),
 		m_Position(Position)
 	{}
-	GameManagement::~GameManagement() {}
+	ManagerObject::~ManagerObject() {}
 
 	//シーンを読み込む
-	void GameManagement::LoadScene(int stageNum)
+	void ManagerObject::LoadScene(int stageNum)
 	{
 		auto gm = GameManager::GetInstance();
 
 		wstring sceneKey;
 		switch (stageNum)
 		{
-		case (int)SceneNum::Title:
+		case SceneNum::Title:
 			sceneKey = WstringKey::ToGameTitle;
 			gm->SetSceneNum(SceneNum::Title);
 			break;
-		case (int)SceneNum::StageSelect:
+		case SceneNum::StageSelect:
 			sceneKey = WstringKey::ToGameStageSelect;
 			gm->SetSceneNum(SceneNum::StageSelect);
 			break;
-		case (int)SceneNum::GameStage_1:
+		case SceneNum::GameStage_1:
 			sceneKey = WstringKey::ToGameStage1;
 			gm->SetSceneNum(SceneNum::GameStage_1);
 			break;
@@ -89,7 +89,7 @@ namespace basecross{
 	}
 
 	//シーンに入った時のフェードイン
-	void GameManagement::EnterScene()
+	void ManagerObject::EnterScene()
 	{
 		auto gm = GameManager::GetInstance();
 
@@ -116,8 +116,8 @@ namespace basecross{
 		}
 	}
 
-	//シーンを読み込む
-	void GameManagement::ExitScene()
+	//シーンから出る時にフェードアウト
+	void ManagerObject::ExitScene()
 	{
 		auto gm = GameManager::GetInstance();
 
@@ -138,13 +138,19 @@ namespace basecross{
 		case SceneNum::GameStage_10:
 		case SceneNum::GameStage_Test:
 			CreateFadeOut(L"WHITE_TX", Col4(1.0f, 1.0f, 1.0f, 0.0f));
+			if (m_WallDeleteFlgChanged == false)
+			{
+				m_WallDeleteFlg = true;
+				m_WallDeleteFlgChanged = true;
+			}
 			break;
 		default:
 			break;
 		}
 	}
 
-	void GameManagement::PlayerMoveEnabled()
+	//プレイヤーの行動の許可
+	void ManagerObject::PlayerMoveEnabled()
 	{
 		auto gm = GameManager::GetInstance();
 		if (gm->GetOpeningCameraMoveEnd())
@@ -158,26 +164,12 @@ namespace basecross{
 				}
 			}
 		}
-		else
-		{
-			//auto delta = App::GetApp()->GetElapsedTime();
-			//m_Timer += delta;
-		}
 	}
 
-	void GameManagement::ClearCheck()
+	// 十字ボタンの操作
+	void ManagerObject::ButtonControl()
 	{
-		//auto gm = GameManager::GetInstance();
-		//if (gm->GetClearFlg() == true && gm->GetClearFlgChanged() == false)
-		//{
-		//	ChangeCamera();
-		//	gm->SetClearFlgChanged(true);
-		//}
-	}
-
-	void GameManagement::ButtonControl()
-	{
-		m_InputHandler.PushHandle(GetThis<GameManagement>());
+		m_InputHandler.PushHandle(GetThis<ManagerObject>());
 		auto cntlVec = App::GetApp()->GetInputDevice().GetControlerVec();
 		WORD wButtons = 0;
 		if (cntlVec[0].bConnected) {
@@ -269,7 +261,7 @@ namespace basecross{
 		}
 	}
 
-	void GameManagement::ChangeCamera()
+	void ManagerObject::ChangeCamera()
 	{
 		auto gm = GameManager::GetInstance();
 		int stageNum = gm->GetSceneNum();
@@ -329,9 +321,10 @@ namespace basecross{
 			auto ptrGameGtage = GetTypeStage<TestStage>();
 			ptrGameGtage->ToPlayerCamera();
 		}
+		gm->SetGameStartFlg(true);
 	}
 
-	void GameManagement::StageEffect()
+	void ManagerObject::StageEffect()
 	{
 		auto multiFire = GetStage()->AddGameObject<MultiFire>();
 		GetStage()->SetSharedGameObject(L"MultiFire", multiFire);
@@ -355,18 +348,18 @@ namespace basecross{
 		GetStage()->SetSharedGameObject(WstringKey::ShareObj_ReflectBulletEffect, reflectEffect);
 	}
 
-	void GameManagement::CreateFadeIn(wstring textureKey, Col4 color)
+	void ManagerObject::CreateFadeIn(wstring textureKey, Col4 color)
 	{
 		auto fadeSprite = GetStage()->AddGameObject<FadeSprite>(true, Vec2(1280, 800), Vec2(0, 0), false, 0.0f, 1.0f, textureKey, 3, color);
 		fadeSprite->SetFadeFlgChanged(false);
 	}
-	void GameManagement::CreateFadeOut(wstring textureKey, Col4 color)
+	void ManagerObject::CreateFadeOut(wstring textureKey, Col4 color)
 	{
 		auto fadeSprite = GetStage()->AddGameObject<FadeSprite>(true, Vec2(1280, 800), Vec2(0, 0), true, 1.0f, 0.0f, textureKey, 3, color);
 		fadeSprite->SetFadeFlgChanged(false);
 	}
 
-	void GameManagement::TitleButton_A()
+	void ManagerObject::TitleButton_A()
 	{
 		auto gm = GameManager::GetInstance();
 		if (gm->GetFadeFlgChanged() == true)
@@ -382,7 +375,7 @@ namespace basecross{
 	}
 
 	//ステージセレクト中のボタン
-	void GameManagement::StageSelectButton_A()
+	void ManagerObject::StageSelectButton_A()
 	{
 		auto gm = GameManager::GetInstance();
 		if (gm->GetFadeFlgChanged() == true)
@@ -431,7 +424,7 @@ namespace basecross{
 			ExitScene();
 		}
 	}
-	void GameManagement::StageSelectButton_B()
+	void ManagerObject::StageSelectButton_B()
 	{
 		auto gm = GameManager::GetInstance();
 		//LoadScene(SceneNum::Title);
@@ -448,7 +441,7 @@ namespace basecross{
 	}
 
 	//ゲームステージ内でのボタン
-	void GameManagement::GameStageButton_A()
+	void ManagerObject::GameStageButton_A()
 	{
 		auto gm = GameManager::GetInstance();
 		if (gm->GetPoseFlg() == true)
@@ -462,6 +455,7 @@ namespace basecross{
 					gm->SetLoadSceneNum(gm->GetSceneNum());
 					gm->SetFadeFlgChanged(false);
 					ExitScene();
+
 					break;
 				case 1:	// ステージセレクト
 					//LoadScene((int)SceneNum::StageSelect);
@@ -549,7 +543,7 @@ namespace basecross{
 		}
 	}
 
-	void GameManagement::GameStageButton_Start()
+	void ManagerObject::GameStageButton_Start()
 	{
 		auto gm = GameManager::GetInstance();
 		if (gm->GetPoseFlgChanged() == true)
@@ -568,7 +562,7 @@ namespace basecross{
 	}
 
 	//	初期化
-	void GameManagement::OnCreate()
+	void ManagerObject::OnCreate()
 	{
 		// 大きさ、回転、位置
 		auto ptrTrans = GetComponent<Transform>();
@@ -585,10 +579,11 @@ namespace basecross{
 		//strComp->SetTextRect(Rect2D<float>(50, 150, 400, 600));
 	}
 
-	void GameManagement::OnUpdate()
+	void ManagerObject::OnUpdate()
 	{
 		auto gm = GameManager::GetInstance();
 
+		// 十字ボタンの操作
 		ButtonControl();
 		PlayerMoveEnabled();
 
@@ -604,14 +599,30 @@ namespace basecross{
 				m_Timer += delta;
 			}
 		}
+		
+		if (m_WallDeleteFlg == true)
+		{
+			auto stage = GetStage();
+			for (auto obj : stage->GetGameObjectVec())
+			{
+				// 魔法壁が残ってるなら
+				if (obj->FindTag(WstringKey::Tag_MagicWall))
+				{
+					if (auto magicWall = dynamic_pointer_cast<MagicWall>(obj))
+					{
+						magicWall->SetHp(0.0f);
+					}
+				}
+			}
+		}
 	}
 
-	void GameManagement::OnUpdate2()
+	void ManagerObject::OnUpdate2()
 	{
 		//DrawStrings();
 	}
 
-	void GameManagement::DrawStrings()
+	void ManagerObject::DrawStrings()
 	{
 		auto gm = GameManager::GetInstance();
 
@@ -624,31 +635,31 @@ namespace basecross{
 		wstring sceneNum(L"現在のシーン : ");
 		switch (gm->GetSceneNum())
 		{
-		case (int)SceneNum::Title:
+		case SceneNum::Title:
 			sceneNum += L"タイトル\n";
 			break;
-		case (int)SceneNum::StageSelect:
+		case SceneNum::StageSelect:
 			sceneNum += L"ステージセレクト\n";
 			break;
-		case (int)SceneNum::GameStage_1:
+		case SceneNum::GameStage_1:
 			sceneNum += L"ゲームステージ１\n";
 			break;
-		case (int)SceneNum::GameStage_2:
+		case SceneNum::GameStage_2:
 			sceneNum += L"ゲームステージ２\n";
 			break;
-		case (int)SceneNum::GameStage_3:
+		case SceneNum::GameStage_3:
 			sceneNum += L"ゲームステージ３\n";
 			break;
-		case (int)SceneNum::GameStage_4:
+		case SceneNum::GameStage_4:
 			sceneNum += L"ゲームステージ４\n";
 			break;
-		case (int)SceneNum::GameStage_5:
+		case SceneNum::GameStage_5:
 			sceneNum += L"ゲームステージ５\n";
 			break;
-		case (int)SceneNum::GameStage_6:
+		case SceneNum::GameStage_6:
 			sceneNum += L"ゲームステージ６\n";
 			break;
-		case (int)SceneNum::GameStage_Test:
+		case SceneNum::GameStage_Test:
 			sceneNum += L"テストステージ\n";
 			break;
 		default:
@@ -671,16 +682,16 @@ namespace basecross{
 		wstring camName = L"現在のカメラの名前：";
 		switch (gm->GetSceneNum())
 		{
-		case (int)SceneNum::GameStage_1:
-		case (int)SceneNum::GameStage_2:
-		case (int)SceneNum::GameStage_3:
-		case (int)SceneNum::GameStage_4:
-		case (int)SceneNum::GameStage_5:
-		case (int)SceneNum::GameStage_6:
-		case (int)SceneNum::GameStage_7:
-		case (int)SceneNum::GameStage_8:
-		case (int)SceneNum::GameStage_9:
-		case (int)SceneNum::GameStage_10:
+		case SceneNum::GameStage_1:
+		case SceneNum::GameStage_2:
+		case SceneNum::GameStage_3:
+		case SceneNum::GameStage_4:
+		case SceneNum::GameStage_5:
+		case SceneNum::GameStage_6:
+		case SceneNum::GameStage_7:
+		case SceneNum::GameStage_8:
+		case SceneNum::GameStage_9:
+		case SceneNum::GameStage_10:
 			camName += gm->GetCameraName();
 			break;
 		default:
@@ -691,16 +702,16 @@ namespace basecross{
 		wstring playerCamState = L"PlayerCamera_State：";
 		switch (gm->GetSceneNum())
 		{
-		case (int)SceneNum::GameStage_1:
-		case (int)SceneNum::GameStage_2:
-		case (int)SceneNum::GameStage_3:
-		case (int)SceneNum::GameStage_4:
-		case (int)SceneNum::GameStage_5:
-		case (int)SceneNum::GameStage_6:
-		case (int)SceneNum::GameStage_7:
-		case (int)SceneNum::GameStage_8:
-		case (int)SceneNum::GameStage_9:
-		case (int)SceneNum::GameStage_10:
+		case SceneNum::GameStage_1:
+		case SceneNum::GameStage_2:
+		case SceneNum::GameStage_3:
+		case SceneNum::GameStage_4:
+		case SceneNum::GameStage_5:
+		case SceneNum::GameStage_6:
+		case SceneNum::GameStage_7:
+		case SceneNum::GameStage_8:
+		case SceneNum::GameStage_9:
+		case SceneNum::GameStage_10:
 			playerCamState += gm->GetPlayerCameraStateName();
 			break;
 		default:
@@ -721,34 +732,43 @@ namespace basecross{
 		wstring testText(L"テストテキスト\n");
 		testText += gm->GetTestText();
 
+		wstring gameStart(L"m_GameStart : ");
+		if (gm->GetGameStartFlg() == true)
+		{
+			gameStart += L"true\n";
+		}
+		else
+		{
+			gameStart += L"false\n";
+		}
 
-		wstring str = selectingButton + maxButtonNum + sceneNum + timer + pose + camName + playerCamState + L"\n" + testFLG + testText+ L"\n";
+		wstring str = selectingButton + maxButtonNum + sceneNum + timer + pose + camName + playerCamState + L"\n" + testFLG + testText + gameStart + L"\n";
 		auto ptrString = GetComponent<StringSprite>();
 		ptrString->SetText(str);
 	}
 
-	void GameManagement::OnPushA()
+	void ManagerObject::OnPushA()
 	{
 		auto gm = GameManager::GetInstance();
 		switch (gm->GetSceneNum())
 		{
-		case (int)SceneNum::Title:
+		case SceneNum::Title:
 			TitleButton_A();
 			break;
-		case (int)SceneNum::StageSelect:
+		case SceneNum::StageSelect:
 			StageSelectButton_A();
 			break;
-		case (int)SceneNum::GameStage_1:
-		case (int)SceneNum::GameStage_2:
-		case (int)SceneNum::GameStage_3:
-		case (int)SceneNum::GameStage_4:
-		case (int)SceneNum::GameStage_5:
-		case (int)SceneNum::GameStage_6:
-		case (int)SceneNum::GameStage_7:
-		case (int)SceneNum::GameStage_8:
-		case (int)SceneNum::GameStage_9:
-		case (int)SceneNum::GameStage_10:
-		case(int)SceneNum::GameStage_Test:
+		case SceneNum::GameStage_1:
+		case SceneNum::GameStage_2:
+		case SceneNum::GameStage_3:
+		case SceneNum::GameStage_4:
+		case SceneNum::GameStage_5:
+		case SceneNum::GameStage_6:
+		case SceneNum::GameStage_7:
+		case SceneNum::GameStage_8:
+		case SceneNum::GameStage_9:
+		case SceneNum::GameStage_10:
+		case SceneNum::GameStage_Test:
 			GameStageButton_A();
 			break;
 		default:
@@ -756,27 +776,27 @@ namespace basecross{
 		}
 	}
 
-	void GameManagement::OnPushB()
+	void ManagerObject::OnPushB()
 	{
 		auto gm = GameManager::GetInstance();
 		switch (gm->GetSceneNum())
 		{
-		case (int)SceneNum::Title:
+		case SceneNum::Title:
 			TitleButton_B();
 			break;
-		case (int)SceneNum::StageSelect:
+		case SceneNum::StageSelect:
 			StageSelectButton_B();
 			break;
-		case (int)SceneNum::GameStage_1:
-		case (int)SceneNum::GameStage_2:
-		case (int)SceneNum::GameStage_3:
-		case (int)SceneNum::GameStage_4:
-		case (int)SceneNum::GameStage_5:
-		case (int)SceneNum::GameStage_6:
-		case (int)SceneNum::GameStage_7:
-		case (int)SceneNum::GameStage_8:
-		case (int)SceneNum::GameStage_9:
-		case (int)SceneNum::GameStage_10:
+		case SceneNum::GameStage_1:
+		case SceneNum::GameStage_2:
+		case SceneNum::GameStage_3:
+		case SceneNum::GameStage_4:
+		case SceneNum::GameStage_5:
+		case SceneNum::GameStage_6:
+		case SceneNum::GameStage_7:
+		case SceneNum::GameStage_8:
+		case SceneNum::GameStage_9:
+		case SceneNum::GameStage_10:
 			GameStageButton_B();
 			break;
 		default:
@@ -784,24 +804,24 @@ namespace basecross{
 		}
 	}
 
-	void GameManagement::OnPushStart()
+	void ManagerObject::OnPushStart()
 	{
 		auto gm = GameManager::GetInstance();
 		switch (gm->GetSceneNum())
 		{
-		case (int)SceneNum::Title:
-			LoadScene((int)SceneNum::GameStage_Test);
+		case SceneNum::Title:
+			LoadScene(SceneNum::GameStage_Test);
 			break;
-		case (int)SceneNum::GameStage_1:
-		case (int)SceneNum::GameStage_2:
-		case (int)SceneNum::GameStage_3:
-		case (int)SceneNum::GameStage_4:
-		case (int)SceneNum::GameStage_5:
-		case (int)SceneNum::GameStage_6:
-		case (int)SceneNum::GameStage_7:
-		case (int)SceneNum::GameStage_8:
-		case (int)SceneNum::GameStage_9:
-		case (int)SceneNum::GameStage_10:
+		case SceneNum::GameStage_1:
+		case SceneNum::GameStage_2:
+		case SceneNum::GameStage_3:
+		case SceneNum::GameStage_4:
+		case SceneNum::GameStage_5:
+		case SceneNum::GameStage_6:
+		case SceneNum::GameStage_7:
+		case SceneNum::GameStage_8:
+		case SceneNum::GameStage_9:
+		case SceneNum::GameStage_10:
 			GameStageButton_Start();
 			break;
 		default:

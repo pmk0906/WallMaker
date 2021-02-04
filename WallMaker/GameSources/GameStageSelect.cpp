@@ -59,7 +59,7 @@ namespace basecross{
 		auto ptrXA = App::GetApp()->GetXAudio2Manager();
 		m_BGM = ptrXA->Start(WstringKey::BGM_GameSelect, XAUDIO2_LOOP_INFINITE, 1.0f);
 
-		AddGameObject<GameManagement>(Vec3(0.0f), Vec3(0.0f), Vec3(0.0f));
+		AddGameObject<ManagerObject>(Vec3(0.0f), Vec3(0.0f), Vec3(0.0f));
 
 		auto gm = GameManager::GetInstance();
 		gm->InitGameManager();

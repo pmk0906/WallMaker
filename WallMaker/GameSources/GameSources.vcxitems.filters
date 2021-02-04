@@ -10,191 +10,273 @@
     <Filter Include="DebugBoard">
       <UniqueIdentifier>{73b2a8e8-db94-44dc-a930-7f0088edfa3f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Headers\敵.h">
+      <UniqueIdentifier>{930dbb74-3b4c-4e64-beb2-8ea23ec2c5d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\敵.cpp">
+      <UniqueIdentifier>{e7b96a8e-eac1-4624-827b-8c9d2e1cb67d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\弾.cpp">
+      <UniqueIdentifier>{31e7b977-6e25-4412-afcd-fa778f0822e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headers\弾.h">
+      <UniqueIdentifier>{46369041-3f20-468b-ac98-509da765d365}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headers\シーン.h">
+      <UniqueIdentifier>{d746e3f5-6452-4ff1-a6b7-9842156c84a8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\シーン.cpp">
+      <UniqueIdentifier>{7be2f7a3-e730-4eb5-8b5c-96b8c6006c55}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\ステージオブジェクト.cpp">
+      <UniqueIdentifier>{320203e5-5d59-4eae-abe7-6c6af325b908}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headers\ステージオブジェクト.h">
+      <UniqueIdentifier>{e7024dea-ee2b-4a97-92f2-a141b70c9610}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headers\UI,演出.h">
+      <UniqueIdentifier>{8227768c-a2d6-4128-8470-dfecc255c03a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\UI,演出.cpp">
+      <UniqueIdentifier>{504c233a-6f98-437d-9b4e-dd9d936a9623}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\プレイヤー.cpp">
+      <UniqueIdentifier>{1dea0c4c-6399-4462-ad4c-abfae27339c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headers\プレイヤー.h">
+      <UniqueIdentifier>{ccccfab2-fb30-421d-b297-4a086ac517fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\ゲーム管理.cpp">
+      <UniqueIdentifier>{478383bd-e095-4b71-a2ce-85efcff355cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headers\ゲーム管理.h">
+      <UniqueIdentifier>{021623d9-bc0b-462e-b5ed-1aa7956e66ec}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Character.h">
-      <Filter>Headers</Filter>
+    <ClInclude Include="$(MSBuildThisFileDirectory)DebugBoard.h">
+      <Filter>DebugBoard</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)GameStage.h">
-      <Filter>Headers</Filter>
+      <Filter>Headers\シーン.h</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)GameStage2.h">
+      <Filter>Headers\シーン.h</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)GameStage3.h">
+      <Filter>Headers\シーン.h</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)GameStage4.h">
+      <Filter>Headers\シーン.h</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)GameStage5.h">
+      <Filter>Headers\シーン.h</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)GameStage6.h">
+      <Filter>Headers\シーン.h</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)GameStage7.h">
+      <Filter>Headers\シーン.h</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)GameStage8.h">
+      <Filter>Headers\シーン.h</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)GameStage9.h">
+      <Filter>Headers\シーン.h</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)GameStage10.h">
+      <Filter>Headers\シーン.h</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)DangerEnemy.h">
+      <Filter>Headers\敵.h</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)EnemyFirst.h">
+      <Filter>Headers\敵.h</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)EnemyShield.h">
+      <Filter>Headers\敵.h</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)PatrolEnemy.h">
+      <Filter>Headers\敵.h</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)PatrolEnemyUPDown.h">
+      <Filter>Headers\敵.h</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)RapidFireEnemy.h">
+      <Filter>Headers\敵.h</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)ReflectEnemy.h">
+      <Filter>Headers\敵.h</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)DangerBullet.h">
+      <Filter>Headers\弾.h</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)EnemyBullet.h">
+      <Filter>Headers\弾.h</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)ReflectBullet.h">
+      <Filter>Headers\弾.h</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)TestStage.h">
+      <Filter>Headers\シーン.h</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)GameStageSelect.h">
+      <Filter>Headers\シーン.h</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)GameTitle.h">
+      <Filter>Headers\シーン.h</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Cannon.h">
+      <Filter>Headers\ステージオブジェクト.h</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Character.h">
+      <Filter>Headers\ステージオブジェクト.h</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Treasure.h">
+      <Filter>Headers\ステージオブジェクト.h</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Camera.h">
+      <Filter>Headers\UI,演出.h</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)DirectorObject.h">
+      <Filter>Headers\UI,演出.h</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)UISprite.h">
+      <Filter>Headers\UI,演出.h</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Player.h">
-      <Filter>Headers</Filter>
+      <Filter>Headers\プレイヤー.h</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)GameManager.h">
+      <Filter>Headers\ゲーム管理.h</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)ManagerObject.h">
+      <Filter>Headers\ゲーム管理.h</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)ProjectBehavior.h">
+      <Filter>Headers\ゲーム管理.h</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)ProjectShader.h">
+      <Filter>Headers\ゲーム管理.h</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Scene.h">
+      <Filter>Headers\ゲーム管理.h</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)WstringKey.h">
+      <Filter>Headers\ゲーム管理.h</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Project.h">
       <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)ProjectShader.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Scene.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)ProjectBehavior.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)EnemyFirst.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)DebugBoard.h">
-      <Filter>DebugBoard</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)PatrolEnemy.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)PatrolEnemyUPDown.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)RapidFireEnemy.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)WstringKey.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)EnemyBullet.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)DangerBullet.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)DangerEnemy.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Treasure.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)GameManager.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)GameStageSelect.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)GameTitle.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)UISprite.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)EnemyShield.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)TestStage.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)ManagerObject.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Cannon.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Camera.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)GameStage2.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)DirectorObject.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)GameStage3.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)GameStage4.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)GameStage5.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)ReflectBullet.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)ReflectEnemy.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)GameStage6.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)GameStage7.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)GameStage8.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)GameStage9.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)GameStage10.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Character.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)GameStage.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Player.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)ProjectShader.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Scene.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)WinMain.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)ProjectBehavior.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)EnemyFirst.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)DebugBoard.cpp">
       <Filter>DebugBoard</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)PatrolEnemy.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)PatrolEnemyUPDown.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)RapidFireEnemy.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)EnemyBullet.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)DangerBullet.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)DangerEnemy.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Treasure.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)GameStageSelect.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)GameTitle.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)UISprite.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)EnemyShield.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)ManagerObject.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)TestStage.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Cannon.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Camera.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)DirectorObject.cpp">
-      <Filter>Sources</Filter>
+    <ClCompile Include="$(MSBuildThisFileDirectory)GameStage.cpp">
+      <Filter>Sources\シーン.cpp</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)GameStage2.cpp">
-      <Filter>Sources</Filter>
+      <Filter>Sources\シーン.cpp</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)GameStage3.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)GameStage4.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)GameStage5.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)ReflectBullet.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)ReflectEnemy.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)GameStage6.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)GameStage7.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)GameStage8.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)GameStage9.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)GameStage10.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)GameStage3.cpp">
+      <Filter>Sources\シーン.cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)GameStage4.cpp">
+      <Filter>Sources\シーン.cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)GameStage5.cpp">
+      <Filter>Sources\シーン.cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)GameStage6.cpp">
+      <Filter>Sources\シーン.cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)GameStage7.cpp">
+      <Filter>Sources\シーン.cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)GameStage8.cpp">
+      <Filter>Sources\シーン.cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)GameStage9.cpp">
+      <Filter>Sources\シーン.cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)GameStage10.cpp">
+      <Filter>Sources\シーン.cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)DangerEnemy.cpp">
+      <Filter>Sources\敵.cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)EnemyFirst.cpp">
+      <Filter>Sources\敵.cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)EnemyShield.cpp">
+      <Filter>Sources\敵.cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)PatrolEnemy.cpp">
+      <Filter>Sources\敵.cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)PatrolEnemyUPDown.cpp">
+      <Filter>Sources\敵.cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)RapidFireEnemy.cpp">
+      <Filter>Sources\敵.cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)ReflectEnemy.cpp">
+      <Filter>Sources\敵.cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)DangerBullet.cpp">
+      <Filter>Sources\弾.cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)EnemyBullet.cpp">
+      <Filter>Sources\弾.cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)ReflectBullet.cpp">
+      <Filter>Sources\弾.cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)GameStageSelect.cpp">
+      <Filter>Sources\シーン.cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)GameTitle.cpp">
+      <Filter>Sources\シーン.cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)TestStage.cpp">
+      <Filter>Headers\シーン.h</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Cannon.cpp">
+      <Filter>Sources\ステージオブジェクト.cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Character.cpp">
+      <Filter>Sources\ステージオブジェクト.cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Treasure.cpp">
+      <Filter>Sources\ステージオブジェクト.cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Camera.cpp">
+      <Filter>Sources\UI,演出.cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)DirectorObject.cpp">
+      <Filter>Sources\UI,演出.cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)UISprite.cpp">
+      <Filter>Sources\UI,演出.cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Player.cpp">
+      <Filter>Sources\プレイヤー.cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)ManagerObject.cpp">
+      <Filter>Sources\ゲーム管理.cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)ProjectBehavior.cpp">
+      <Filter>Sources\ゲーム管理.cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)ProjectShader.cpp">
+      <Filter>Sources\ゲーム管理.cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Scene.cpp">
+      <Filter>Sources\ゲーム管理.cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)WinMain.cpp">
+      <Filter>Sources\ゲーム管理.cpp</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

@@ -205,7 +205,7 @@ namespace basecross {
 		//CreatePlayer(Vec3(0.0f, 1.0f, 0.0f));
 		CreateCameraman();
 
-		auto gameManagement = AddGameObject<GameManagement>(Vec3(0.0f), Vec3(0.0f), Vec3(0.0f));
+		auto gameManagement = AddGameObject<ManagerObject>(Vec3(0.0f), Vec3(0.0f), Vec3(0.0f));
 		SetSharedGameObject(WstringKey::ShareObj_GameManagement, gameManagement);
 
 		auto gm = GameManager::GetInstance();

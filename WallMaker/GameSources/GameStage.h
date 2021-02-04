@@ -81,6 +81,8 @@ namespace basecross {
 
 		void StopBGM();
 
+		void WallDelete();
+
 
 		void ToMyCamera();
 		void ToPlayerCamera();

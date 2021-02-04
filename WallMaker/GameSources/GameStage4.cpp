@@ -73,99 +73,95 @@ namespace basecross {
 				switch (map[r * mapCols + c]) {
 				case 0:
 					break;
-				case 1: // 普通の壁
-					//AddGameObject<StageWall>(Vec3(3.0f, 3.0f, 3.0f), Vec3(0.0f), Vec3(pos.x, 1.5f, pos.z)); // 一段
+				case StageObjectNum::ObjNum_StageWall: // 普通の壁
 					AddGameObject<StageWall>(Vec3(3.0f, 6.0f, 3.0f), Vec3(0.0f), Vec3(pos.x, 3.0f, pos.z)); // 二段
-					//AddGameObject<StageWall>(Vec3(3.0f, 9.0f, 3.0f), Vec3(0.0f), Vec3(pos.x, 4.5f, pos.z)); // 三段
-
-					//AddGameObject<StageWall>(Vec3(3.0f, 3.0f, 3.0f), Vec3(0.0f), Vec3(pos.x, 1.5f, pos.z)); // 二段
-					//AddGameObject<StageWall>(Vec3(3.0f, 3.0f, 3.0f), Vec3(0.0f), Vec3(pos.x, 4.5f, pos.z)); // 二段
 					break;
-				case 2: // プレイヤー生成
+				case StageObjectNum::ObjNum_Player: // プレイヤー生成
 					CreatePlayer(pos);
 					AddGameObject<WarpMagicSircle>(Vec3(0.0f), Vec3(0.0f), Vec3(pos.x, 4.0f, pos.z));
 					break;
-				case 3: // 通常の敵
+				case StageObjectNum::ObjNum_EnemyFirst: // 通常の敵
 					AddGameObject<EnemyFirst>(Vec3(2.0f, 1.0f, 3.5f), Vec3(0.0f), Vec3(pos));
 					break;
-				case 5: // 連射的
+				case StageObjectNum::ObjNum_RapidFireEnemy: // 連射的
 					AddGameObject<RapidFireEnemy>(Vec3(2.0f, 1.0f, 3.5f), Vec3(0.0f), Vec3(pos.x, 1.5f, pos.z));
 					break;
-				// 反射壁(テンキーの配置参照)
-				case 041:
+					// 反射壁(テンキーの配置参照)
+				case StageObjectNum::ObjNum_ReflectWall_1:
 					AddGameObject<StageRefrectWall>(Vec3(scale), Vec3(0.0f, XMConvertToRadians(90.0f), 0.0f), Vec3(pos.x - 1.3f, 1.5f, pos.z));
 					AddGameObject<StageRefrectWall>(Vec3(scale), Vec3(0.0f), Vec3(pos.x, 1.5f, pos.z - 1.3f));
 					break;
-				case 042:
+				case StageObjectNum::ObjNum_RefrectWall_2:
 					AddGameObject<StageRefrectWall>(Vec3(scale), Vec3(0.0f), Vec3(pos.x, 1.5f, pos.z - 1.3f));
 					break;
-				case 043:
+				case StageObjectNum::ObjNum_ReflectWall_3:
 					AddGameObject<StageRefrectWall>(Vec3(scale), Vec3(0.0f, XMConvertToRadians(90.0f), 0.0f), Vec3(pos.x + 1.3f, 1.5f, pos.z));
 					AddGameObject<StageRefrectWall>(Vec3(scale), Vec3(0.0f), Vec3(pos.x, 1.5f, pos.z - 1.3f));
 					break;
-				case 044:
+				case StageObjectNum::ObjNum_RefrectWall_4:
 					AddGameObject<StageRefrectWall>(Vec3(scale), Vec3(0.0f, XMConvertToRadians(90.0f), 0.0f), Vec3(pos.x - 1.3f, 1.5f, pos.z));
 					break;
-				case 046:
+				case StageObjectNum::ObjNum_RefrectWall_6:
 					AddGameObject<StageRefrectWall>(Vec3(scale), Vec3(0.0f, XMConvertToRadians(90.0f), 0.0f), Vec3(pos.x + 1.3f, 1.5f, pos.z));
 					break;
-				case 047:
+				case StageObjectNum::ObjNum_ReflectWall_7:
 					AddGameObject<StageRefrectWall>(Vec3(scale), Vec3(0.0f, XMConvertToRadians(90.0f), 0.0f), Vec3(pos.x - 1.3f, 1.5f, pos.z));
 					AddGameObject<StageRefrectWall>(Vec3(scale), Vec3(0.0f), Vec3(pos.x, 1.5f, pos.z + 1.3f));
 					break;
-				case 48:
+				case StageObjectNum::ObjNum_RefrectWall_8:
 					AddGameObject<StageRefrectWall>(Vec3(scale), Vec3(0.0f), Vec3(pos.x, 1.5f, pos.z + 1.3f));
 					break;
-				case 49:
+				case StageObjectNum::ObjNum_ReflectWall_9:
 					AddGameObject<StageRefrectWall>(Vec3(scale), Vec3(0.0f, XMConvertToRadians(90.0f), 0.0f), Vec3(pos.x + 1.3f, 1.5f, pos.z));
 					AddGameObject<StageRefrectWall>(Vec3(scale), Vec3(0.0f), Vec3(pos.x, 1.5f, pos.z + 1.3f));
 					break;
-				case 441:
+				case StageObjectNum::ObjNum_ReflectWall_28:
 					AddGameObject<StageRefrectWall>(Vec3(scale), Vec3(0.0f), Vec3(pos.x, 1.5f, pos.z - 1.3f));
 					AddGameObject<StageRefrectWall>(Vec3(scale), Vec3(0.0f), Vec3(pos.x, 1.5f, pos.z + 1.3f));
 					break;
-				case 442:
+				case StageObjectNum::ObjNum_RefrectWall_46:
 					AddGameObject<StageRefrectWall>(Vec3(scale), Vec3(0.0f, XMConvertToRadians(90.0f), 0.0f), Vec3(pos.x - 1.3f, 1.5f, pos.z));
 					AddGameObject<StageRefrectWall>(Vec3(scale), Vec3(0.0f, XMConvertToRadians(90.0f), 0.0f), Vec3(pos.x + 1.3f, 1.5f, pos.z));
 					break;
-				case 072:
+				case StageObjectNum::ObjNum_Cannon_2:
 					AddGameObject<Cannon>(Vec3(2.0f, 3.0f, 2.0f), Vec3(0.0f, XMConvertToRadians(180.0f), 0.0f), Vec3(pos.x, 1.5f, pos.z));
 					break;
-				case 074:
+				case StageObjectNum::ObjNum_Cannon_4:
 					AddGameObject<Cannon>(Vec3(2.0f, 3.0f, 2.0f), Vec3(0.0f, XMConvertToRadians(270.0f), 0.0f), Vec3(pos.x, 1.5f, pos.z));
 					break;
-				case 076:
+				case StageObjectNum::ObjNum_Cannon_6:
 					AddGameObject<Cannon>(Vec3(2.0f, 3.0f, 2.0f), Vec3(0.0f, XMConvertToRadians(90.0f), 0.0f), Vec3(pos.x, 1.5f, pos.z));
 					break;
-				case 78:
+				case StageObjectNum::ObjNum_Cannon_8:
 					AddGameObject<Cannon>(Vec3(2.0f, 3.0f, 2.0f), Vec3(0.0f), Vec3(pos.x, 1.5f, pos.z));
 					break;
-				case 8:
+				case StageObjectNum::ObjNum_BreakWall:
 					AddGameObject<BreakWall>(Vec3(3.0f), Vec3(0.0f), Vec3(pos.x, 1.5f, pos.z));
 					break;
-				case 9:
+				case StageObjectNum::ObjNum_DangerEnemy:
 					AddGameObject<DangerEnemy>(Vec3(2.0f, 1.0f, 3.5f), Vec3(0.0f), Vec3(pos.x, 1.5f, pos.z));
 					break;
-				case 10:
+				case StageObjectNum::ObjNum_PatrolEnemy_down:
 					AddGameObject<PatrolEnemy>(Vec3(2.0f, 1.0f, 3.5f), Vec3(0.0f, XMConvertToRadians(180), 0.0f),
 						Vec3(pos.x, 1.5f, pos.z));
 					break;
-				case 11:
+				case StageObjectNum::ObjNum_PatrolEnemy_6:
 					AddGameObject<PatrolEnemyUPDown>(Vec3(2.0f, 1.0f, 3.5f), Vec3(0.0f, XMConvertToRadians(90), 0.0f),
 						Vec3(pos.x, 1.5f, pos.z));
 					break;
-				case 12:
+				case StageObjectNum::ObjNum_PatrolEnemy_4:
 					AddGameObject<PatrolEnemyUPDown>(Vec3(2.0f, 1.0f, 3.5f), Vec3(0.0f, XMConvertToRadians(270), 0.0f),
 						Vec3(pos.x, 1.5f, pos.z));
 					break;
 				default:
 					break;
 				}
-				if (map[r * mapCols + c] == 6)
+				if (map[r * mapCols + c] == StageObjectNum::ObjNum_Treasure)
 				{
 					auto treasureBox = AddGameObject<TreasureBox>(Vec3(1.0f), Vec3(0.0f), Vec3(pos.x, 1.5f, pos.z));
 					SetSharedGameObject(WstringKey::ShareObj_TreasureBox, treasureBox);
 				}
+
 			}
 		}
 	}
@@ -191,7 +187,7 @@ namespace basecross {
 		//CreatePlayer(Vec3(0.0f, 1.0f, 0.0f));
 		CreateCameraman();
 
-		auto gameManagement = AddGameObject<GameManagement>(Vec3(0.0f), Vec3(0.0f), Vec3(0.0f));
+		auto gameManagement = AddGameObject<ManagerObject>(Vec3(0.0f), Vec3(0.0f), Vec3(0.0f));
 		SetSharedGameObject(WstringKey::ShareObj_GameManagement, gameManagement);
 
 		auto gm = GameManager::GetInstance();
@@ -392,6 +388,9 @@ namespace basecross {
 		WhiteSprite = AddGameObject<FadeSprite>(true, Vec2(1120, 630), Vec2(0, 0), true, 0.5f, 0.0f, L"WHITE_TX", 1, Col4(1, 1, 1, 0.5f));
 		WhiteSprite->SetDrawActive(false);
 
+		ResultSprite = AddGameObject<Sprite>(true, Vec2(800, 200), Vec2(0, 150), L"POSE_TX", 1, Col4(1, 1, 1, 1.0f));
+		ResultSprite->SetDrawActive(false);
+
 		m_Button1 = AddGameObject<ButtonSprite>(true, Vec2(600, 100), Vec2(0, -60.0f), true, 1.0f, L"RETRY_BUTTON_TX", 0, 2, Col4(1, 1, 1, 0.5f));
 		m_Button1->SetDrawActive(false);
 		m_Button1->SetUpdateActive(false);
@@ -410,6 +409,10 @@ namespace basecross {
 		auto whiteSprite = dynamic_pointer_cast<FadeSprite>(WhiteSprite);
 		whiteSprite->SetDrawActive(poseFlg);
 		whiteSprite->SetUpdateActive(poseFlg);
+
+		auto resultSprite = dynamic_pointer_cast<Sprite>(ResultSprite);
+		resultSprite->SetDrawActive(poseFlg);
+		resultSprite->SetUpdateActive(poseFlg);
 
 		m_Button1->SetDrawActive(poseFlg);
 		m_Button1->SetUpdateActive(poseFlg);

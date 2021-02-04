@@ -556,7 +556,7 @@ namespace basecross{
 	}
 
 	void OpeningCameraman::EndStateEnterBehavior() {
-		auto gameManagement = GetStage()->GetSharedGameObject<GameManagement>(WstringKey::ShareObj_GameManagement);
+		auto gameManagement = GetStage()->GetSharedGameObject<ManagerObject>(WstringKey::ShareObj_GameManagement);
 		gameManagement->ChangeCamera();
 
 		auto gm = GameManager::GetInstance();
@@ -577,12 +577,12 @@ namespace basecross{
 					if (len.length() >= m_DrawActiveFloorLength)
 					{
 						obj->SetDrawActive(false);
-						obj->SetUpdateActive(false);
+						//obj->SetUpdateActive(false);
 					}
 					else
 					{
 						obj->SetDrawActive(true);
-						obj->SetUpdateActive(true);
+						//obj->SetUpdateActive(true);
 					}
 				}
 				else
@@ -615,6 +615,12 @@ namespace basecross{
 	}
 	void OpeningCameramanStartState::Execute(const shared_ptr<OpeningCameraman>& Obj) {
 		//Obj->ToGoalExcuteBehavior();
+		auto gm = GameManager::GetInstance();
+		if(gm->GetGameStartFlg() == false)
+		{
+			Obj->DrawActiveSwitch();
+		}
+
 		if (Obj->ExcuteBehavior(1.0f)) {
 			Obj->GetStateMachine()->ChangeState(OpeningCameramanMoveState::Instance());
 		}
@@ -633,6 +639,8 @@ namespace basecross{
 	}
 	void OpeningCameramanMoveState::Execute(const shared_ptr<OpeningCameraman>& Obj) {
 		auto gm = GameManager::GetInstance();
+
+
 		if (gm->GetMoveEnabledFlg() == false)
 		{
 			if (gm->GetPoseFlg() == false)
@@ -643,6 +651,10 @@ namespace basecross{
 					}
 				}
 			}
+		}
+		if (gm->GetGameStartFlg() == false)
+		{
+			Obj->DrawActiveSwitch();
 		}
 	}
 	void OpeningCameramanMoveState::Exit(const shared_ptr<OpeningCameraman>& Obj) {

@@ -80,7 +80,7 @@ namespace basecross{
 		//スプライトの作成
 		CreateTitleSprite();
 
-		AddGameObject<GameManagement>(Vec3(0.0f), Vec3(0.0f), Vec3(0.0f));
+		AddGameObject<ManagerObject>(Vec3(0.0f), Vec3(0.0f), Vec3(0.0f));
 
 		auto gm = GameManager::GetInstance();
 		gm->InitGameManager();

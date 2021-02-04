@@ -41,39 +41,23 @@ namespace basecross {
 
 		const int mapData[] = 
 		{
-			1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ,1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-			1,47,48,48,48,48, 8,48,48,48,48,48,48,48,49, 1, 1, 1,47,48,48,48,48,48,48,48,48,48,48,48,49, 1,
-			1,44, 0, 6, 0, 0, 8, 0, 0, 0, 0, 0, 0, 0, 0,49, 1,47 ,0, 0, 0, 0, 0, 0, 0, 0, 0,10, 0, 0,46, 1,
-			1,44, 0, 0, 0, 0, 8, 0, 0, 0, 0, 0, 9, 0, 0,46, 1,44, 0, 0, 0,42,42,42,42, 0, 0, 0, 0, 0,46, 1,
-			1,41,42,42,42,42, 8, 0, 0, 0, 0, 0, 0, 0, 0,46, 1,44, 0, 0,46, 1, 1, 1, 1,41, 0, 0, 0, 0,46, 1,
-			1, 1, 1, 1, 1, 1, 1,44, 0, 0, 0, 0, 0, 0, 0,46, 1,44, 0, 0, 0, 8,48,48,49, 1,44, 0, 0, 0,46, 1,
-			1,47,48,48,48,48,48, 0, 0, 0, 0, 0, 0, 0, 0,46, 1,44, 0, 0, 0, 8, 0, 0,46, 1,41, 0, 0, 0,46, 1,
-			1,44, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,46, 1,44, 0, 0, 0, 8, 0, 0, 0,49, 1,44, 0, 0,46, 1,
-			1,44, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 0,46, 1,41, 0, 7, 0, 8, 0, 0, 0,46, 1,44, 0, 3,46, 1,
-			1,44, 0, 0, 0, 0, 0, 0, 0,42,42,42,42,42,42,43, 1, 1,41,42,42, 8, 0, 0, 0,46, 1,44, 0, 0,46, 1,
-			1,44,11, 0, 0, 0, 0, 0,46, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,44, 0, 0,46, 1,44, 0, 0,46, 1,
-			1,44, 0, 0, 0, 0, 0, 0, 0,48,48,48,48,48,48,48,48,48,48,48,48,48, 0, 0, 0,46, 1,44, 0, 0,46, 1,
-			1,44, 0, 5, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0,46, 1,44, 0, 2,46, 1,
-			1,44, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,46, 1,44, 0, 0,46, 1,
-			1,41,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,43, 1,41,42,42,43, 1,
-			1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1
+			001,001,001,001,001,001,001,001,001,001,001,001,001,001,001,001,001,001,001,001,001,001,001,001,001,001,001,001,001,001,001,001,
+			001,047, 48, 48, 48, 48,  8, 48, 48, 48, 48, 48, 48, 48, 49,001,001,001,047, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 49,001,
+			001,044,000,006,000,000,  8,000,000,000,000,000,000,000,000, 49,001,047,000,000,000,000,000,000,000,000,000, 10,000,000,046,001,
+			001,044,000,000,000,000,  8,000,000,000,000,000,  9,000,000,046,001,044,000,000,000,042,042,042,042,000,000,000,000,000,046,001,
+			001,041,042,042,042,042,  8,000,000,000,000,000,000,000,000,046,001,044,000,000,046,001,001,001,001,041,000,000,000,000,046,001,
+			001,001,001,001,001,001,001,044,000,000,000,000,000,000,000,046,001,044,000,000,000,  8, 48, 48, 49,001,044,000,000,000,046,001,
+			001,047, 48, 48, 48, 48, 48,000,000,000,000,000,000,000,000,046,001,044,000,000,000,  8,000,000,046,001,041,000,000,000,046,001,
+			001,044,000,000,000,000,000,000,000,000,000,000,000,000,000,046,001,044,000,000,000,  8,000,000,000, 49,001,044,000,000,046,001,
+			001,044,000,000,000,000,000,000,000,000,000,000,000,000,000,046,001,044,000,000,000,  8,000,000,000,046,001,044,000,003,046,001,
+			001,044,000,000,000,000,000,000,000,042,042,042,042,042,042,043,001,041,042,042,042,  8,000,000,000,046,001,044,000,000,046,001,
+			001,044,011,000,000,000,000,000,046,001,001,001,001,001,001,001,001,001,001,001,001,001,044,000,000,046,001,044,000,000,046,001,
+			001,044,000,000,000,000,000,000,000, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48,000,000,000,046,001,044,000,000,046,001,
+			001,044,000,005,000,000,000,000,000,000,003,000,000,000,000,000,000,000,000,000,000,000,000,003,000,046,001,044,002,000,046,001,
+			001,044,000,000,000,000,000,000,000,000,003,000,000,000,000,000,000,000,000,000,000,000,000,000,000,046,001,044,000,000,046,001,
+			001,041,042,042,042,042,042,042,042,042,042,042,042,042,042,042,042,042,042,042,042,042,042,042,042,043,001,041,042,042,043,001,
+			001,001,001,001,001,001,001,001,001,001,001,001,001,001,001,001,001,001,001,001,001,001,001,001,001,001,001,001,001,001,001,001,
 
-			//1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ,1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-			//1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
-			//1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0 ,3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 1,
-			//1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
-			//1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 1, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1,
-			//1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1,
-			//1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1,
-			//1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 3, 0, 0, 1, 0, 0, 0, 0, 1,
-			//1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 3, 0, 1,
-			//1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1,
-			//1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1,
-			//1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1,
-			//1, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 6, 0, 0, 0, 1,
-			//1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 2, 0, 1,
-			//1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 1 ,0 ,0 ,0, 0, 1,
-			//1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1
 		};
 
 		memcpy(map, mapData, sizeof(int) * mapRows * mapCols);
@@ -86,69 +70,95 @@ namespace basecross {
 				switch (map[r * mapCols + c]) {
 				case 0:
 					break;
-				case 1:
+				case StageObjectNum::ObjNum_StageWall: // 普通の壁
 					AddGameObject<StageWall>(Vec3(3.0f, 6.0f, 3.0f), Vec3(0.0f), Vec3(pos.x, 3.0f, pos.z)); // 二段
 					break;
-				case 2:
+				case StageObjectNum::ObjNum_Player: // プレイヤー生成
 					CreatePlayer(pos);
 					AddGameObject<WarpMagicSircle>(Vec3(0.0f), Vec3(0.0f), Vec3(pos.x, 4.0f, pos.z));
 					break;
-				case 3:
+				case StageObjectNum::ObjNum_EnemyFirst: // 通常の敵
 					AddGameObject<EnemyFirst>(Vec3(2.0f, 1.0f, 3.5f), Vec3(0.0f), Vec3(pos));
 					break;
-				case 5:
+				case StageObjectNum::ObjNum_RapidFireEnemy: // 連射的
 					AddGameObject<RapidFireEnemy>(Vec3(2.0f, 1.0f, 3.5f), Vec3(0.0f), Vec3(pos.x, 1.5f, pos.z));
 					break;
-				case 41:
+					// 反射壁(テンキーの配置参照)
+				case StageObjectNum::ObjNum_ReflectWall_1:
 					AddGameObject<StageRefrectWall>(Vec3(scale), Vec3(0.0f, XMConvertToRadians(90.0f), 0.0f), Vec3(pos.x - 1.3f, 1.5f, pos.z));
 					AddGameObject<StageRefrectWall>(Vec3(scale), Vec3(0.0f), Vec3(pos.x, 1.5f, pos.z - 1.3f));
 					break;
-				case 42:
+				case StageObjectNum::ObjNum_RefrectWall_2:
 					AddGameObject<StageRefrectWall>(Vec3(scale), Vec3(0.0f), Vec3(pos.x, 1.5f, pos.z - 1.3f));
 					break;
-				case 43:
+				case StageObjectNum::ObjNum_ReflectWall_3:
 					AddGameObject<StageRefrectWall>(Vec3(scale), Vec3(0.0f, XMConvertToRadians(90.0f), 0.0f), Vec3(pos.x + 1.3f, 1.5f, pos.z));
 					AddGameObject<StageRefrectWall>(Vec3(scale), Vec3(0.0f), Vec3(pos.x, 1.5f, pos.z - 1.3f));
 					break;
-				case 44:
+				case StageObjectNum::ObjNum_RefrectWall_4:
 					AddGameObject<StageRefrectWall>(Vec3(scale), Vec3(0.0f, XMConvertToRadians(90.0f), 0.0f), Vec3(pos.x - 1.3f, 1.5f, pos.z));
 					break;
-				case 46:
+				case StageObjectNum::ObjNum_RefrectWall_6:
 					AddGameObject<StageRefrectWall>(Vec3(scale), Vec3(0.0f, XMConvertToRadians(90.0f), 0.0f), Vec3(pos.x + 1.3f, 1.5f, pos.z));
 					break;
-				case 47:
+				case StageObjectNum::ObjNum_ReflectWall_7:
 					AddGameObject<StageRefrectWall>(Vec3(scale), Vec3(0.0f, XMConvertToRadians(90.0f), 0.0f), Vec3(pos.x - 1.3f, 1.5f, pos.z));
 					AddGameObject<StageRefrectWall>(Vec3(scale), Vec3(0.0f), Vec3(pos.x, 1.5f, pos.z + 1.3f));
 					break;
-				case 48:
+				case StageObjectNum::ObjNum_RefrectWall_8:
 					AddGameObject<StageRefrectWall>(Vec3(scale), Vec3(0.0f), Vec3(pos.x, 1.5f, pos.z + 1.3f));
 					break;
-				case 49:
+				case StageObjectNum::ObjNum_ReflectWall_9:
 					AddGameObject<StageRefrectWall>(Vec3(scale), Vec3(0.0f, XMConvertToRadians(90.0f), 0.0f), Vec3(pos.x + 1.3f, 1.5f, pos.z));
 					AddGameObject<StageRefrectWall>(Vec3(scale), Vec3(0.0f), Vec3(pos.x, 1.5f, pos.z + 1.3f));
 					break;
-				case 7:
+				case StageObjectNum::ObjNum_ReflectWall_28:
+					AddGameObject<StageRefrectWall>(Vec3(scale), Vec3(0.0f), Vec3(pos.x, 1.5f, pos.z - 1.3f));
+					AddGameObject<StageRefrectWall>(Vec3(scale), Vec3(0.0f), Vec3(pos.x, 1.5f, pos.z + 1.3f));
+					break;
+				case StageObjectNum::ObjNum_RefrectWall_46:
+					AddGameObject<StageRefrectWall>(Vec3(scale), Vec3(0.0f, XMConvertToRadians(90.0f), 0.0f), Vec3(pos.x - 1.3f, 1.5f, pos.z));
+					AddGameObject<StageRefrectWall>(Vec3(scale), Vec3(0.0f, XMConvertToRadians(90.0f), 0.0f), Vec3(pos.x + 1.3f, 1.5f, pos.z));
+					break;
+				case StageObjectNum::ObjNum_Cannon_2:
+					AddGameObject<Cannon>(Vec3(2.0f, 3.0f, 2.0f), Vec3(0.0f, XMConvertToRadians(180.0f), 0.0f), Vec3(pos.x, 1.5f, pos.z));
+					break;
+				case StageObjectNum::ObjNum_Cannon_4:
+					AddGameObject<Cannon>(Vec3(2.0f, 3.0f, 2.0f), Vec3(0.0f, XMConvertToRadians(270.0f), 0.0f), Vec3(pos.x, 1.5f, pos.z));
+					break;
+				case StageObjectNum::ObjNum_Cannon_6:
+					AddGameObject<Cannon>(Vec3(2.0f, 3.0f, 2.0f), Vec3(0.0f, XMConvertToRadians(90.0f), 0.0f), Vec3(pos.x, 1.5f, pos.z));
+					break;
+				case StageObjectNum::ObjNum_Cannon_8:
 					AddGameObject<Cannon>(Vec3(2.0f, 3.0f, 2.0f), Vec3(0.0f), Vec3(pos.x, 1.5f, pos.z));
 					break;
-				case 8:
+				case StageObjectNum::ObjNum_BreakWall:
 					AddGameObject<BreakWall>(Vec3(3.0f), Vec3(0.0f), Vec3(pos.x, 1.5f, pos.z));
 					break;
-				case 9:
+				case StageObjectNum::ObjNum_DangerEnemy:
 					AddGameObject<DangerEnemy>(Vec3(2.0f, 1.0f, 3.5f), Vec3(0.0f), Vec3(pos.x, 1.5f, pos.z));
 					break;
-				case 10:
+				case StageObjectNum::ObjNum_PatrolEnemy_down:
 					AddGameObject<PatrolEnemy>(Vec3(2.0f, 1.0f, 3.5f), Vec3(0.0f, XMConvertToRadians(180), 0.0f),
-					Vec3(pos.x, 1.5f, pos.z));
+						Vec3(pos.x, 1.5f, pos.z));
 					break;
-				case 11:
+				case StageObjectNum::ObjNum_PatrolEnemy_6:
 					AddGameObject<PatrolEnemyUPDown>(Vec3(2.0f, 1.0f, 3.5f), Vec3(0.0f, XMConvertToRadians(90), 0.0f),
 						Vec3(pos.x, 1.5f, pos.z));
+					break;
+				case StageObjectNum::ObjNum_PatrolEnemy_4:
+					AddGameObject<PatrolEnemyUPDown>(Vec3(2.0f, 1.0f, 3.5f), Vec3(0.0f, XMConvertToRadians(270), 0.0f),
+						Vec3(pos.x, 1.5f, pos.z));
+					break;
+				default:
+					break;
 				}
-				if (map[r * mapCols + c] == 6)
+				if (map[r * mapCols + c] == StageObjectNum::ObjNum_Treasure)
 				{
 					auto treasureBox = AddGameObject<TreasureBox>(Vec3(1.0f), Vec3(0.0f), Vec3(pos.x, 1.5f, pos.z));
 					SetSharedGameObject(WstringKey::ShareObj_TreasureBox, treasureBox);
 				}
+
 			}
 		}
 	}
@@ -174,7 +184,7 @@ namespace basecross {
 		//CreatePlayer(Vec3(0.0f, 1.0f, 0.0f));
 		CreateCameraman();
 
-		auto gameManagement = AddGameObject<GameManagement>(Vec3(0.0f), Vec3(0.0f), Vec3(0.0f));
+		auto gameManagement = AddGameObject<ManagerObject>(Vec3(0.0f), Vec3(0.0f), Vec3(0.0f));
 		SetSharedGameObject(WstringKey::ShareObj_GameManagement, gameManagement);
 
 		auto gm = GameManager::GetInstance();

@@ -8,7 +8,7 @@
 
 namespace basecross{
 	// 仮床
-	class GameManagement : public GameObject
+	class ManagerObject : public GameObject
 	{
 		// 大きさ、回転、位置
 		Vec3 m_Scale;
@@ -16,22 +16,32 @@ namespace basecross{
 		Vec3 m_Position;
 
 		bool testFlg = false;
+
 		float m_Timer = 0.0f;
+
+		//プレイヤーが動けるフラグが変わったか
 		bool m_PlayerMoveFlgChanged = false;
 
-		InputHandler<GameManagement> m_InputHandler;
+		InputHandler<ManagerObject> m_InputHandler;
 
+		// シーンを読み込む
 		void LoadScene(int stageNum);
+		//シーンに入った時のフェードイン
 		void EnterScene();
+		//シーンから出る時にフェードアウト
 		void ExitScene();
+		//プレイヤーの行動の許可
 		void PlayerMoveEnabled();
-		void ClearCheck();
 
-		//十字キー用
+		// 十字ボタンの操作
 		void ButtonControl();
 
 		//エフェクトをステージに登録する
 		void StageEffect();
+
+		//壁を消すフラグ
+		bool m_WallDeleteFlg = false;
+		bool m_WallDeleteFlgChanged = false;
 
 		//フェードイン・アウト
 		void CreateFadeIn(wstring textureKey, Col4 color);
@@ -50,12 +60,12 @@ namespace basecross{
 
 	public:
 		// 構築と破棄
-		GameManagement(
+		ManagerObject(
 			const shared_ptr<Stage>& StagePtr,
 			const Vec3& Scale,
 			const Vec3& Rotation,
 			const Vec3& Position);
-		virtual ~GameManagement();
+		virtual ~ManagerObject();
 
 		// 初期化
 		virtual void OnCreate()override;
